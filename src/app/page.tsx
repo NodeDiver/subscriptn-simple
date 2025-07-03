@@ -2,16 +2,24 @@
 import { useState, useEffect } from "react";
 
 type Store = { id: string; name: string; lightningAddress?: string };
+const BTCPAY_SERVER = "btcpay.aceptabitcoin.com";
 
 export default function Home() {
   const [stores, setStores] = useState<Store[]>([]);
   const [shop, setShop] = useState<string>("");
-  const [recipient, setRecipient] = useState("");
-  const [amount, setAmount] = useState(100);
-  const [timeframe, setTimeframe] = useState("30d");
-  const [comment, setComment] = useState("");
+  const [recipient, setRecipient] = useState<string>("nodii@getalby.com");
+  const [amount, setAmount] = useState<number>(500);
+  const [timeframe, setTimeframe] = useState<string>("30d");
+  const [comment, setComment] = useState<string>("");
 
-  // 1) Fetch stores on mount
+  const timeframeOptions = [
+    { value: '7d', label: '1 Week' },
+    { value: '30d', label: '1 Month' },
+    { value: '90d', label: '3 Months' },
+    { value: '365d', label: '1 Year' },
+  ];
+
+  // Fetch stores on mount
   useEffect(() => {
     fetch("/api/stores")
       .then((res) => res.json())
@@ -24,12 +32,22 @@ export default function Home() {
       .catch(console.error);
   }, []);
 
-  // 2) Handle subscribe click
+  // Update comment default when shop changes
+  useEffect(() => {
+    const selected = stores.find((s) => s.id === shop);
+    if (selected) {
+      setComment(
+        `Subscription from ${selected.name} shop owner to ${BTCPAY_SERVER} through SubscriptN`
+      );
+    }
+  }, [shop, stores]);
+
   const handleSubscribe = () => {
     const selected = stores.find((s) => s.id === shop);
     const recipientValue = recipient || selected?.lightningAddress || "";
     const shopName = selected?.name || "";
-    const commentValue = comment || `Subscription to ${shopName}`;
+    const commentValue = comment || 
+      `Subscription from ${shopName} shopowner to ${BTCPAY_SERVER} through SubscriptN`;
 
     const params = new URLSearchParams({
       amount: amount.toString(),
@@ -49,8 +67,7 @@ export default function Home() {
           SubscriptN for BTCPay
         </h1>
         <p className="text-gray-600 dark:text-gray-300 text-center">
-          Automate monthly subscriptions for your BTCPay shops using Nostr
-          Wallet Connect.
+          Automate subscriptions for your BTCPay shops via Nostr Wallet Connect.
         </p>
 
         <div className="grid grid-cols-1 gap-4">
@@ -64,6 +81,9 @@ export default function Home() {
               onChange={(e) => setShop(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
+              <option value="" disabled>
+                Select a shop
+              </option>
               {stores.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.name}
@@ -79,47 +99,62 @@ export default function Home() {
             </label>
             <input
               type="text"
-              placeholder="Leave empty to use store default"
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Amount */}
+          {/* Amount slider */}
           <div>
             <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Amount (sats/month)
+              Amount: {amount} sats/month
             </label>
             <input
-              type="number"
+              type="range"
+              min="500"
+              max="21000"
+              step="500"
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
             />
+            {amount === 500 && (
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Minimum recommended subscription amount.
+              </p>
+            )}
           </div>
 
-          {/* Timeframe */}
+          {/* Timeframe buttons */}
           <div>
             <label className="block text-gray-700 dark:text-gray-200 mb-1">
               Timeframe
             </label>
-            <input
-              type="text"
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value)}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="flex gap-2">
+              {timeframeOptions.map(({ value, label }) => (
+                <button
+                  key={value}
+                  onClick={() => setTimeframe(value)}
+                  className={`px-3 py-1 rounded-lg font-medium transition-colors ${
+                    timeframe === value
+                      ? 'bg-blue-600 text-white'
+                      : 'border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Comment */}
           <div>
             <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Comment (optional)
+              Comment
             </label>
             <input
               type="text"
-              placeholder="E.g. Subscription to Shop X"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
