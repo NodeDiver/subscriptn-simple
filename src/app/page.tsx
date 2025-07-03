@@ -1,24 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+type Store = { id: string; name: string; lightningAddress?: string };
 
 export default function Home() {
-  const [shop, setShop] = useState('shop1');
-  const [recipient, setRecipient] = useState('');
+  const [stores, setStores] = useState<Store[]>([]);
+  const [shop, setShop] = useState<string>("");
+  const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState(100);
-  const [timeframe, setTimeframe] = useState('30d');
-  const [comment, setComment] = useState('');
+  const [timeframe, setTimeframe] = useState("30d");
+  const [comment, setComment] = useState("");
 
+  // 1) Fetch stores on mount
+  useEffect(() => {
+    fetch("/api/stores")
+      .then((res) => res.json())
+      .then(({ stores }: { stores: Store[] }) => {
+        setStores(stores);
+        if (stores.length > 0) {
+          setShop(stores[0].id);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  // 2) Handle subscribe click
   const handleSubscribe = () => {
-    const recipientValue = recipient || (shop === 'shop1' ? 'shop1@btcpay.example.com' : 'shop2@btcpay.example.com');
-    const shopName = shop === 'shop1' ? 'Shop 1' : 'Shop 2';
+    const selected = stores.find((s) => s.id === shop);
+    const recipientValue = recipient || selected?.lightningAddress || "";
+    const shopName = selected?.name || "";
     const commentValue = comment || `Subscription to ${shopName}`;
+
     const params = new URLSearchParams({
       amount: amount.toString(),
       recipient: recipientValue,
       timeframe,
       comment: commentValue,
-      returnUrl: window.location.origin + '/thanks'
+      returnUrl: window.location.origin + "/thanks",
     });
+
     window.location.href = `https://zapplanner.albylabs.com/confirm?${params.toString()}`;
   };
 
@@ -29,60 +49,79 @@ export default function Home() {
           SubscriptN for BTCPay
         </h1>
         <p className="text-gray-600 dark:text-gray-300 text-center">
-          Automate monthly subscriptions for your BTCPay shops using Nostr Wallet Connect.
+          Automate monthly subscriptions for your BTCPay shops using Nostr
+          Wallet Connect.
         </p>
 
         <div className="grid grid-cols-1 gap-4">
+          {/* Shop selector */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">Select Shop</label>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              Select Shop
+            </label>
             <select
               value={shop}
-              onChange={e => setShop(e.target.value)}
+              onChange={(e) => setShop(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="shop1">Shop 1</option>
-              <option value="shop2">Shop 2</option>
+              {stores.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
             </select>
           </div>
 
+          {/* Lightning address override */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">Recipient Lightning Address</label>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              Recipient Lightning Address
+            </label>
             <input
               type="text"
-              placeholder={shop === 'shop1' ? 'shop1@btcpay.example.com' : 'shop2@btcpay.example.com'}
+              placeholder="Leave empty to use store default"
               value={recipient}
-              onChange={e => setRecipient(e.target.value)}
+              onChange={(e) => setRecipient(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
+          {/* Amount */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">Amount (sats/month)</label>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              Amount (sats/month)
+            </label>
             <input
               type="number"
               value={amount}
-              onChange={e => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(Number(e.target.value))}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
+          {/* Timeframe */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">Timeframe</label>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              Timeframe
+            </label>
             <input
               type="text"
               value={timeframe}
-              onChange={e => setTimeframe(e.target.value)}
+              onChange={(e) => setTimeframe(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
+          {/* Comment */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">Comment (optional)</label>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              Comment (optional)
+            </label>
             <input
               type="text"
               placeholder="E.g. Subscription to Shop X"
               value={comment}
-              onChange={e => setComment(e.target.value)}
+              onChange={(e) => setComment(e.target.value)}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
