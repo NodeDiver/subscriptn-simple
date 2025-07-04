@@ -77,6 +77,20 @@ SubscriptN is a project initiated for the Geyser Hackathon in July 2025. Its goa
 
 ## Entries
 
+---
+
+### 2025-07-04: Full App Build, Security & Production Prep
+- **Action**: Built out the full SubscriptN app with ChatGPT and Cursor AI, focusing on authentication, API, database, and security.
+- **Updates**:  
+  - Implemented session auth, role-based access, and all core API routes.  
+  - Integrated ZapPlanner webhooks and subscription management.  
+  - Added error handling, toasts, validation, and rate limiting.  
+  - Performed a security audit, excluded sensitive files, and created SECURITY.md.  
+  - Updated README and env.example for clarity and onboarding.
+- **Result**: First complete user flows working, there are are still lots of work to do, many implementation were "half made" and still need some configuring...
+- **Plan for 2025-07-05**: Polish all half-implemented features, finalize UI flows, and validate end-to-end subscription functionality.
+- **Thought**: I realized today that with this rest-call to zapplanner I am actually not really implementing nwc. I should re-focus and think of implementing perhaps a nwc conection somwhere and let the webapp do the subscription instead of asking the user to go to zapplanner with the click of the button add new shop button.
+
 ### 2025-07-03: Refactor Frontend & Live Data
 
 - **Task**: Refactor and enhance the Next.js front end in `subscriptn-simple`.
