@@ -6,14 +6,10 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function ShopsDashboard() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const handleLogout = async () => {
-    await logout();
-  };
 
   useEffect(() => {
     const fetchShops = async () => {
@@ -40,24 +36,10 @@ export default function ShopsDashboard() {
     <ProtectedRoute requiredRole="shop_owner">
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          {/* Page Header */}
+          <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">My Shops Dashboard</h1>
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-600">Welcome, {user?.username}</span>
-              <Link 
-                href="/shops/add-shop"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Add Shop
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-gray-600 hover:text-gray-800"
-              >
-                Logout
-              </button>
-            </div>
+            <p className="text-gray-600 mt-2">Manage your shops and subscriptions to BTCPay Server providers</p>
           </div>
 
           {/* Info Box */}
