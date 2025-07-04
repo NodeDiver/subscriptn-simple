@@ -62,7 +62,7 @@ export default function LandingPage() {
                 BTCPay Server Providers
               </h2>
               <p className="text-gray-600">
-                Manage your BTCPay Server infrastructure, monitor shops, and handle subscription statuses. 
+                Manage your BTCPay Server infrastructure, monitor shops, and handle subscriptions. 
                 Perfect for infrastructure owners and server administrators.
               </p>
             </div>
