@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBitcoinConnectContext } from '@/contexts/BitcoinConnectContext';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Sidebar from './Sidebar';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
+  const bitcoinConnect = useBitcoinConnectContext();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -80,6 +82,26 @@ export default function TopBar() {
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
+            {/* Bitcoin Connect Button */}
+            {bitcoinConnect.isConnected ? (
+              <button
+                onClick={bitcoinConnect.disconnect}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center space-x-2"
+              >
+                <span>⚡</span>
+                <span>Disconnect Wallet</span>
+              </button>
+            ) : (
+              <button
+                onClick={bitcoinConnect.connect}
+                disabled={bitcoinConnect.connecting}
+                className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors text-sm font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span>⚡</span>
+                <span>{bitcoinConnect.connecting ? 'Connecting...' : 'Connect Wallet'}</span>
+              </button>
+            )}
+            
             {user ? (
               <>
                 <div className="flex items-center space-x-2">
