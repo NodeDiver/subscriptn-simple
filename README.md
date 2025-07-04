@@ -2,6 +2,71 @@ Enable automated monthly subscription payments via NWC for BTCPayServer users.
 
 _This version will solely verify subscriptions on BTCPayServer via NWC. User management features will be deferred to later phases._
 
+## Installation & Setup
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- BTCPay Server instance
+- BTCPay Server API key
+
+### Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/subscriptn-simple.git
+   cd subscriptn-simple
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   Edit `.env.local` and add your BTCPay Server details:
+   ```env
+   BTCPAY_HOST=https://your-btcpay-server.com
+   BTCPAY_API_KEY=your-btcpay-api-key
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   The database will be automatically created with demo users on first run, and the app will be available at `http://localhost:3000`
+
+### Demo Credentials
+- **BTCPay Server Provider**: `btcpayserver` / `btcpayserver`
+- **Shop Owner**: `shopowner` / `shopowner`
+
+## Security & Privacy
+
+### Environment Variables
+This application uses environment variables for sensitive configuration. Copy `env.example` to `.env.local` and fill in your actual values:
+
+```bash
+cp env.example .env.local
+```
+
+**Required variables:**
+- `BTCPAY_HOST`: Your BTCPay Server URL
+- `BTCPAY_API_KEY`: Your BTCPay Server API key
+
+### Database Security
+- The SQLite database (`subscriptn.db`) contains sensitive user data and is automatically excluded from Git
+- Never commit the database file or any `.env` files
+- Use environment variables for all secrets and API keys
+
+### Development Security
+- Demo credentials are hardcoded for development only
+- In production, implement proper user registration and password hashing
+- Use HTTPS in production environments
+- Implement proper session management and CSRF protection
+
 # SubscriptN Logbook
 
 ## Project Overview

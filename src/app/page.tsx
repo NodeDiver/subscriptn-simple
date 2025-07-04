@@ -1,173 +1,110 @@
 "use client";
-import { useState, useEffect } from "react";
 
-type Store = { id: string; name: string; lightningAddress?: string };
-const BTCPAY_SERVER = "btcpay.aceptabitcoin.com";
+import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Home() {
-  const [stores, setStores] = useState<Store[]>([]);
-  const [shop, setShop] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("nodii@getalby.com");
-  const [amount, setAmount] = useState<number>(500);
-  const [timeframe, setTimeframe] = useState<string>("30d");
-  const [comment, setComment] = useState<string>("");
+export default function LandingPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
-  const timeframeOptions = [
-    { value: '7d', label: '1 Week' },
-    { value: '30d', label: '1 Month' },
-    { value: '90d', label: '3 Months' },
-    { value: '365d', label: '1 Year' },
-  ];
-
-  // Fetch stores on mount
   useEffect(() => {
-    fetch("/api/stores")
-      .then((res) => res.json())
-      .then(({ stores }: { stores: Store[] }) => {
-        setStores(stores);
-        if (stores.length > 0) {
-          setShop(stores[0].id);
-        }
-      })
-      .catch(console.error);
-  }, []);
-
-  // Update comment default when shop changes
-  useEffect(() => {
-    const selected = stores.find((s) => s.id === shop);
-    if (selected) {
-      setComment(
-        `Subscription from ${selected.name} shop owner to ${BTCPAY_SERVER} through SubscriptN`
-      );
+    if (!loading && user) {
+      // Redirect authenticated users to their appropriate dashboard
+      if (user.role === 'provider') {
+        router.push('/infrastructure');
+      } else {
+        router.push('/shops');
+      }
     }
-  }, [shop, stores]);
+  }, [user, loading, router]);
 
-  const handleSubscribe = () => {
-    const selected = stores.find((s) => s.id === shop);
-    const recipientValue = recipient || selected?.lightningAddress || "";
-    const shopName = selected?.name || "";
-    const commentValue = comment || 
-      `Subscription from ${shopName} shopowner to ${BTCPAY_SERVER} through SubscriptN`;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-    const params = new URLSearchParams({
-      amount: amount.toString(),
-      recipient: recipientValue,
-      timeframe,
-      comment: commentValue,
-      returnUrl: window.location.origin + "/thanks",
-    });
-
-    window.location.href = `https://zapplanner.albylabs.com/confirm?${params.toString()}`;
-  };
-
+  if (user) {
+    return null; // Will redirect to appropriate dashboard
+  }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 space-y-6">
-        <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 text-center">
-          SubscriptN for BTCPay
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 text-center">
-          Automate subscriptions for your BTCPay shops via Nostr Wallet Connect.
-        </p>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <div className="max-w-4xl mx-auto w-full">
+        {/* Main Title */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            SubscriptN
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners. 
+            Streamline recurring payments and server management in one platform.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          {/* Shop selector */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Select Shop
-            </label>
-            <select
-              value={shop}
-              onChange={(e) => setShop(e.target.value)}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="" disabled>
-                Select a shop
-              </option>
-              {stores.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Lightning address override */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Recipient Lightning Address
-            </label>
-            <input
-              type="text"
-              value={recipient}
-              onChange={(e) => setRecipient(e.target.value)}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* Amount slider */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Amount: {amount} sats/month
-            </label>
-            <input
-              type="range"
-              min="500"
-              max="21000"
-              step="500"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
-            />
-            {amount === 500 && (
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Minimum recommended subscription amount.
+        {/* Two Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* BTCPay Server Providers Card */}
+          <div className="bg-white rounded-lg shadow-sm p-8 border border-gray-200">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                BTCPay Server Providers
+              </h2>
+              <p className="text-gray-600">
+                Manage your BTCPay Server infrastructure, monitor shops, and handle subscription statuses. 
+                Perfect for infrastructure owners and server administrators.
               </p>
-            )}
-          </div>
-
-          {/* Timeframe buttons */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Timeframe
-            </label>
-            <div className="flex gap-2">
-              {timeframeOptions.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setTimeframe(value)}
-                  className={`px-3 py-1 rounded-lg font-medium transition-colors ${
-                    timeframe === value
-                      ? 'bg-blue-600 text-white'
-                      : 'border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
             </div>
+            <Link 
+              href="/login"
+              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center block"
+            >
+              Access Provider Dashboard
+            </Link>
           </div>
 
-          {/* Comment */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-200 mb-1">
-              Comment
-            </label>
-            <input
-              type="text"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+          {/* Shop Owners Card */}
+          <div className="bg-white rounded-lg shadow-sm p-8 border border-gray-200">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Shop Owners
+              </h2>
+              <p className="text-gray-600">
+                Manage your shops, create new subscriptions to BTCPay Server providers, 
+                and track your payment history. Ideal for merchants and shop operators.
+              </p>
+            </div>
+            <Link 
+              href="/login"
+              className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium text-center block"
+            >
+              Access Shop Dashboard
+            </Link>
           </div>
         </div>
 
-        <button
-          onClick={handleSubscribe}
-          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-3 transition-colors"
-        >
-          Subscribe
-        </button>
+        {/* Footer Info */}
+        <div className="text-center mt-12 text-gray-500">
+          <p className="text-sm">
+            Powered by BTCPay Server and Lightning Network
+          </p>
+        </div>
       </div>
     </div>
   );
