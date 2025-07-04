@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import BitcoinConnectModal from '@/components/BitcoinConnectModal';
 
 interface BitcoinConnectContextType {
   isConnected: boolean;
@@ -31,7 +32,7 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
   const connect = () => {
     setConnecting(true);
     setModalOpen(true);
-    // This will be implemented with the actual Bitcoin Connect modal
+    setError(undefined);
     console.log('Bitcoin Connect: Opening connection modal...');
   };
 
@@ -49,6 +50,22 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
   const closeModal = () => {
     setModalOpen(false);
     setConnecting(false);
+    setError(undefined);
+  };
+
+  const handleConnect = (walletInfo: any) => {
+    console.log('Bitcoin Connect: Connected successfully', walletInfo);
+    setIsConnected(true);
+    setInfo(walletInfo);
+    setConnecting(false);
+    setError(undefined);
+  };
+
+  const handleError = (errorMessage: string) => {
+    console.error('Bitcoin Connect: Error', errorMessage);
+    setError(errorMessage);
+    setConnecting(false);
+    setIsConnected(false);
   };
 
   // Provide a default context value to prevent errors during SSR
@@ -67,6 +84,13 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
   return (
     <BitcoinConnectContext.Provider value={contextValue}>
       {children}
+      {/* Bitcoin Connect Modal */}
+      <BitcoinConnectModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onConnect={handleConnect}
+        onError={handleError}
+      />
     </BitcoinConnectContext.Provider>
   );
 }
