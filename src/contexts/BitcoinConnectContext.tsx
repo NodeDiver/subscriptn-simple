@@ -53,12 +53,15 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
     setError(undefined);
   };
 
-  const handleConnect = (walletInfo: any) => {
-    console.log('Bitcoin Connect: Connected successfully', walletInfo);
+  const handleConnect = (info: any) => {
+    setInfo(info);
     setIsConnected(true);
-    setInfo(walletInfo);
     setConnecting(false);
     setError(undefined);
+    // Auto-close modal after 2 seconds
+    setTimeout(() => {
+      setModalOpen(false);
+    }, 2000);
   };
 
   const handleError = (errorMessage: string) => {

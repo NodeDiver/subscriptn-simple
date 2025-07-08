@@ -263,6 +263,20 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 **Next Phase**: Phase 3 - Subscription management with Lightning payments
 
+### User Prompt: Reorganize README Logbook for Consistency and Visualization
+**Time**: After week 1 completion and summary
+**Request**: Move Week 1 Summary to be always visible, wrap all week 1 entries in a collapsible accordion, leave pre-week entry outside, and apply consistency enhancements (emojis, formatting, uniform headers, etc).
+
+**Action Taken**:
+- Moved Week 1 Summary to be visible after Entries heading
+- Wrapped all entries from 2025-07-01 to 2025-07-05 in a <details> accordion labeled 'Week 1: 2025-07-01 to 2025-07-05'
+- Left the 2025-06-30 entry outside as a pre-week entry
+- Applied consistent formatting, subtle emojis, and bold/italic emphasis for key actions/results/plans
+- Ensured date formats, bullet styles, and section headers are uniform throughout
+
+**Files Modified**:
+- `README.md` - Reorganized logbook section for clarity and consistency
+
 ---
 
 ## Project Context (as of 2025-07-05)

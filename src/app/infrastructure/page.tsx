@@ -41,7 +41,6 @@ export default function InfrastructureDashboard() {
             <h1 className="text-3xl font-bold text-gray-900">BTCPay Server Providers Dashboard</h1>
             <p className="text-gray-600 mt-2">Manage your BTCPay Server infrastructure and monitor subscriptions</p>
           </div>
-
           {/* Info Box */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Overview</h2>
@@ -60,7 +59,6 @@ export default function InfrastructureDashboard() {
               </div>
             </div>
           </div>
-
           {/* Servers List */}
           <div className="bg-white rounded-lg shadow-sm">
             <div className="p-6 border-b border-gray-200">

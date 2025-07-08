@@ -52,6 +52,20 @@ export default function BitcoinConnectModal({
     };
   }, [isOpen, onConnect, onError, onClose]);
 
+  // Auto-close modal when 'bc:connected' event is fired (listen on window)
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleConnected = () => {
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    };
+    window.addEventListener('bc:connected', handleConnected);
+    return () => {
+      window.removeEventListener('bc:connected', handleConnected);
+    };
+  }, [isOpen, onClose]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -70,9 +84,28 @@ export default function BitcoinConnectModal({
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-40 flex items-center justify-center z-50">
+      {/* Custom style for <bc-connect> modal background */}
+      <style>{`
+        bc-connect::part(modal) {
+          background: #e5e7eb !important;
+          border-radius: 20px !important;
+          box-shadow: 0 8px 32px 0 rgba(31, 41, 55, 0.18) !important;
+        }
+        bc-connect::part(content) {
+          padding: 32px 32px 24px 32px !important;
+        }
+        bc-connect::part(header) {
+          margin-top: 12px !important;
+          margin-bottom: 24px !important;
+        }
+        bc-connect::part(footer) {
+          margin-bottom: 12px !important;
+          margin-top: 24px !important;
+        }
+      `}</style>
       <div 
         ref={modalRef}
-        className="bg-white rounded-lg shadow-xl p-0 max-w-md w-full mx-4"
+        className="bg-white rounded-lg shadow-xl p-0 max-w-md w-full mx-4 pt-8 pb-8 px-8"
       >
         {/* Bitcoin Connect Web Component Modal */}
         <bc-connect ref={bcConnectRef} open="true" app-name="SubscriptN" app-description="Bitcoin Subscription Management Platform" app-icon-url="/file.svg" closable="true" />

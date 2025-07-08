@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ToastProvider } from "@/contexts/ToastContext";
-import { BitcoinConnectProvider } from "@/contexts/BitcoinConnectContext";
+import BitcoinConnectProvider from "@/components/BitcoinConnectProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import TopBar from "@/components/TopBar";
 
@@ -28,19 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
-        {/* Force Bitcoin Connect modal to always use dark mode, as early as possible */}
-        <script src="/bc-darkmode.js" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ErrorBoundary>
           <AuthProvider>
             <ToastProvider>
-              <BitcoinConnectProvider>
-                <TopBar />
-                {children}
-              </BitcoinConnectProvider>
+              <BitcoinConnectProvider />
+              <TopBar />
+              {children}
             </ToastProvider>
           </AuthProvider>
         </ErrorBoundary>

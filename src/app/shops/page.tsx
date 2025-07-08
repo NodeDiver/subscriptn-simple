@@ -41,7 +41,6 @@ export default function ShopsDashboard() {
             <h1 className="text-3xl font-bold text-gray-900">My Shops Dashboard</h1>
             <p className="text-gray-600 mt-2">Manage your shops and subscriptions to BTCPay Server providers</p>
           </div>
-
           {/* Info Box */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Overview</h2>
@@ -64,7 +63,6 @@ export default function ShopsDashboard() {
               </div>
             </div>
           </div>
-
           {/* Shops List */}
           <div className="bg-white rounded-lg shadow-sm">
             <div className="p-6 border-b border-gray-200">
@@ -92,26 +90,14 @@ export default function ShopsDashboard() {
                       <div>
                         <h3 className="font-medium text-gray-900">{shop.name}</h3>
                         <p className="text-sm text-gray-600">{shop.server_name}</p>
-                        {shop.lightning_address && (
-                          <p className="text-sm text-gray-500">{shop.lightning_address}</p>
-                        )}
-                        <p className="text-xs text-gray-500">Added {new Date(shop.created_at).toLocaleDateString()}</p>
+                        <p className="text-xs text-gray-500">Subscription: {shop.subscription_status}</p>
                       </div>
-                      <div className="flex items-center space-x-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          shop.subscription_status === 'active' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {shop.subscription_status}
-                        </span>
-                        <Link
-                          href={`/shops/${shop.id}`}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          View Details →
-                        </Link>
-                      </div>
+                      <Link
+                        href={`/shops/${shop.id}`}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        View Details →
+                      </Link>
                     </div>
                   ))}
                 </div>

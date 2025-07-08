@@ -13,4 +13,12 @@ declare module 'react' {
       };
     }
   }
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'bc-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
 } 

@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
         
         {/* Sidebar content */}
-        <div className="p-6">
+        <div className="p-6 flex-1">
           {/* Content */}
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
@@ -51,6 +51,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </div>
           </div>
         </div>
+        {/* Remove theme switch button at the bottom */}
       </div>
     </>
   );
