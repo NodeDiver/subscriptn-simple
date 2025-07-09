@@ -20,24 +20,8 @@ export async function GET(
 
     const db = await getDatabase();
     
-    let shop;
-    if (user.role === 'provider') {
-      // For providers, get shop if it's on one of their servers
-      shop = await db.get(`
-        SELECT 
-          s.id, 
-          s.name, 
-          s.lightning_address, 
-          s.subscription_status, 
-          s.created_at,
-          sr.name as server_name
-        FROM shops s
-        JOIN servers sr ON s.server_id = sr.id
-        WHERE s.id = ? AND sr.provider_id = ?
-      `, [params.shopId, user.id]);
-    } else {
-      // For shop owners, get their own shop
-      shop = await db.get(`
+    // Only return the shop if it is owned by the user
+    const shop = await db.get(`
         SELECT 
           s.id, 
           s.name, 
@@ -49,7 +33,6 @@ export async function GET(
         JOIN servers sr ON s.server_id = sr.id
         WHERE s.id = ? AND s.owner_id = ?
       `, [params.shopId, user.id]);
-    }
 
     if (!shop) {
       return NextResponse.json({ error: 'Shop not found' }, { status: 404 });

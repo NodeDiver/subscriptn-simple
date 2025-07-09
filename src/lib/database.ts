@@ -21,7 +21,6 @@ export async function getDatabase(): Promise<Database> {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
-      role TEXT NOT NULL CHECK (role IN ('provider', 'shop_owner')),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -52,7 +51,6 @@ export async function getDatabase(): Promise<Database> {
       shop_id INTEGER NOT NULL,
       amount_sats INTEGER NOT NULL,
       interval TEXT NOT NULL CHECK (interval IN ('daily', 'weekly', 'monthly', 'yearly')),
-      zap_planner_id TEXT,
       status TEXT DEFAULT 'active' CHECK (status IN ('active', 'cancelled', 'expired')),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (shop_id) REFERENCES shops (id)
@@ -64,6 +62,9 @@ export async function getDatabase(): Promise<Database> {
       payment_amount INTEGER NOT NULL,
       payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
       status TEXT NOT NULL CHECK (status IN ('success', 'failed', 'pending')),
+      payment_method TEXT,
+      wallet_provider TEXT,
+      preimage TEXT,
       FOREIGN KEY (subscription_id) REFERENCES subscriptions (id)
     );
   `);
@@ -71,8 +72,11 @@ export async function getDatabase(): Promise<Database> {
   // Initialize with demo users if they don't exist
   // ⚠️ PRODUCTION NOTE: Remove demo users or use environment variables for production
   const demoUsers = [
-    { username: process.env.DEMO_PROVIDER_USERNAME || 'btcpayserver', password: process.env.DEMO_PROVIDER_PASSWORD || 'btcpayserver', role: 'provider' },
-    { username: process.env.DEMO_SHOP_OWNER_USERNAME || 'shopowner', password: process.env.DEMO_SHOP_OWNER_PASSWORD || 'shopowner', role: 'shop_owner' }
+    { username: process.env.DEMO_USERNAME || 'demo', password: process.env.DEMO_PASSWORD || 'demo' },
+    { username: 'demo1', password: 'demo1' },
+    { username: 'demo2', password: 'demo2' },
+    { username: 'demo3', password: 'demo3' },
+    { username: 'demo4', password: 'demo4' }
   ];
 
   // Only create demo users in development
@@ -82,9 +86,23 @@ export async function getDatabase(): Promise<Database> {
       if (!existingUser) {
         const passwordHash = await bcrypt.hash(user.password, 10);
         await db.run(
-          'INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)',
-          [user.username, passwordHash, user.role]
+          'INSERT INTO users (username, password_hash) VALUES (?, ?)',
+          [user.username, passwordHash]
         );
+      }
+    }
+
+    // Create demo server if it doesn't exist
+    const existingServer = await db.get('SELECT id FROM servers WHERE id = ?', [1]);
+    if (!existingServer) {
+      // Get the first user to be the provider
+      const firstUser = await db.get('SELECT id FROM users LIMIT 1');
+      if (firstUser) {
+        await db.run(
+          'INSERT INTO servers (id, name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?, ?)',
+          [1, 'Demo BTCPay Server', 'https://btcpay.aceptabitcoin.com', 'demo-api-key', firstUser.id]
+        );
+        console.log('Demo server created with ID 1');
       }
     }
   }

@@ -20,24 +20,13 @@ export async function GET(
 
     const db = await getDatabase();
     
-    // Verify the subscription belongs to the user (for shop owners) or is on their server (for providers)
-    let subscription;
-    if (user.role === 'provider') {
-      subscription = await db.get(`
-        SELECT sub.id
-        FROM subscriptions sub
-        JOIN shops s ON sub.shop_id = s.id
-        JOIN servers sr ON s.server_id = sr.id
-        WHERE sub.id = ? AND sr.provider_id = ?
-      `, [params.subscriptionId, user.id]);
-    } else {
-      subscription = await db.get(`
+    // Only allow access if the subscription is for a shop owned by the user
+    const subscription = await db.get(`
         SELECT sub.id
         FROM subscriptions sub
         JOIN shops s ON sub.shop_id = s.id
         WHERE sub.id = ? AND s.owner_id = ?
       `, [params.subscriptionId, user.id]);
-    }
 
     if (!subscription) {
       return NextResponse.json({ error: 'Subscription not found' }, { status: 404 });

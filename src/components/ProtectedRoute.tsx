@@ -6,10 +6,9 @@ import { useEffect } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: 'provider' | 'shop_owner';
 }
 
-export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -17,16 +16,9 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
     if (!loading) {
       if (!user) {
         router.push('/login');
-      } else if (requiredRole && user.role !== requiredRole) {
-        // Redirect to appropriate dashboard based on user role
-        if (user.role === 'provider') {
-          router.push('/infrastructure');
-        } else {
-          router.push('/shops');
-        }
       }
     }
-  }, [user, loading, requiredRole, router]);
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -41,10 +33,6 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
 
   if (!user) {
     return null; // Will redirect to login
-  }
-
-  if (requiredRole && user.role !== requiredRole) {
-    return null; // Will redirect to appropriate dashboard
   }
 
   return <>{children}</>;

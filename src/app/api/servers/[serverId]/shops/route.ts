@@ -14,7 +14,7 @@ export async function GET(
     }
 
     const user = await getUserById(parseInt(userId));
-    if (!user || user.role !== 'provider') {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 

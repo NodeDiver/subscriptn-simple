@@ -36,8 +36,7 @@ export async function POST(request: NextRequest) {
       success: true, 
       user: {
         id: user.id,
-        username: user.username,
-        role: user.role
+        username: user.username
       }
     });
 

@@ -8,7 +8,7 @@ This document outlines the security measures implemented in SubscriptN and guide
 
 ### Authentication & Authorization
 - Session-based authentication with secure cookies
-- Role-based access control (provider vs shop_owner)
+- Unified user model (no roles)
 - Password hashing using bcrypt
 - Protected routes with authentication checks
 
@@ -43,10 +43,8 @@ BTCPAY_API_KEY=your_secure_api_key
 SESSION_SECRET=your_random_session_secret
 
 # Optional (for development)
-DEMO_PROVIDER_USERNAME=your_demo_username
-DEMO_PROVIDER_PASSWORD=your_demo_password
-DEMO_SHOP_OWNER_USERNAME=your_demo_username
-DEMO_SHOP_OWNER_PASSWORD=your_demo_password
+DEMO_USERNAME=your_demo_username
+DEMO_PASSWORD=your_demo_password
 ```
 
 ## 🚨 Security Considerations
@@ -59,7 +57,7 @@ DEMO_SHOP_OWNER_PASSWORD=your_demo_password
 
 ### API Security
 - All API endpoints require authentication
-- Role-based access control implemented
+- All data/actions are scoped to the authenticated user
 - Input validation on all endpoints
 - Rate limiting on sensitive endpoints
 
@@ -115,3 +113,6 @@ For security issues or questions:
 - [ ] Annual penetration testing
 - [ ] Regular backup verification
 - [ ] Monitor security advisories 
+
+### User Model Update
+- As of 2025-07-08, all user data and actions are strictly scoped to the authenticated user. There are no longer multiple user roles; all users can access all dashboards, but only see and manage their own data. 

@@ -16,28 +16,7 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDatabase();
-    
-    if (user.role === 'provider') {
-      // For providers, get all shops on their servers
-      const shops = await db.all(`
-        SELECT 
-          s.id, 
-          s.name, 
-          s.lightning_address, 
-          s.subscription_status, 
-          s.created_at,
-          sr.name as server_name,
-          u.username as owner_username
-        FROM shops s
-        JOIN servers sr ON s.server_id = sr.id
-        JOIN users u ON s.owner_id = u.id
-        WHERE sr.provider_id = ?
-        ORDER BY s.created_at DESC
-      `, [user.id]);
-      
-      return NextResponse.json({ shops });
-    } else {
-      // For shop owners, get their own shops
+    // Always return only shops owned by the user
       const shops = await db.all(`
         SELECT 
           s.id, 
@@ -51,9 +30,7 @@ export async function GET(request: NextRequest) {
         WHERE s.owner_id = ?
         ORDER BY s.created_at DESC
       `, [user.id]);
-      
       return NextResponse.json({ shops });
-    }
   } catch (error) {
     console.error('Get shops error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -69,7 +46,7 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await getUserById(parseInt(userId));
-    if (!user || user.role !== 'shop_owner') {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 

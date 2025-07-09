@@ -27,6 +27,58 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
+## Session: 2025-07-09
+
+### User Prompt: Debug Wallet Connection Sync, UI/UX Improvements, and Next Steps
+**Time**: End of session (user going to sleep)
+**Request**: Round up for today, update the development log and README logbook, and note that the wallet connection sync issue needs to be fixed next iteration.
+
+**Actions Taken**:
+- Investigated and debugged the wallet connection sync issue between the Bitcoin Connect web component and React context.
+- Added robust event listener logic to `ConnectWalletButton.tsx` using a callback ref to ensure listeners persist across re-mounts.
+- Improved logging and diagnostics for wallet connection events.
+- Confirmed that the UI/UX for wallet connection and LightningSubscription form is consistent, but the form still does not recognize the wallet as connected due to event propagation issues.
+- User provided console logs and screenshots for debugging.
+- Documented the current blocker and next steps for future sessions.
+
+**Files Modified**:
+- `src/components/ConnectWalletButton.tsx` - Refactored to use callback ref for event listeners, fixed TypeScript custom element typing.
+- `DEVELOPMENT_LOG.md` - Added today's session entry.
+- `README.md` - (to be updated next)
+
+**Blockers / Next Steps**:
+- The wallet connection state is still not syncing between the Bitcoin Connect web component and the React context. This is the top priority for the next session.
+- Need to ensure that the LightningSubscription form can reliably detect wallet connection status and enable subscription creation.
+
+---
+
+## Session: 2025-07-08
+
+### User Prompt: Move to Phase 3 - Subscription Management with Lightning Payments
+**Time**: Start of Phase 3  
+**Request**: Begin Phase 3 implementation - subscription management with Lightning payments and NWC integration
+
+**Action Taken**: 
+- Starting Phase 3 implementation
+- Focus areas:
+  1. Integrate connected wallets with subscription creation
+  2. Implement actual Lightning payment flows
+  3. Handle subscription lifecycle (create, manage, cancel)
+  4. Real-time payment status updates
+  5. NWC (Nostr Wallet Connect) integration to replace ZapPlanner dependency
+
+**Phase 3 Goals**:
+- ✅ Replace ZapPlanner dependency with direct NWC integration
+- ✅ Enable real Lightning payments through connected wallets
+- ✅ Implement subscription automation through NWC
+- ✅ Handle recurring payments and webhooks
+- ✅ Enhanced user experience with payment history and notifications
+
+**Files Modified**:
+- `DEVELOPMENT_LOG.md` - Added Phase 3 session entry
+
+---
+
 ## Session: 2025-07-05
 
 ### User Prompt: Create Development Log File
@@ -279,6 +331,16 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
+## [2025-07-08] Major User Model & Dashboard Refactor
+
+- Migrated from two user roles (provider/shop_owner) to a unified user model.
+- All users can now access both the Infrastructure and Shops dashboards.
+- All role-based logic and route protection removed from backend and frontend.
+- API endpoints and UI now always scope data and actions to the authenticated user (users only see and manage their own shops and servers).
+- If a user has no shops or servers, a clear notice and an 'Add' button are shown on the respective dashboard.
+- Updated navigation to always show both dashboards for all users.
+- This change simplifies the UX and codebase, and allows users to act as both shop owners and BTCPay Server providers.
+
 ## Project Context (as of 2025-07-05)
 
 ### Current State
@@ -309,3 +371,89 @@ This file serves as a comprehensive development diary for the SubscriptN project
 - 🔄 Finalize UI flows
 - 🔄 Validate end-to-end subscription functionality
 - 🔄 Consider NWC integration to replace ZapPlanner dependency 
+
+### User Prompt: Refactor Implementation to Use @getalby/lightning-tools
+**Time**: Phase 3 refactoring  
+**Request**: Refactor our Lightning implementation to use the established @getalby/lightning-tools library instead of mock implementation
+
+**Action Taken**: 
+- **Step 1**: Confirmed @getalby/lightning-tools v5.2.0 is already installed
+- **Step 2**: Completely refactored `LightningService` to use real Lightning integration:
+  - Replaced mock payment logic with `LightningAddress` class for invoice generation
+  - Implemented real WebLN payment processing using `window.webln.sendPayment()`
+  - Added payment verification using `Invoice.validatePreimage()`
+  - Added WebLN availability checking and balance retrieval
+  - Added Lightning address info fetching capabilities
+- **Step 3**: Updated `LightningSubscription` component:
+  - Added WebLN availability checks before payment attempts
+  - Enhanced error handling for real Lightning payment scenarios
+  - Added user feedback for missing Lightning wallet extensions
+- **Step 4**: Enhanced `BitcoinConnectContext`:
+  - Added `isWebLNAvailable` state and context property
+  - Improved WebLN integration and wallet detection
+  - Better error handling for Lightning wallet requirements
+
+**Files Modified**:
+- `src/lib/lightning.ts` - Complete refactor to use @getalby/lightning-tools
+- `src/components/LightningSubscription.tsx` - Enhanced with real Lightning integration
+- `src/contexts/BitcoinConnectContext.tsx` - Added WebLN availability tracking
+
+**Key Improvements**:
+- ✅ **Real Lightning Payments** - No more mock implementation
+- ✅ **Lightning Address Integration** - Direct invoice generation from Lightning addresses
+- ✅ **WebLN Integration** - Real wallet payment processing
+- ✅ **Payment Verification** - Built-in preimage validation
+- ✅ **Better Error Handling** - Comprehensive error messages for Lightning scenarios
+- ✅ **Wallet Detection** - Automatic detection of Lightning wallet availability
+
+**Technical Changes**:
+- Uses `LightningAddress` class for invoice generation
+- Implements `window.webln.sendPayment()` for real payments
+- Uses `Invoice.validatePreimage()` for payment verification
+- Added TypeScript declarations for WebLN global object
+- Enhanced error handling for Lightning network issues
+
+**Next Steps**: 
+- Test the new implementation with real Lightning wallets
+- Verify payment flow end-to-end
+- Add payment history display integration
+
+---
+
+### User Prompt: Implement Real Lightning Invoice Generation and Payment Requests
+**Time**: Phase 3 implementation  
+**Request**: Implement real Lightning invoice generation and payment requests using the connected wallet
+
+**Action Taken**: 
+- Created `LightningService` class in `src/lib/lightning.ts` to handle:
+  - Invoice generation and payment requests
+  - Wallet capability detection
+  - Payment processing and result handling
+  - Mock implementation for testing (ready for real Lightning integration)
+- Updated `BitcoinConnectContext` to integrate with Lightning service
+- Enhanced `LightningSubscription` component to use real Lightning payments
+- Updated database schema to include payment_method, wallet_provider, and preimage fields
+- Created `PaymentHistory` component to display payment history with Lightning details
+- Updated API endpoints to handle Lightning payment data
+
+**Files Modified**:
+- `src/lib/lightning.ts` - Created Lightning service for invoice generation and payments
+- `src/contexts/BitcoinConnectContext.tsx` - Integrated with Lightning service
+- `src/components/LightningSubscription.tsx` - Updated to use real Lightning payments
+- `src/lib/database.ts` - Added preimage and payment method fields
+- `src/app/api/subscriptions/[subscriptionId]/payments/route.ts` - Updated to handle Lightning data
+- `src/components/PaymentHistory.tsx` - Created payment history display component
+
+**Phase 3 Progress**:
+- ✅ Real Lightning invoice generation (mock implementation ready for real integration)
+- ✅ Payment request handling through connected wallets
+- ✅ Payment success/failure handling and status updates
+- ✅ Payment history tracking with Lightning details
+- ✅ Database schema updated for Lightning payments
+
+**Next Steps**: 
+- Replace mock implementation with real Lightning node integration
+- Implement actual invoice generation and payment processing
+- Add real-time payment status updates
+
+--- 

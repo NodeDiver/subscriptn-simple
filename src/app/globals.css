@@ -24,3 +24,34 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Bitcoin Connect Modal Text Visibility Fix */
+bc-connect input,
+bc-connect textarea,
+bc-connect [contenteditable] {
+  color: #171717 !important;
+  background-color: #ffffff !important;
+}
+
+bc-connect input::placeholder,
+bc-connect textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Ensure all text within bc-connect is visible */
+bc-connect {
+  color: #171717 !important;
+}
+
+bc-connect * {
+  color: inherit !important;
+}
+
+/* Specific fix for NWC connection string input */
+bc-connect input[type="text"],
+bc-connect input[type="password"],
+bc-connect input[type="url"] {
+  color: #171717 !important;
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
+}

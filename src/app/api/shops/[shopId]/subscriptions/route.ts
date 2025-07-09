@@ -20,20 +20,11 @@ export async function GET(
 
     const db = await getDatabase();
     
-    // Verify the shop belongs to the user or is on their server
-    let shop;
-    if (user.role === 'provider') {
-      shop = await db.get(`
-        SELECT s.id FROM shops s
-        JOIN servers sr ON s.server_id = sr.id
-        WHERE s.id = ? AND sr.provider_id = ?
-      `, [params.shopId, user.id]);
-    } else {
-      shop = await db.get(
+    // Only allow access if the shop is owned by the user
+    const shop = await db.get(
         'SELECT id FROM shops WHERE id = ? AND owner_id = ?',
         [params.shopId, user.id]
       );
-    }
 
     if (!shop) {
       return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
@@ -47,11 +38,12 @@ export async function GET(
         sub.interval,
         sub.status,
         sub.created_at,
-        sub.zap_planner_id
+        s.name as shop_name
       FROM subscriptions sub
-      WHERE sub.shop_id = ?
+      JOIN shops s ON sub.shop_id = s.id
+      WHERE s.id = ? AND s.owner_id = ?
       ORDER BY sub.created_at DESC
-    `, [params.shopId]);
+    `, [params.shopId, user.id]);
 
     return NextResponse.json({ subscriptions });
   } catch (error) {

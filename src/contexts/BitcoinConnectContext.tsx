@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import BitcoinConnectModal from '@/components/BitcoinConnectModal';
+import { lightningService } from '@/lib/lightning';
 
 interface BitcoinConnectContextType {
   isConnected: boolean;
@@ -13,6 +14,7 @@ interface BitcoinConnectContextType {
   modalOpen: boolean;
   error: string | undefined;
   info: any;
+  isWebLNAvailable: boolean;
 }
 
 const BitcoinConnectContext = createContext<BitcoinConnectContextType | undefined>(undefined);
@@ -24,9 +26,39 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [info, setInfo] = useState<any>(null);
+  const [isWebLNAvailable, setIsWebLNAvailable] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Check if WebLN is available
+    setIsWebLNAvailable(typeof window !== 'undefined' && !!window.webln);
+
+    // Listen for Bitcoin Connect events globally
+    function handleBCConnected(e: any) {
+      setInfo(e.detail);
+      setIsConnected(true);
+      setConnecting(false);
+      setError(undefined);
+      lightningService.setConnectedWallet(e.detail);
+      setIsWebLNAvailable(lightningService.isWebLNAvailable());
+    }
+    function handleBCDisconnected() {
+      setIsConnected(false);
+      setInfo(null);
+      setError(undefined);
+      lightningService.clearConnectedWallet();
+      setIsWebLNAvailable(lightningService.isWebLNAvailable());
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('bc:connected', handleBCConnected);
+      window.addEventListener('bc:disconnected', handleBCDisconnected);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('bc:connected', handleBCConnected);
+        window.removeEventListener('bc:disconnected', handleBCDisconnected);
+      }
+    };
   }, []);
 
   const connect = () => {
@@ -40,6 +72,10 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
     setIsConnected(false);
     setInfo(null);
     setError(undefined);
+    
+    // Clear the connected wallet from the Lightning service
+    lightningService.clearConnectedWallet();
+    
     console.log('Bitcoin Connect: Disconnected wallet');
   };
 
@@ -58,6 +94,13 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
     setIsConnected(true);
     setConnecting(false);
     setError(undefined);
+    
+    // Set the connected wallet in the Lightning service
+    lightningService.setConnectedWallet(info);
+    
+    // Check WebLN availability after connection
+    setIsWebLNAvailable(lightningService.isWebLNAvailable());
+    
     // Auto-close modal after 2 seconds
     setTimeout(() => {
       setModalOpen(false);
@@ -82,6 +125,7 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
     modalOpen,
     error,
     info,
+    isWebLNAvailable,
   };
 
   return (
@@ -112,7 +156,30 @@ export function useBitcoinConnectContext() {
       modalOpen: false,
       error: undefined,
       info: null,
+      isWebLNAvailable: false,
     };
   }
   return context;
+} 
+
+// In the context, export the handlers so they can be used by ConnectWalletButton
+export function useBitcoinConnectHandlers() {
+  const { setInfo, setIsConnected, setConnecting, setError, setIsWebLNAvailable } = useBitcoinConnectContext() as any;
+  return {
+    onConnect: (info: any) => {
+      setInfo(info);
+      setIsConnected(true);
+      setConnecting(false);
+      setError(undefined);
+      lightningService.setConnectedWallet(info);
+      setIsWebLNAvailable(lightningService.isWebLNAvailable());
+    },
+    onDisconnect: () => {
+      setIsConnected(false);
+      setInfo(null);
+      setError(undefined);
+      lightningService.clearConnectedWallet();
+      setIsWebLNAvailable(lightningService.isWebLNAvailable());
+    }
+  };
 } 

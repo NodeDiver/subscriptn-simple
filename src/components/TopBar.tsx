@@ -5,11 +5,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
+import ConnectWalletButton from './ConnectWalletButton';
+import { useBitcoinConnectHandlers } from '@/contexts/BitcoinConnectContext';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { onConnect, onDisconnect } = useBitcoinConnectHandlers();
 
   // Dynamically import the Bitcoin Connect web component on mount
   useEffect(() => {
@@ -19,16 +22,6 @@ export default function TopBar() {
   const handleLogout = async () => {
     await logout();
     router.push('/');
-  };
-
-  const getDashboardLink = () => {
-    if (!user) return '/';
-    return user.role === 'provider' ? '/infrastructure' : '/shops';
-  };
-
-  const getDashboardName = () => {
-    if (!user) return 'Home';
-    return user.role === 'provider' ? 'Infrastructure' : 'Shops';
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {
@@ -58,27 +51,17 @@ export default function TopBar() {
             {user && (
               <>
                 <Link
-                  href={getDashboardLink()}
+                  href="/infrastructure"
                   className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  {getDashboardName()} Dashboard
+                  Infrastructure Dashboard
                 </Link>
-                {user.role === 'provider' && (
-                  <Link
-                    href="/infrastructure/subscriptions"
-                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Subscriptions
-                  </Link>
-                )}
-                {user.role === 'shop_owner' && (
-                  <Link
-                    href="/shops/add-shop"
-                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Add Shop
-                  </Link>
-                )}
+                <Link
+                  href="/shops"
+                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Shops Dashboard
+                </Link>
               </>
             )}
           </div>
@@ -87,7 +70,7 @@ export default function TopBar() {
           <div className="flex items-center space-x-4">
             {/* Bitcoin Connect Button (official web component) */}
             <div className="px-2">
-              <bc-button></bc-button>
+              <ConnectWalletButton onConnect={onConnect} onDisconnect={onDisconnect} />
             </div>
             {user ? (
               <>
@@ -99,7 +82,7 @@ export default function TopBar() {
                   </div>
                   <div className="hidden sm:block">
                     <div className="text-sm font-medium text-gray-900">{user.username}</div>
-                    <div className="text-xs text-gray-500 capitalize">{user.role.replace('_', ' ')}</div>
+                    {/* No role shown */}
                   </div>
                 </div>
                 <button

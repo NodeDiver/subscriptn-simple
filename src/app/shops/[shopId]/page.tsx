@@ -65,7 +65,7 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
     fetchShopData();
   }, [params.shopId]);
   return (
-    <ProtectedRoute requiredRole="shop_owner">
+    <ProtectedRoute>
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -155,9 +155,6 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
                               {subscription.amount_sats} sats / {subscription.interval}
                             </h3>
                             <p className="text-sm text-gray-600">Created {new Date(subscription.created_at).toLocaleDateString()}</p>
-                            {subscription.zap_planner_id && (
-                              <p className="text-xs text-gray-500">ZapPlanner ID: {subscription.zap_planner_id}</p>
-                            )}
                           </div>
                           <div className="flex items-center space-x-4">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${

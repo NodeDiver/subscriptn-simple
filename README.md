@@ -18,11 +18,12 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 - [Contributing](#contributing)
 
 ## Features
-- ⚡ Lightning Network subscription payments
-- 🏪 Role-based dashboards for providers & shop owners
+- ⚡ **Real Lightning Network payments** using @getalby/lightning-tools
+- 🏪 Unified dashboard access for all users (no roles)
 - 🔒 Secure authentication & privacy-first design
-- 🧩 ZapPlanner integration
+- 🔗 Bitcoin Connect wallet integration with WebLN support
 - 🎨 Modern, responsive UI (dark mode ready!)
+- 💳 **Direct Lightning address integration** for invoice generation
 
 ## Getting Started
 
@@ -83,8 +84,14 @@ npm run dev
    The database will be automatically created with demo users on first run, and the app will be available at `http://localhost:3000`
 
 ### Demo Credentials
-- **BTCPay Server Provider**: `btcpayserver` / `btcpayserver`
-- **Shop Owner**: `shopowner` / `shopowner`
+- **Demo User**: `demo` / `demo`
+
+### Lightning Wallet Requirements
+To use the subscription payment features, you'll need a Lightning wallet with WebLN support:
+- **Alby** (recommended) - [getalby.com](https://getalby.com)
+- **BlueWallet** - [bluewallet.io](https://bluewallet.io)
+- **Phoenix** - [phoenix.acinq.co](https://phoenix.acinq.co)
+- **Breez** - [breez.technology](https://breez.technology)
 
 ## Security & Privacy
 
@@ -110,19 +117,25 @@ cp env.example .env.local
 - Use HTTPS in production environments
 - Implement proper session management and CSRF protection
 
-# SubscriptN Logbook
-
-## Entries
-
 ## Week 1 Summary
 - 🚀 *Set up project foundation and local development environment*
-- 🔐 *Built full authentication, role-based dashboards, and core API routes*
-- ⚡ *Integrated ZapPlanner webhooks and subscription management*
+- 🔐 *Built full authentication, unified dashboard access, and core API routes*
+- ⚡ *Integrated Lightning payments and subscription management*
 - 🖥️ *Added persistent top bar, sidebar, and improved UI/UX*
 - 🧩 *Began Bitcoin Connect integration (modal, context, TopBar); modal theming WIP*
 
 <details>
 <summary>Week 1: 2025-07-01 to 2025-07-05</summary>
+
+### 2025-07-09: Wallet Connection Debugging, UI/UX Improvements, and Next Steps
+- **Action**: 🐞 *Debugged wallet connection sync between Bitcoin Connect web component and React context. Improved event listener logic and diagnostics in `ConnectWalletButton.tsx`.*
+- **Updates**:
+  - 🔄 *Refactored wallet connect button to use callback ref for robust event handling.*
+  - 📝 *Added detailed logging and diagnostics for wallet connection events.*
+  - 🖥️ *UI/UX for wallet connection and LightningSubscription form improved, but form still does not recognize wallet as connected due to event propagation issues.*
+  - 💤 *User ended session for sleep; blocker documented for next session.*
+- **Result**: ⚠️ *Wallet connection state is still not syncing to the LightningSubscription form. This is the top priority for the next session.*
+- **Plan for next session**: 📝 *Fix wallet connection state propagation so the LightningSubscription form can reliably detect wallet connection and enable subscription creation.*
 
 ### 2025-07-05: Development Log Setup, Bitcoin Connect Integration & Project Continuity
 - **Action**: 🚀 *Created comprehensive development log system for project continuity and session tracking. Began and advanced Bitcoin Connect integration (Phase 2).*
@@ -139,7 +152,7 @@ cp env.example .env.local
 - **Action**: 🚀 *Built out the full SubscriptN app with ChatGPT and Cursor AI, focusing on authentication, API, database, and security.*
 - **Updates**:  
   - 🔑 *Implemented session auth, role-based access, and all core API routes.*  
-  - ⚡ *Integrated ZapPlanner webhooks and subscription management.*  
+  - ⚡ *Integrated Lightning payments and subscription management.*  
   - 🛡️ *Added error handling, toasts, validation, and rate limiting.*  
   - 🔒 *Performed a security audit, excluded sensitive files, and created SECURITY.md.*  
   - 📄 *Updated README and env.example for clarity and onboarding.*

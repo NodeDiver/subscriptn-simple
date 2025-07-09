@@ -2,23 +2,9 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function LandingPage() {
   const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && user) {
-      // Redirect authenticated users to their appropriate dashboard
-      if (user.role === 'provider') {
-        router.push('/infrastructure');
-      } else {
-        router.push('/shops');
-      }
-    }
-  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -31,9 +17,6 @@ export default function LandingPage() {
     );
   }
 
-  if (user) {
-    return null; // Will redirect to appropriate dashboard
-  }
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-6">
       <div className="max-w-4xl mx-auto w-full">
@@ -67,7 +50,7 @@ export default function LandingPage() {
               </p>
             </div>
             <Link 
-              href="/login"
+              href="/infrastructure"
               className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center block"
             >
               Access Provider Dashboard
@@ -91,7 +74,7 @@ export default function LandingPage() {
               </p>
             </div>
             <Link 
-              href="/login"
+              href="/shops"
               className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium text-center block"
             >
               Access Shop Dashboard

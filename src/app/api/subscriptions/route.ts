@@ -17,8 +17,7 @@ export async function GET(request: NextRequest) {
 
     const db = await getDatabase();
     
-    if (user.role === 'provider') {
-      // For providers, get all subscriptions on their servers
+    // Only return subscriptions for shops owned by the user
       const subscriptions = await db.all(`
         SELECT 
           sub.id,
@@ -26,29 +25,6 @@ export async function GET(request: NextRequest) {
           sub.interval,
           sub.status,
           sub.created_at,
-          sub.zap_planner_id,
-          s.name as shop_name,
-          sr.name as server_name,
-          u.username as owner_username
-        FROM subscriptions sub
-        JOIN shops s ON sub.shop_id = s.id
-        JOIN servers sr ON s.server_id = sr.id
-        JOIN users u ON s.owner_id = u.id
-        WHERE sr.provider_id = ?
-        ORDER BY sub.created_at DESC
-      `, [user.id]);
-      
-      return NextResponse.json({ subscriptions });
-    } else {
-      // For shop owners, get their own subscriptions
-      const subscriptions = await db.all(`
-        SELECT 
-          sub.id,
-          sub.amount_sats,
-          sub.interval,
-          sub.status,
-          sub.created_at,
-          sub.zap_planner_id,
           s.name as shop_name,
           sr.name as server_name
         FROM subscriptions sub
@@ -57,9 +33,7 @@ export async function GET(request: NextRequest) {
         WHERE s.owner_id = ?
         ORDER BY sub.created_at DESC
       `, [user.id]);
-      
       return NextResponse.json({ subscriptions });
-    }
   } catch (error) {
     console.error('Get subscriptions error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -75,11 +49,11 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await getUserById(parseInt(userId));
-    if (!user || user.role !== 'shop_owner') {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { shopId, amountSats, interval, zapPlannerId } = await request.json();
+    const { shopId, amountSats, interval } = await request.json();
 
     if (!shopId || !amountSats || !interval) {
       return NextResponse.json(
@@ -100,8 +74,8 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await db.run(
-      'INSERT INTO subscriptions (shop_id, amount_sats, interval, zap_planner_id) VALUES (?, ?, ?, ?)',
-      [shopId, amountSats, interval, zapPlannerId || null]
+      'INSERT INTO subscriptions (shop_id, amount_sats, interval) VALUES (?, ?, ?)',
+      [shopId, amountSats, interval]
     );
 
     const newSubscription = await db.get(`
@@ -111,7 +85,6 @@ export async function POST(request: NextRequest) {
         sub.interval,
         sub.status,
         sub.created_at,
-        sub.zap_planner_id,
         s.name as shop_name,
         sr.name as server_name
       FROM subscriptions sub

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function ShopsDashboard() {
@@ -33,13 +32,12 @@ export default function ShopsDashboard() {
   }, []);
 
   return (
-    <ProtectedRoute requiredRole="shop_owner">
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto">
-          {/* Page Header */}
-          <div className="mb-8">
+        {/* Page Header */}
+        <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">My Shops Dashboard</h1>
-            <p className="text-gray-600 mt-2">Manage your shops and subscriptions to BTCPay Server providers</p>
+          <p className="text-gray-600 mt-2">Manage your shops and subscriptions to BTCPay Server providers</p>
           </div>
           {/* Info Box */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
@@ -80,8 +78,10 @@ export default function ShopsDashboard() {
                 </div>
               ) : shops.length === 0 ? (
                 <div className="text-center text-gray-500 py-8">
-                  <p>No shops added yet.</p>
-                  <p className="text-sm mt-2">Click "Add Shop" to create your first subscription.</p>
+                <p>You currently have not listed your shop, please add one here.</p>
+                <Link href="/shops/add-shop">
+                  <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Add Shop</button>
+                </Link>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -90,22 +90,29 @@ export default function ShopsDashboard() {
                       <div>
                         <h3 className="font-medium text-gray-900">{shop.name}</h3>
                         <p className="text-sm text-gray-600">{shop.server_name}</p>
-                        <p className="text-xs text-gray-500">Subscription: {shop.subscription_status}</p>
+                      <p className="text-xs text-gray-500">Subscription: {shop.subscription_status}</p>
                       </div>
-                      <Link
-                        href={`/shops/${shop.id}`}
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        View Details →
-                      </Link>
+                        <Link
+                          href={`/shops/${shop.id}`}
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          View Details →
+                        </Link>
                     </div>
                   ))}
                 </div>
               )}
             </div>
           </div>
+          {/* Add Shop Button at the bottom */}
+          <div className="flex justify-end mt-6">
+            <Link href="/shops/add-shop">
+              <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium shadow">
+                + Add New Shop
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-    </ProtectedRoute>
   );
 } 

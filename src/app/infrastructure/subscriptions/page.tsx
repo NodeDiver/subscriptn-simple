@@ -50,7 +50,7 @@ export default function InfrastructureSubscriptions() {
   };
 
   return (
-    <ProtectedRoute requiredRole="provider">
+    <ProtectedRoute>
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -122,9 +122,6 @@ export default function InfrastructureSubscriptions() {
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Created
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            ZapPlanner ID
-                          </th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
@@ -154,9 +151,6 @@ export default function InfrastructureSubscriptions() {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                               {new Date(subscription.created_at).toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {subscription.zap_planner_id || '-'}
                             </td>
                           </tr>
                         ))}

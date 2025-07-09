@@ -4,14 +4,13 @@ import { getDatabase } from './database';
 export interface User {
   id: number;
   username: string;
-  role: 'provider' | 'shop_owner';
 }
 
 export async function authenticateUser(username: string, password: string): Promise<User | null> {
   try {
     const db = await getDatabase();
     const user = await db.get(
-      'SELECT id, username, password_hash, role FROM users WHERE username = ?',
+      'SELECT id, username, password_hash FROM users WHERE username = ?',
       [username]
     );
 
@@ -26,8 +25,7 @@ export async function authenticateUser(username: string, password: string): Prom
 
     return {
       id: user.id,
-      username: user.username,
-      role: user.role
+      username: user.username
     };
   } catch (error) {
     console.error('Authentication error:', error);
@@ -39,14 +37,13 @@ export async function getUserById(id: number): Promise<User | null> {
   try {
     const db = await getDatabase();
     const user = await db.get(
-      'SELECT id, username, role FROM users WHERE id = ?',
+      'SELECT id, username FROM users WHERE id = ?',
       [id]
     );
 
     return user ? {
       id: user.id,
-      username: user.username,
-      role: user.role
+      username: user.username
     } : null;
   } catch (error) {
     console.error('Get user error:', error);

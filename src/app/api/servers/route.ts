@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     }
 
     const user = await getUserById(parseInt(userId));
-    if (!user || user.role !== 'provider') {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await getUserById(parseInt(userId));
-    if (!user || user.role !== 'provider') {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
