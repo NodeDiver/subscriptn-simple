@@ -127,6 +127,17 @@ cp env.example .env.local
 <details>
 <summary>Week 1: 2025-07-01 to 2025-07-05</summary>
 
+### 2025-07-12: Bitcoin Connect Integration - Official API Implementation
+- **Action**: 🔄 *Replaced custom Bitcoin Connect context with official @getalby/bitcoin-connect API integration for reliable wallet connection state management.*
+- **Updates**:
+  - ⚡ *Migrated from custom event listeners to official Bitcoin Connect API functions (`onConnected`, `onDisconnected`, `onConnecting`, `isConnected`, `launchModal`, etc.).*
+  - 🔧 *Updated `BitcoinConnectContext.tsx` to use official API instead of custom web component event handling.*
+  - 🎯 *Removed dependency on `@getalby/bitcoin-connect-react` package (which didn't provide the expected Provider/hook).*
+  - 🧹 *Cleaned up custom modal implementation and event listener logic.*
+  - ✅ *Maintained existing `ConnectWalletButton` component using official `<bc-button>` web component.*
+- **Result**: ✅ *Wallet connection state should now properly sync across all components using the official Bitcoin Connect API. The context now uses reliable event subscriptions instead of DOM event listeners.*
+- **Plan for next session**: 📝 *Test the wallet connection flow end-to-end and verify that the LightningSubscription form properly detects wallet connection state.*
+
 ### 2025-07-09: Wallet Connection Debugging, UI/UX Improvements, and Next Steps
 - **Action**: 🐞 *Debugged wallet connection sync between Bitcoin Connect web component and React context. Improved event listener logic and diagnostics in `ConnectWalletButton.tsx`.*
 - **Updates**:

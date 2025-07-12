@@ -27,28 +27,63 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
-## Session: 2025-07-09
+## Session: 2025-07-12
 
-### User Prompt: Debug Wallet Connection Sync, UI/UX Improvements, and Next Steps
-**Time**: End of session (user going to sleep)
-**Request**: Round up for today, update the development log and README logbook, and note that the wallet connection sync issue needs to be fixed next iteration.
+### User Prompt: Replace Custom BitcoinConnectContext with Official @getalby/bitcoin-connect API
+**Time**: Start of session  
+**Request**: Follow ChatGPT instructions to replace custom BitcoinConnectContext with @getalby/bitcoin-connect-react package for better wallet connection state management.
 
 **Actions Taken**:
-- Investigated and debugged the wallet connection sync issue between the Bitcoin Connect web component and React context.
-- Added robust event listener logic to `ConnectWalletButton.tsx` using a callback ref to ensure listeners persist across re-mounts.
-- Improved logging and diagnostics for wallet connection events.
-- Confirmed that the UI/UX for wallet connection and LightningSubscription form is consistent, but the form still does not recognize the wallet as connected due to event propagation issues.
-- User provided console logs and screenshots for debugging.
-- Documented the current blocker and next steps for future sessions.
+- **Step 1**: Attempted to install @getalby/bitcoin-connect-react package
+  - Encountered React version conflict (React 19 vs required React 18)
+  - Installed with --legacy-peer-deps flag to resolve dependency conflicts
+- **Step 2**: Discovered the React package doesn't provide expected BitcoinConnectProvider or useBitcoinConnect hook
+  - Package only provides React components wrapping web components (Button, Connect, PayButton, Payment)
+  - No context provider or hooks available as suggested by ChatGPT instructions
+- **Step 3**: Reverted layout.tsx changes and uninstalled the problematic package
+- **Step 4**: Implemented alternative solution using official Bitcoin Connect API functions
+  - Updated BitcoinConnectContext.tsx to use official API functions: onConnected, onDisconnected, onConnecting, isConnected, launchModal, closeModal, disconnect, init
+  - Replaced custom event listeners with official event subscriptions
+  - Removed dependency on custom modal implementation
+  - Maintained existing ConnectWalletButton component using official <bc-button> web component
 
 **Files Modified**:
-- `src/components/ConnectWalletButton.tsx` - Refactored to use callback ref for event listeners, fixed TypeScript custom element typing.
-- `DEVELOPMENT_LOG.md` - Added today's session entry.
-- `README.md` - (to be updated next)
+- `src/contexts/BitcoinConnectContext.tsx` - Complete refactor to use official Bitcoin Connect API
+- `src/app/layout.tsx` - Reverted to use custom BitcoinConnectProvider (not the React package)
+- `package.json` - Removed @getalby/bitcoin-connect-react dependency
+- `README.md` - Updated logbook with today's session entry
 
-**Blockers / Next Steps**:
-- The wallet connection state is still not syncing between the Bitcoin Connect web component and the React context. This is the top priority for the next session.
-- Need to ensure that the LightningSubscription form can reliably detect wallet connection status and enable subscription creation.
+**Technical Changes**:
+- **Before**: Custom event listeners on <bc-button> elements with manual state management
+- **After**: Official Bitcoin Connect API with proper event subscriptions and state management
+- **Benefits**: More reliable wallet connection state synchronization across all components
+
+**Result**: ✅ Wallet connection state should now properly sync between TopBar Connect Wallet button and LightningSubscription form using the official Bitcoin Connect API.
+
+**Next Steps**: Test the integration end-to-end and verify that the LightningSubscription form properly detects wallet connection state.
+
+### User Prompt: Git Push with Development Log Update and Status Comment
+**Time**: End of session  
+**Request**: Update development log file, then git push with comment mentioning that subscription works with WebLN but not native NWC, and lots of bugs to continue solving.
+
+**Actions Taken**:
+- Added comprehensive session entry to DEVELOPMENT_LOG.md documenting the Bitcoin Connect API integration
+- Documented the failed attempt to use @getalby/bitcoin-connect-react package
+- Recorded the successful implementation using official Bitcoin Connect API functions
+- Prepared for git push with descriptive commit message about current status
+
+**Files Modified**:
+- `DEVELOPMENT_LOG.md` - Added today's complete session entry
+
+**Current Status for Git Commit**:
+- ✅ Subscription functionality works with WebLN (Lightning wallet extensions)
+- ⚠️ Native NWC (Nostr Wallet Connect) integration not yet implemented
+- 🔧 Multiple bugs and issues still need to be resolved
+- 🚧 Development ongoing with Bitcoin Connect API integration
+
+---
+
+## Session: 2025-07-09
 
 ---
 
