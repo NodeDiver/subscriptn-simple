@@ -41,7 +41,7 @@ export default function ShopsDashboard() {
           </div>
           {/* Info Box */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Overview</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Overview</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">{shops.length}</div>
@@ -64,7 +64,7 @@ export default function ShopsDashboard() {
           {/* Shops List */}
           <div className="bg-white rounded-lg shadow-sm">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold">My Shops</h2>
+              <h2 className="text-xl font-semibold text-gray-900">My Shops</h2>
             </div>
             <div className="p-6">
               {loading ? (

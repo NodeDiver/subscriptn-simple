@@ -105,15 +105,15 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
             <>
               {/* Info Box */}
               <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Shop Information</h2>
+                <h2 className="text-xl font-semibold mb-4 text-gray-900">Shop Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <div className="text-sm text-gray-600">Shop Name</div>
-                    <div className="font-medium">{shop.name}</div>
+                    <div className="font-medium text-gray-900">{shop.name}</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">BTCPay Server</div>
-                    <div className="font-medium">{shop.server_name}</div>
+                    <div className="font-medium text-gray-900">{shop.server_name}</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">Subscription Status</div>
@@ -131,7 +131,7 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
                 {shop.lightning_address && (
                   <div className="mt-4">
                     <div className="text-sm text-gray-600">Lightning Address</div>
-                    <div className="font-medium">{shop.lightning_address}</div>
+                    <div className="font-medium text-gray-900">{shop.lightning_address}</div>
                   </div>
                 )}
               </div>
@@ -139,11 +139,11 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
               {/* Subscription History */}
               <div className="bg-white rounded-lg shadow-sm mb-8">
                 <div className="p-6 border-b border-gray-200">
-                  <h2 className="text-xl font-semibold">Subscription History</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">Subscription History</h2>
                 </div>
                 <div className="p-6">
                   {subscriptions.length === 0 ? (
-                    <div className="text-center text-gray-500 py-8">
+                    <div className="text-center text-gray-600 py-8">
                       <p>No subscriptions found for this shop.</p>
                     </div>
                   ) : (
@@ -185,7 +185,7 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
               {/* Actions */}
               <div className="bg-white rounded-lg shadow-sm">
                 <div className="p-6 border-b border-gray-200">
-                  <h2 className="text-xl font-semibold">Actions</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">Actions</h2>
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">

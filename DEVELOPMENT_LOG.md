@@ -62,6 +62,27 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 **Next Steps**: Test the integration end-to-end and verify that the LightningSubscription form properly detects wallet connection state.
 
+### User Prompt: Fix Text Color Issues in Shop Dashboard
+**Time**: Current session  
+**Request**: Fix unreadable white text in shop dashboard - specifically "Shop Information", "Subscription History", and "Actions" headings and content.
+
+**Actions Taken**:
+- Identified text color issues in shop dashboard where headings and content were appearing in white/light gray against white background
+- Fixed text colors in `src/app/shops/[shopId]/page.tsx` by adding explicit `text-gray-900` classes to headings and content
+- Fixed text colors in `src/app/shops/page.tsx` (main shops dashboard) by adding explicit `text-gray-900` classes to headings
+- Fixed text colors in `src/app/infrastructure/page.tsx` (infrastructure dashboard) by adding explicit `text-gray-900` classes to headings
+- Updated all section headings: "Shop Information", "Subscription History", "Actions", "Overview", "My Shops", "Your BTCPay Servers"
+- Improved readability of shop names, server names, and other content text
+
+**Files Modified**:
+- `src/app/shops/[shopId]/page.tsx` - Added explicit text-gray-900 classes to all headings and content
+- `src/app/shops/page.tsx` - Added explicit text-gray-900 classes to section headings
+- `src/app/infrastructure/page.tsx` - Added explicit text-gray-900 classes to section headings
+
+**Result**: ✅ *Fixed text color issues across all dashboard pages. All headings and content should now be clearly readable with dark gray text on white backgrounds.*
+
+**Next Steps**: Test the changes in browser to confirm text readability is improved.
+
 ### User Prompt: Git Push with Development Log Update and Status Comment
 **Time**: End of session  
 **Request**: Update development log file, then git push with comment mentioning that subscription works with WebLN but not native NWC, and lots of bugs to continue solving.
