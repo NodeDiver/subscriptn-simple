@@ -83,6 +83,36 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 **Next Steps**: Test the changes in browser to confirm text readability is improved.
 
+### User Prompt: Fix BTCPay Server Duplicate Prevention Logic
+**Time**: Current session  
+**Request**: Prevent users from adding duplicate BTCPay Servers - only one user can own a specific server (based on host_url), and users cannot add the same server twice.
+
+**Actions Taken**:
+- **Database Cleanup**: Successfully cleaned database by removing all shops (17), subscriptions (1), and subscription history
+- **Server Ownership Logic**: Implemented unique server ownership based on host_url
+- **Duplicate Prevention**: Added checks in server creation API to prevent:
+  - Same user adding the same host_url twice
+  - Different users claiming the same host_url
+- **Database Constraints**: Added unique index on host_url for data integrity
+- **Error Handling**: Added proper error messages for duplicate attempts
+- **Server Management**: Added DELETE endpoint for server owners to remove ownership
+
+**Files Modified**:
+- `src/app/api/servers/route.ts` - Added duplicate prevention logic and DELETE endpoint
+- `src/lib/database.ts` - Added unique index on host_url
+
+**Technical Implementation**:
+- **Application Logic**: Check existing server by host_url before creation
+- **Database Constraint**: Unique index prevents duplicate host_url entries
+- **Error Messages**: 
+  - "You already own a server with this host URL" (400)
+  - "This server is already owned by another user" (409)
+- **Server Removal**: Owners can delete their servers via DELETE /api/servers?id=X
+
+**Result**: ✅ *BTCPay Server ownership is now properly managed with duplicate prevention and removal capabilities.*
+
+**Next Steps**: Test the duplicate prevention logic by attempting to add the same server multiple times.
+
 ### User Prompt: Git Push with Development Log Update and Status Comment
 **Time**: End of session  
 **Request**: Update development log file, then git push with comment mentioning that subscription works with WebLN but not native NWC, and lots of bugs to continue solving.

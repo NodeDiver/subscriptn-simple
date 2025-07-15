@@ -33,6 +33,9 @@ export async function getDatabase(): Promise<Database> {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (provider_id) REFERENCES users (id)
     );
+    
+    -- Add unique constraint on host_url only if it doesn't exist
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_servers_host_url ON servers (host_url);
 
     CREATE TABLE IF NOT EXISTS shops (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
