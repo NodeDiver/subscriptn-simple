@@ -38,6 +38,32 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
     }
   };
 
+  // Handle remove shop
+  const handleRemoveShop = async (shopId: number) => {
+    const warningMessage = `Are you sure you want to remove this shop?\n\n⚠️ WARNING: This will also:\n• Cancel all active subscriptions\n• Stop recurring payments to the BTCPay Server owner\n• Permanently delete all subscription history\n\nThis action cannot be undone.`;
+    
+    if (!confirm(warningMessage)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/shops?id=${shopId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Redirect to shops dashboard
+        window.location.href = '/shops';
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to remove shop');
+      }
+    } catch (error) {
+      console.error('Error removing shop:', error);
+      alert('Failed to remove shop');
+    }
+  };
+
   useEffect(() => {
     const fetchShopData = async () => {
       try {
@@ -189,8 +215,16 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
-                    <button className="w-full px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors">
-                      Cancel Subscription
+                    {subscriptions.length > 0 && subscriptions.some((sub: any) => sub.status === 'active') && (
+                      <button className="w-full px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors">
+                        Cancel Subscription
+                      </button>
+                    )}
+                    <button 
+                      onClick={() => handleRemoveShop(shop.id)}
+                      className="w-full px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                    >
+                      Remove Shop
                     </button>
                   </div>
                 </div>

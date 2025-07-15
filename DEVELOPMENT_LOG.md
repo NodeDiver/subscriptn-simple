@@ -113,6 +113,49 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 **Next Steps**: Test the duplicate prevention logic by attempting to add the same server multiple times.
 
+### User Prompt: Implement Shop and Subscription Duplicate Prevention Logic
+**Time**: Current session  
+**Request**: Prevent duplicate shops and subscriptions - implement unique ownership and prevent multiple active subscriptions per shop.
+
+**Actions Taken**:
+- **Database Schema Updates**: Added unique constraints for shops and subscriptions
+  - Unique index on `(name, server_id)` for shops (prevents duplicate shop names per server)
+  - Unique index on `shop_id` for active subscriptions (prevents multiple active subscriptions per shop)
+- **Shop Duplicate Prevention**: Added logic in shop creation API to prevent:
+  - Same user adding the same shop name on the same server
+  - Different users claiming the same shop name on the same server
+- **Subscription Duplicate Prevention**: Added logic in subscription creation API to prevent:
+  - Multiple active subscriptions per shop
+  - Clear error message when attempting to create duplicate subscription
+- **Shop Removal Functionality**: Added DELETE endpoint for shops with:
+  - Cascade deletion of related subscriptions and subscription history
+  - Warning message about stopping recurring payments
+  - Proper cleanup of all related data
+- **UI Enhancements**: Added "Remove Shop" button to shop dashboard with:
+  - Comprehensive warning about payment cancellation
+  - Confirmation dialog before removal
+  - Redirect to shops dashboard after successful removal
+
+**Files Modified**:
+- `src/lib/database.ts` - Added unique indexes for shops and subscriptions
+- `src/app/api/shops/route.ts` - Added duplicate prevention logic and DELETE endpoint
+- `src/app/api/subscriptions/route.ts` - Added duplicate prevention logic for subscriptions
+- `src/app/shops/[shopId]/page.tsx` - Added shop removal functionality with warning
+
+**Technical Implementation**:
+- **Shop Uniqueness**: Based on `shop_name + server_id` combination
+- **Subscription Uniqueness**: One active subscription per shop
+- **Error Messages**:
+  - "You already own a shop with this name on this server" (400)
+  - "This shop is already owned by another user" (409)
+  - "This shop already has an active subscription" (409)
+- **Shop Removal**: DELETE /api/shops?id=X with cascade deletion
+- **Warning System**: Comprehensive warning about payment cancellation
+
+**Result**: ✅ *Shop and subscription duplicate prevention is now fully implemented with proper ownership management and removal capabilities.*
+
+**Next Steps**: Test the duplicate prevention logic by attempting to create duplicate shops and subscriptions.
+
 ### User Prompt: Git Push with Development Log Update and Status Comment
 **Time**: End of session  
 **Request**: Update development log file, then git push with comment mentioning that subscription works with WebLN but not native NWC, and lots of bugs to continue solving.

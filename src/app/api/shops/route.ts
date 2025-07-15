@@ -67,6 +67,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });
     }
 
+    // Check if this shop name already exists on this server
+    const existingShop = await db.get(
+      'SELECT id, owner_id FROM shops WHERE name = ? AND server_id = ?',
+      [name, serverId]
+    );
+
+    if (existingShop) {
+      // Check if the current user already owns this shop
+      if (existingShop.owner_id === user.id) {
+        return NextResponse.json(
+          { error: 'You already own a shop with this name on this server' },
+          { status: 400 }
+        );
+      } else {
+        // Another user owns this shop
+        return NextResponse.json(
+          { error: 'This shop is already owned by another user' },
+          { status: 409 }
+        );
+      }
+    }
+
+    // No existing shop with this name on this server, create new one
     const result = await db.run(
       'INSERT INTO shops (name, lightning_address, server_id, owner_id) VALUES (?, ?, ?, ?)',
       [name, lightningAddress || null, serverId, user.id]
@@ -88,6 +111,59 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ shop: newShop }, { status: 201 });
   } catch (error) {
     console.error('Create shop error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const userId = request.cookies.get('user_id')?.value;
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    }
+
+    const user = await getUserById(parseInt(userId));
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const shopId = searchParams.get('id');
+
+    if (!shopId) {
+      return NextResponse.json({ error: 'Shop ID is required' }, { status: 400 });
+    }
+
+    const db = await getDatabase();
+    
+    // Check if the shop exists and is owned by the current user
+    const shop = await db.get(
+      'SELECT id, name FROM shops WHERE id = ? AND owner_id = ?',
+      [shopId, user.id]
+    );
+
+    if (!shop) {
+      return NextResponse.json({ error: 'Shop not found or not owned by you' }, { status: 404 });
+    }
+
+    // Delete related subscriptions first (cascade delete)
+    await db.run('DELETE FROM subscriptions WHERE shop_id = ?', [shopId]);
+    
+    // Delete related subscription history
+    await db.run(`
+      DELETE FROM subscription_history 
+      WHERE subscription_id IN (SELECT id FROM subscriptions WHERE shop_id = ?)
+    `, [shopId]);
+
+    // Delete the shop
+    await db.run('DELETE FROM shops WHERE id = ?', [shopId]);
+
+    return NextResponse.json({ 
+      message: 'Shop removed successfully. All related subscriptions and payments have been cancelled.' 
+    });
+  } catch (error) {
+    console.error('Delete shop error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

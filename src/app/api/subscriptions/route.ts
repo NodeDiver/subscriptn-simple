@@ -73,6 +73,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
     }
 
+    // Check if this shop already has an active subscription
+    const existingSubscription = await db.get(
+      'SELECT id, status FROM subscriptions WHERE shop_id = ? AND status = ?',
+      [shopId, 'active']
+    );
+
+    if (existingSubscription) {
+      return NextResponse.json(
+        { error: 'This shop already has an active subscription. Please cancel the existing subscription before creating a new one.' },
+        { status: 409 }
+      );
+    }
+
+    // No active subscription exists for this shop, create new one
     const result = await db.run(
       'INSERT INTO subscriptions (shop_id, amount_sats, interval) VALUES (?, ?, ?)',
       [shopId, amountSats, interval]

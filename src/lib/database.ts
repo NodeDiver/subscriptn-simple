@@ -48,6 +48,9 @@ export async function getDatabase(): Promise<Database> {
       FOREIGN KEY (server_id) REFERENCES servers (id),
       FOREIGN KEY (owner_id) REFERENCES users (id)
     );
+    
+    -- Add unique constraint on shop name + server combination
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_shops_name_server ON shops (name, server_id);
 
     CREATE TABLE IF NOT EXISTS subscriptions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,6 +61,9 @@ export async function getDatabase(): Promise<Database> {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (shop_id) REFERENCES shops (id)
     );
+    
+    -- Add unique constraint on active subscriptions per shop
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_subscriptions_active_shop ON subscriptions (shop_id) WHERE status = 'active';
 
     CREATE TABLE IF NOT EXISTS subscription_history (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
