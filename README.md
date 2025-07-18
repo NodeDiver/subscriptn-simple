@@ -1,6 +1,6 @@
 <!-- Project Logo/Banner -->
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" alt="SubscriptN Logo" width="120" />
+  <img src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" alt="SubscriptN Logo" width="220" />
 </p>
 
 # SubscriptN
@@ -25,7 +25,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 - 🎨 Modern, responsive UI (dark mode ready!)
 - 💳 **Direct Lightning address integration** for invoice generation
 
-  <img width="1138" height="683" alt="image" src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" />
+
 
 
 ## Getting Started
