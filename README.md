@@ -46,8 +46,12 @@ npm run dev
 > 🧙‍♂️ **Fun Fact:** This project was built during the Geyser Hackathon 2025!
 
 ## Screenshots
-![Dashboard Screenshot](public/screenshot-dashboard.png)
-![Connect Wallet Modal](public/screenshot-modal.png)
+
+
+<img src="https://github.com/user-attachments/assets/fbf407aa-dc1c-408a-a66c-07a3eea2071b" alt="SubscriptN Logo" width="420" />
+<img src="https://github.com/user-attachments/assets/94d7703d-9309-4457-83aa-8d3fd11e3b31" alt="SubscriptN Logo" width="420" />
+
+
 
 ## Installation & Setup
 
