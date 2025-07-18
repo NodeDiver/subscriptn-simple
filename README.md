@@ -1,6 +1,6 @@
 <!-- Project Logo/Banner -->
 <p align="center">
-  <img src="[public/file.svg](https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d)" alt="SubscriptN Logo" width="120" />
+  <img src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" alt="SubscriptN Logo" width="120" />
 </p>
 
 # SubscriptN
