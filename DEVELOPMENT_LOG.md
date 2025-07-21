@@ -27,6 +27,107 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
+## Session: 2025-07-15
+
+### User Prompt: Start Week 4 - Update README Logbook and Address Technical Debt
+**Time**: Start of Week 4 session  
+**Request**: Start Week 4 by updating the README.md logbook to reflect current week and previous work status, then address technical debt.
+
+**Actions Taken**:
+- **Step 1**: Updated README.md logbook structure:
+  - Changed Week 3 from "Current Week" to completed status
+  - Added new Week 4 Summary (Current Week) section
+  - Created detailed Week 4 session entry for 2025-07-15
+  - Fixed Week 1 section by moving 2025-07-12 Bitcoin Connect entry to Week 3 where it belongs
+- **Step 2**: Documented technical debt priorities:
+  - Identified Next.js API route async/await errors as immediate priority
+  - Analyzed terminal logs showing persistent errors in dynamic routes
+  - Set clear technical priorities for Week 4 development
+
+**Files Modified**:
+- `README.md` - Updated logbook structure and added Week 4 session entry
+
+**Result**: ✅ Week 4 development session properly documented with clear technical priorities identified.
+
+**Next Steps**: Fix the API route async/await issues and continue with remaining NWC integration features.
+
+### User Prompt: Fix Next.js API Route Async/Await Errors
+**Time**: Current session  
+**Request**: Fix the persistent Next.js API route errors related to `params.shopId` not being awaited in Next.js 15+.
+
+**Actions Taken**:
+- **Step 1**: Identified all affected API route files:
+  - `src/app/api/shops/[shopId]/route.ts`
+  - `src/app/api/shops/[shopId]/subscriptions/route.ts`
+  - `src/app/api/subscriptions/[subscriptionId]/cancel/route.ts`
+  - `src/app/api/subscriptions/[subscriptionId]/history/route.ts`
+  - `src/app/api/servers/[serverId]/route.ts`
+  - `src/app/api/servers/[serverId]/shops/route.ts`
+- **Step 2**: Updated all dynamic route handlers to properly await params:
+  - Changed TypeScript types from `{ params: { id: string } }` to `{ params: Promise<{ id: string }> }`
+  - Added proper destructuring with `const { id } = await params;` in all handlers
+  - Updated all `params.id` references to use destructured variables
+- **Step 3**: Committed changes and updated documentation
+
+**Files Modified**:
+- `src/app/api/shops/[shopId]/route.ts` - Fixed async/await for shopId parameter
+- `src/app/api/shops/[shopId]/subscriptions/route.ts` - Fixed async/await for shopId parameter
+- `src/app/api/subscriptions/[subscriptionId]/cancel/route.ts` - Fixed async/await for subscriptionId parameter
+- `src/app/api/subscriptions/[subscriptionId]/history/route.ts` - Fixed async/await for subscriptionId parameter
+- `src/app/api/servers/[serverId]/route.ts` - Fixed async/await for serverId parameter
+- `src/app/api/servers/[serverId]/shops/route.ts` - Fixed async/await for serverId parameter
+- `README.md` - Updated Week 4 session entry to document the fixes
+
+**Technical Changes**:
+- **Before**: `{ params: { shopId: string } }` with direct `params.shopId` usage
+- **After**: `{ params: Promise<{ shopId: string }> }` with `const { shopId } = await params;`
+- **Benefits**: 
+  - ✅ Clean console logs (no more error messages)
+  - ✅ Next.js 15+ compliance
+  - ✅ Future-proof implementation
+  - ✅ Better performance and race condition prevention
+
+**Result**: ✅ All Next.js API route async/await errors resolved. Console logs are now clean and the application follows Next.js 15+ best practices.
+
+**Next Steps**: Test the wallet connection flow and continue with remaining NWC integration features.
+
+### User Prompt: Review Library Versions and Update Dependencies
+**Time**: Current session  
+**Request**: Review possible outdated libraries, check Next.js version, and assess if updates would cause conflicts.
+
+**Actions Taken**:
+- **Step 1**: Analyzed current dependency versions:
+  - Next.js: 15.3.4 (latest available: 15.4.2)
+  - React: 19.1.0 (latest stable)
+  - @getalby/bitcoin-connect: 3.8.2 (latest stable)
+  - @getalby/lightning-tools: 5.2.0 (latest stable)
+- **Step 2**: Identified outdated packages:
+  - Next.js: 15.3.4 → 15.4.2 (patch update)
+  - eslint-config-next: 15.3.4 → 15.4.2 (patch update)
+  - eslint: 9.30.1 → 9.31.0 (patch update)
+  - @types/node: 20.19.4 → 24.0.15 (major update)
+- **Step 3**: Assessed update risks and recommendations
+
+**Analysis Results**:
+- ✅ **Next.js**: Safe to update (15.3.4 → 15.4.2 is patch version)
+- ✅ **React**: Already at latest stable version (19.1.0)
+- ✅ **Bitcoin Connect**: Already at latest stable version (3.8.2)
+- ✅ **Lightning Tools**: Already at latest stable version (5.2.0)
+- ⚠️ **@types/node**: Major version update (20 → 24) - requires careful testing
+- ✅ **eslint packages**: Safe patch updates
+
+**Recommendation**: 
+- Update Next.js and eslint packages (safe patch updates)
+- Hold off on @types/node major update until after testing
+- All core dependencies are already up-to-date
+
+**Files Modified**:
+- None (analysis only)
+
+**Result**: ✅ Library version analysis complete. Most dependencies are current, with only minor updates recommended.
+
+**Next Steps**: Consider updating Next.js to 15.4.2 for latest patches and improvements.
+
 ## Session: 2025-07-12
 
 ### User Prompt: Replace Custom BitcoinConnectContext with Official @getalby/bitcoin-connect API
