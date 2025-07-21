@@ -5,12 +5,13 @@ import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function ShopView({ params }: { params: { shopId: string } }) {
+export default function ShopView({ params }: { params: Promise<{ shopId: string }> }) {
   const { user, logout } = useAuth();
   const [shop, setShop] = useState<any>(null);
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [shopId, setShopId] = useState<string | null>(null);
 
   const handleLogout = async () => {
     await logout();
@@ -67,15 +68,18 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
   useEffect(() => {
     const fetchShopData = async () => {
       try {
+        const { shopId: resolvedShopId } = await params;
+        setShopId(resolvedShopId);
+        
         // Fetch shop details
-        const shopResponse = await fetch(`/api/shops/${params.shopId}`);
+        const shopResponse = await fetch(`/api/shops/${resolvedShopId}`);
         if (shopResponse.ok) {
           const shopData = await shopResponse.json();
           setShop(shopData.shop);
         }
 
         // Fetch subscriptions for this shop
-        const subscriptionsResponse = await fetch(`/api/shops/${params.shopId}/subscriptions`);
+        const subscriptionsResponse = await fetch(`/api/shops/${resolvedShopId}/subscriptions`);
         if (subscriptionsResponse.ok) {
           const subscriptionsData = await subscriptionsResponse.json();
           setSubscriptions(subscriptionsData.subscriptions);
@@ -89,7 +93,7 @@ export default function ShopView({ params }: { params: { shopId: string } }) {
     };
 
     fetchShopData();
-  }, [params.shopId]);
+  }, [params]);
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50 p-6">

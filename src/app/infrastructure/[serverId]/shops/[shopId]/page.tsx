@@ -1,15 +1,28 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function ShopDashboard({ params }: { params: { serverId: string; shopId: string } }) {
+export default function ShopDashboard({ params }: { params: Promise<{ serverId: string; shopId: string }> }) {
+  const [serverId, setServerId] = useState<string | null>(null);
+  const [shopId, setShopId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setServerId(resolvedParams.serverId);
+      setShopId(resolvedParams.shopId);
+    };
+    resolveParams();
+  }, [params]);
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center mb-8">
           <Link 
-            href={`/infrastructure/${params.serverId}`}
+            href={`/infrastructure/${serverId}`}
             className="text-blue-600 hover:text-blue-800 mr-4"
           >
             ← Back to Server

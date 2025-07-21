@@ -5,12 +5,13 @@ import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function ServerDashboard({ params }: { params: { serverId: string } }) {
+export default function ServerDashboard({ params }: { params: Promise<{ serverId: string }> }) {
   const { user, logout } = useAuth();
   const [server, setServer] = useState<any>(null);
   const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [serverId, setServerId] = useState<string | null>(null);
 
   const handleLogout = async () => {
     await logout();
@@ -19,15 +20,18 @@ export default function ServerDashboard({ params }: { params: { serverId: string
   useEffect(() => {
     const fetchServerData = async () => {
       try {
+        const { serverId: resolvedServerId } = await params;
+        setServerId(resolvedServerId);
+        
         // Fetch server details
-        const serverResponse = await fetch(`/api/servers/${params.serverId}`);
+        const serverResponse = await fetch(`/api/servers/${resolvedServerId}`);
         if (serverResponse.ok) {
           const serverData = await serverResponse.json();
           setServer(serverData.server);
         }
 
         // Fetch shops for this server
-        const shopsResponse = await fetch(`/api/servers/${params.serverId}/shops`);
+        const shopsResponse = await fetch(`/api/servers/${resolvedServerId}/shops`);
         if (shopsResponse.ok) {
           const shopsData = await shopsResponse.json();
           setShops(shopsData.shops);
@@ -41,9 +45,9 @@ export default function ServerDashboard({ params }: { params: { serverId: string
     };
 
     fetchServerData();
-  }, [params.serverId]);
+  }, [params]);
   return (
-    <ProtectedRoute requiredRole="provider">
+    <ProtectedRoute>
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -131,7 +135,7 @@ export default function ServerDashboard({ params }: { params: { serverId: string
                               {shop.subscription_status}
                             </span>
                             <Link
-                              href={`/infrastructure/${params.serverId}/shops/${shop.id}`}
+                              href={`/infrastructure/${serverId}/shops/${shop.id}`}
                               className="text-blue-600 hover:text-blue-800 font-medium"
                             >
                               View Details →
