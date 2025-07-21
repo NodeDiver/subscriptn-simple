@@ -5,11 +5,9 @@ import {
   onConnected, 
   onDisconnected, 
   onConnecting, 
-  isConnected, 
   launchModal, 
   closeModal, 
   disconnect as bcDisconnect,
-  getConnectorConfig,
   init as bcInit
 } from '@getalby/bitcoin-connect';
 import { lightningService } from '@/lib/lightning';
@@ -23,24 +21,21 @@ interface BitcoinConnectContextType {
   closeModal: () => void;
   modalOpen: boolean;
   error: string | undefined;
-  info: any;
+  info: { provider?: unknown } | null;
   isWebLNAvailable: boolean;
 }
 
 const BitcoinConnectContext = createContext<BitcoinConnectContextType | undefined>(undefined);
 
 export function BitcoinConnectProvider({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
   const [isConnectedState, setIsConnectedState] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  const [info, setInfo] = useState<any>(null);
+  const [info, setInfo] = useState<{ provider?: unknown } | null>(null);
   const [isWebLNAvailable, setIsWebLNAvailable] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    
     // Initialize Bitcoin Connect
     bcInit({
       appName: 'SubscriptN',
@@ -160,12 +155,13 @@ export function useBitcoinConnectContext() {
 export function useBitcoinConnectHandlers() {
   const context = useBitcoinConnectContext();
   return {
-    onConnect: (info: any) => {
-      context.info = info;
+    onConnect: (info: { provider?: unknown }) => {
       // The onConnected callback will handle the rest
+      console.log('Connect handler called with:', info);
     },
     onDisconnect: () => {
       // The onDisconnected callback will handle the rest
+      console.log('Disconnect handler called');
     }
   };
 } 

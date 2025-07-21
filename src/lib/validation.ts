@@ -3,7 +3,7 @@ export interface ValidationRule {
   minLength?: number;
   maxLength?: number;
   pattern?: RegExp;
-  custom?: (value: any) => string | null;
+  custom?: (value: unknown) => string | null;
 }
 
 export interface ValidationResult {
@@ -11,7 +11,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export function validateField(value: any, rules: ValidationRule): ValidationResult {
+export function validateField(value: unknown, rules: ValidationRule): ValidationResult {
   const errors: string[] = [];
 
   // Required validation
@@ -56,7 +56,7 @@ export function validateField(value: any, rules: ValidationRule): ValidationResu
   };
 }
 
-export function validateForm(data: Record<string, any>, schema: Record<string, ValidationRule>): ValidationResult {
+export function validateForm(data: Record<string, unknown>, schema: Record<string, ValidationRule>): ValidationResult {
   const errors: string[] = [];
   let isValid = true;
 
@@ -90,8 +90,8 @@ export const VALIDATION_RULES = {
   shopName: { required: true, minLength: 2, maxLength: 100 },
   amount: { 
     required: true, 
-    custom: (value: any) => {
-      const num = parseInt(value);
+    custom: (value: unknown) => {
+      const num = parseInt(String(value));
       if (isNaN(num) || num <= 0) {
         return 'Amount must be a positive number';
       }

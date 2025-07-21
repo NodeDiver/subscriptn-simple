@@ -4,9 +4,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 
+interface Shop {
+  id: number;
+  name: string;
+  server_name: string;
+  subscription_status: string;
+}
+
 export default function ShopsDashboard() {
-  const { user } = useAuth();
-  const [shops, setShops] = useState([]);
+  const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -49,13 +55,13 @@ export default function ShopsDashboard() {
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
-                  {shops.filter((shop: any) => shop.subscription_status === 'active').length}
+                  {shops.filter((shop) => shop.subscription_status === 'active').length}
                 </div>
                 <div className="text-gray-600">Active Subscriptions</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-600">
-                  {shops.filter((shop: any) => shop.subscription_status === 'inactive').length}
+                  {shops.filter((shop) => shop.subscription_status === 'inactive').length}
                 </div>
                 <div className="text-gray-600">Lapsed Subscriptions</div>
               </div>
@@ -85,7 +91,7 @@ export default function ShopsDashboard() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {shops.map((shop: any) => (
+                  {shops.map((shop) => (
                     <div key={shop.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                       <div>
                         <h3 className="font-medium text-gray-900">{shop.name}</h3>

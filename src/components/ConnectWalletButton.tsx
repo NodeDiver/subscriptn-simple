@@ -11,26 +11,31 @@ declare module 'react' {
 }
 
 interface ConnectWalletButtonProps {
-  onConnect?: (info: any) => void;
+  onConnect?: (info: { provider?: unknown }) => void;
   onDisconnect?: () => void;
 }
 
 export default function ConnectWalletButton({ onConnect, onDisconnect }: ConnectWalletButtonProps) {
-  const buttonRef = useRef<any>(null);
-  const lastElRef = useRef<any>(null);
+  const buttonRef = useRef<HTMLElement | null>(null);
+  const lastElRef = useRef<HTMLElement | null>(null);
 
   // Callback ref to always attach listeners to the latest element
-  const setButtonRef = useCallback((node: any) => {
+  const setButtonRef = useCallback((node: HTMLElement | null) => {
     if (lastElRef.current && lastElRef.current !== node) {
       // Clean up listeners from previous node
-      lastElRef.current.removeEventListener('bc:connected', lastElRef.current._handleConnected);
-      lastElRef.current.removeEventListener('bc:disconnected', lastElRef.current._handleDisconnected);
+      const prevNode = lastElRef.current as HTMLElement & { _handleConnected?: EventListener; _handleDisconnected?: EventListener };
+      if (prevNode._handleConnected) {
+        prevNode.removeEventListener('bc:connected', prevNode._handleConnected);
+      }
+      if (prevNode._handleDisconnected) {
+        prevNode.removeEventListener('bc:disconnected', prevNode._handleDisconnected);
+      }
     }
     if (node) {
       // Attach listeners to new node
-      const handleConnected = (e: any) => {
+      const handleConnected = (e: Event) => {
         console.log('bc:connected event fired from bc-button', e);
-        if (onConnect) onConnect(e.detail);
+        if (onConnect) onConnect((e as CustomEvent).detail);
       };
       const handleDisconnected = () => {
         console.log('bc:disconnected event fired from bc-button');
@@ -39,8 +44,8 @@ export default function ConnectWalletButton({ onConnect, onDisconnect }: Connect
       node.addEventListener('bc:connected', handleConnected);
       node.addEventListener('bc:disconnected', handleDisconnected);
       // Store handlers for cleanup
-      node._handleConnected = handleConnected;
-      node._handleDisconnected = handleDisconnected;
+      (node as HTMLElement & { _handleConnected?: EventListener; _handleDisconnected?: EventListener })._handleConnected = handleConnected;
+      (node as HTMLElement & { _handleConnected?: EventListener; _handleDisconnected?: EventListener })._handleDisconnected = handleDisconnected;
     }
     buttonRef.current = node;
     lastElRef.current = node;
