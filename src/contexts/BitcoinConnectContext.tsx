@@ -47,8 +47,8 @@ export function BitcoinConnectProvider({ children }: { children: React.ReactNode
       appIcon: 'https://your-app-icon.com/icon.png', // Optional
     });
 
-    // Check initial connection state
-    setIsConnectedState(isConnected());
+    // Check initial connection state - start as disconnected, let events update it
+    setIsConnectedState(false);
     setIsWebLNAvailable(typeof window !== 'undefined' && !!window.webln);
 
     // Set up event listeners
