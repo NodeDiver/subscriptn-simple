@@ -4,9 +4,10 @@ import { getUserById } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { subscriptionId: string } }
+  { params }: { params: Promise<{ subscriptionId: string }> }
 ) {
   try {
+    const { subscriptionId } = await params;
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -26,7 +27,7 @@ export async function GET(
         FROM subscriptions sub
         JOIN shops s ON sub.shop_id = s.id
         WHERE sub.id = ? AND s.owner_id = ?
-      `, [params.subscriptionId, user.id]);
+      `, [subscriptionId, user.id]);
 
     if (!subscription) {
       return NextResponse.json({ error: 'Subscription not found' }, { status: 404 });
@@ -38,7 +39,7 @@ export async function GET(
       FROM subscription_history
       WHERE subscription_id = ?
       ORDER BY created_at DESC
-    `, [params.subscriptionId]);
+    `, [subscriptionId]);
 
     return NextResponse.json({ history });
   } catch (error) {

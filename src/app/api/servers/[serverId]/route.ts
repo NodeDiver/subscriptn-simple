@@ -4,9 +4,10 @@ import { getUserById } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { serverId: string } }
+  { params }: { params: Promise<{ serverId: string }> }
 ) {
   try {
+    const { serverId } = await params;
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -21,7 +22,7 @@ export async function GET(
     const db = await getDatabase();
     const server = await db.get(
       'SELECT id, name, host_url, created_at FROM servers WHERE id = ? AND provider_id = ?',
-      [params.serverId, user.id]
+      [serverId, user.id]
     );
 
     if (!server) {

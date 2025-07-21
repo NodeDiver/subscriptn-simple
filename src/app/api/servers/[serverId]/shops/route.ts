@@ -4,9 +4,10 @@ import { getUserById } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { serverId: string } }
+  { params }: { params: Promise<{ serverId: string }> }
 ) {
   try {
+    const { serverId } = await params;
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -23,7 +24,7 @@ export async function GET(
     // Verify the server belongs to the provider
     const server = await db.get(
       'SELECT id FROM servers WHERE id = ? AND provider_id = ?',
-      [params.serverId, user.id]
+      [serverId, user.id]
     );
 
     if (!server) {
@@ -43,7 +44,7 @@ export async function GET(
       JOIN users u ON s.owner_id = u.id
       WHERE s.server_id = ?
       ORDER BY s.created_at DESC
-    `, [params.serverId]);
+    `, [serverId]);
 
     return NextResponse.json({ shops });
   } catch (error) {

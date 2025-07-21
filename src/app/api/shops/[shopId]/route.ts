@@ -4,9 +4,10 @@ import { getUserById } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { shopId: string } }
+  { params }: { params: Promise<{ shopId: string }> }
 ) {
   try {
+    const { shopId } = await params;
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -32,7 +33,7 @@ export async function GET(
         FROM shops s
         JOIN servers sr ON s.server_id = sr.id
         WHERE s.id = ? AND s.owner_id = ?
-      `, [params.shopId, user.id]);
+      `, [shopId, user.id]);
 
     if (!shop) {
       return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
