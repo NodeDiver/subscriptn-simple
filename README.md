@@ -156,9 +156,17 @@ cp env.example .env.local
   - 🐛 *Identified multiple API route errors related to `params.shopId` not being awaited in Next.js 15+.*
   - 📋 *Updated README.md logbook to reflect current week and previous work status.*
   - 🔍 *Analyzed terminal logs showing persistent errors in `/api/shops/[shopId]` and `/api/shops/[shopId]/subscriptions` routes.*
-  - 📝 *Documented the need to fix async/await issues in dynamic route parameters.*
-- **Result**: *Week 4 development session initiated with clear technical priorities identified.*
-- **Plan for next session**: *Fix the API route async/await issues and continue with remaining NWC integration features.*
+  - 🔧 *Fixed all dynamic route handlers to properly await params:*
+    - `src/app/api/shops/[shopId]/route.ts`
+    - `src/app/api/shops/[shopId]/subscriptions/route.ts`
+    - `src/app/api/subscriptions/[subscriptionId]/cancel/route.ts`
+    - `src/app/api/subscriptions/[subscriptionId]/history/route.ts`
+    - `src/app/api/servers/[serverId]/route.ts`
+    - `src/app/api/servers/[serverId]/shops/route.ts`
+  - ✅ *Updated TypeScript types from `{ params: { id: string } }` to `{ params: Promise<{ id: string }> }`*
+  - ✅ *Added proper destructuring with `const { id } = await params;` in all handlers*
+- **Result**: *All Next.js API route async/await errors resolved. Console logs are now clean and the application follows Next.js 15+ best practices.*
+- **Plan for next session**: *Test the wallet connection flow and continue with remaining NWC integration features.*
 
 </details>
 
