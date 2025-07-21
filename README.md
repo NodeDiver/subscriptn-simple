@@ -124,7 +124,11 @@ cp env.example .env.local
 - Use HTTPS in production environments
 - Implement proper session management and CSRF protection
 
-## Week 3 Summary (Current Week)
+## Week 4 Summary (Current Week)
+- 🐛 *Started Week 4 by addressing Next.js API route errors and technical debt*
+- 🔧 *Planning to fix params.shopId async/await issues in dynamic routes*
+
+## Week 3 Summary
 - 🔧 *Fixed critical UI/UX issues and implemented comprehensive duplicate prevention*
 - 🛡️ *Added robust database constraints and ownership management*
 - ⚡ *Enhanced Bitcoin Connect integration with official API*
@@ -144,10 +148,36 @@ cp env.example .env.local
 - 🧩 *Began Bitcoin Connect integration (modal, context, TopBar); modal theming WIP*
 
 <details>
-<summary>Week 3: 2025-07-08 to 2025-07-12 (Current Week)</summary>
+<summary>Week 4: 2025-07-15 to 2025-07-19 (Current Week)</summary>
+
+### 2025-07-15: Week 4 Kickoff - Technical Debt & API Route Fixes
+- **Action**: *Started Week 4 by addressing Next.js API route errors and technical debt from previous sessions.*
+- **Updates**:
+  - 🐛 *Identified multiple API route errors related to `params.shopId` not being awaited in Next.js 15+.*
+  - 📋 *Updated README.md logbook to reflect current week and previous work status.*
+  - 🔍 *Analyzed terminal logs showing persistent errors in `/api/shops/[shopId]` and `/api/shops/[shopId]/subscriptions` routes.*
+  - 📝 *Documented the need to fix async/await issues in dynamic route parameters.*
+- **Result**: *Week 4 development session initiated with clear technical priorities identified.*
+- **Plan for next session**: *Fix the API route async/await issues and continue with remaining NWC integration features.*
+
+</details>
+
+<details>
+<summary>Week 3: 2025-07-08 to 2025-07-12</summary>
+
+### 2025-07-12: Bitcoin Connect Integration - Official API Implementation
+- **Action**: *Replaced custom Bitcoin Connect context with official @getalby/bitcoin-connect API integration for reliable wallet connection state management.*
+- **Updates**:
+  - ⚡ *Migrated from custom event listeners to official Bitcoin Connect API functions (`onConnected`, `onDisconnected`, `onConnecting`, `isConnected`, `launchModal`, etc.).*
+  - 🔧 *Updated `BitcoinConnectContext.tsx` to use official API instead of custom web component event handling.*
+  - 🎯 *Removed dependency on `@getalby/bitcoin-connect-react` package (which didn't provide the expected Provider/hook).*
+  - 🧹 *Cleaned up custom modal implementation and event listener logic.*
+  - ✅ *Maintained existing `ConnectWalletButton` component using official `<bc-button>` web component.*
+- **Result**: *Wallet connection state should now properly sync across all components using the official Bitcoin Connect API. The context now uses reliable event subscriptions instead of DOM event listeners.*
+- **Plan for next session**: *Test the wallet connection flow end-to-end and verify that the LightningSubscription form properly detects wallet connection state.*
 
 ### 2025-07-12: Comprehensive Duplicate Prevention & System Optimization
-- **Action**: 🛡️ *Implemented comprehensive duplicate prevention for shops and subscriptions, fixed UI issues, and performed major database cleanup.*
+- **Action**: *Implemented comprehensive duplicate prevention for shops and subscriptions, fixed UI issues, and performed major database cleanup.*
 - **Updates**:
   - 🔧 *Fixed text color issues in shop dashboard (unreadable white text on white background).*
   - 🛡️ *Added database constraints: unique indexes for shops (name+server_id) and subscriptions (active per shop).*
@@ -156,8 +186,8 @@ cp env.example .env.local
   - 🗑️ *Added shop removal functionality with cascade deletion and payment cancellation warnings.*
   - 🧹 *Performed major database cleanup: removed all existing shops (17), subscriptions (1), and subscription history.*
   - ⚡ *Enhanced Bitcoin Connect integration using official API instead of custom implementation.*
-- **Result**: ✅ *System now has robust duplicate prevention, proper ownership management, and clean database state. All UI issues resolved.*
-- **Plan for next session**: 📝 *Continue testing and refining the duplicate prevention logic, and work on remaining NWC integration features.*
+- **Result**: *System now has robust duplicate prevention, proper ownership management, and clean database state. All UI issues resolved.*
+- **Plan for next session**: *Continue testing and refining the duplicate prevention logic, and work on remaining NWC integration features.*
 
 ### 2025-07-11: Research & Analysis Day
 - **Action**: 📚 *Spent the day reading and analyzing other hackathon projects to understand different NWC perspectives and approaches.*
@@ -271,17 +301,6 @@ cp env.example .env.local
 
 <details>
 <summary>Week 1: 2025-07-01 to 2025-07-05</summary>
-
-### 2025-07-12: Bitcoin Connect Integration - Official API Implementation
-- **Action**: *Replaced custom Bitcoin Connect context with official @getalby/bitcoin-connect API integration for reliable wallet connection state management.*
-- **Updates**:
-  - ⚡ *Migrated from custom event listeners to official Bitcoin Connect API functions (`onConnected`, `onDisconnected`, `onConnecting`, `isConnected`, `launchModal`, etc.).*
-  - 🔧 *Updated `BitcoinConnectContext.tsx` to use official API instead of custom web component event handling.*
-  - 🎯 *Removed dependency on `@getalby/bitcoin-connect-react` package (which didn't provide the expected Provider/hook).*
-  - 🧹 *Cleaned up custom modal implementation and event listener logic.*
-  - ✅ *Maintained existing `ConnectWalletButton` component using official `<bc-button>` web component.*
-- **Result**: *Wallet connection state should now properly sync across all components using the official Bitcoin Connect API. The context now uses reliable event subscriptions instead of DOM event listeners.*
-- **Plan for next session**: *Test the wallet connection flow end-to-end and verify that the LightningSubscription form properly detects wallet connection state.*
 
 ### 2025-07-09: Wallet Connection Debugging, UI/UX Improvements, and Next Steps
 - **Action**: *Debugged wallet connection sync between Bitcoin Connect web component and React context. Improved event listener logic and diagnostics in `ConnectWalletButton.tsx`.*
