@@ -98,155 +98,143 @@ export default function AddShop() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center mb-8">
-          <Link 
-            href="/shops"
-            className="text-blue-600 hover:text-blue-800 mr-4"
-          >
-            ← Back to My Shops
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Shop</h1>
-        </div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center mb-8">
+            <Link 
+              href="/shops"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mr-4"
+            >
+              ← Back to Dashboard
+            </Link>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add New Shop</h1>
+          </div>
 
-        {/* Form or LightningSubscription */}
-        {!showLightningSub ? (
-          <div className="bg-white rounded-lg shadow-sm p-8 space-y-6">
-            {/* 1) BTCPay Server selector */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Select BTCPay Server
-              </label>
-              <select
-                value={server}
-                onChange={(e) => setServer(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="btcpay.aceptabitcoin.com">
-                  btcpay.aceptabitcoin.com
-                </option>
-              </select>
-            </div>
-
-            {/* 2) Shop selector (tied to selected server) */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Select Shop
-              </label>
-              <select
-                value={shop}
-                onChange={(e) => setShop(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {stores.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* 3) Recipient Lightning Address */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Recipient Lightning Address
-              </label>
-              <input
-                type="text"
-                value={recipient}
-                onChange={(e) => setRecipient(e.target.value)}
-                className={`w-full border rounded-lg p-2 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.recipient ? 'border-red-300' : 'border-gray-300'
-                }`}
-              />
-              {errors.recipient && (
-                <p className="mt-1 text-sm text-red-600">{errors.recipient}</p>
-              )}
-            </div>
-
-            {/* 4) Amount slider */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Amount: {amount} sats/month
-              </label>
-              <input
-                type="range"
-                min={500}
-                max={21000}
-                step={500}
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg"
-              />
-              {amount === 500 && (
-                <p className="mt-1 text-sm text-gray-500">
-                  *Minimum recommended subscription amount.
-                </p>
-              )}
-            </div>
-
-            {/* 5) Timeframe buttons */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Timeframe
-              </label>
-              <div className="flex gap-2">
-                {[
-                  { label: "1 Week", value: "weekly" },
-                  { label: "1 Month", value: "monthly" },
-                  // Optionally, you can add quarterly if you update your DB schema
-                  // { label: "3 Months", value: "quarterly" },
-                  { label: "1 Year", value: "yearly" },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setTimeframe(opt.value)}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
-                      timeframe === opt.value
-                        ? "bg-blue-600 text-white"
-                        : "border border-gray-300 text-gray-900 hover:bg-gray-100"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+          {/* Main Content */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left Column - Shop Selection */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Shop Configuration</h2>
+              
+              {/* BTCPay Server Selection */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  BTCPay Server
+                </label>
+                <select
+                  value={server}
+                  onChange={(e) => setServer(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                >
+                  <option value="btcpay.aceptabitcoin.com">btcpay.aceptabitcoin.com</option>
+                </select>
               </div>
-            </div>
 
-            {/* 6) Comment input */}
-            <div>
-              <label className="block text-gray-700 mb-1">
-                Comment
-              </label>
-              <input
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+              {/* Shop Selection */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Select Shop
+                </label>
+                <select
+                  value={shop}
+                  onChange={(e) => setShop(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                >
+                  {stores.map((store) => (
+                    <option key={store.id} value={store.id}>
+                      {store.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            {/* 7) Subscribe button */}
-            <div className="flex justify-end space-x-4 pt-4">
-              <Link
-                href="/shops"
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </Link>
+              {/* Lightning Address */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Lightning Address (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={recipient}
+                  onChange={(e) => setRecipient(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                  placeholder="your@lightning.address"
+                />
+              </div>
+
+              {/* Subscribe Button */}
               <button
                 onClick={handleSubscribe}
-                disabled={loading}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading || !shop}
+                className="w-full bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {loading ? 'Creating Shop...' : 'Continue to Payment'}
+                {loading ? 'Creating Shop...' : 'Create Shop & Subscribe'}
               </button>
             </div>
+
+            {/* Right Column - Subscription Details */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Subscription Details</h2>
+              
+              {/* Amount */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Amount (sats)
+                </label>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                  min="1"
+                />
+              </div>
+
+              {/* Timeframe */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Timeframe
+                </label>
+                <select
+                  value={timeframe}
+                  onChange={(e) => setTimeframe(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                >
+                  <option value="30d">30 days</option>
+                  <option value="7d">7 days</option>
+                  <option value="1d">1 day</option>
+                </select>
+              </div>
+
+              {/* Comment */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Comment
+                </label>
+                <textarea
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                  rows={3}
+                  placeholder="Subscription comment..."
+                />
+              </div>
+
+              {/* Preview */}
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-md p-4">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview</h3>
+                <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                  <div><strong>Amount:</strong> {amount} sats</div>
+                  <div><strong>Timeframe:</strong> {timeframe}</div>
+                  <div><strong>Comment:</strong> {comment}</div>
+                </div>
+              </div>
+            </div>
           </div>
-        ) : (
-          createdShopId && (
+
+          {/* Lightning Subscription Modal */}
+          {showLightningSub && createdShopId && (
             <LightningSubscription
               shopId={createdShopId}
               amountSats={amount}
@@ -254,17 +242,16 @@ export default function AddShop() {
               recipientAddress={recipient}
               comment={comment}
               onSuccess={() => {
-                showToast('Subscription and payment successful!', 'success');
-                window.location.href = `/shops/${createdShopId}`;
+                setShowLightningSub(false);
+                setCreatedShopId(null);
               }}
               onCancel={() => {
                 setShowLightningSub(false);
                 setCreatedShopId(null);
               }}
             />
-          )
-        )}
-      </div>
+          )}
+        </div>
       </div>
     </ProtectedRoute>
   );

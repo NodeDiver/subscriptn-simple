@@ -46,25 +46,26 @@ export default function AddServer() {
       setLoading(false);
     }
   };
+  
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center mb-8">
           <Link 
             href="/infrastructure"
-            className="text-blue-600 hover:text-blue-800 mr-4"
+            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mr-4"
           >
             ← Back to Dashboard
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Add BTCPay Server</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add BTCPay Server</h1>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Server Name
               </label>
               <input
@@ -72,19 +73,19 @@ export default function AddServer() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.name ? 'border-red-300' : 'border-gray-300'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.name ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder="My BTCPay Server"
                 required
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="hostUrl" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="hostUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Host URL
               </label>
               <input
@@ -92,19 +93,19 @@ export default function AddServer() {
                 id="hostUrl"
                 value={hostUrl}
                 onChange={(e) => setHostUrl(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.hostUrl ? 'border-red-300' : 'border-gray-300'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.hostUrl ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder="https://your-btcpay-server.com"
                 required
               />
               {errors.hostUrl && (
-                <p className="mt-1 text-sm text-red-600">{errors.hostUrl}</p>
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.hostUrl}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 API Key
               </label>
               <input
@@ -112,31 +113,31 @@ export default function AddServer() {
                 id="apiKey"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.apiKey ? 'border-red-300' : 'border-gray-300'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.apiKey ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
-                placeholder="Your BTCPay API key"
+                placeholder="Your BTCPay Server API key"
                 required
               />
               {errors.apiKey && (
-                <p className="mt-1 text-sm text-red-600">{errors.apiKey}</p>
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.apiKey}</p>
               )}
             </div>
 
-            <div className="flex justify-end space-x-4">
-              <Link
-                href="/infrastructure"
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </Link>
+            <div className="flex gap-4">
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Adding Server...' : 'Add Server'}
               </button>
+              <Link
+                href="/infrastructure"
+                className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 transition-colors text-center"
+              >
+                Cancel
+              </Link>
             </div>
           </form>
         </div>
