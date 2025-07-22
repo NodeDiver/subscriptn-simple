@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubscriptN Color Palette Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+            background: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2D5A3D;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .color-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: #1E3A8A;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .color-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .color-swatch {
+            width: 100%;
+            height: 80px;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .color-info {
+            font-size: 0.9rem;
+        }
+        
+        .color-name {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+        
+        .color-hex {
+            font-family: monospace;
+            color: #6B7280;
+        }
+        
+        .gradient-section {
+            margin-top: 2rem;
+        }
+        
+        .gradient-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .gradient-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        
+        .dark-mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #2D5A3D;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        body.dark {
+            background: #111827;
+            color: #F9FAFB;
+        }
+        
+        body.dark .color-card,
+        body.dark .gradient-card {
+            background: #1F2937;
+            color: #F9FAFB;
+        }
+        
+        body.dark h1 {
+            color: #10B981;
+        }
+        
+        body.dark .section-title {
+            color: #3B82F6;
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    
+    <div class="container">
+        <h1>🎨 SubscriptN Color Palette</h1>
+        
+        <div class="color-section">
+            <h2 class="section-title">Primary Colors</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #2D5A3D;">Forest Green</div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Green</div>
+                        <div class="color-hex">#2D5A3D</div>
+                        <div>BTCPay Server inspired</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #1E3A8A;">Navy Blue</div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Blue</div>
+                        <div class="color-hex">#1E3A8A</div>
+                        <div>Bitcoin Connect inspired</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #0F766E;">Teal</div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Teal</div>
+                        <div class="color-hex">#0F766E</div>
+                        <div>Unique accent color</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="color-section">
+            <h2 class="section-title">Secondary Colors</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #86EFAC; color: #1F2937;">Light Green</div>
+                    <div class="color-info">
+                        <div class="color-name">Light Green</div>
+                        <div class="color-hex">#86EFAC</div>
+                        <div>Soft mint for highlights</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #93C5FD; color: #1F2937;">Light Blue</div>
+                    <div class="color-info">
+                        <div class="color-name">Light Blue</div>
+                        <div class="color-hex">#93C5FD</div>
+                        <div>Soft sky blue for highlights</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #6B7280;">Neutral Gray</div>
+                    <div class="color-info">
+                        <div class="color-name">Neutral Gray</div>
+                        <div class="color-hex">#6B7280</div>
+                        <div>Balanced neutral color</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gradient-section">
+            <h2 class="section-title">Gradients</h2>
+            
+            <div class="gradient-card">
+                <div class="gradient-preview" style="background: linear-gradient(135deg, #2D5A3D 0%, #1E3A8A 100%);"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary Gradient</div>
+                    <div class="color-hex">#2D5A3D → #1E3A8A</div>
+                    <div>Combines green and blue</div>
+                </div>
+            </div>
+            
+            <div class="gradient-card">
+                <div class="gradient-preview" style="background: linear-gradient(135deg, #0F766E 0%, #86EFAC 100%);"></div>
+                <div class="color-info">
+                    <div class="color-name">Accent Gradient</div>
+                    <div class="color-hex">#0F766E → #86EFAC</div>
+                    <div>Teal to light green</div>
+                </div>
+            </div>
+            
+            <div class="gradient-card">
+                <div class="gradient-preview" style="background: linear-gradient(135deg, #2D5A3D 0%, #0F766E 50%, #1E3A8A 100%);"></div>
+                <div class="color-info">
+                    <div class="color-name">Logo Gradient</div>
+                    <div class="color-hex">#2D5A3D → #0F766E → #1E3A8A</div>
+                    <div>All three primary colors</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
+    </script>
+</body>
+</html> 

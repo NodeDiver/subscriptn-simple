@@ -1,0 +1,135 @@
+{
+  "brand": {
+    "name": "SubscriptN",
+    "description": "Bitcoin subscription management platform - BTCPay Server & Bitcoin Connect inspired palette",
+    "version": "1.0.0",
+    "created": "2025-07-15"
+  },
+  "colors": {
+    "primary": {
+      "green": {
+        "light": "#2D5A3D",
+        "dark": "#10B981",
+        "description": "Deep forest green inspired by BTCPay Server"
+      },
+      "blue": {
+        "light": "#1E3A8A",
+        "dark": "#3B82F6",
+        "description": "Deep navy blue inspired by Bitcoin Connect"
+      },
+      "teal": {
+        "light": "#0F766E",
+        "dark": "#14B8A6",
+        "description": "Unique teal-green blend accent color"
+      }
+    },
+    "secondary": {
+      "lightGreen": {
+        "light": "#86EFAC",
+        "dark": "#34D399",
+        "description": "Soft mint green for highlights and accents"
+      },
+      "lightBlue": {
+        "light": "#93C5FD",
+        "dark": "#60A5FA",
+        "description": "Soft sky blue for highlights and accents"
+      },
+      "neutral": {
+        "light": "#6B7280",
+        "dark": "#9CA3AF",
+        "description": "Balanced neutral gray"
+      }
+    },
+    "background": {
+      "light": "#FFFFFF",
+      "dark": "#111827",
+      "description": "Main background color"
+    },
+    "surface": {
+      "light": "#F9FAFB",
+      "dark": "#1F2937",
+      "description": "Surface/card background color"
+    },
+    "text": {
+      "primary": {
+        "light": "#111827",
+        "dark": "#F9FAFB",
+        "description": "Primary text color"
+      },
+      "secondary": {
+        "light": "#6B7280",
+        "dark": "#9CA3AF",
+        "description": "Secondary text color"
+      },
+      "muted": {
+        "light": "#9CA3AF",
+        "dark": "#6B7280",
+        "description": "Muted text color"
+      }
+    },
+    "border": {
+      "light": "#E5E7EB",
+      "dark": "#374151",
+      "description": "Border color"
+    },
+    "success": {
+      "light": "#10B981",
+      "dark": "#34D399",
+      "description": "Success state color"
+    },
+    "warning": {
+      "light": "#F59E0B",
+      "dark": "#FBBF24",
+      "description": "Warning state color"
+    },
+    "error": {
+      "light": "#EF4444",
+      "dark": "#F87171",
+      "description": "Error state color"
+    }
+  },
+  "gradients": {
+    "primary": {
+      "light": "linear-gradient(135deg, #2D5A3D 0%, #1E3A8A 100%)",
+      "dark": "linear-gradient(135deg, #10B981 0%, #3B82F6 100%)",
+      "description": "Primary gradient combining green and blue"
+    },
+    "accent": {
+      "light": "linear-gradient(135deg, #0F766E 0%, #86EFAC 100%)",
+      "dark": "linear-gradient(135deg, #14B8A6 0%, #34D399 100%)",
+      "description": "Accent gradient with teal and light green"
+    },
+    "logo": {
+      "light": "linear-gradient(135deg, #2D5A3D 0%, #0F766E 50%, #1E3A8A 100%)",
+      "dark": "linear-gradient(135deg, #10B981 0%, #14B8A6 50%, #3B82F6 100%)",
+      "description": "Logo gradient with all three primary colors"
+    }
+  },
+  "usage": {
+    "buttons": {
+      "primary": "primary.green",
+      "secondary": "primary.blue",
+      "accent": "primary.teal"
+    },
+    "navigation": {
+      "active": "primary.green",
+      "hover": "primary.blue",
+      "background": "surface"
+    },
+    "cards": {
+      "background": "surface",
+      "border": "border"
+    },
+    "text": {
+      "headings": "text.primary",
+      "body": "text.primary",
+      "captions": "text.secondary"
+    }
+  },
+  "inspiration": {
+    "btcpayserver": "Green theme inspiration",
+    "bitcoinconnect": "Blue theme inspiration",
+    "uniqueness": "Statistically rare color combination",
+    "accessibility": "High contrast ratios for eye comfort"
+  }
+} 

@@ -1,57 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Bitcoin Connect Modal Text Visibility Fix */
+  bc-connect input,
+  bc-connect textarea,
+  bc-connect [contenteditable] {
+    @apply text-gray-900 dark:text-white bg-white dark:bg-gray-900;
+  }
+
+  bc-connect input::placeholder,
+  bc-connect textarea::placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  /* Ensure all text within bc-connect is visible */
+  bc-connect {
+    @apply text-gray-900 dark:text-white;
+  }
+
+  bc-connect * {
+    @apply text-inherit;
+  }
+
+  /* Specific fix for NWC connection string input */
+  bc-connect input[type="text"],
+  bc-connect input[type="password"],
+  bc-connect input[type="url"] {
+    @apply text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600;
+  }
 }
 
-/* Bitcoin Connect Modal Text Visibility Fix */
-bc-connect input,
-bc-connect textarea,
-bc-connect [contenteditable] {
-  color: #171717 !important;
-  background-color: #ffffff !important;
-}
-
-bc-connect input::placeholder,
-bc-connect textarea::placeholder {
-  color: #6b7280 !important;
-}
-
-/* Ensure all text within bc-connect is visible */
-bc-connect {
-  color: #171717 !important;
-}
-
-bc-connect * {
-  color: inherit !important;
-}
-
-/* Specific fix for NWC connection string input */
-bc-connect input[type="text"],
-bc-connect input[type="password"],
-bc-connect input[type="url"] {
-  color: #171717 !important;
-  background-color: #ffffff !important;
-  border-color: #d1d5db !important;
+@layer utilities {
+  /* Dark mode transition for all elements */
+  * {
+    @apply transition-colors duration-300;
+  }
 }
