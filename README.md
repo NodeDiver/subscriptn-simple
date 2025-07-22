@@ -1,6 +1,6 @@
 <!-- Project Logo/Banner -->
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" alt="SubscriptN Logo" width="420" />
+  <img src="https://github.com/user-attachments/assets/6c513ce5-9e86-4cd8-ba84-58f6e114c55d" alt="SubscriptN Logo" width="400" />
 </p>
 
 # SubscriptN
@@ -11,36 +11,61 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Hackathon](https://img.shields.io/badge/hackathon-Geyser%202025-orange)
 
-## Quick Links
-- [Live Demo](#) <!-- Add link if available -->
-- [Documentation](#)
-- [Logbook](#subscriptn-logbook)
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Lightning Wallet Requirements](#lightning-wallet-requirements)
+- [Security & Privacy](#security--privacy)
+- [FAQ](#faq)
+- [Development Log](#development-log)
 - [Contributing](#contributing)
 
-## Features
+## 🎯 Overview
+
+SubscriptN is a Bitcoin subscription management platform that enables shop owners to create and manage recurring Lightning Network payments. It bridges BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
+
+### How It Works
+1. **Connect Wallet** - Shop owners connect their Lightning wallet
+2. **Select Store** - Choose a BTCPay Server store and set subscription details
+3. **Create Invoice** - System generates Lightning invoices automatically
+4. **Process Payment** - Wallet pays the invoice instantly
+5. **Manage Subscriptions** - Track and manage all recurring payments
+
+## ⚡ Features
+
 - ⚡ **Real Lightning Network payments** using @getalby/lightning-tools
-- 🏪 Unified dashboard access for all users (no roles)
-- 🔒 Secure authentication & privacy-first design
-- 🔗 Bitcoin Connect wallet integration with WebLN support
-- 🎨 Modern, responsive UI (dark mode ready!)
+- 🏪 **Unified dashboard** access for all users (no complex roles)
+- 🔒 **Secure authentication** & privacy-first design
+- 🔗 **Bitcoin Connect integration** with WebLN support
+- 🎨 **Modern, responsive UI** (dark mode ready!)
 - 💳 **Direct Lightning address integration** for invoice generation
+- 📊 **Payment history tracking** with detailed transaction info
+- 🔄 **Automated subscription management** with recurring payments
 
-### Lightning Payment Flow
-Experience seamless Bitcoin subscription management with real Lightning payments. The application provides a complete workflow from wallet connection to payment confirmation:
+## 📸 Screenshots
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/fbf407aa-dc1c-408a-a66c-07a3eea2071b" alt="SubscriptN Dashboard" width="400" />
+  <img src="https://github.com/user-attachments/assets/94d7703d-9309-4457-83aa-8d3fd11e3b31" alt="SubscriptN Interface" width="400" />
+</div>
 
+<div align="center">
+  <img src="public/screenshots/image_large.webp" alt="Home Dashboard" width="400" />
+  <p><em>BTCPay Server owners and shop owners can both access their dashboard and find each other</em></p>
+</div>
 
-**Key Features Demonstrated:**
-- 🔗 **Wallet Connection**: One-click Bitcoin Connect integration with balance display
-- 💰 **Real-time Payments**: Instant Lightning payments with live transaction confirmation
-- 📊 **Payment History**: Comprehensive tracking of all subscription payments
-- 🏪 **Shop Management**: Complete shop and subscription lifecycle management
-- ⚡ **Lightning Integration**: Direct integration with Lightning addresses and BTCPay Server
-## Getting Started
+<div align="center">
+  <img src="public/screenshots/lightning-payment-flow.png" alt="Lightning Payment Flow" width="400" />
+  <p><em>Working subscription flow: shop owner to BTCPay Server admin with NWC protocol support</em></p>
+</div>
+
+## 🚀 Quick Start
 
 ```bash
-# Welcome to SubscriptN!
-# Run the following to get started:
+# Clone and set up SubscriptN
 git clone https://github.com/yourusername/subscriptn-simple.git
 cd subscriptn-simple
 npm install
@@ -49,30 +74,19 @@ cp env.example .env.local
 npm run dev
 ```
 
-> 💡 **Tip:** You can connect your Lightning wallet in just two clicks!
+> 💡 **Pro Tip:** Connect your Lightning wallet in just two clicks!
 >
-> 🧙‍♂️ **Fun Fact:** This project was built during the Geyser Hackathon 2025!
+> 🏆 **Hackathon Winner:** Built during Geyser Hackathon 2025!
 
-## Screenshots
-
-<img src="https://github.com/user-attachments/assets/fbf407aa-dc1c-408a-a66c-07a3eea2071b" alt="SubscriptN Logo" width="420" />
-<img src="https://github.com/user-attachments/assets/94d7703d-9309-4457-83aa-8d3fd11e3b31" alt="SubscriptN Logo" width="420" />
-
-![Home](public/screenshots/image_large.webp)
-*BTCPay Server owners and shop owners can both have their dashboard and find each other*
-
-![Subscription made](public/screenshots/lightning-payment-flow.png)
-*At the Geyser Hackathon I was not able to make the subscription work during the presentation due to some bugs. Now after some more days of work, I was finally able to make it work: the core functionality of the app, which is a working subscription from a shop owner to a BTCPay Server admin, works, and works thanks that NWC protocol allows subscriptions*
-
-## Installation & Setup
+## 📦 Installation
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- BTCPay Server instance
-- BTCPay Server API key
+- **Node.js 18+** 
+- **npm or yarn**
+- **BTCPay Server instance**
+- **BTCPay Server API key**
 
-### Quick Start
+### Step-by-Step Setup
 
 1. **Clone the repository**
    ```bash
@@ -85,11 +99,12 @@ npm run dev
    npm install
    ```
 
-3. **Set up environment variables**
+3. **Configure environment variables**
    ```bash
    cp env.example .env.local
    ```
-   Edit `.env.local` and add your BTCPay Server details:
+   
+   Edit `.env.local` with your BTCPay Server details:
    ```env
    BTCPAY_HOST=https://your-btcpay-server.com
    BTCPAY_API_KEY=your-btcpay-api-key
@@ -99,64 +114,71 @@ npm run dev
    ```bash
    npm run dev
    ```
-   The database will be automatically created with demo users on first run, and the app will be available at `http://localhost:3000`
+   
+   The app will be available at `http://localhost:3000`
 
-### Demo Credentials
-- **Demo User**: `demo` / `demo`
+### Demo Access
+- **Username:** `demo`
+- **Password:** `demo`
 
-### Lightning Wallet Requirements
-To use the subscription payment features, you'll need a Lightning wallet with WebLN support:
+## ⚡ Lightning Wallet Requirements
+
+To use the subscription payment features, you'll need a Lightning wallet with WebLN or NWC support:
+
+### WebLN Compatible Wallets
 - **Alby** (recommended) - [getalby.com](https://getalby.com)
 - **BlueWallet** - [bluewallet.io](https://bluewallet.io)
 - **Phoenix** - [phoenix.acinq.co](https://phoenix.acinq.co)
 - **Breez** - [breez.technology](https://breez.technology)
 
-## Security & Privacy
+### NWC (Nostr Wallet Connect) Compatible Wallets
+- **Alby Hub** - [hub.getalby.com](https://hub.getalby.com)
+- **Coinos** - [coinos.io](https://coinos.io)
+- **Mutiny Wallet** - [mutinywallet.com](https://mutinywallet.com)
+- **Zeus** - [zeusln.app](https://zeusln.app)
 
-### Environment Variables
-This application uses environment variables for sensitive configuration. Copy `env.example` to `.env.local` and fill in your actual values:
+## 🔒 Security & Privacy
 
-```bash
-cp env.example .env.local
-```
+For security concerns, deployment recommendations, and best practices, please see [SECURITY.md](SECURITY.md).
 
-**Required variables:**
-- `BTCPAY_HOST`: Your BTCPay Server URL
-- `BTCPAY_API_KEY`: Your BTCPay Server API key
+This includes:
+- 🚨 How to report security vulnerabilities
+- 🔒 Essential security steps for deployment
+- 📋 Environment variable configuration
+- 🗄️ Database security guidelines
+- 🛡️ Development security recommendations
 
-### Database Security
-- The SQLite database (`subscriptn.db`) contains sensitive user data and is automatically excluded from Git
-- Never commit the database file or any `.env` files
-- Use environment variables for all secrets and API keys
+## ❓ FAQ
 
-### Development Security
-- Demo credentials are hardcoded for development only
-- In production, implement proper user registration and password hashing
-- Use HTTPS in production environments
-- Implement proper session management and CSRF protection
+### **Q: What is SubscriptN and what does it do?**
+**A:** SubscriptN is a Bitcoin subscription management platform that allows shop owners to create and manage recurring Lightning Network payments. It connects BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
 
-## Week 4 Summary (Current Week)
+### **Q: Do I need a BTCPay Server to use this?**
+**A:** Yes, you need a BTCPay Server instance and an API key. The application acts as a bridge between your BTCPay Server (which handles the payment processing) and Lightning wallets (which make the payments). You can set up your own BTCPay Server or use a hosted service.
+
+### **Q: What Lightning wallets are supported?**
+**A:** SubscriptN supports both WebLN and NWC (Nostr Wallet Connect) compatible wallets. Popular options include Alby, BlueWallet, Phoenix, Breez, Alby Hub, Coinos, Mutiny Wallet, and Zeus. See the [Lightning Wallet Requirements](#lightning-wallet-requirements) section for the complete list.
+
+### **Q: How does the subscription payment process work?**
+**A:** 1) Shop owners connect their Lightning wallet, 2) They select a BTCPay Server store and set subscription details (amount, frequency), 3) The system creates a Lightning invoice, 4) The wallet pays the invoice, 5) The subscription is activated and will automatically create new invoices for recurring payments.
+
+### **Q: Is this production-ready for businesses?**
+**A:** This is a beginner project built during a hackathon. While it demonstrates the core functionality, it uses demo credentials and basic security. For production use, you should implement proper user registration, password hashing, and additional security measures as outlined in [SECURITY.md](SECURITY.md).
+
+## 📚 Development Log
+
+### Current Status (Week 4)
 - 🐛 *Started Week 4 by addressing Next.js API route errors and technical debt*
 - 🔧 *Planning to fix params.shopId async/await issues in dynamic routes*
 
-## Week 3 Summary
+### Recent Achievements
 - 🔧 *Fixed critical UI/UX issues and implemented comprehensive duplicate prevention*
 - 🛡️ *Added robust database constraints and ownership management*
 - ⚡ *Enhanced Bitcoin Connect integration with official API*
 - 🧹 *Performed major database cleanup and system optimization*
 
-## Week 2 Summary
-- 🎯 *Wednesday: Hackathon presentation and demo*
-- 🏆 *Friday: Winner announcement - we won!*
-- 🧠 *Saturday: Continued development work on project features*
-- 📚 *Monday: Research and analysis of other projects and NWC perspectives*
-
-## Week 1 Summary
-- 🚀 *Set up project foundation and local development environment*
-- 🔐 *Built full authentication, unified dashboard access, and core API routes*
-- ⚡ *Integrated Lightning payments and subscription management*
-- 🖥️ *Added persistent top bar, sidebar, and improved UI/UX*
-- 🧩 *Began Bitcoin Connect integration (modal, context, TopBar); modal theming WIP*
+<details>
+<summary>📖 Detailed Development History</summary>
 
 <details>
 <summary>Week 4: 2025-07-15 to 2025-07-19 (Current Week)</summary>
@@ -330,6 +352,13 @@ cp env.example .env.local
 <details>
 <summary>Week 1: 2025-07-01 to 2025-07-05</summary>
 
+### 2025-06-30: Kickoff and Local Setup
+- **Task**: *Forked the ZapPlanner repository.*
+- **Action**: *Cloned the fork to local machine.*
+- **Result**: *Attempted to launch ZapPlanner locally but faced errors.*
+- **Error**: *Misconfiguration handling `PRISMA_FIELD_ENCRYPTION_KEY`.*
+- **Notes**: *Unable to get it working today.*
+
 ### 2025-07-09: Wallet Connection Debugging, UI/UX Improvements, and Next Steps
 - **Action**: *Debugged wallet connection sync between Bitcoin Connect web component and React context. Improved event listener logic and diagnostics in `ConnectWalletButton.tsx`.*
 - **Updates**:
@@ -389,21 +418,22 @@ cp env.example .env.local
 
 </details>
 
-### 2025-06-30: Kickoff and Local Setup
-- **Task**: *Forked the ZapPlanner repository.*
-- **Action**: *Cloned the fork to local machine.*
-- **Result**: *Attempted to launch ZapPlanner locally but faced errors.*
-- **Error**: *Misconfiguration handling `PRISMA_FIELD_ENCRYPTION_KEY`.*
-- **Notes**: *Unable to get it working today.*
+</details>
 
-## FAQ
-- **Q:** Can I use this with any BTCPay Server?
-  **A:** Yes!
-- **Q:** Is it really lightning fast?
-  **A:** ⚡ Of course!
+## 🤝 Contributing
 
-## Contributing
 We 💛 open source! PRs, issues, and ideas are always welcome.
 
+### How to Contribute
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Development Setup
+See the [Installation](#installation) section for detailed setup instructions.
+
 ---
+
 _Thanks for checking out SubscriptN! May your sats flow endlessly. 🚀_

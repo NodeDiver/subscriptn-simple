@@ -23,11 +23,26 @@ If you find a security vulnerability in SubscriptN, please report it privately:
 5. **Regular updates** - Keep dependencies updated
 
 ### Environment Variables
-Make sure these are properly set:
+This application uses environment variables for sensitive configuration. Copy `env.example` to `.env.local` and fill in your actual values:
+
 ```bash
-BTCPAY_HOST=https://your-btcpay-server.com
-BTCPAY_API_KEY=your_secure_api_key
+cp env.example .env.local
 ```
+
+**Required variables:**
+- `BTCPAY_HOST`: Your BTCPay Server URL
+- `BTCPAY_API_KEY`: Your BTCPay Server API key
+
+### Database Security
+- The SQLite database (`subscriptn.db`) contains sensitive user data and is automatically excluded from Git
+- Never commit the database file or any `.env` files
+- Use environment variables for all secrets and API keys
+
+### Development Security
+- Demo credentials are hardcoded for development only
+- In production, implement proper user registration and password hashing
+- Use HTTPS in production environments
+- Implement proper session management and CSRF protection
 
 ### Basic Security Checklist
 - [ ] Changed default demo credentials
