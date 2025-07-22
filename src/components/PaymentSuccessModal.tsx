@@ -85,10 +85,10 @@ export default function PaymentSuccessModal({ isOpen, onClose, paymentDetails }:
           </button>
         </div>
 
-        {/* Lightning Network Info */}
+        {/* lightning network Info */}
         <div className="mt-4 text-center">
           <p className="text-xs text-gray-500">
-            Powered by the Lightning Network ⚡
+            Powered by the lightning network ⚡
           </p>
         </div>
       </div>

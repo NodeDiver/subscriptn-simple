@@ -25,7 +25,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ## 🎯 Overview
 
-SubscriptN is a Bitcoin subscription management platform that enables shop owners to create and manage recurring Lightning Network payments. It bridges BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
+SubscriptN is a Bitcoin subscription management platform that enables shop owners to create and manage recurring lightning network payments. It bridges BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
 
 ### How It Works
 1. **Connect Wallet** - Shop owners connect their Lightning wallet
@@ -36,7 +36,7 @@ SubscriptN is a Bitcoin subscription management platform that enables shop owner
 
 ## ⚡ Features
 
-- ⚡ **Real Lightning Network payments** using @getalby/lightning-tools
+- ⚡ **Real lightning network payments** using @getalby/lightning-tools
 - 🏪 **Unified dashboard** access for all users (no complex roles)
 - 🔒 **Secure authentication** & privacy-first design
 - 🔗 **Bitcoin Connect integration** with WebLN support
@@ -151,7 +151,7 @@ This includes:
 ## ❓ FAQ
 
 ### **Q: What is SubscriptN and what does it do?**
-**A:** SubscriptN is a Bitcoin subscription management platform that allows shop owners to create and manage recurring Lightning Network payments. It connects BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
+**A:** SubscriptN is a Bitcoin subscription management platform that allows shop owners to create and manage recurring lightning network payments. It connects BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
 
 ### **Q: Do I need a BTCPay Server to use this?**
 **A:** Yes, you need a BTCPay Server instance and an API key. The application acts as a bridge between your BTCPay Server (which handles the payment processing) and Lightning wallets (which make the payments). You can set up your own BTCPay Server or use a hosted service.
@@ -287,7 +287,7 @@ This includes:
 - **Updates**:
   - 🏆 *SubscriptN was announced as the winner!*
   - 🎯 *Project recognized for innovative Bitcoin subscription management approach.*
-  - ⚡ *Lightning Network integration and NWC implementation praised.*
+  - ⚡ *lightning network integration and NWC implementation praised.*
   - 🎊 *Celebrated victory with the team.*
 - **Result**: *Hackathon victory achieved! Project validated by industry experts.*
 - **Plan for next session**: *Continue development with renewed motivation and feedback.*
@@ -296,7 +296,7 @@ This includes:
 - **Action**: *Presented SubscriptN at the Geyser Hackathon 2025.*
 - **Updates**:
   - 🎤 *Delivered presentation and demo of SubscriptN.*
-  - 🖥️ *Showcased Lightning Network integration and subscription management features.*
+  - 🖥️ *Showcased lightning network integration and subscription management features.*
   - 💬 *Answered questions from judges and other participants.*
   - 🎯 *Demonstrated the innovative approach to Bitcoin subscription management.*
 - **Result**: *Successful presentation completed.*
@@ -308,7 +308,7 @@ This includes:
   - 🎯 *Polished presentation materials and demo.*
   - 🔧 *Final bug fixes and feature improvements.*
   - 📝 *Prepared presentation script and technical documentation.*
-  - ⚡ *Ensured Lightning Network integration was working properly.*
+  - ⚡ *Ensured lightning network integration was working properly.*
 - **Result**: *Ready for presentation.*
 - **Plan for next session**: *Present and showcase SubscriptN.*
 
@@ -319,7 +319,7 @@ This includes:
   - 🔧 *Comprehensive bug fixes and system optimization for production readiness.*
   - 🎨 *Extensive UI/UX improvements and polish for professional presentation.*
   - 📝 *Complete documentation and presentation preparation with technical details.*
-  - ⚡ *Enhanced Lightning Network integration with improved error handling.*
+  - ⚡ *Enhanced lightning network integration with improved error handling.*
   - 🛡️ *Added security improvements and validation throughout the application.*
   - 🗄️ *Database optimizations and query improvements for better performance.*
 - **Result**: *Significant progress made with production-ready features and polished presentation materials.*
@@ -332,7 +332,7 @@ This includes:
   - 📝 *Created detailed project timeline and development milestones.*
   - 🧩 *Planned technical implementation approach with modern web technologies.*
   - 🎨 *Designed user experience and interface concepts with focus on usability.*
-  - ⚡ *Outlined Lightning Network and NWC integration strategy.*
+  - ⚡ *Outlined lightning network and NWC integration strategy.*
   - 🗄️ *Designed database schema and API architecture.*
 - **Result**: *Comprehensive project plan established with clear technical direction.*
 - **Plan for next session**: *Begin intensive development sprint.*
@@ -342,8 +342,8 @@ This includes:
 - **Updates**:
   - 📝 *Registered SubscriptN for the competition.*
   - 🎯 *Defined project vision and goals for Bitcoin subscription management.*
-  - 🧠 *Planned innovative approach to subscription management with Lightning Network.*
-  - ⚡ *Outlined Lightning Network and NWC integration strategy.*
+  - 🧠 *Planned innovative approach to subscription management with lightning network.*
+  - ⚡ *Outlined lightning network and NWC integration strategy.*
 - **Result**: *Successfully registered with clear project vision.*
 - **Plan for next session**: *Begin detailed project planning and development.*
 

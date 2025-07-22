@@ -85,7 +85,22 @@ export default function LandingPage() {
         {/* Footer Info */}
         <div className="text-center mt-12 text-gray-500">
           <p className="text-sm">
-            Powered by BTCPay Server and Lightning Network
+            Powered by{' '}
+            <a href="https://btcpayserver.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+              BTCPay Server
+            </a>
+            ,{' '}
+            <a href="https://lightning.network" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+              lightning network
+            </a>
+            ,{' '}
+            <a href="https://nwc.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+              NWC
+            </a>
+            , and{' '}
+            <a href="https://bitcoin-connect.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+              Bitcoin Connect
+            </a>
           </p>
         </div>
       </div>

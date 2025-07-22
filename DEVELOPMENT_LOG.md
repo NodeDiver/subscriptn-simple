@@ -27,6 +27,211 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
+## Session: 2025-07-15 (Evening)
+
+### User Prompt: Change Security Email and Simplify SECURITY.md
+**Time**: Evening session  
+**Request**: Change the security email to nodediver@proton.me and make the SECURITY.md file super small and concise, removing all incident response timelines and enterprise features to make it appropriate for a beginner project.
+
+**Actions Taken**:
+- **Step 1**: Updated SECURITY.md with nodediver@proton.me contact email
+- **Step 2**: Completely restructured SECURITY.md to be beginner-project appropriate:
+  - Removed all enterprise features (incident response timelines, security metrics, penetration testing results)
+  - Removed complex compliance documentation and security operations procedures
+  - Kept only essential security information: contact email, basic deployment recommendations, environment variables
+  - Added beginner-friendly security checklist and appropriate disclaimers
+  - Made the file concise and practical for a small project
+- **Step 3**: Maintained proper security practices while acknowledging the project's beginner status
+
+**Files Modified**:
+- `SECURITY.md` - Complete restructure for beginner project appropriateness
+
+**Content Changes**:
+- **Removed**: Incident response timelines, security metrics, penetration testing, compliance docs
+- **Kept**: Security contact, basic deployment steps, environment variables, security checklist
+- **Added**: Beginner project disclaimer and practical recommendations
+- **Result**: File reduced from 100+ lines to 41 lines while maintaining essential security information
+
+**Result**: ✅ SECURITY.md now appropriately sized for a beginner project with essential security information and nodediver@proton.me contact.
+
+### User Prompt: Update README Lightning Wallet Requirements with NWC Support
+**Time**: Current session  
+**Request**: Add NWC compatible wallets to the Lightning Wallet Requirements section, including Alby Hub and Coinos links.
+
+**Actions Taken**:
+- **Step 1**: Enhanced Lightning Wallet Requirements section in README.md:
+  - Organized wallets into two clear categories: "WebLN Compatible Wallets" and "NWC Compatible Wallets"
+  - Added proper headers to distinguish between the two protocols
+  - Maintained existing WebLN wallets while adding new NWC options
+- **Step 2**: Added NWC compatible wallets:
+  - **Alby Hub** - [hub.getalby.com](https://hub.getalby.com)
+  - **Coinos** - [coinos.io](https://coinos.io)
+  - **Mutiny Wallet** - [mutinywallet.com](https://mutinywallet.com)
+  - **Zeus** - [zeusln.app](https://zeusln.app)
+
+**Files Modified**:
+- `README.md` - Enhanced Lightning Wallet Requirements section with NWC support
+
+**Content Added**:
+- **New subsection**: "NWC (Nostr Wallet Connect) Compatible Wallets"
+- **4 new wallet options**: Alby Hub, Coinos, Mutiny Wallet, Zeus
+- **Better organization**: Clear separation between WebLN and NWC protocols
+- **Comprehensive coverage**: Now supports both current WebLN and future NWC integration
+
+**Result**: ✅ README now provides comprehensive wallet options for both WebLN and NWC protocols, giving users clear guidance on supported wallets.
+
+### User Prompt: Consolidate Security Information and Simplify README
+**Time**: Current session  
+**Request**: Move security details from README Security & Privacy section to SECURITY.md and replace the section with a simple reference to check SECURITY.md.
+
+**Actions Taken**:
+- **Step 1**: Enhanced SECURITY.md with missing details from README:
+  - Added comprehensive environment variable setup instructions
+  - Included database security guidelines
+  - Added development security recommendations
+  - Maintained beginner-friendly tone
+- **Step 2**: Simplified README Security & Privacy section:
+  - Replaced lengthy security section with clean reference to SECURITY.md
+  - Added bullet-point summary of what's covered in SECURITY.md
+  - Kept it concise and focused on directing users to proper documentation
+
+**Files Modified**:
+- `SECURITY.md` - Added comprehensive security details from README
+- `README.md` - Simplified Security & Privacy section to reference SECURITY.md
+
+**Content Changes**:
+- **SECURITY.md**: Now single source of truth for all security information
+- **README.md**: Clean reference section that directs to SECURITY.md
+- **No duplication**: Security information consolidated in one place
+- **Better organization**: Users directed to proper security documentation
+
+**Result**: ✅ Security information properly consolidated with SECURITY.md as single source of truth, README simplified and more focused.
+
+### User Prompt: Reorganize README Development History
+**Time**: Current session  
+**Request**: Move the standalone "2025-06-30: Kickoff and Local Setup" section into the Week 1 accordion to keep it hidden and organized.
+
+**Actions Taken**:
+- **Step 1**: Removed standalone "2025-06-30: Kickoff and Local Setup" section from bottom of README
+- **Step 2**: Added the section as the first entry in the Week 1 accordion
+- **Step 3**: Maintained all original content and formatting
+- **Step 4**: Improved README organization by keeping development history properly structured
+
+**Files Modified**:
+- `README.md` - Reorganized development history structure
+
+**Content Changes**:
+- **Removed**: Standalone kickoff section from bottom of README
+- **Added**: Kickoff section as first entry in Week 1 accordion
+- **Maintained**: All original content and formatting
+- **Improved**: Better organization and readability
+
+**Result**: ✅ Development history properly organized with kickoff information hidden in Week 1 accordion, keeping main README cleaner.
+
+### User Prompt: Improve FAQ Section and Make It Comprehensive
+**Time**: Current session  
+**Request**: Replace the joke FAQ questions with a comprehensive list of 5 questions that could be asked by someone who doesn't know the project.
+
+**Actions Taken**:
+- **Step 1**: Completely replaced joke FAQ with comprehensive questions:
+  - "What is SubscriptN and what does it do?" - Explains core purpose and value proposition
+  - "Do I need a BTCPay Server to use this?" - Clarifies technical requirements
+  - "What Lightning wallets are supported?" - Lists supported wallet types with reference to detailed section
+  - "How does the subscription payment process work?" - Step-by-step explanation of user flow
+  - "Is this production-ready for businesses?" - Sets appropriate expectations and directs to security docs
+- **Step 2**: Made FAQ actually helpful for new users trying to understand the project
+- **Step 3**: Set proper expectations about project maturity level
+- **Step 4**: Used professional tone that matches rest of README
+
+**Files Modified**:
+- `README.md` - Completely replaced FAQ section with comprehensive questions
+
+**Content Changes**:
+- **Removed**: Joke questions about BTCPay Server and lightning speed
+- **Added**: 5 comprehensive questions covering project purpose, requirements, wallets, process, and readiness
+- **Improved**: Actually helpful for new users understanding the project
+- **Professional**: Tone matches rest of README and sets proper expectations
+
+**Result**: ✅ FAQ now serves its intended purpose of helping users quickly understand what SubscriptN is and whether it meets their needs.
+
+### User Prompt: Restructure README for Better Organization and Readability
+**Time**: Current session  
+**Request**: Adjust the index, improve overall readability, reorganize sections, and make all images consistent in size.
+
+**Actions Taken**:
+- **Step 1**: Added comprehensive Table of Contents with clickable links to all sections
+- **Step 2**: Completely restructured README flow:
+  - Added Overview section with clear explanation and "How It Works" steps
+  - Reorganized sections in logical order: Overview → Features → Screenshots → Quick Start → Installation → etc.
+  - Added consistent emoji usage for visual hierarchy
+- **Step 3**: Standardized all images to 400px width (down from 420px for consistency)
+- **Step 4**: Improved image presentation:
+  - Centered layout with proper HTML structure
+  - Better alt text and descriptions
+  - Professional presentation with proper spacing
+- **Step 5**: Enhanced readability:
+  - Clear section headers with emojis
+  - Better formatting with proper spacing and typography
+  - Step-by-step instructions that are easy to follow
+  - Professional tone throughout
+- **Step 6**: Reorganized Development Log section:
+  - Current status prominently displayed
+  - Recent achievements highlighted
+  - Detailed history moved to collapsible accordion
+  - Better navigation within development section
+- **Step 7**: Enhanced Contributing section with clear guidelines and development setup reference
+
+**Files Modified**:
+- `README.md` - Complete restructure for better organization and readability
+
+**Major Improvements**:
+- **📋 Table of Contents**: Comprehensive, clickable navigation
+- **🎯 Better Structure**: Logical flow from overview to detailed sections
+- **📸 Consistent Images**: All 400px width with professional presentation
+- **🚀 Improved Readability**: Clear headers, better formatting, step-by-step instructions
+- **📚 Better Organization**: Development log properly structured
+- **🤝 Enhanced Contributing**: Clear guidelines and setup instructions
+
+**Result**: ✅ README now flows much better, is easier to navigate, and presents the project in a more professional and user-friendly way.
+
+### User Prompt: Git Push All Changes to GitHub
+**Time**: End of session  
+**Request**: Push all the major README improvements and SECURITY.md changes to GitHub.
+
+**Actions Taken**:
+- **Step 1**: Checked git status to see all modified files
+- **Step 2**: Added both README.md and SECURITY.md to staging
+- **Step 3**: Committed changes with comprehensive message describing all improvements
+- **Step 4**: Successfully pushed to GitHub main branch
+
+**Files Modified**:
+- `README.md` - Major restructure and improvements
+- `SECURITY.md` - Complete restructure for beginner project
+
+**Git Operations**:
+- **Commit Hash**: `b5a41c2`
+- **Files Changed**: 2 files (README.md, SECURITY.md)
+- **Changes**: 139 insertions, 94 deletions
+- **Repository**: Successfully pushed to `https://github.com/NodeDiver/subscriptn-simple.git`
+
+**Major Improvements Pushed**:
+1. **📋 Complete README restructure** with proper table of contents
+2. **🎯 Better organization** and flow of content
+3. **📸 Consistent image sizing** (all 400px width)
+4. **❓ Enhanced FAQ** with comprehensive questions
+5. **🔒 Comprehensive SECURITY.md** with all security details
+6. **📚 Better development log organization**
+7. **🤝 Improved contributing section**
+
+**Result**: ✅ All changes successfully pushed to GitHub. README now looks much more professional and user-friendly!
+
+**Next Steps**: 
+- Continue with NWC integration features
+- Address remaining ESLint warnings for code quality
+- Test wallet connection flow with updated dependencies
+
+---
+
 ## Session: 2025-07-15
 
 ### User Prompt: Start Week 4 - Update README Logbook and Address Technical Debt
@@ -444,7 +649,7 @@ This file serves as a comprehensive development diary for the SubscriptN project
   - New `PaymentSuccessModal` component with beautiful success feedback
   - Shows payment details including amount, recipient, subscription ID, and preimage
   - Includes copy-to-clipboard functionality for payment details
-  - Professional design with success icon and Lightning Network branding
+  - Professional design with success icon and lightning network branding
 - **Step 3**: Enhanced LightningSubscription Component:
   - Integrated success modal into payment flow
   - Added state management for success modal and payment details

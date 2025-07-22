@@ -22,9 +22,8 @@ export default function TopBar() {
     router.push('/');
   };
 
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // Sidebar functionality removed - logo now just prevents default
+  const handleLogoClick = () => {
+    router.push('/');
   };
 
   return (
@@ -35,14 +34,14 @@ export default function TopBar() {
           <div className="flex items-center">
             <button 
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 hover:scale-105"
+              className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 hover:scale-105 cursor-pointer"
             >
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-lg">S</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-gray-900">SubscriptN</span>
-                <span className="text-xs text-gray-500 -mt-1">Bitcoin Subs</span>
+                <span className="text-xs text-gray-500 -mt-1">BTCPay & Bitcoin Shops</span>
               </div>
             </button>
           </div>
