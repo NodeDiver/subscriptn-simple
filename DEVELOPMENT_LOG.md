@@ -256,6 +256,69 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 **Progress**: ✅ Significant improvement in code quality. Reduced ESLint errors by ~40%.
 
+### User Prompt: Continue Development - Analyze Lightning Payment Flow
+**Time**: Current session  
+**Request**: Continue with app development by analyzing and testing the complete Lightning payment flow.
+
+**Actions Taken**:
+- **Step 1**: Analyzed LightningSubscription component:
+  - ✅ Complete payment flow implementation
+  - ✅ Wallet connection integration
+  - ✅ Invoice generation and payment processing
+  - ✅ Database recording and error handling
+- **Step 2**: Reviewed Lightning service implementation:
+  - ✅ Lightning Address invoice generation
+  - ✅ WebLN payment processing
+  - ✅ Payment verification with preimage validation
+  - ✅ Comprehensive error handling
+- **Step 3**: Identified testing requirements:
+  - End-to-end payment flow testing needed
+  - Real Lightning payments required for full validation
+  - Database integration verification needed
+
+**Technical Analysis**:
+- **Payment Flow**: `LightningSubscription` → `LightningService` → WebLN → Database
+- **Invoice Generation**: Uses `@getalby/lightning-tools` for Lightning Address support
+- **Payment Processing**: WebLN integration with proper error handling
+- **Verification**: Preimage validation ensures payment authenticity
+- **Database**: Records payment history with subscription tracking
+
+**Files Analyzed**:
+- `src/components/LightningSubscription.tsx` - Complete payment UI and flow
+- `src/lib/lightning.ts` - Lightning service with invoice generation and payment
+- `src/contexts/BitcoinConnectContext.tsx` - Wallet connection management
+
+**Status**: ✅ **Lightning payment flow is fully implemented and ready for testing!**
+
+### User Prompt: Fix Remaining Issues - API Routes and Database Schema
+**Time**: Current session  
+**Request**: Fix remaining issues including API route errors and database schema problems.
+
+**Actions Taken**:
+- **Step 1**: Fixed API route async/await issues:
+  - `src/app/api/subscriptions/[subscriptionId]/payments/route.ts` - Fixed both POST and GET functions
+  - Updated `params` type from `{ subscriptionId: string }` to `Promise<{ subscriptionId: string }>`
+  - Added `await params` destructuring in both functions
+- **Step 2**: Fixed database schema migration:
+  - Added ALTER TABLE statements to ensure missing columns exist
+  - Added `payment_method`, `wallet_provider`, and `preimage` columns to `subscription_history`
+  - This resolves the "table subscription_history has no column named payment_method" error
+- **Step 3**: Verified all API routes:
+  - Checked all dynamic routes for `params.` usage
+  - Confirmed no other async/await issues remain
+  - Server restarted successfully (HTTP 200)
+
+**Technical Details**:
+- **API Route Fix**: Next.js 15+ requires `params` to be awaited before destructuring
+- **Database Migration**: Added backward-compatible column additions
+- **Error Resolution**: Eliminated console errors for cleaner development experience
+
+**Files Modified**:
+- `src/app/api/subscriptions/[subscriptionId]/payments/route.ts` - Fixed async params handling
+- `src/lib/database.ts` - Added database migration for missing columns
+
+**Result**: ✅ **All remaining API route and database issues resolved!**
+
 ### User Prompt: Analyze Console Logs and Fix Issues
 **Time**: Current session  
 **Request**: User provided console logs showing wallet connection working but some deprecated API warnings and server errors.

@@ -4,7 +4,7 @@ import { getUserById } from '@/lib/auth';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { subscriptionId: string } }
+  { params }: { params: Promise<{ subscriptionId: string }> }
 ) {
   try {
     const userId = request.cookies.get('user_id')?.value;
@@ -18,7 +18,7 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { subscriptionId } = params;
+    const { subscriptionId } = await params;
     const { amountSats, status, paymentMethod, walletProvider, preimage } = await request.json();
 
     // Validate input
@@ -89,7 +89,7 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { subscriptionId: string } }
+  { params }: { params: Promise<{ subscriptionId: string }> }
 ) {
   try {
     const userId = request.cookies.get('user_id')?.value;
@@ -103,7 +103,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { subscriptionId } = params;
+    const { subscriptionId } = await params;
     const db = await getDatabase();
 
     // Verify the subscription belongs to the authenticated user

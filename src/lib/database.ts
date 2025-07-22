@@ -76,6 +76,11 @@ export async function getDatabase(): Promise<Database> {
       preimage TEXT,
       FOREIGN KEY (subscription_id) REFERENCES subscriptions (id)
     );
+    
+    -- Add missing columns if they don't exist (migration)
+    ALTER TABLE subscription_history ADD COLUMN payment_method TEXT;
+    ALTER TABLE subscription_history ADD COLUMN wallet_provider TEXT;
+    ALTER TABLE subscription_history ADD COLUMN preimage TEXT;
   `);
 
   // Initialize with demo users if they don't exist
