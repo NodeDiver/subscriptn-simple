@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
 
 export default function InfrastructureDashboard() {
-  const { user } = useAuth();
-  const [servers, setServers] = useState([]);
+  const [servers, setServers] = useState<Array<{
+    id: number;
+    name: string;
+    host_url: string;
+    created_at: string;
+  }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -81,7 +84,7 @@ export default function InfrastructureDashboard() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {servers.map((server: any) => (
+                  {servers.map((server) => (
                     <div key={server.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                       <div>
                         <h3 className="font-medium text-gray-900">{server.name}</h3>

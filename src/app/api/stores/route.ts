@@ -21,7 +21,11 @@ export async function GET() {
       );
     }
     const storesRaw = await resp.json();
-    const stores = (storesRaw as any[]).map((s) => ({
+    const stores = (storesRaw as Array<{
+      id: string;
+      name: string;
+      defaultStoreSettings?: { lightningAddress?: string };
+    }>).map((s) => ({
       id: s.id,
       name: s.name,
       lightningAddress: s.defaultStoreSettings?.lightningAddress,

@@ -7,8 +7,19 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export default function ServerDashboard({ params }: { params: Promise<{ serverId: string }> }) {
   const { user, logout } = useAuth();
-  const [server, setServer] = useState<any>(null);
-  const [shops, setShops] = useState([]);
+  const [server, setServer] = useState<{
+    id: number;
+    name: string;
+    host_url: string;
+  } | null>(null);
+  const [shops, setShops] = useState<Array<{
+    id: number;
+    name: string;
+    owner_username: string;
+    lightning_address?: string;
+    created_at: string;
+    subscription_status: string;
+  }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [serverId, setServerId] = useState<string | null>(null);
@@ -116,7 +127,7 @@ export default function ServerDashboard({ params }: { params: Promise<{ serverId
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      {shops.map((shop: any) => (
+                      {shops.map((shop) => (
                         <div key={shop.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                           <div>
                             <h3 className="font-medium text-gray-900">{shop.name}</h3>

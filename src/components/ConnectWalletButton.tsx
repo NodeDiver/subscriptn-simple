@@ -1,14 +1,5 @@
 "use client";
-import { useEffect, useRef, useCallback } from "react";
-
-// Ambient module declaration for custom element 'bc-button'
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements {
-      'bc-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
-}
+import React, { useEffect, useRef, useCallback } from "react";
 
 interface ConnectWalletButtonProps {
   onConnect?: (info: { provider?: unknown }) => void;
@@ -55,5 +46,5 @@ export default function ConnectWalletButton({ onConnect, onDisconnect }: Connect
     import("@getalby/bitcoin-connect");
   }, []);
 
-  return <bc-button ref={setButtonRef}></bc-button>;
+  return React.createElement('bc-button', { ref: setButtonRef });
 } 

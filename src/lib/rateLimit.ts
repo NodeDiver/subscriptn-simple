@@ -78,9 +78,27 @@ export const webhookRateLimiter = new RateLimiter({
   maxRequests: 10, // 10 webhook calls per minute
 });
 
+export const shopRateLimiter = new RateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 20, // 20 shop operations per minute
+});
+
+export const subscriptionRateLimiter = new RateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 10, // 10 subscription operations per minute
+});
+
+export const serverRateLimiter = new RateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 15, // 15 server operations per minute
+});
+
 // Clean up old records every 5 minutes
 setInterval(() => {
   authRateLimiter.cleanup();
   apiRateLimiter.cleanup();
   webhookRateLimiter.cleanup();
+  shopRateLimiter.cleanup();
+  subscriptionRateLimiter.cleanup();
+  serverRateLimiter.cleanup();
 }, 5 * 60 * 1000); 

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 import { getUserById } from '@/lib/auth';
+import { validateApiRequest, shopValidationSchema, sanitizeString } from '@/lib/validation';
+import { shopRateLimiter } from '@/lib/rateLimit';
 
 export async function GET(request: NextRequest) {
   try {
@@ -39,6 +41,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    if (!shopRateLimiter.isAllowed(clientIP)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -50,14 +61,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { name, serverId, lightningAddress } = await request.json();
-
-    if (!name || !serverId) {
+    // Validate input
+    const validation = await validateApiRequest(request, shopValidationSchema);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Name and server ID are required' },
+        { error: 'Invalid input', details: validation.errors },
         { status: 400 }
       );
     }
+
+    const { name, server_id, lightning_address } = validation.data;
+    const sanitizedName = sanitizeString(name as string);
+    const sanitizedLightningAddress = lightning_address ? sanitizeString(lightning_address as string) : null;
+    const serverId = Number(server_id);
 
     const db = await getDatabase();
     
@@ -92,7 +108,7 @@ export async function POST(request: NextRequest) {
     // No existing shop with this name on this server, create new one
     const result = await db.run(
       'INSERT INTO shops (name, lightning_address, server_id, owner_id) VALUES (?, ?, ?, ?)',
-      [name, lightningAddress || null, serverId, user.id]
+      [sanitizedName, sanitizedLightningAddress, serverId, user.id]
     );
 
     const newShop = await db.get(`

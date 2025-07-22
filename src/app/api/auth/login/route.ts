@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticateUser } from '@/lib/auth';
 import { authRateLimiter } from '@/lib/rateLimit';
+import { validateApiRequest, authValidationSchema, sanitizeString } from '@/lib/validation';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,16 +14,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { username, password } = await request.json();
-
-    if (!username || !password) {
+    // Validate input
+    const validation = await validateApiRequest(request, authValidationSchema);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Username and password are required' },
+        { error: 'Invalid input', details: validation.errors },
         { status: 400 }
       );
     }
 
-    const user = await authenticateUser(username, password);
+    const { username, password } = validation.data;
+    const sanitizedUsername = sanitizeString(username as string);
+    const sanitizedPassword = sanitizeString(password as string);
+
+    const user = await authenticateUser(sanitizedUsername, sanitizedPassword);
 
     if (!user) {
       return NextResponse.json(

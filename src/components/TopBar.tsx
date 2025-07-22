@@ -3,15 +3,13 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import Sidebar from './Sidebar';
+import { useEffect } from 'react';
 import ConnectWalletButton from './ConnectWalletButton';
 import { useBitcoinConnectHandlers } from '@/contexts/BitcoinConnectContext';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
   const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { onConnect, onDisconnect } = useBitcoinConnectHandlers();
 
   // Dynamically import the Bitcoin Connect web component on mount
@@ -26,7 +24,7 @@ export default function TopBar() {
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setSidebarOpen(true);
+    // Sidebar functionality removed - logo now just prevents default
   };
 
   return (
@@ -109,8 +107,6 @@ export default function TopBar() {
         </div>
       </div>
       
-      {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </nav>
   );
 } 

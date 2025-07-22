@@ -25,9 +25,17 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 - 🎨 Modern, responsive UI (dark mode ready!)
 - 💳 **Direct Lightning address integration** for invoice generation
 
+### Lightning Payment Flow
+Experience seamless Bitcoin subscription management with real Lightning payments. The application provides a complete workflow from wallet connection to payment confirmation:
 
 
 
+**Key Features Demonstrated:**
+- 🔗 **Wallet Connection**: One-click Bitcoin Connect integration with balance display
+- 💰 **Real-time Payments**: Instant Lightning payments with live transaction confirmation
+- 📊 **Payment History**: Comprehensive tracking of all subscription payments
+- 🏪 **Shop Management**: Complete shop and subscription lifecycle management
+- ⚡ **Lightning Integration**: Direct integration with Lightning addresses and BTCPay Server
 ## Getting Started
 
 ```bash
@@ -47,11 +55,14 @@ npm run dev
 
 ## Screenshots
 
-
 <img src="https://github.com/user-attachments/assets/fbf407aa-dc1c-408a-a66c-07a3eea2071b" alt="SubscriptN Logo" width="420" />
 <img src="https://github.com/user-attachments/assets/94d7703d-9309-4457-83aa-8d3fd11e3b31" alt="SubscriptN Logo" width="420" />
 
+![Home](public/screenshots/image_large.webp)
+*BTCPay Server owners and shop owners can both have their dashboard and find each other*
 
+![Subscription made](public/screenshots/lightning-payment-flow.png)
+*At the Geyser Hackathon I was not able to make the subscription work during the presentation due to some bugs. Now after some more days of work, I was finally able to make it work: the core functionality of the app, which is a working subscription from a shop owner to a BTCPay Server admin, works, and works thanks that NWC protocol allows subscriptions*
 
 ## Installation & Setup
 

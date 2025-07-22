@@ -7,7 +7,16 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export default function InfrastructureSubscriptions() {
   const { user, logout } = useAuth();
-  const [subscriptions, setSubscriptions] = useState([]);
+  const [subscriptions, setSubscriptions] = useState<Array<{
+    id: number;
+    shop_name: string;
+    shop_owner: string;
+    server_name: string;
+    amount_sats: number;
+    interval: string;
+    status: string;
+    created_at: string;
+  }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -125,7 +134,7 @@ export default function InfrastructureSubscriptions() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {subscriptions.map((subscription: any) => (
+                        {subscriptions.map((subscription) => (
                           <tr key={subscription.id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">

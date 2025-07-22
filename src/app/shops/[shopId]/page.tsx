@@ -8,11 +8,24 @@ import PaymentHistory from '@/components/PaymentHistory';
 
 export default function ShopView({ params }: { params: Promise<{ shopId: string }> }) {
   const { user, logout } = useAuth();
-  const [shop, setShop] = useState<any>(null);
-  const [subscriptions, setSubscriptions] = useState([]);
+  const [shop, setShop] = useState<{
+    id: number;
+    name: string;
+    server_name: string;
+    subscription_status: string;
+    lightning_address?: string;
+  } | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Array<{
+    id: number;
+    amount_sats: number;
+    interval: string;
+    status: string;
+    created_at: string;
+  }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [shopId, setShopId] = useState<string | null>(null);
+
+
 
   const handleLogout = async () => {
     await logout();
@@ -70,7 +83,6 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
     const fetchShopData = async () => {
       try {
         const { shopId: resolvedShopId } = await params;
-        setShopId(resolvedShopId);
         
         // Fetch shop details
         const shopResponse = await fetch(`/api/shops/${resolvedShopId}`);
@@ -179,7 +191,7 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      {subscriptions.map((subscription: any) => (
+                      {subscriptions.map((subscription) => (
                         <div key={subscription.id} className="border border-gray-200 rounded-lg overflow-hidden">
                           <div className="flex items-center justify-between p-4 bg-gray-50">
                             <div>
@@ -226,7 +238,7 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
-                    {subscriptions.length > 0 && subscriptions.some((sub: any) => sub.status === 'active') && (
+                    {subscriptions.length > 0 && subscriptions.some((sub) => sub.status === 'active') && (
                       <button className="w-full px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors">
                         Cancel Subscription
                       </button>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function LandingPage() {
-  const { user, loading } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return (

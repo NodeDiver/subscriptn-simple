@@ -153,7 +153,6 @@ export function useBitcoinConnectContext() {
 
 // Export the handlers so they can be used by ConnectWalletButton
 export function useBitcoinConnectHandlers() {
-  const context = useBitcoinConnectContext();
   return {
     onConnect: (info: { provider?: unknown }) => {
       // The onConnected callback will handle the rest

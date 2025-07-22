@@ -5,13 +5,11 @@ import Link from 'next/link';
 
 export default function ShopDashboard({ params }: { params: Promise<{ serverId: string; shopId: string }> }) {
   const [serverId, setServerId] = useState<string | null>(null);
-  const [shopId, setShopId] = useState<string | null>(null);
 
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
       setServerId(resolvedParams.serverId);
-      setShopId(resolvedParams.shopId);
     };
     resolveParams();
   }, [params]);

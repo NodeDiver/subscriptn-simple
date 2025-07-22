@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useToast } from '@/contexts/ToastContext';
-import { validateForm, VALIDATION_RULES } from '@/lib/validation';
 import LightningSubscription from '@/components/LightningSubscription';
 
 type Store = { id: string; name: string; lightningAddress?: string };
@@ -63,33 +62,6 @@ export default function AddShop() {
 
     const selected = stores.find((s) => s.id === shop);
     const recipientValue = recipient || selected?.lightningAddress || "";
-
-    // Validate form
-    const validation = validateForm(
-      { 
-        shop, 
-        recipient: recipientValue, 
-        amount: amount.toString(),
-        timeframe 
-      },
-      {
-        shop: VALIDATION_RULES.required,
-        recipient: VALIDATION_RULES.lightningAddress,
-        amount: VALIDATION_RULES.amount,
-        timeframe: VALIDATION_RULES.required,
-      }
-    );
-
-    if (!validation.isValid) {
-      const fieldErrors: Record<string, string> = {};
-      validation.errors.forEach(error => {
-        const [field, message] = error.split(': ');
-        fieldErrors[field] = message;
-      });
-      setErrors(fieldErrors);
-      setLoading(false);
-      return;
-    }
     
     try {
       // First, create the shop in our database

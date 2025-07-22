@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useToast } from '@/contexts/ToastContext';
-import { validateForm, VALIDATION_RULES } from '@/lib/validation';
 
 export default function AddServer() {
   const [name, setName] = useState('');
@@ -20,27 +19,6 @@ export default function AddServer() {
     setLoading(true);
     setErrors({});
 
-    // Validate form
-    const validation = validateForm(
-      { name, hostUrl, apiKey },
-      {
-        name: VALIDATION_RULES.serverName,
-        hostUrl: VALIDATION_RULES.url,
-        apiKey: VALIDATION_RULES.required,
-      }
-    );
-
-    if (!validation.isValid) {
-      const fieldErrors: Record<string, string> = {};
-      validation.errors.forEach(error => {
-        const [field, message] = error.split(': ');
-        fieldErrors[field] = message;
-      });
-      setErrors(fieldErrors);
-      setLoading(false);
-      return;
-    }
-
     try {
       const response = await fetch('/api/servers', {
         method: 'POST',
@@ -55,7 +33,11 @@ export default function AddServer() {
         router.push('/infrastructure');
       } else {
         const data = await response.json();
-        showToast(data.error || 'Failed to create server', 'error');
+        if (data.details) {
+          setErrors(data.details);
+        } else {
+          showToast(data.error || 'Failed to create server', 'error');
+        }
       }
     } catch (error) {
       console.error('Error creating server:', error);

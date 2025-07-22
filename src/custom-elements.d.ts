@@ -4,7 +4,7 @@ declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'bc-connect': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        ref?: React.Ref<any>;
+        ref?: React.Ref<HTMLElement | null>;
         open?: string;
         'app-name'?: string;
         'app-description'?: string;

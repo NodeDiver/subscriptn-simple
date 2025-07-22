@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 import { getUserById } from '@/lib/auth';
+import { validateApiRequest, serverValidationSchema, sanitizeString } from '@/lib/validation';
 
 export async function GET(request: NextRequest) {
   try {
@@ -41,21 +42,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { name, hostUrl, apiKey } = await request.json();
-
-    if (!name || !hostUrl || !apiKey) {
+    // Validate input
+    const validation = await validateApiRequest(request, serverValidationSchema);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Name, host URL, and API key are required' },
+        { error: 'Invalid input', details: validation.errors },
         { status: 400 }
       );
     }
+
+    const { name, host_url, api_key } = validation.data;
+    const sanitizedName = sanitizeString(name as string);
+    const sanitizedHostUrl = sanitizeString(host_url as string);
+    const sanitizedApiKey = sanitizeString(api_key as string);
 
     const db = await getDatabase();
     
     // Check if this host_url already exists
     const existingServer = await db.get(
       'SELECT id, provider_id FROM servers WHERE host_url = ?',
-      [hostUrl]
+      [sanitizedHostUrl]
     );
 
     if (existingServer) {
@@ -77,7 +83,7 @@ export async function POST(request: NextRequest) {
     // No existing server with this host_url, create new one
     const result = await db.run(
       'INSERT INTO servers (name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?)',
-      [name, hostUrl, apiKey, user.id]
+      [sanitizedName, sanitizedHostUrl, sanitizedApiKey, user.id]
     );
 
     const newServer = await db.get(

@@ -28,12 +28,17 @@ export default function LightningSubscription({
   onSuccess,
   onCancel
 }: LightningSubscriptionProps) {
-  const { isConnected, connect, info } = useBitcoinConnectContext();
+  const { isConnected, connect } = useBitcoinConnectContext();
   const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [paymentDetails, setPaymentDetails] = useState<any>(null);
+  const [paymentDetails, setPaymentDetails] = useState<{
+    amountSats: number;
+    recipientAddress: string;
+    subscriptionId: string;
+    preimage?: string;
+  } | null>(null);
   const { onConnect, onDisconnect } = useBitcoinConnectHandlers();
 
   const handleCreateSubscription = async () => {

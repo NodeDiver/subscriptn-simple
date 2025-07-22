@@ -129,4 +129,51 @@ export async function closeDatabase() {
     await db.close();
     db = null;
   }
+}
+
+// Database health check
+export async function checkDatabaseHealth(): Promise<boolean> {
+  try {
+    const database = await getDatabase();
+    await database.get('SELECT 1');
+    return true;
+  } catch (error) {
+    console.error('Database health check failed:', error);
+    return false;
+  }
+}
+
+// Database statistics
+export async function getDatabaseStats(): Promise<{
+  users: number;
+  servers: number;
+  shops: number;
+  subscriptions: number;
+  payments: number;
+}> {
+  try {
+    const database = await getDatabase();
+    const [users] = await database.get('SELECT COUNT(*) as count FROM users');
+    const [servers] = await database.get('SELECT COUNT(*) as count FROM servers');
+    const [shops] = await database.get('SELECT COUNT(*) as count FROM shops');
+    const [subscriptions] = await database.get('SELECT COUNT(*) as count FROM subscriptions');
+    const [payments] = await database.get('SELECT COUNT(*) as count FROM subscription_history');
+    
+    return {
+      users: users.count,
+      servers: servers.count,
+      shops: shops.count,
+      subscriptions: subscriptions.count,
+      payments: payments.count
+    };
+  } catch (error) {
+    console.error('Error getting database stats:', error);
+    return {
+      users: 0,
+      servers: 0,
+      shops: 0,
+      subscriptions: 0,
+      payments: 0
+    };
+  }
 } 

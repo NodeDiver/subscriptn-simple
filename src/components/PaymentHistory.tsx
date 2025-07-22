@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 interface Payment {
   id: number;
@@ -21,11 +21,7 @@ export default function PaymentHistory({ subscriptionId }: PaymentHistoryProps) 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchPaymentHistory();
-  }, [subscriptionId]);
-
-  const fetchPaymentHistory = async () => {
+  const fetchPaymentHistory = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/subscriptions/${subscriptionId}/payments`);
@@ -42,7 +38,11 @@ export default function PaymentHistory({ subscriptionId }: PaymentHistoryProps) 
     } finally {
       setLoading(false);
     }
-  };
+  }, [subscriptionId]);
+
+  useEffect(() => {
+    fetchPaymentHistory();
+  }, [fetchPaymentHistory]);
 
   const getStatusColor = (status: string) => {
     switch (status) {

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 import { getUserById } from '@/lib/auth';
+import { validateApiRequest, subscriptionValidationSchema } from '@/lib/validation';
+import { subscriptionRateLimiter } from '@/lib/rateLimit';
 
 export async function GET(request: NextRequest) {
   try {
@@ -42,6 +44,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    if (!subscriptionRateLimiter.isAllowed(clientIP)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -53,14 +64,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const { shopId, amountSats, interval } = await request.json();
-
-    if (!shopId || !amountSats || !interval) {
+    // Validate input
+    const validation = await validateApiRequest(request, subscriptionValidationSchema);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Shop ID, amount, and interval are required' },
+        { error: 'Invalid input', details: validation.errors },
         { status: 400 }
       );
     }
+
+    const { shop_id, amount_sats, interval } = validation.data;
+    const shopId = Number(shop_id);
+    const amountSats = Number(amount_sats);
 
     const db = await getDatabase();
     
