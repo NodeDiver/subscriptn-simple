@@ -7,6 +7,7 @@ import { lightningService } from '@/lib/lightning';
 import ConnectWalletButton from './ConnectWalletButton';
 import { useBitcoinConnectHandlers } from '@/contexts/BitcoinConnectContext';
 import PaymentSuccessModal from './PaymentSuccessModal';
+import { LightningLoadingSpinner } from './LoadingSpinner';
 
 interface LightningSubscriptionProps {
   shopId: string;
@@ -298,6 +299,13 @@ export default function LightningSubscription({
           )}
         </button>
       </div>
+
+      {/* Enhanced Loading State */}
+      {loading && (
+        <div className="mt-6">
+          <LightningLoadingSpinner text="Processing Lightning payment..." />
+        </div>
+      )}
 
       {/* Payment Success Modal */}
       {paymentDetails && (
