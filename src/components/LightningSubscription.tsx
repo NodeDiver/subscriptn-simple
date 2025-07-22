@@ -6,6 +6,7 @@ import { useToast } from '@/contexts/ToastContext';
 import { lightningService } from '@/lib/lightning';
 import ConnectWalletButton from './ConnectWalletButton';
 import { useBitcoinConnectHandlers } from '@/contexts/BitcoinConnectContext';
+import PaymentSuccessModal from './PaymentSuccessModal';
 
 interface LightningSubscriptionProps {
   shopId: string;
@@ -30,6 +31,8 @@ export default function LightningSubscription({
   const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState<any>(null);
   const { onConnect, onDisconnect } = useBitcoinConnectHandlers();
 
   const handleCreateSubscription = async () => {
@@ -66,10 +69,17 @@ export default function LightningSubscription({
       const subscriptionId = subscriptionData.subscription.id;
 
       // Now initiate the Lightning payment
-      await initiateLightningPayment(subscriptionId, amountSats, recipientAddress, comment);
+      const paymentResult = await initiateLightningPayment(subscriptionId, amountSats, recipientAddress, comment);
 
       setPaymentStatus('success');
-      showToast('Subscription created and payment initiated!', 'success');
+      setPaymentDetails({
+        amountSats,
+        recipientAddress,
+        subscriptionId,
+        preimage: paymentResult?.preimage
+      });
+      setShowSuccessModal(true);
+      showToast('Subscription created and payment successful!', 'success');
       
       if (onSuccess) {
         onSuccess(subscriptionId);
@@ -116,11 +126,12 @@ export default function LightningSubscription({
           amountSats,
           status: 'success',
           paymentMethod: 'lightning',
-          walletProvider: info?.wallet?.name || 'unknown',
+          walletProvider: 'Bitcoin Connect',
           preimage: paymentResult.preimage
         }),
       });
 
+      return paymentResult;
     } catch (error) {
       console.error('Error initiating Lightning payment:', error);
       throw new Error(error instanceof Error ? error.message : 'Failed to process Lightning payment');
@@ -193,14 +204,12 @@ export default function LightningSubscription({
             <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
             <div>
               <p className="text-sm font-medium text-green-800">
-                Wallet Connected: {info?.wallet?.name || 'Unknown Wallet'}
+                Wallet Connected: Bitcoin Connect
               </p>
               <p className="text-xs text-green-600">
                 Ready to process Lightning payments
               </p>
-              {info?.balance && (
-                <p className="text-xs text-green-700 mt-1">Balance: {info.balance} sats</p>
-              )}
+              <p className="text-xs text-green-700 mt-1">Balance: Connected</p>
             </div>
           </div>
         ) : (
@@ -289,6 +298,15 @@ export default function LightningSubscription({
           )}
         </button>
       </div>
+
+      {/* Payment Success Modal */}
+      {paymentDetails && (
+        <PaymentSuccessModal
+          isOpen={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+          paymentDetails={paymentDetails}
+        />
+      )}
     </div>
   );
 } 

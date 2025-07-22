@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
+import PaymentHistory from '@/components/PaymentHistory';
 
 export default function ShopView({ params }: { params: Promise<{ shopId: string }> }) {
   const { user, logout } = useAuth();
@@ -179,31 +180,37 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
                   ) : (
                     <div className="space-y-4">
                       {subscriptions.map((subscription: any) => (
-                        <div key={subscription.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                          <div>
-                            <h3 className="font-medium text-gray-900">
-                              {subscription.amount_sats} sats / {subscription.interval}
-                            </h3>
-                            <p className="text-sm text-gray-600">Created {new Date(subscription.created_at).toLocaleDateString()}</p>
+                        <div key={subscription.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                          <div className="flex items-center justify-between p-4 bg-gray-50">
+                            <div>
+                              <h3 className="font-medium text-gray-900">
+                                {subscription.amount_sats} sats / {subscription.interval}
+                              </h3>
+                              <p className="text-sm text-gray-600">Created {new Date(subscription.created_at).toLocaleDateString()}</p>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                subscription.status === 'active' 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : subscription.status === 'cancelled'
+                                  ? 'bg-gray-100 text-gray-800'
+                                  : 'bg-red-100 text-red-800'
+                              }`}>
+                                {subscription.status}
+                              </span>
+                              {subscription.status === 'active' && (
+                                <button
+                                  onClick={() => handleCancelSubscription(subscription.id)}
+                                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                                >
+                                  Cancel
+                                </button>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex items-center space-x-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              subscription.status === 'active' 
-                                ? 'bg-green-100 text-green-800' 
-                                : subscription.status === 'cancelled'
-                                ? 'bg-gray-100 text-gray-800'
-                                : 'bg-red-100 text-red-800'
-                            }`}>
-                              {subscription.status}
-                            </span>
-                            {subscription.status === 'active' && (
-                              <button
-                                onClick={() => handleCancelSubscription(subscription.id)}
-                                className="text-red-600 hover:text-red-800 text-sm font-medium"
-                              >
-                                Cancel
-                              </button>
-                            )}
+                          {/* Payment History for this subscription */}
+                          <div className="p-4">
+                            <PaymentHistory subscriptionId={subscription.id.toString()} />
                           </div>
                         </div>
                       ))}
