@@ -168,10 +168,13 @@ This includes:
 ## 📚 Development Log
 
 ### Current Status (Week 4)
+- 🎨 *Completed comprehensive Light/Dark Mode Toggle implementation across entire application*
 - 🐛 *Started Week 4 by addressing Next.js API route errors and technical debt*
 - 🔧 *Planning to fix params.shopId async/await issues in dynamic routes*
 
 ### Recent Achievements
+- 🌙 *Implemented simplified theme architecture with direct HTML class manipulation*
+- 🎨 *Added comprehensive dark mode support to all pages and components*
 - 🔧 *Fixed critical UI/UX issues and implemented comprehensive duplicate prevention*
 - 🛡️ *Added robust database constraints and ownership management*
 - ⚡ *Enhanced Bitcoin Connect integration with official API*
@@ -182,6 +185,27 @@ This includes:
 
 <details>
 <summary>Week 4: 2025-07-15 to 2025-07-19 (Current Week)</summary>
+
+### 2025-07-15: Light/Dark Mode Toggle - Complete Application Overhaul
+- **Action**: *Implemented comprehensive Light/Dark Mode Toggle functionality across the entire application with simplified architecture.*
+- **Updates**:
+  - 🏗️ *Simplified Architecture: Removed ThemeContext.tsx and ThemeToggle.tsx components to eliminate unnecessary complexity.*
+  - ⚡ *Direct HTML Manipulation: Implemented clean `document.documentElement.classList.toggle('dark')` approach.*
+  - 🎨 *Comprehensive Dark Mode Support: Added dark mode to all pages and components:*
+    - `src/app/page.tsx` - Homepage with branded colors
+    - `src/app/login/page.tsx` - Login form with dark mode
+    - `src/app/infrastructure/page.tsx` - Infrastructure dashboard
+    - `src/app/shops/page.tsx` - Shops dashboard
+    - `src/app/infrastructure/add-server/page.tsx` - Add server form
+    - `src/app/shops/add-shop/page.tsx` - Add shop form
+    - `src/components/LoadingSpinner.tsx` - All loading spinners
+    - `src/components/Toast.tsx` - Toast notifications
+  - 🎨 *Brand Consistency: Ensured all colors match the official SubscriptN brand palette from `/branding/color-preview.html`*
+  - 🔧 *Theme Flash Prevention: Added script in layout.tsx to prevent theme flashing on page load*
+  - 📱 *Responsive Design: All dark mode styles work across different screen sizes*
+  - 🔄 *LocalStorage Persistence: Theme preference saved and restored automatically*
+- **Result**: *Light/Dark Mode Toggle now works properly across the entire application, not just the top bar. Simplified architecture eliminates unnecessary re-renders and complex state management.*
+- **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
 
 ### 2025-07-15: Week 4 Kickoff - Technical Debt & API Route Fixes
 - **Action**: *Started Week 4 by addressing Next.js API route errors and technical debt from previous sessions.*
