@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ConnectWalletButton from './ConnectWalletButton';
 import { useBitcoinConnectHandlers } from '@/contexts/BitcoinConnectContext';
+import UserDropdown from './UserDropdown';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
@@ -23,10 +24,7 @@ export default function TopBar() {
     setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
-  const handleLogout = async () => {
-    await logout();
-    router.push('/');
-  };
+
 
   const handleLogoClick = () => {
     router.push('/');
@@ -60,26 +58,9 @@ export default function TopBar() {
             </button>
           </div>
 
-          {/* Navigation Links */}
+          {/* Navigation Links - Removed, now in dropdown menu */}
           <div className="hidden md:flex items-center space-x-6">
-            {user && (
-              <>
-                <Link
-                  href="/infrastructure"
-                  className="text-gray-700 dark:text-gray-300 hover:text-subscriptn-green-500 dark:hover:text-green-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-subscriptn-green-50 dark:hover:bg-green-500/10 relative group"
-                >
-                  Infrastructure Dashboard
-                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-subscriptn-green-500 dark:bg-green-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></div>
-                </Link>
-                <Link
-                  href="/shops"
-                  className="text-gray-700 dark:text-gray-300 hover:text-subscriptn-blue-500 dark:hover:text-blue-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-subscriptn-blue-50 dark:hover:bg-blue-500/10 relative group"
-                >
-                  Shops Dashboard
-                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-subscriptn-blue-500 dark:bg-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></div>
-                </Link>
-              </>
-            )}
+            {/* Future navigation items can go here */}
           </div>
 
           {/* User Menu */}
@@ -106,25 +87,7 @@ export default function TopBar() {
               <ConnectWalletButton onConnect={onConnect} onDisconnect={onDisconnect} />
             </div>
             {user ? (
-              <>
-                <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 rounded-lg px-3 py-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 dark:from-gray-500 dark:to-gray-400 rounded-full flex items-center justify-center shadow-sm">
-                    <span className="text-white text-sm font-medium">
-                      {user.username.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="hidden sm:block">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">{user.username}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">User</div>
-                  </div>
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="text-gray-700 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-500/10"
-                >
-                  Logout
-                </button>
-              </>
+              <UserDropdown user={user} />
             ) : (
               <Link
                 href="/login"
