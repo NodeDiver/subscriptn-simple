@@ -267,149 +267,34 @@ This includes:
 - **Result**: *Complete UI/UX overhaul with professional loading states, error handling, and modern visual design. Payment flow now provides excellent user feedback.*
 - **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
 
-</details>
-
-<details>
-<summary>Week 3: 2025-07-08 to 2025-07-12</summary>
-
-### 2025-07-12: Bitcoin Connect Integration - Official API Implementation
-- **Action**: *Replaced custom Bitcoin Connect context with official @getalby/bitcoin-connect API integration for reliable wallet connection state management.*
+### 2025-07-15: Revenue Box Ownership and Contact Admin Features
+- **Action**: *Implemented ownership-based revenue display and contact admin functionality in the dashboard.*
 - **Updates**:
-  - ⚡ *Migrated from custom event listeners to official Bitcoin Connect API functions (`onConnected`, `onDisconnected`, `onConnecting`, `isConnected`, `launchModal`, etc.).*
-  - 🔧 *Updated `BitcoinConnectContext.tsx` to use official API instead of custom web component event handling.*
-  - 🎯 *Removed dependency on `@getalby/bitcoin-connect-react` package (which didn't provide the expected Provider/hook).*
-  - 🧹 *Cleaned up custom modal implementation and event listener logic.*
-  - ✅ *Maintained existing `ConnectWalletButton` component using official `<bc-button>` web component.*
-- **Result**: *Wallet connection state should now properly sync across all components using the official Bitcoin Connect API. The context now uses reliable event subscriptions instead of DOM event listeners.*
-- **Plan for next session**: *Test the wallet connection flow end-to-end and verify that the LightningSubscription form properly detects wallet connection state.*
+  - 💰 *Moved revenue boxes from main stats to inline display with each BTCPay Server.*
+  - 👑 *Added ownership logic to show revenue boxes only for servers the user owns.*
+  - 💬 *Created "Contact Admin" boxes for servers the user doesn't own with messaging functionality.*
+  - 🔄 *Updated API to return all servers with ownership information (is_owner field).*
+  - 📊 *Modified stats calculation to only count servers the user owns.*
+  - 🎨 *Applied consistent branding and styling for both revenue and contact admin components.*
+- **Result**: *Dashboard now shows appropriate content based on server ownership - revenue for owned servers, contact admin for others.*
+- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
 
-### 2025-07-12: Comprehensive Duplicate Prevention & System Optimization
-- **Action**: *Implemented comprehensive duplicate prevention for shops and subscriptions, fixed UI issues, and performed major database cleanup.*
+### 2025-07-15: Settings Page with Wallet Integration
+- **Action**: *Created comprehensive settings page with user account management features and added it to the dropdown menu, including a new Wallet section.*
 - **Updates**:
-  - 🔧 *Fixed text color issues in shop dashboard (unreadable white text on white background).*
-  - 🛡️ *Added database constraints: unique indexes for shops (name+server_id) and subscriptions (active per shop).*
-  - 🚫 *Implemented shop duplicate prevention: same user cannot add same shop name on same server, different users cannot claim same shop.*
-  - 🔒 *Implemented subscription duplicate prevention: one active subscription per shop only.*
-  - 🗑️ *Added shop removal functionality with cascade deletion and payment cancellation warnings.*
-  - 🧹 *Performed major database cleanup: removed all existing shops (17), subscriptions (1), and subscription history.*
-  - ⚡ *Enhanced Bitcoin Connect integration using official API instead of custom implementation.*
-- **Result**: *System now has robust duplicate prevention, proper ownership management, and clean database state. All UI issues resolved.*
-- **Plan for next session**: *Continue testing and refining the duplicate prevention logic, and work on remaining NWC integration features.*
+  - ⚙️ *Created new settings page at `/settings` with branded design and familiar structure.*
+  - 👤 *Added Profile tab with display name, email, lightning address, and timezone settings.*
+  - 🔐 *Added Account tab with password change and two-factor authentication options.*
+  - 💰 *Added Wallet tab with Bitcoin Connect button and placeholder content for future features.*
+  - ⚡ *Added BTCPay Servers tab showing connected servers with status indicators.*
+  - 🏪 *Added Shops tab displaying user's shops with subscription details.*
+  - 🎛️ *Added Preferences tab with notification and auto-refresh settings.*
+  - 🔗 *Added Settings link to user dropdown menu below Dashboard link.*
+  - 🎨 *Applied consistent SubscriptN branding and dark mode support throughout.*
+- **Result**: *Complete settings page with all user account management features, wallet integration, and proper navigation integration.*
+- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
 
-### 2025-07-11: Research & Analysis Day
-- **Action**: 📚 *Spent the day reading and analyzing other hackathon projects to understand different NWC perspectives and approaches.*
-- **Updates**:
-  - 🔍 *Researched other Geyser Hackathon 2025 projects and their NWC implementations.*
-  - 💭 *Analyzed different approaches to Nostr Wallet Connect integration.*
-  - 🧠 *Contemplated future development direction for SubscriptN project.*
-  - 📖 *Studied various NWC use cases and implementation patterns.*
-- **Result**: 💡 *Gained valuable insights into NWC ecosystem and different implementation approaches.*
-- **Plan for next session**: 📝 *Apply learnings to continue SubscriptN development with improved NWC integration strategy.*
-
-### 2025-07-10: Post-Hackathon Development Work
-- **Action**: 🧠 *Continued development work on SubscriptN features after hackathon victory.*
-- **Updates**:
-  - 🔧 *Worked on various project features and improvements.*
-  - 🎯 *Applied lessons learned from hackathon presentation and feedback.*
-  - ⚡ *Continued Bitcoin Connect integration work.*
-- **Result**: ✅ *Made progress on project features and improvements.*
-- **Plan for next session**: 📝 *Continue development with focus on user experience and system stability.*
-
-### 2025-07-09: Wallet Connection Debugging & UI Improvements
-- **Action**: 🐞 *Debugged wallet connection synchronization issues and improved UI/UX.*
-- **Updates**:
-  - 🔄 *Refactored wallet connect button to use callback ref for robust event handling.*
-  - 📝 *Added detailed logging and diagnostics for wallet connection events.*
-  - 🖥️ *Improved UI/UX for wallet connection and LightningSubscription form.*
-  - 💤 *User ended session for sleep; blocker documented for next session.*
-- **Result**: ⚠️ *Wallet connection state still not syncing properly to LightningSubscription form.*
-- **Plan for next session**: 📝 *Fix wallet connection state propagation issues.*
-
-### 2025-07-08: Phase 3 - Subscription Management with Lightning Payments
-- **Action**: 🚀 *Began Phase 3 implementation focusing on subscription management and Lightning payments.*
-- **Updates**:
-  - 🎯 *Started Phase 3 with focus on Lightning payment flows and subscription lifecycle.*
-  - ⚡ *Planned NWC (Nostr Wallet Connect) integration to replace ZapPlanner dependency.*
-  - 🔄 *Outlined subscription automation and recurring payment handling.*
-- **Result**: 📋 *Phase 3 goals and roadmap established.*
-- **Plan for next session**: 📝 *Continue Phase 3 implementation with wallet integration.*
-
-</details>
-
-<details>
-<summary>Week 2: 2025-07-01 to 2025-07-07</summary>
-
-### 2025-07-07: Winner Announcement
-- **Action**: *Won the Geyser Hackathon 2025!*
-- **Updates**:
-  - 🏆 *SubscriptN was announced as the winner!*
-  - 🎯 *Project recognized for innovative Bitcoin subscription management approach.*
-  - ⚡ *lightning network integration and NWC implementation praised.*
-  - 🎊 *Celebrated victory with the team.*
-- **Result**: *Hackathon victory achieved! Project validated by industry experts.*
-- **Plan for next session**: *Continue development with renewed motivation and feedback.*
-
-### 2025-07-05: Presentation Day
-- **Action**: *Presented SubscriptN at the Geyser Hackathon 2025.*
-- **Updates**:
-  - 🎤 *Delivered presentation and demo of SubscriptN.*
-  - 🖥️ *Showcased lightning network integration and subscription management features.*
-  - 💬 *Answered questions from judges and other participants.*
-  - 🎯 *Demonstrated the innovative approach to Bitcoin subscription management.*
-- **Result**: *Successful presentation completed.*
-- **Plan for next session**: *Await results and continue development.*
-
-### 2025-07-04: Final Preparation
-- **Action**: *Final preparations for presentation.*
-- **Updates**:
-  - 🎯 *Polished presentation materials and demo.*
-  - 🔧 *Final bug fixes and feature improvements.*
-  - 📝 *Prepared presentation script and technical documentation.*
-  - ⚡ *Ensured lightning network integration was working properly.*
-- **Result**: *Ready for presentation.*
-- **Plan for next session**: *Present and showcase SubscriptN.*
-
-### 2025-07-03: Intensive Development Sprint
-- **Action**: *Major development sprint with significant feature implementation and system improvements.*
-- **Updates**:
-  - 🚀 *Rapid feature development and integration across the entire application.*
-  - 🔧 *Comprehensive bug fixes and system optimization for production readiness.*
-  - 🎨 *Extensive UI/UX improvements and polish for professional presentation.*
-  - 📝 *Complete documentation and presentation preparation with technical details.*
-  - ⚡ *Enhanced lightning network integration with improved error handling.*
-  - 🛡️ *Added security improvements and validation throughout the application.*
-  - 🗄️ *Database optimizations and query improvements for better performance.*
-- **Result**: *Significant progress made with production-ready features and polished presentation materials.*
-- **Plan for next session**: *Continue preparation and final polish for presentation.*
-
-### 2025-07-02: Project Planning & Architecture
-- **Action**: *Planned and structured SubscriptN with comprehensive technical architecture.*
-- **Updates**:
-  - 🎯 *Defined project scope and goals with clear technical requirements.*
-  - 📝 *Created detailed project timeline and development milestones.*
-  - 🧩 *Planned technical implementation approach with modern web technologies.*
-  - 🎨 *Designed user experience and interface concepts with focus on usability.*
-  - ⚡ *Outlined lightning network and NWC integration strategy.*
-  - 🗄️ *Designed database schema and API architecture.*
-- **Result**: *Comprehensive project plan established with clear technical direction.*
-- **Plan for next session**: *Begin intensive development sprint.*
-
-### 2025-07-01: Project Registration & Vision
-- **Action**: *Registered for Geyser Hackathon 2025 and began project planning.*
-- **Updates**:
-  - 📝 *Registered SubscriptN for the competition.*
-  - 🎯 *Defined project vision and goals for Bitcoin subscription management.*
-  - 🧠 *Planned innovative approach to subscription management with lightning network.*
-  - ⚡ *Outlined lightning network and NWC integration strategy.*
-- **Result**: *Successfully registered with clear project vision.*
-- **Plan for next session**: *Begin detailed project planning and development.*
-
-</details>
-
-<details>
-<summary>Week 1: 2025-07-01 to 2025-07-05</summary>
-
-### 2025-07-15: Integrative Dashboard Creation & Brand Compliance
+### 2025-07-15: Integrative Dashboard and Branding Updates
 - **Action**: *Created a new integrative dashboard and updated all pages with proper branding and theme support.*
 - **Updates**:
   - 🎯 *Created new integrative dashboard at `/dashboard` combining BTCPay Servers and Shops in one view.*

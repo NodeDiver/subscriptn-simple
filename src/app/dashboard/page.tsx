@@ -15,8 +15,118 @@ interface Server {
   name: string;
   host_url: string;
   created_at: string;
+  provider_id: number;
+  is_owner: number; // 1 if user owns, 0 if not
   is_online?: boolean;
   last_seen_online?: string;
+}
+
+// Revenue Component for inline display - only shown to owners
+function RevenueDisplay({ serverId }: { serverId: number }) {
+  const [revenuePeriod, setRevenuePeriod] = useState<'monthly' | 'yearly'>('monthly');
+  
+  // Calculate revenue for this specific server (placeholder - $10 per active subscription)
+  const monthlyRevenue = 10; // Placeholder - would be calculated based on server's shops
+  const yearlyRevenue = monthlyRevenue * 12;
+  const currentRevenue = revenuePeriod === 'monthly' ? monthlyRevenue : yearlyRevenue;
+  
+  // Convert to satoshis (1 USD ≈ 3,000,000 sats as placeholder)
+  const satoshiRate = 3000000;
+  const revenueInSats = Math.round(currentRevenue * satoshiRate);
+
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 ml-4 min-w-[200px]">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center">
+          <div className="p-1 bg-[#0F766E]/10 dark:bg-[#14B8A6]/20 rounded">
+            <svg className="w-4 h-4 text-[#0F766E] dark:text-[#14B8A6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+            </svg>
+          </div>
+          <div className="ml-2">
+            <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Revenue</p>
+            <p className="text-sm font-bold text-gray-900 dark:text-white">${currentRevenue}</p>
+          </div>
+        </div>
+        
+        {/* Period Toggle */}
+        <div className="flex items-center bg-gray-100 dark:bg-gray-600 rounded p-1">
+          <button
+            onClick={() => setRevenuePeriod('monthly')}
+            className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
+              revenuePeriod === 'monthly'
+                ? 'bg-white dark:bg-gray-500 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            M
+          </button>
+          <button
+            onClick={() => setRevenuePeriod('yearly')}
+            className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
+              revenuePeriod === 'yearly'
+                ? 'bg-white dark:bg-gray-500 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            Y
+          </button>
+        </div>
+      </div>
+      
+      {/* Satoshi Conversion */}
+      <div className="text-center">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          {revenueInSats.toLocaleString()} sats
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Contact Admin Component for non-owners
+function ContactAdminDisplay({ serverName }: { serverName: string }) {
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 ml-4 min-w-[200px]">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center">
+          <div className="p-1 bg-[#F59E0B]/10 dark:bg-[#FBBF24]/20 rounded">
+            <svg className="w-4 h-4 text-[#F59E0B] dark:text-[#FBBF24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </div>
+          <div className="ml-2">
+            <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Contact Admin</p>
+            <p className="text-xs text-gray-900 dark:text-white font-medium">{serverName}</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Contact Button */}
+      <div className="text-center">
+        <button className="text-xs bg-[#F59E0B] dark:bg-[#FBBF24] text-white px-3 py-1 rounded hover:bg-[#D97706] dark:hover:bg-[#F59E0B] transition-colors">
+          Message Admin
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// View Details Button Component
+function ViewDetailsButton({ serverId }: { serverId: number }) {
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 ml-4 min-w-[120px]">
+      <div className="flex items-center justify-center">
+        <Link
+          href={`/infrastructure/${serverId}`}
+          className="text-xs bg-[#1E3A8A] dark:bg-[#3B82F6] text-white px-3 py-1 rounded hover:bg-[#0F766E] dark:hover:bg-[#14B8A6] transition-colors font-medium text-center leading-tight"
+        >
+          <div>View</div>
+          <div>Details</div>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default function Dashboard() {
@@ -24,8 +134,6 @@ export default function Dashboard() {
   const [servers, setServers] = useState<Server[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [revenuePeriod, setRevenuePeriod] = useState<'monthly' | 'yearly'>('monthly');
-  const [currency, setCurrency] = useState('USD');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,18 +173,10 @@ export default function Dashboard() {
   const activeSubscriptions = shops.filter(shop => shop.subscription_status === 'active').length;
   const pendingSubscriptions = shops.filter(shop => shop.subscription_status === 'pending').length;
   const cancelledSubscriptions = shops.filter(shop => shop.subscription_status === 'cancelled').length;
-  
-  // Revenue calculation (placeholder - $10 per active subscription)
-  const monthlyRevenue = activeSubscriptions * 10;
-  const yearlyRevenue = monthlyRevenue * 12;
-  const currentRevenue = revenuePeriod === 'monthly' ? monthlyRevenue : yearlyRevenue;
-  
-  // Convert to satoshis (1 USD ≈ 3,000,000 sats as placeholder)
-  const satoshiRate = 3000000;
-  const revenueInSats = Math.round(currentRevenue * satoshiRate);
 
   // Conditional display logic
-  const hasServers = servers.length > 0;
+  const ownedServers = servers.filter(server => server.is_owner === 1);
+  const hasOwnedServers = ownedServers.length > 0;
   const hasActiveSubscriptions = activeSubscriptions > 0;
 
   // Helper function to format last seen time
@@ -103,9 +203,9 @@ export default function Dashboard() {
         {/* Enhanced Overview Section */}
         <div className="mb-8">
           {/* Main Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
             {/* Shops Subscribed - Only show if user has servers */}
-            {hasServers && (
+            {hasOwnedServers && (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
                   <div className="p-2 bg-[#2D5A3D]/10 dark:bg-[#10B981]/20 rounded-lg">
@@ -122,7 +222,7 @@ export default function Dashboard() {
             )}
 
             {/* BTCPay Servers - Only show if user has servers */}
-            {hasServers && (
+            {hasOwnedServers && (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
                   <div className="p-2 bg-[#1E3A8A]/10 dark:bg-[#3B82F6]/20 rounded-lg">
@@ -132,58 +232,8 @@ export default function Dashboard() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">BTCPay Servers</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{servers.length}</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{ownedServers.length}</p>
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Monthly/Yearly Revenue - Only show if user has servers */}
-            {hasServers && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <div className="p-2 bg-[#0F766E]/10 dark:bg-[#14B8A6]/20 rounded-lg">
-                      <svg className="w-6 h-6 text-[#0F766E] dark:text-[#14B8A6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Revenue</p>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-white">${currentRevenue}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Period Toggle */}
-                  <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-                    <button
-                      onClick={() => setRevenuePeriod('monthly')}
-                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
-                        revenuePeriod === 'monthly'
-                          ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                      }`}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      onClick={() => setRevenuePeriod('yearly')}
-                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
-                        revenuePeriod === 'yearly'
-                          ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                      }`}
-                    >
-                      Yearly
-                    </button>
-                  </div>
-                </div>
-                
-                {/* Satoshi Conversion */}
-                <div className="text-center">
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {revenueInSats.toLocaleString()} sats
-                  </p>
                 </div>
               </div>
             )}
@@ -236,12 +286,14 @@ export default function Dashboard() {
                           </p>
                         )}
                       </div>
-                      <Link
-                        href={`/infrastructure/${server.id}`}
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium ml-4"
-                      >
-                        View Details →
-                      </Link>
+                      
+                      {/* Revenue Display inline with server - only for owners */}
+                      {server.is_owner === 1 && <RevenueDisplay serverId={server.id} />}
+                      
+                      {/* Contact Admin Display for non-owners */}
+                      {server.is_owner === 0 && <ContactAdminDisplay serverName={server.name} />}
+                      
+                      <ViewDetailsButton serverId={server.id} />
                     </div>
                   ))}
                 </div>

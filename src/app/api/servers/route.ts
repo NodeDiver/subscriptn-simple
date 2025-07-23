@@ -17,8 +17,17 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDatabase();
+    // Get all servers with ownership information
     const servers = await db.all(
-      'SELECT id, name, host_url, created_at FROM servers WHERE provider_id = ? ORDER BY created_at DESC',
+      `SELECT 
+        s.id, 
+        s.name, 
+        s.host_url, 
+        s.created_at,
+        s.provider_id,
+        CASE WHEN s.provider_id = ? THEN 1 ELSE 0 END as is_owner
+      FROM servers s 
+      ORDER BY s.created_at DESC`,
       [user.id]
     );
 
