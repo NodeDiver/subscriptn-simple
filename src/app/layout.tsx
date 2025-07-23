@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { BitcoinConnectProvider } from '@/contexts/BitcoinConnectContext';
 import { ToastProvider } from '@/contexts/ToastContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import TopBar from '@/components/TopBar';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -37,7 +38,14 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('subscriptn-theme');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  if (!theme || theme === 'system') {
+                    // Default to system preference
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                      document.documentElement.classList.add('dark');
+                    } else {
+                      document.documentElement.classList.remove('dark');
+                    }
+                  } else if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
                     document.documentElement.classList.remove('dark');
@@ -50,18 +58,20 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ErrorBoundary>
-          <AuthProvider>
-            <BitcoinConnectProvider>
-              <ToastProvider>
-                <div className="min-h-screen bg-white dark:bg-gray-900">
-                  <TopBar />
-                  <main className="flex-1">
-                    {children}
-                  </main>
-                </div>
-              </ToastProvider>
-            </BitcoinConnectProvider>
-          </AuthProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <BitcoinConnectProvider>
+                <ToastProvider>
+                  <div className="min-h-screen bg-white dark:bg-gray-900">
+                    <TopBar />
+                    <main className="flex-1">
+                      {children}
+                    </main>
+                  </div>
+                </ToastProvider>
+              </BitcoinConnectProvider>
+            </AuthProvider>
+          </ThemeProvider>
         </ErrorBoundary>
       </body>
     </html>

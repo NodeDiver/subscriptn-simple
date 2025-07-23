@@ -90,7 +90,8 @@ export async function getDatabase(): Promise<Database> {
     { username: 'demo1', password: 'demo1' },
     { username: 'demo2', password: 'demo2' },
     { username: 'demo3', password: 'demo3' },
-    { username: 'demo4', password: 'demo4' }
+    { username: 'demo4', password: 'demo4' },
+    { username: 'muni', password: 'muni' }
   ];
 
   // Only create demo users in development
@@ -117,6 +118,19 @@ export async function getDatabase(): Promise<Database> {
           [1, 'Demo BTCPay Server', 'https://btcpay.aceptabitcoin.com', 'demo-api-key', firstUser.id]
         );
         console.log('Demo server created with ID 1');
+      }
+    }
+
+    // Create muni's BTCPay server if it doesn't exist
+    const muniUser = await db.get('SELECT id FROM users WHERE username = ?', ['muni']);
+    if (muniUser) {
+      const existingMuniServer = await db.get('SELECT id FROM servers WHERE name = ? AND provider_id = ?', ['muni btcpayserver', muniUser.id]);
+      if (!existingMuniServer) {
+        await db.run(
+          'INSERT INTO servers (name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?)',
+          ['muni btcpayserver', 'https://muni-btcpay.example.com', 'muni-api-key-123', muniUser.id]
+        );
+        console.log('Muni BTCPay server created');
       }
     }
   }

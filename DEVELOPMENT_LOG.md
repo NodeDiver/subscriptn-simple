@@ -29,6 +29,110 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-07-15 (Evening)
 
+### User Prompt: Create New Dashboard Page
+**Time**: Late evening session  
+**Request**: We are now going to be creating a new dashboard page. for this you will duplicate the shop dashboard page. we will name this new page just Dashboard, and you will place an access link to it in the dropdown menu, below shop dashboard, inside that same section. choose an appropriate icon. and we will start modifying this a little bit later. on the next prompt.
+
+**Actions Taken**:
+- **Step 1**: Created new Dashboard page:
+  - Duplicated the shops dashboard structure from `src/app/shops/page.tsx`
+  - Created new file `src/app/dashboard/page.tsx`
+  - Updated page title to "Dashboard" and description to "Welcome to your SubscriptN dashboard"
+  - Maintained all existing functionality and styling
+  - Kept the same data fetching logic for shops
+- **Step 2**: Added Dashboard link to UserDropdown menu:
+  - Added new link below "Shops Dashboard" in the dropdown menu
+  - Used appropriate dashboard icon (bar chart/graph icon)
+  - Applied teal color scheme to differentiate from other menu items
+  - Maintained consistent styling and hover effects
+  - Added proper click handler to close dropdown
+
+**Files Created/Modified**:
+- `src/app/dashboard/page.tsx` - New Dashboard page (duplicated from shops dashboard)
+- `src/components/UserDropdown.tsx` - Added Dashboard link to dropdown menu
+
+**Technical Implementation**:
+- **Page Structure**: Identical to shops dashboard with updated titles
+- **Navigation**: Accessible via `/dashboard` route
+- **Icon**: Used bar chart icon to represent dashboard functionality
+- **Styling**: Applied teal color scheme for visual distinction
+- **Functionality**: Currently shows same shop data as shops dashboard (ready for future modifications)
+
+**Result**: ✅ New Dashboard page created and accessible via dropdown menu. The page is ready for future modifications as requested.
+
+### User Prompt: Enhanced Theme System with Three Options
+**Time**: Late evening session  
+**Request**: We are now going to do some changes to the dark/light switch: we are going to add a system option, and this will be the default option, which means it will be using the system's color (if the system is using light the system option is switched on, and it will because it will be the default option, if the system is light, the theme will use light, if the system is using dark and the system option is selected then the web will be dark) and also this means the icons should be slightly smaller. and this button thing will have to be moved to the dropdown menu, but this time place it below the logout button, also on its own small section. You can check how the vercel website does it, here is a screenshot for example, it does not have to be exactly like vercel, just similar.
+
+**Actions Taken**:
+- **Step 1**: Created new ThemeContext with three-option system:
+  - Added support for 'system', 'light', and 'dark' themes
+  - Implemented system preference detection using `window.matchMedia('(prefers-color-scheme: dark)')`
+  - Made 'system' the default option
+  - Added proper localStorage persistence
+  - Implemented real-time system theme change detection
+- **Step 2**: Created ThemeSwitcher component:
+  - Designed with three small icons (System, Light, Dark) similar to Vercel
+  - Used smaller 4x4 icons instead of larger ones
+  - Added proper hover states and active state highlighting
+  - Implemented accessibility features (aria-labels, titles)
+- **Step 3**: Updated layout and components:
+  - Added ThemeProvider to layout.tsx
+  - Updated theme flash prevention script to handle three-option system
+  - Moved theme switcher from TopBar to UserDropdown menu
+  - Positioned theme switcher below logout button in its own section
+  - Removed old theme toggle from TopBar
+
+**Files Created/Modified**:
+- `src/contexts/ThemeContext.tsx` - New theme context with three-option system
+- `src/components/ThemeSwitcher.tsx` - New theme switcher component with small icons
+- `src/app/layout.tsx` - Added ThemeProvider and updated flash prevention
+- `src/components/UserDropdown.tsx` - Added ThemeSwitcher below logout button
+- `src/components/TopBar.tsx` - Removed old theme toggle
+
+**Technical Implementation**:
+- **System Detection**: Uses `window.matchMedia('(prefers-color-scheme: dark)')` for real-time system preference
+- **Default Behavior**: 'system' is the default option, automatically follows OS theme
+- **Persistence**: Theme preference saved to localStorage
+- **Real-time Updates**: Automatically updates when system theme changes (in system mode)
+- **Small Icons**: 4x4 size icons for compact design
+- **Accessibility**: Proper ARIA labels and keyboard navigation
+
+**Result**: ✅ Enhanced theme system now supports System (default), Light, and Dark options with smaller icons, positioned in the dropdown menu below the logout button, similar to Vercel's implementation.
+
+### User Prompt: Move Bitcoin Connect Button to Dropdown Menu
+**Time**: Late evening session  
+**Request**: We are going to move the bitcoin connect button to the dropdown menu, we might run into troubles because there might be a size issue. I want the bitcoin connect button to be on top of the log out button, with its own separator section, just like the log out button has its own section (a line separates it). Lets hope it does not breaks.
+
+**Actions Taken**:
+- **Step 1**: Analyzed current structure:
+  - Identified `ConnectWalletButton` component in TopBar
+  - Reviewed `UserDropdown` component structure
+  - Checked `BitcoinConnectContext` for proper integration
+- **Step 2**: Updated UserDropdown component:
+  - Added import for `useBitcoinConnectContext` and `ConnectWalletButton`
+  - Added Bitcoin Connect section above logout button
+  - Created separate section with "Bitcoin Wallet" label
+  - Added proper separator lines before and after the section
+  - Maintained consistent styling with other menu items
+- **Step 3**: Cleaned up TopBar component:
+  - Removed `ConnectWalletButton` import and usage
+  - Removed `useBitcoinConnectHandlers` import
+  - Removed Bitcoin Connect button from TopBar layout
+  - Simplified TopBar structure
+
+**Files Modified**:
+- `src/components/UserDropdown.tsx` - Added Bitcoin Connect button with proper sectioning
+- `src/components/TopBar.tsx` - Removed Bitcoin Connect button and related imports
+
+**Technical Implementation**:
+- **Layout**: Bitcoin Connect button placed in its own section with separators
+- **Styling**: Consistent with dropdown menu design and brand colors
+- **Functionality**: Maintains all existing Bitcoin Connect functionality
+- **Integration**: Uses existing `BitcoinConnectContext` and `ConnectWalletButton` components
+
+**Result**: ✅ Bitcoin Connect button successfully moved to the dropdown menu with proper sectioning and styling. No size issues encountered, and the button integrates seamlessly with the existing dropdown design.
+
 ### User Prompt: Add User Registration System and Beautiful Dropdown Menu
 **Time**: Evening session  
 **Request**: There is no sign up page, or logic on how to create new users. Also, add a nice looking dropdown menu for when a user is logged in and touches his name-icon on the top right corner, in the top bar. This dropdown menu must have some nice effect, and must be in tune with the color branding, but also easy to read, and have a dark and light mode. Under the menu we will place both infrastructure and shop dashboard links. So that we can remove them from the topbar since they are ugly in the topbar, and it would be nicer to have them on a dropdown menu, the logout button will also be moved down to that dropdown menu, the logout will be the last item on the menu list.

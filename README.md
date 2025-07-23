@@ -204,6 +204,8 @@ This includes:
     - Created `UserDropdown` component with smooth animations and dark mode support
     - Moved Infrastructure and Shops dashboard links to dropdown menu
     - Moved logout functionality to dropdown menu
+    - Moved Bitcoin Connect button to dropdown menu with its own section
+    - Moved theme switcher to dropdown menu with three options (System, Light, Dark)
     - Removed cluttered navigation links from TopBar
     - Added hover effects, transitions, and proper accessibility
     - Implemented click-outside and escape key to close functionality
@@ -214,7 +216,7 @@ This includes:
     - Smooth animations and hover effects
     - Proper keyboard navigation and accessibility
     - Responsive design for all screen sizes
-- **Result**: *Complete user registration system now allows new users to create accounts, and the beautiful dropdown menu provides a much cleaner, more professional user interface with all navigation options easily accessible.*
+- **Result**: *Complete user registration system now allows new users to create accounts, and the beautiful dropdown menu provides a much cleaner, more professional user interface with all navigation options easily accessible. Bitcoin Connect button and enhanced theme switcher are now neatly organized in the dropdown menu.*
 - **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
 
 ### 2025-07-15: Light/Dark Mode Toggle - Complete Application Overhaul
@@ -406,6 +408,21 @@ This includes:
 
 <details>
 <summary>Week 1: 2025-07-01 to 2025-07-05</summary>
+
+### 2025-07-15: Integrative Dashboard Creation & Brand Compliance
+- **Action**: *Created a new integrative dashboard and updated all pages with proper branding and theme support.*
+- **Updates**:
+  - 🎯 *Created new integrative dashboard at `/dashboard` combining BTCPay Servers and Shops in one view.*
+  - 🎨 *Moved Bitcoin Connect button from TopBar to user dropdown menu for cleaner design.*
+  - 🌙 *Enhanced theme system with System/Light/Dark mode toggle in dropdown menu.*
+  - 🖼️ *Updated all dashboard pages (server-specific, shop-specific) with proper dark mode support.*
+  - 🎨 *Applied official SubscriptN brand colors throughout the application.*
+  - 🗄️ *Added "muni" user and "muni btcpayserver" to database for testing.*
+  - 📊 *Implemented conditional display logic for stats cards based on user data.*
+  - 💰 *Added monthly/yearly revenue toggle with satoshi conversion display.*
+  - 🔧 *Removed subscription status breakdown section for cleaner interface.*
+- **Result**: *Complete integrative dashboard with proper branding, theme support, and conditional logic working.*
+- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
 
 ### 2025-06-30: Kickoff and Local Setup
 - **Task**: *Forked the ZapPlanner repository.*

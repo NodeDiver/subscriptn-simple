@@ -4,7 +4,10 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBitcoinConnectContext } from '@/contexts/BitcoinConnectContext';
 import { User } from '@/lib/auth';
+import ConnectWalletButton from './ConnectWalletButton';
+import ThemeSwitcher from './ThemeSwitcher';
 
 interface UserDropdownProps {
   user: User;
@@ -14,6 +17,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth();
+  const { isConnected, connect, disconnect } = useBitcoinConnectContext();
   const router = useRouter();
 
   // Close dropdown when clicking outside
@@ -130,6 +134,38 @@ export default function UserDropdown({ user }: UserDropdownProps) {
               <span>Shops Dashboard</span>
             </Link>
 
+            {/* Dashboard */}
+            <Link
+              href="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-subscriptn-teal-50 dark:hover:bg-teal-500/10 hover:text-subscriptn-teal-600 dark:hover:text-teal-400 transition-all duration-200 group"
+            >
+              <div className="w-5 h-5 text-subscriptn-teal-500 dark:text-teal-400 group-hover:scale-110 transition-transform duration-200">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </Link>
+
+            {/* Divider */}
+            <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+
+            {/* Bitcoin Connect Section */}
+            <div className="px-4 py-2">
+              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Bitcoin Wallet</div>
+              <div className="flex items-center justify-center">
+                <ConnectWalletButton 
+                  onConnect={() => {
+                    console.log('Bitcoin wallet connected from dropdown');
+                  }}
+                  onDisconnect={() => {
+                    console.log('Bitcoin wallet disconnected from dropdown');
+                  }}
+                />
+              </div>
+            </div>
+
             {/* Divider */}
             <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
 
@@ -145,6 +181,12 @@ export default function UserDropdown({ user }: UserDropdownProps) {
               </div>
               <span>Logout</span>
             </button>
+
+            {/* Divider */}
+            <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+
+            {/* Theme Switcher */}
+            <ThemeSwitcher />
           </div>
         </div>
       )}
