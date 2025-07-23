@@ -29,6 +29,50 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-07-15 (Evening)
 
+### User Prompt: Add User Registration System and Beautiful Dropdown Menu
+**Time**: Evening session  
+**Request**: There is no sign up page, or logic on how to create new users. Also, add a nice looking dropdown menu for when a user is logged in and touches his name-icon on the top right corner, in the top bar. This dropdown menu must have some nice effect, and must be in tune with the color branding, but also easy to read, and have a dark and light mode. Under the menu we will place both infrastructure and shop dashboard links. So that we can remove them from the topbar since they are ugly in the topbar, and it would be nicer to have them on a dropdown menu, the logout button will also be moved down to that dropdown menu, the logout will be the last item on the menu list.
+
+**Actions Taken**:
+- **Step 1**: Created comprehensive user registration system:
+  - Created `/register` page with form validation and dark mode support
+  - Added `/api/auth/register` endpoint with proper validation and security
+  - Enhanced auth library with `createUser()` function and password hashing
+  - Updated validation library with `registerValidationSchema`
+  - Modified homepage to show Sign In/Sign Up buttons for non-authenticated users
+  - Added proper error handling and user feedback throughout
+- **Step 2**: Created beautiful UserDropdown component:
+  - Created `UserDropdown` component with smooth animations and dark mode support
+  - Moved Infrastructure and Shops dashboard links to dropdown menu
+  - Moved logout functionality to dropdown menu
+  - Removed cluttered navigation links from TopBar
+  - Added hover effects, transitions, and proper accessibility
+  - Implemented click-outside and escape key to close functionality
+  - Used SubscriptN brand colors and gradients throughout
+- **Step 3**: Enhanced user experience:
+  - Dropdown includes user profile info, dashboard links, and logout
+  - Beautiful gradient avatars with user initials
+  - Smooth animations and hover effects
+  - Proper keyboard navigation and accessibility
+  - Responsive design for all screen sizes
+
+**Files Created/Modified**:
+- `src/app/register/page.tsx` - New registration page with form validation
+- `src/app/api/auth/register/route.ts` - New registration API endpoint
+- `src/lib/auth.ts` - Added `createUser()` function
+- `src/lib/validation.ts` - Added `registerValidationSchema`
+- `src/app/page.tsx` - Updated homepage with Sign In/Sign Up buttons
+- `src/components/UserDropdown.tsx` - New dropdown menu component
+- `src/components/TopBar.tsx` - Integrated UserDropdown and removed old navigation
+
+**Technical Implementation**:
+- **Security**: Password hashing with bcrypt (10 salt rounds), input sanitization, rate limiting
+- **Validation**: Username format validation, password strength requirements, duplicate prevention
+- **UX**: Dark mode support, responsive design, smooth animations, proper accessibility
+- **Branding**: Consistent use of SubscriptN green, teal, and blue gradients
+
+**Result**: ✅ Complete user registration system now allows new users to create accounts, and the beautiful dropdown menu provides a much cleaner, more professional user interface with all navigation options easily accessible.
+
 ### User Prompt: Change Security Email and Simplify SECURITY.md
 **Time**: Evening session  
 **Request**: Change the security email to nodediver@proton.me and make the SECURITY.md file super small and concise, removing all incident response timelines and enterprise features to make it appropriate for a beginner project.
