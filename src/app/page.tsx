@@ -32,18 +32,39 @@ export default function HomePage() {
               Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners. Streamline recurring payments and server management in one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href={user ? '/infrastructure' : '/login'}
-                className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-3 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                Get Started
-              </Link>
-              <Link
-                href="/shops"
-                className="border-2 border-subscriptn-blue-500 dark:border-blue-500 text-subscriptn-blue-500 dark:text-blue-400 px-8 py-3 rounded-lg hover:bg-subscriptn-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-200 text-lg font-medium"
-              >
-                Browse Shops
-              </Link>
+              {user ? (
+                // User is logged in - show dashboard links
+                <>
+                  <Link
+                    href="/infrastructure"
+                    className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-3 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    Go to Dashboard
+                  </Link>
+                  <Link
+                    href="/shops"
+                    className="border-2 border-subscriptn-blue-500 dark:border-blue-500 text-subscriptn-blue-500 dark:text-blue-400 px-8 py-3 rounded-lg hover:bg-subscriptn-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-200 text-lg font-medium"
+                  >
+                    Browse Shops
+                  </Link>
+                </>
+              ) : (
+                // User is not logged in - show auth options
+                <>
+                  <Link
+                    href="/login"
+                    className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-3 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="border-2 border-subscriptn-blue-500 dark:border-blue-500 text-subscriptn-blue-500 dark:text-blue-400 px-8 py-3 rounded-lg hover:bg-subscriptn-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-200 text-lg font-medium"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

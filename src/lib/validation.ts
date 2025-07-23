@@ -135,6 +135,36 @@ export const authValidationSchema = {
   }
 };
 
+export const registerValidationSchema = {
+  username: {
+    required: true,
+    type: 'string' as const,
+    minLength: 3,
+    maxLength: 50,
+    pattern: /^[a-zA-Z0-9_-]+$/,
+    custom: (value: unknown) => {
+      const username = String(value);
+      if (username.toLowerCase() === 'admin' || username.toLowerCase() === 'root') {
+        return 'Username not allowed';
+      }
+      return null;
+    }
+  },
+  password: {
+    required: true,
+    type: 'string' as const,
+    minLength: 6,
+    maxLength: 100,
+    custom: (value: unknown) => {
+      const password = String(value);
+      if (password.length < 6) {
+        return 'Password must be at least 6 characters long';
+      }
+      return null;
+    }
+  }
+};
+
 export const serverValidationSchema = {
   name: {
     required: true,
