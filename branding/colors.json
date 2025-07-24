@@ -79,7 +79,7 @@
     },
     "warning": {
       "light": "#F59E0B",
-      "dark": "#FBBF24",
+      "dark": "#93C5FD",
       "description": "Warning state color"
     },
     "error": {

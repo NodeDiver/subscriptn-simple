@@ -112,23 +112,6 @@ function ContactAdminDisplay({ serverName }: { serverName: string }) {
   );
 }
 
-// View Details Button Component
-function ViewDetailsButton({ serverId }: { serverId: number }) {
-  return (
-    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 ml-4 min-w-[120px]">
-      <div className="flex items-center justify-center">
-        <Link
-          href={`/infrastructure/${serverId}`}
-          className="text-xs bg-[#1E3A8A] dark:bg-[#3B82F6] text-white px-3 py-1 rounded hover:bg-[#0F766E] dark:hover:bg-[#14B8A6] transition-colors font-medium text-center leading-tight"
-        >
-          <div>View</div>
-          <div>Details</div>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 export default function Dashboard() {
   const [shops, setShops] = useState<Shop[]>([]);
   const [servers, setServers] = useState<Server[]>([]);
@@ -201,42 +184,21 @@ export default function Dashboard() {
         </div>
         
         {/* Enhanced Overview Section */}
-        <div className="mb-8">
-          {/* Main Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
-            {/* Shops Subscribed - Only show if user has servers */}
-            {hasOwnedServers && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center">
-                  <div className="p-2 bg-[#2D5A3D]/10 dark:bg-[#10B981]/20 rounded-lg">
-                    <svg className="w-6 h-6 text-[#2D5A3D] dark:text-[#10B981]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Shops Subscribed</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeSubscriptions}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* BTCPay Servers - Only show if user has servers */}
-            {hasOwnedServers && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center">
-                  <div className="p-2 bg-[#1E3A8A]/10 dark:bg-[#3B82F6]/20 rounded-lg">
-                    <svg className="w-6 h-6 text-[#1E3A8A] dark:text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-                    </svg>
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">BTCPay Servers</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{ownedServers.length}</p>
-                  </div>
-                </div>
-              </div>
-            )}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Overview</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{servers.length}</div>
+              <div className="text-gray-600 dark:text-gray-400">Total Servers</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">0</div>
+              <div className="text-gray-600 dark:text-gray-400">Shops Subscribed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">0</div>
+              <div className="text-gray-600 dark:text-gray-400">other info</div>
+            </div>
           </div>
         </div>
         
@@ -268,9 +230,9 @@ export default function Dashboard() {
                 <div className="space-y-4">
                   {servers.map((server) => (
                     <div key={server.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                      <div className="flex-1">
+                      <Link href={`/infrastructure/${server.id}`} className="flex-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded p-2 -m-2">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-medium text-gray-900 dark:text-white">{server.name}</h3>
+                          <h3 className="font-medium text-gray-900 dark:text-white hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">{server.name}</h3>
                           <div className="flex items-center">
                             <div className={`w-2 h-2 rounded-full mr-2 ${server.is_online ? 'bg-green-500' : 'bg-red-500'}`}></div>
                             <span className={`text-xs font-medium ${server.is_online ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
@@ -278,22 +240,20 @@ export default function Dashboard() {
                             </span>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{server.host_url}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">Added {new Date(server.created_at).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">{server.host_url}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">Added {new Date(server.created_at).toLocaleDateString()}</p>
                         {!server.is_online && server.last_seen_online && (
                           <p className="text-xs text-red-500 dark:text-red-400 mt-1">
                             Last seen online: {formatLastSeen(server.last_seen_online)}
                           </p>
                         )}
-                      </div>
+                      </Link>
                       
                       {/* Revenue Display inline with server - only for owners */}
                       {server.is_owner === 1 && <RevenueDisplay serverId={server.id} />}
                       
                       {/* Contact Admin Display for non-owners */}
                       {server.is_owner === 0 && <ContactAdminDisplay serverName={server.name} />}
-                      
-                      <ViewDetailsButton serverId={server.id} />
                     </div>
                   ))}
                 </div>

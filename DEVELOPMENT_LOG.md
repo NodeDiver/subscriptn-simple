@@ -29,6 +29,81 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-07-15 (Evening)
 
+### User Prompt: Enhanced BTCPay Server Registration Form
+**Time**: Late evening session  
+**Request**: When adding a new BTCPay server, we need to ask for more information:
+- Optional short description
+- Public listing option (yes/no, default: yes)
+- Available slots for shops (default: 21)
+- Mandatory lightning address for receiving payments
+
+**Actions Taken**:
+- **Step 1**: Updated database schema:
+  - Added `description` (TEXT, optional) to servers table
+  - Added `is_public` (BOOLEAN, default: 1) to servers table
+  - Added `slots_available` (INTEGER, default: 21) to servers table
+  - Added `lightning_address` (TEXT, required) to servers table
+  - Added migration statements for existing databases
+- **Step 2**: Enhanced validation schema:
+  - Added validation rules for all new fields
+  - Made lightning_address mandatory with email format validation
+  - Added range validation for slots_available (1-1000)
+  - Added length validation for description (max 500 chars)
+- **Step 3**: Updated API endpoint:
+  - Modified POST method to handle new fields
+  - Updated database insert statement
+  - Enhanced GET method to return new fields
+- **Step 4**: Redesigned form UI:
+  - Added description textarea (optional)
+  - Added lightning address input (mandatory)
+  - Added slots available number input (default: 21)
+  - Added public listing radio buttons (default: yes)
+  - Improved form layout and validation feedback
+  - Added helpful descriptions for each field
+
+**Files Modified**:
+- `src/lib/database.ts` - Added new columns and migration
+- `src/lib/validation.ts` - Enhanced server validation schema
+- `src/app/api/servers/route.ts` - Updated API to handle new fields
+- `src/app/infrastructure/add-server/page.tsx` - Complete form redesign
+
+**Technical Implementation**:
+- **Database Migration**: Safe migration that adds columns if they don't exist
+- **Validation**: Comprehensive validation for all new fields with proper error messages
+- **UI/UX**: Clean, intuitive form with proper field grouping and helpful descriptions
+- **Default Values**: Sensible defaults (21 slots, public listing enabled)
+- **Error Handling**: Proper validation feedback for all fields
+
+**Result**: ✅ Enhanced BTCPay server registration form with comprehensive information collection. The form now captures all necessary details for server management and payment processing.
+
+### User Prompt: Fix Settings Page API Data Extraction Error
+**Time**: Late evening session  
+**Request**: In the settings section, when I click on BTCPay server subsection or shop subsection an error appears: "userServers.map is not a function" and "userShops.map is not a function".
+
+**Actions Taken**:
+- **Step 1**: Identified the root cause:
+  - API endpoints `/api/servers` and `/api/shops` return data in nested format: `{ servers: [...] }` and `{ shops: [...] }`
+  - Settings page was trying to use the response directly as arrays instead of extracting the nested properties
+- **Step 2**: Fixed data extraction in fetch functions:
+  - Updated `fetchUserServers()` to use `data.servers || []` instead of `servers`
+  - Updated `fetchUserShops()` to use `data.shops || []` instead of `shops`
+  - Added proper error handling with fallback to empty arrays
+- **Step 3**: Added additional safety checks:
+  - Added `(userServers || []).map()` and `(userShops || []).map()` to prevent future errors
+  - Updated empty state checks to use the same safety pattern
+  - Ensured arrays are always arrays before mapping operations
+
+**Files Modified**:
+- `src/app/settings/page.tsx` - Fixed API data extraction and added safety checks
+
+**Technical Implementation**:
+- **Data Extraction**: Properly extract nested arrays from API responses
+- **Error Handling**: Added fallback to empty arrays on API errors
+- **Safety Checks**: Added null/undefined checks before array operations
+- **Consistency**: Applied same pattern to both servers and shops sections
+
+**Result**: ✅ Settings page now properly handles API responses and displays BTCPay servers and shops without errors. The page is now robust against API response format changes.
+
 ### User Prompt: Add Wallet Section to Settings Page
 **Time**: Late evening session  
 **Request**: In the settings user section, I need you to add a new section that will be called a wallet, there you can copy the bitcoin connect button, and we might add some things in there in the future, I'll let you decide what to put there right now for show off.

@@ -279,20 +279,22 @@ This includes:
 - **Result**: *Dashboard now shows appropriate content based on server ownership - revenue for owned servers, contact admin for others.*
 - **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
 
-### 2025-07-15: Settings Page with Wallet Integration
-- **Action**: *Created comprehensive settings page with user account management features and added it to the dropdown menu, including a new Wallet section.*
+### 2025-07-15: Enhanced BTCPay Server Registration & Settings Page
+- **Action**: *Enhanced BTCPay server registration form with comprehensive information collection and fixed settings page API data extraction issues.*
 - **Updates**:
-  - ⚙️ *Created new settings page at `/settings` with branded design and familiar structure.*
-  - 👤 *Added Profile tab with display name, email, lightning address, and timezone settings.*
-  - 🔐 *Added Account tab with password change and two-factor authentication options.*
-  - 💰 *Added Wallet tab with Bitcoin Connect button and placeholder content for future features.*
-  - ⚡ *Added BTCPay Servers tab showing connected servers with status indicators.*
-  - 🏪 *Added Shops tab displaying user's shops with subscription details.*
-  - 🎛️ *Added Preferences tab with notification and auto-refresh settings.*
-  - 🔗 *Added Settings link to user dropdown menu below Dashboard link.*
-  - 🎨 *Applied consistent SubscriptN branding and dark mode support throughout.*
-- **Result**: *Complete settings page with all user account management features, wallet integration, and proper navigation integration.*
-- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
+  - ⚙️ *Enhanced BTCPay server registration form with new fields:*
+    - 📝 *Optional short description field (max 500 chars)*
+    - 🌐 *Public listing option (yes/no, default: yes)*
+    - 🔢 *Available slots for shops (default: 21, range 1-1000)*
+    - ⚡ *Mandatory lightning address for receiving subscription payments*
+  - 🗄️ *Updated database schema with new columns and safe migration*
+  - ✅ *Enhanced validation schema with comprehensive field validation*
+  - 🔧 *Fixed settings page API data extraction errors*
+  - 🎨 *Improved form UI with proper field grouping and helpful descriptions*
+  - 💰 *Added Wallet tab to settings page with Bitcoin Connect integration*
+  - 👤 *Added Profile, Account, BTCPay Servers, Shops, and Preferences tabs*
+- **Result**: *Complete BTCPay server registration system with comprehensive data collection and fully functional settings page.*
+- **Plan for next session**: *Continue enhancing the integrative dashboard and implement public server directory features.*
 
 ### 2025-07-15: Integrative Dashboard and Branding Updates
 - **Action**: *Created a new integrative dashboard and updated all pages with proper branding and theme support.*

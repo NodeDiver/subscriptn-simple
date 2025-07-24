@@ -30,6 +30,10 @@ export async function getDatabase(): Promise<Database> {
       host_url TEXT NOT NULL,
       api_key TEXT NOT NULL,
       provider_id INTEGER NOT NULL,
+      description TEXT,
+      is_public BOOLEAN DEFAULT 1,
+      slots_available INTEGER DEFAULT 21,
+      lightning_address TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (provider_id) REFERENCES users (id)
     );
@@ -81,6 +85,12 @@ export async function getDatabase(): Promise<Database> {
     ALTER TABLE subscription_history ADD COLUMN payment_method TEXT;
     ALTER TABLE subscription_history ADD COLUMN wallet_provider TEXT;
     ALTER TABLE subscription_history ADD COLUMN preimage TEXT;
+    
+    -- Add new columns to servers table if they don't exist (migration)
+    ALTER TABLE servers ADD COLUMN description TEXT;
+    ALTER TABLE servers ADD COLUMN is_public BOOLEAN DEFAULT 1;
+    ALTER TABLE servers ADD COLUMN slots_available INTEGER DEFAULT 21;
+    ALTER TABLE servers ADD COLUMN lightning_address TEXT;
   `);
 
   // Initialize with demo users if they don't exist

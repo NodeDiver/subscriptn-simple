@@ -42,11 +42,12 @@ export default function Settings() {
     try {
       const response = await fetch('/api/shops');
       if (response.ok) {
-        const shops = await response.json();
-        setUserShops(shops);
+        const data = await response.json();
+        setUserShops(data.shops || []);
       }
     } catch (error) {
       console.error('Error fetching shops:', error);
+      setUserShops([]);
     } finally {
       setLoadingShops(false);
     }
@@ -56,11 +57,12 @@ export default function Settings() {
     try {
       const response = await fetch('/api/servers');
       if (response.ok) {
-        const servers = await response.json();
-        setUserServers(servers);
+        const data = await response.json();
+        setUserServers(data.servers || []);
       }
     } catch (error) {
       console.error('Error fetching servers:', error);
+      setUserServers([]);
     } finally {
       setLoadingServers(false);
     }
@@ -359,7 +361,7 @@ export default function Settings() {
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2D5A3D] dark:border-[#10B981] mx-auto"></div>
                       <p className="text-gray-600 dark:text-gray-400 mt-2">Loading servers...</p>
                     </div>
-                  ) : userServers.length === 0 ? (
+                  ) : (userServers || []).length === 0 ? (
                     <div className="text-center py-8">
                       <p className="text-gray-600 dark:text-gray-400">No BTCPay servers found.</p>
                       <Link
@@ -370,7 +372,7 @@ export default function Settings() {
                       </Link>
                     </div>
                   ) : (
-                    userServers.map((server) => (
+                    (userServers || []).map((server) => (
                       <div key={server.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                         <div className="flex items-center justify-between">
                           <div>
@@ -416,7 +418,7 @@ export default function Settings() {
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2D5A3D] dark:border-[#10B981] mx-auto"></div>
                       <p className="text-gray-600 dark:text-gray-400 mt-2">Loading shops...</p>
                     </div>
-                  ) : userShops.length === 0 ? (
+                  ) : (userShops || []).length === 0 ? (
                     <div className="text-center py-8">
                       <p className="text-gray-600 dark:text-gray-400">No shops found.</p>
                       <Link
@@ -427,7 +429,7 @@ export default function Settings() {
                       </Link>
                     </div>
                   ) : (
-                    userShops.map((shop) => (
+                    (userShops || []).map((shop) => (
                       <div key={shop.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                         <div className="flex items-center justify-between">
                           <div>

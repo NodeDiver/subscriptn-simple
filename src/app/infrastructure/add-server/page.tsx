@@ -9,6 +9,10 @@ export default function AddServer() {
   const [name, setName] = useState('');
   const [hostUrl, setHostUrl] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [description, setDescription] = useState('');
+  const [isPublic, setIsPublic] = useState(true);
+  const [slotsAvailable, setSlotsAvailable] = useState(21);
+  const [lightningAddress, setLightningAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const router = useRouter();
@@ -25,7 +29,15 @@ export default function AddServer() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, hostUrl, apiKey }),
+        body: JSON.stringify({ 
+          name, 
+          host_url: hostUrl, 
+          api_key: apiKey,
+          description: description || undefined,
+          is_public: isPublic,
+          slots_available: slotsAvailable,
+          lightning_address: lightningAddress
+        }),
       });
 
       if (response.ok) {
@@ -66,7 +78,7 @@ export default function AddServer() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Server Name
+                Server Name *
               </label>
               <input
                 type="text"
@@ -85,8 +97,27 @@ export default function AddServer() {
             </div>
 
             <div>
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Description (Optional)
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.description ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                }`}
+                placeholder="Brief description of your BTCPay server..."
+              />
+              {errors.description && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.description}</p>
+              )}
+            </div>
+
+            <div>
               <label htmlFor="hostUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Host URL
+                Host URL *
               </label>
               <input
                 type="url"
@@ -94,19 +125,19 @@ export default function AddServer() {
                 value={hostUrl}
                 onChange={(e) => setHostUrl(e.target.value)}
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.hostUrl ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                  errors.host_url ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder="https://your-btcpay-server.com"
                 required
               />
-              {errors.hostUrl && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.hostUrl}</p>
+              {errors.host_url && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.host_url}</p>
               )}
             </div>
 
             <div>
               <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                API Key
+                API Key *
               </label>
               <input
                 type="password"
@@ -114,13 +145,96 @@ export default function AddServer() {
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.apiKey ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                  errors.api_key ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder="Your BTCPay Server API key"
                 required
               />
-              {errors.apiKey && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.apiKey}</p>
+              {errors.api_key && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.api_key}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="lightningAddress" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Lightning Address for Payments *
+              </label>
+              <input
+                type="text"
+                id="lightningAddress"
+                value={lightningAddress}
+                onChange={(e) => setLightningAddress(e.target.value)}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.lightning_address ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                }`}
+                placeholder="username@domain.com"
+                required
+              />
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                This is where you'll receive subscription payments from shop owners
+              </p>
+              {errors.lightning_address && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.lightning_address}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="slotsAvailable" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Available Slots for Shops *
+              </label>
+              <input
+                type="number"
+                id="slotsAvailable"
+                value={slotsAvailable}
+                onChange={(e) => setSlotsAvailable(Number(e.target.value))}
+                min="1"
+                max="1000"
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
+                  errors.slots_available ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                }`}
+                required
+              />
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Maximum number of shops that can connect to this server
+              </p>
+              {errors.slots_available && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.slots_available}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Public Listing *
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="isPublic"
+                    value="true"
+                    checked={isPublic === true}
+                    onChange={() => setIsPublic(true)}
+                    className="mr-2 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Yes - List on public directory</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="isPublic"
+                    value="false"
+                    checked={isPublic === false}
+                    onChange={() => setIsPublic(false)}
+                    className="mr-2 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">No - Private server only</span>
+                </label>
+              </div>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Public servers will be visible to shop owners looking for BTCPay servers
+              </p>
+              {errors.is_public && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.is_public}</p>
               )}
             </div>
 

@@ -188,6 +188,43 @@ export const serverValidationSchema = {
     type: 'string' as const,
     minLength: 10,
     maxLength: 200
+  },
+  description: {
+    required: false,
+    type: 'string' as const,
+    maxLength: 500
+  },
+  is_public: {
+    required: true,
+    type: 'boolean' as const
+  },
+  slots_available: {
+    required: true,
+    type: 'number' as const,
+    min: 1,
+    max: 1000,
+    custom: (value: unknown) => {
+      const slots = Number(value);
+      if (slots <= 0) {
+        return 'Slots available must be greater than 0';
+      }
+      if (slots > 1000) {
+        return 'Slots available cannot exceed 1000';
+      }
+      return null;
+    }
+  },
+  lightning_address: {
+    required: true,
+    type: 'string' as const,
+    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    custom: (value: unknown) => {
+      const address = String(value);
+      if (!address.includes('@')) {
+        return 'Lightning address must be in format: username@domain.com';
+      }
+      return null;
+    }
   }
 };
 

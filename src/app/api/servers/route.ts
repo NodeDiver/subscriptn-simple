@@ -25,6 +25,10 @@ export async function GET(request: NextRequest) {
         s.host_url, 
         s.created_at,
         s.provider_id,
+        s.description,
+        s.is_public,
+        s.slots_available,
+        s.lightning_address,
         CASE WHEN s.provider_id = ? THEN 1 ELSE 0 END as is_owner
       FROM servers s 
       ORDER BY s.created_at DESC`,
@@ -60,10 +64,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, host_url, api_key } = validation.data;
+    const { name, host_url, api_key, description, is_public, slots_available, lightning_address } = validation.data;
     const sanitizedName = sanitizeString(name as string);
     const sanitizedHostUrl = sanitizeString(host_url as string);
     const sanitizedApiKey = sanitizeString(api_key as string);
+    const sanitizedDescription = description ? sanitizeString(description as string) : null;
+    const sanitizedLightningAddress = sanitizeString(lightning_address as string);
+    const isPublic = Boolean(is_public);
+    const slotsAvailable = Number(slots_available);
 
     const db = await getDatabase();
     
@@ -91,8 +99,8 @@ export async function POST(request: NextRequest) {
 
     // No existing server with this host_url, create new one
     const result = await db.run(
-      'INSERT INTO servers (name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?)',
-      [sanitizedName, sanitizedHostUrl, sanitizedApiKey, user.id]
+      'INSERT INTO servers (name, host_url, api_key, provider_id, description, is_public, slots_available, lightning_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [sanitizedName, sanitizedHostUrl, sanitizedApiKey, user.id, sanitizedDescription, isPublic, slotsAvailable, sanitizedLightningAddress]
     );
 
     const newServer = await db.get(
