@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 import ConnectWalletButton from '@/components/ConnectWalletButton';
+import ToggleSwitch from '@/components/ToggleSwitch';
 
 interface Shop {
   id: number;
@@ -30,6 +31,11 @@ export default function Settings() {
   const [userServers, setUserServers] = useState<Server[]>([]);
   const [loadingShops, setLoadingShops] = useState(true);
   const [loadingServers, setLoadingServers] = useState(true);
+  
+  // Toggle switch states
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [lightningAlerts, setLightningAlerts] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -241,14 +247,23 @@ export default function Settings() {
                   </div>
 
                   <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-4">Two-Factor Authentication</h4>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Add an extra layer of security to your account</p>
-                      </div>
-                      <button className="bg-[#0F766E] dark:bg-[#14B8A6] text-white px-4 py-2 rounded-md hover:bg-[#1E3A8A] dark:hover:bg-[#3B82F6] transition-colors">
-                        Enable 2FA
-                      </button>
+                    <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-4">Account Settings</h4>
+                    <div className="space-y-6">
+                      <ToggleSwitch
+                        checked={true}
+                        onChange={() => {}}
+                        label="Two-Factor Authentication"
+                        description="Add an extra layer of security to your account"
+                        size="md"
+                      />
+                      
+                      <ToggleSwitch
+                        checked={false}
+                        onChange={() => {}}
+                        label="Session Management"
+                        description="Allow multiple active sessions across devices"
+                        size="md"
+                      />
                     </div>
                   </div>
                 </div>
@@ -302,27 +317,40 @@ export default function Settings() {
                         </div>
                       </div>
 
-                      <div className="mt-8 space-y-4">
-                        <h5 className="font-medium text-gray-900 dark:text-white">Wallet Features</h5>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div className="flex items-center space-x-3 p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
-                            <div className="w-6 h-6 bg-[#10B981]/10 dark:bg-[#34D399]/20 rounded flex items-center justify-center">
-                              <span className="text-[#10B981] dark:text-[#34D399] text-sm">✓</span>
-                            </div>
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Auto-payments</span>
-                          </div>
-                          <div className="flex items-center space-x-3 p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
-                            <div className="w-6 h-6 bg-[#10B981]/10 dark:bg-[#34D399]/20 rounded flex items-center justify-center">
-                              <span className="text-[#10B981] dark:text-[#34D399] text-sm">✓</span>
-                            </div>
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Invoice generation</span>
-                          </div>
-                          <div className="flex items-center space-x-3 p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
-                            <div className="w-6 h-6 bg-[#10B981]/10 dark:bg-[#34D399]/20 rounded flex items-center justify-center">
-                              <span className="text-[#10B981] dark:text-[#34D399] text-sm">✓</span>
-                            </div>
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Payment tracking</span>
-                          </div>
+                      <div className="mt-8 space-y-6">
+                        <h5 className="font-medium text-gray-900 dark:text-white">Wallet Settings</h5>
+                        <div className="space-y-4">
+                          <ToggleSwitch
+                            checked={true}
+                            onChange={() => {}}
+                            label="Auto-payments"
+                            description="Automatically process recurring payments"
+                            size="sm"
+                          />
+                          
+                          <ToggleSwitch
+                            checked={true}
+                            onChange={() => {}}
+                            label="Invoice generation"
+                            description="Generate Lightning invoices automatically"
+                            size="sm"
+                          />
+                          
+                          <ToggleSwitch
+                            checked={true}
+                            onChange={() => {}}
+                            label="Payment tracking"
+                            description="Track all payment history and status"
+                            size="sm"
+                          />
+                          
+                          <ToggleSwitch
+                            checked={false}
+                            onChange={() => {}}
+                            label="Advanced analytics"
+                            description="Enable detailed payment analytics and reports"
+                            size="sm"
+                          />
                         </div>
                       </div>
 
@@ -465,39 +493,30 @@ export default function Settings() {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Application Preferences</h3>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white">Email Notifications</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">Receive email updates about your subscriptions</p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" defaultChecked className="sr-only peer" />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#2D5A3D]/20 dark:peer-focus:ring-[#10B981]/20 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#2D5A3D] dark:peer-checked:bg-[#10B981]"></div>
-                        </label>
-                      </div>
+                    <div className="space-y-6">
+                      <ToggleSwitch
+                        checked={emailNotifications}
+                        onChange={setEmailNotifications}
+                        label="Email Notifications"
+                        description="Receive email updates about your subscriptions"
+                        size="md"
+                      />
                       
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white">Lightning Network Alerts</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">Get notified about payment status changes</p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" defaultChecked className="sr-only peer" />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#2D5A3D]/20 dark:peer-focus:ring-[#10B981]/20 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#2D5A3D] dark:peer-checked:bg-[#10B981]"></div>
-                        </label>
-                      </div>
+                      <ToggleSwitch
+                        checked={lightningAlerts}
+                        onChange={setLightningAlerts}
+                        label="Lightning Network Alerts"
+                        description="Get notified about payment status changes"
+                        size="md"
+                      />
 
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white">Auto-refresh Dashboard</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">Automatically refresh dashboard data every 30 seconds</p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" className="sr-only peer" />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#2D5A3D]/20 dark:peer-focus:ring-[#10B981]/20 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#2D5A3D] dark:peer-checked:bg-[#10B981]"></div>
-                        </label>
-                      </div>
+                      <ToggleSwitch
+                        checked={autoRefresh}
+                        onChange={setAutoRefresh}
+                        label="Auto-refresh Dashboard"
+                        description="Automatically refresh dashboard data every 30 seconds"
+                        size="md"
+                      />
                     </div>
                     <div className="mt-6">
                       <button
