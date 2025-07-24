@@ -29,6 +29,63 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-07-15 (Evening)
 
+### User Prompt: Document Private Server Invitations Feature
+**Time**: Late evening session  
+**Request**: Document the private server invitations feature idea discussed with ChatGPT. Create comprehensive documentation for future implementation without implementing it yet. The feature enables shop owners to connect to private BTCPay servers using unique invitation links.
+
+**Actions Taken**:
+- **Step 1**: Created comprehensive documentation file:
+  - **File**: `docs/private-server-invitations.md`
+  - **Content**: Complete technical implementation guide with 8 detailed steps
+  - **Scope**: Database schema, API routes, UI components, security considerations
+- **Step 2**: Added feature to roadmap:
+  - **Location**: Phase 4.4 - Private Server Invitations
+  - **Status**: Planned feature with detailed breakdown
+  - **Reference**: Links to documentation file
+- **Step 3**: Documented implementation phases:
+  - **Phase 1 (MVP)**: Basic invitation ID generation and join page
+  - **Phase 2 (Enhancements)**: QR codes and invitation expiration
+  - **Phase 3 (Advanced)**: Management dashboard and bulk features
+
+**Files Created/Modified**:
+- `docs/private-server-invitations.md` - Complete implementation guide (406 lines)
+- `ROADMAP.md` - Added private server invitations to Phase 4
+
+**Technical Documentation Includes**:
+- **Database Schema**: New `invite_id` column with migration
+- **API Routes**: New invitation lookup endpoint
+- **UI Components**: Join page and invitation link display
+- **Security**: Rate limiting, validation, audit logging
+- **Testing**: Comprehensive testing checklist
+- **Dependencies**: nanoid for ID generation, qrcode for QR codes
+
+**Future Implementation Benefits**:
+- **User Experience**: Private server owners can selectively share their infrastructure
+- **Security**: Controlled access through unique invitation links
+- **Flexibility**: Supports both public and private server models
+- **Scalability**: Foundation for advanced invitation management features
+
+**Result**: ✅ Complete documentation and roadmap integration for private server invitations feature. Ready for future implementation with comprehensive technical specifications.
+
+### User Prompt: Improved Server Capacity Description
+**Time**: Late evening session  
+**Request**: In the BTCPay server add-server page, the "Available Slots for Shops" field needs a more human-friendly description that explains this number is about server capacity, with real-world examples like "4GB RAM, 2 cores can handle 20-30 shops in an m4 LunaNode virtual machine."
+
+**Actions Taken**:
+- **Step 1**: Updated the field description to be more conversational and helpful
+- **Step 2**: Added real-world example with specific hardware specifications
+- **Step 3**: Made the language more user-friendly and informative
+
+**Files Modified**:
+- `src/app/infrastructure/add-server/page.tsx` - Updated slots available field description
+
+**Technical Implementation**:
+- **User Experience**: Changed from technical "Maximum number of shops that can connect" to conversational "How many shops can your server handle?"
+- **Guidance**: Added specific example with 4GB RAM, 2-core VM reference
+- **Clarity**: Explained that capacity depends on server resources
+
+**Result**: ✅ More user-friendly and informative description that helps server owners understand how to estimate their server capacity.
+
 ### User Prompt: Enhanced BTCPay Server Registration Form
 **Time**: Late evening session  
 **Request**: When adding a new BTCPay server, we need to ask for more information:

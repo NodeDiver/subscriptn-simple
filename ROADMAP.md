@@ -182,14 +182,26 @@
 - [ ] Add bulk subscription management for providers
 - [ ] Implement subscription expiration and renewal logic
 
-#### 4.4 Webhook & Integration System
+#### 4.4 Private Server Invitations
+- [ ] **Private Server Invitation System** - Enable shop owners to connect to private BTCPay servers using unique invitation links
+  - Implement unique invitation ID generation for private servers
+  - Create invitation join page (`/join-server/[inviteId]`)
+  - Add invitation link display for private server owners
+  - Implement copy-to-clipboard functionality for invitation links
+  - Add QR code generation for easy mobile sharing (optional)
+  - Create API endpoint for invitation lookup and validation
+  - Add security measures (rate limiting, expiration, audit logging)
+  - Update server registration form with improved private server messaging
+  - **Documentation**: Complete implementation guide available in `docs/private-server-invitations.md`
+
+#### 4.5 Webhook & Integration System
 - [ ] Implement BTCPay Server webhook integration
 - [ ] Add automatic admin rights management via Greenfield API
 - [ ] Create webhook signature verification
 - [ ] Add integration with other Bitcoin services
 - [ ] Implement ZapPlanner replacement with direct NWC
 
-#### 4.5 Enhanced UI/UX
+#### 4.6 Enhanced UI/UX
 - ✅ **Dark Mode Support** - Comprehensive Light/Dark Mode Toggle implemented across entire application
   - Simplified architecture with direct HTML class manipulation
   - Added dark mode support to all pages and components
@@ -201,7 +213,7 @@
 - [ ] Add real-time notifications and alerts
 - [ ] Fix Bitcoin Connect modal theming issues
 
-#### 4.6 Production Deployment
+#### 4.7 Production Deployment
 - [ ] Set up production environment
 - [ ] Implement proper logging and monitoring
 - [ ] Add performance optimization

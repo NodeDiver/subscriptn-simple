@@ -195,7 +195,8 @@ export default function AddServer() {
                 required
               />
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Maximum number of shops that can connect to this server
+                How many shops can your server handle? This depends on your server's resources. 
+                For example, a 4GB RAM, 2-core virtual machine (like m4.luna on LunaNode) can typically handle 20-30 shops comfortably.
               </p>
               {errors.slots_available && (
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.slots_available}</p>
