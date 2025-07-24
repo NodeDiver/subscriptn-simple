@@ -100,7 +100,7 @@ export default function HomePage() {
                 href="/infrastructure"
                 className="block w-full bg-blue-600 dark:bg-blue-500 text-white text-center py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
               >
-                Manage Infrastructure
+                Browse Servers
               </Link>
             </div>
 
@@ -146,7 +146,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">For Providers</h4>
               <ul className="space-y-2">
-                <li><Link href="/infrastructure" className="text-gray-600 dark:text-gray-300 hover:text-subscriptn-green-500 dark:hover:text-green-400">Infrastructure Dashboard</Link></li>
+                <li><Link href="/infrastructure" className="text-gray-600 dark:text-gray-300 hover:text-subscriptn-green-500 dark:hover:text-green-400">Browse Servers</Link></li>
                 <li><Link href="/infrastructure/add-server" className="text-gray-600 dark:text-gray-300 hover:text-subscriptn-green-500 dark:hover:text-green-400">Add Server</Link></li>
               </ul>
             </div>

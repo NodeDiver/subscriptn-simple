@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDatabase();
-    // Get all servers with ownership information
+    // Get all servers with ownership information and shop counts
     const servers = await db.all(
       `SELECT 
         s.id, 
@@ -29,8 +29,16 @@ export async function GET(request: NextRequest) {
         s.is_public,
         s.slots_available,
         s.lightning_address,
-        CASE WHEN s.provider_id = ? THEN 1 ELSE 0 END as is_owner
+        CASE WHEN s.provider_id = ? THEN 1 ELSE 0 END as is_owner,
+        COALESCE(shop_counts.shop_count, 0) as current_shops,
+        (s.slots_available - COALESCE(shop_counts.shop_count, 0)) as available_slots
       FROM servers s 
+      LEFT JOIN (
+        SELECT server_id, COUNT(*) as shop_count 
+        FROM shops 
+        WHERE subscription_status = 'active'
+        GROUP BY server_id
+      ) shop_counts ON s.id = shop_counts.server_id
       ORDER BY s.created_at DESC`,
       [user.id]
     );

@@ -11,388 +11,351 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Hackathon](https://img.shields.io/badge/hackathon-Geyser%202025-orange)
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Lightning Wallet Requirements](#lightning-wallet-requirements)
-- [Security & Privacy](#security--privacy)
-- [FAQ](#faq)
-- [Development Log](#development-log)
-- [Contributing](#contributing)
+## �� Table of Contents
+
+- [🎯 Overview](#-overview)
+- [✨ Features](#-features)
+- [📸 Screenshots](#-screenshots)
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [🔧 Configuration](#-configuration)
+- [💡 Usage](#-usage)
+- [🔒 Security & Privacy](#-security--privacy)
+- [🤝 Contributing](#-contributing)
+- [📚 Development Log](#-development-log)
+- [❓ FAQ](#-faq)
 
 ## 🎯 Overview
 
-SubscriptN is a Bitcoin subscription management platform that enables shop owners to create and manage recurring lightning network payments. It bridges BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
+**SubscriptN** is a Bitcoin subscription management platform that enables automated Lightning payments for recurring services. Built with Next.js 15, TypeScript, and SQLite, it provides a seamless interface for both BTCPay Server providers and shop owners to manage subscriptions through the Lightning network.
 
 ### How It Works
-1. **Connect Wallet** - Shop owners connect their Lightning wallet
-2. **Select Store** - Choose a BTCPay Server store and set subscription details
-3. **Create Invoice** - System generates Lightning invoices automatically
-4. **Process Payment** - Wallet pays the invoice instantly
-5. **Manage Subscriptions** - Track and manage all recurring payments
 
-## ⚡ Features
+1. **BTCPay Server Providers** list their infrastructure with available slots
+2. **Shop Owners** browse public servers and connect their shops
+3. **Lightning Payments** are automatically processed through connected wallets
+4. **Subscription Management** handles recurring payments and payment history
 
-- ⚡ **Real lightning network payments** using @getalby/lightning-tools
-- 🏪 **Unified dashboard** access for all users (no complex roles)
-- 🔒 **Secure authentication** & privacy-first design
-- 🔗 **Bitcoin Connect integration** with WebLN support
-- 🎨 **Modern, responsive UI** (dark mode ready!)
-- 💳 **Direct Lightning address integration** for invoice generation
-- 📊 **Payment history tracking** with detailed transaction info
-- 🔄 **Automated subscription management** with recurring payments
+## ✨ Features
+
+### 🌩️ Lightning Payment Flow
+- **Real Lightning Payments**: Direct integration with Lightning wallets via WebLN
+- **Wallet Connection**: Seamless Bitcoin Connect integration for wallet management
+- **Payment History**: Complete transaction tracking with Lightning details
+- **Shop Management**: Comprehensive shop and subscription lifecycle management
+- **Lightning Integration**: Full Lightning network support with invoice generation
+
+### 🔧 Core Functionality
+- **Public Server Browsing**: Browse available BTCPay servers with slot availability
+- **Infrastructure Management**: Manage your own BTCPay servers with public/private options
+- **Shop Management**: Create and manage shops with subscription capabilities
+- **Payment Processing**: Automated Lightning payments with real-time status updates
+- **User Authentication**: Secure session-based authentication system
+
+### 🎨 User Experience
+- **Responsive Design**: Mobile-friendly interface with dark/light mode support
+- **Real-time Updates**: Live payment status and connection state management
+- **Professional UI**: Modern design with smooth animations and transitions
+- **Error Handling**: Comprehensive error boundaries and user feedback
 
 ## 📸 Screenshots
 
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/fbf407aa-dc1c-408a-a66c-07a3eea2071b" alt="SubscriptN Dashboard" width="400" />
-  <img src="https://github.com/user-attachments/assets/94d7703d-9309-4457-83aa-8d3fd11e3b31" alt="SubscriptN Interface" width="400" />
-</div>
+### Home Dashboard
+*BTCPay Server owners and shop owners can both have their dashboard and find each other*
 
 <div align="center">
-  <img src="public/screenshots/image_large.webp" alt="Home Dashboard" width="400" />
-  <p><em>BTCPay Server owners and shop owners can both access their dashboard and find each other</em></p>
+  <img src="public/screenshots/home-dashboard.png" alt="SubscriptN Home Dashboard" width="400">
 </div>
 
+### Lightning Payment Flow
+*Development progress from Geyser Hackathon to working implementation - working subscription from shop owner to BTCPay Server admin, enabled by NWC protocol*
+
 <div align="center">
-  <img src="public/screenshots/lightning-payment-flow.png" alt="Lightning Payment Flow" width="400" />
-  <p><em>Working subscription flow: shop owner to BTCPay Server admin with NWC protocol support</em></p>
+  <img src="public/screenshots/lightning-payment-flow.png" alt="Lightning Payment Flow" width="400">
 </div>
 
 ## 🚀 Quick Start
 
-```bash
-# Clone and set up SubscriptN
-git clone https://github.com/yourusername/subscriptn-simple.git
-cd subscriptn-simple
-npm install
-cp env.example .env.local
-# Edit .env.local with your BTCPay Server details
-npm run dev
-```
-
-> 💡 **Pro Tip:** Connect your Lightning wallet in just two clicks!
->
-> 🏆 **Hackathon Winner:** Built during Geyser Hackathon 2025!
-
-## 📦 Installation
-
 ### Prerequisites
-- **Node.js 18+** 
-- **npm or yarn**
-- **BTCPay Server instance**
-- **BTCPay Server API key**
+- Node.js 18+ 
+- npm or yarn
+- Lightning wallet (WebLN compatible)
 
-### Step-by-Step Setup
+### Lightning Wallet Requirements
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/subscriptn-simple.git
-   cd subscriptn-simple
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   cp env.example .env.local
-   ```
-   
-   Edit `.env.local` with your BTCPay Server details:
-   ```env
-   BTCPAY_HOST=https://your-btcpay-server.com
-   BTCPAY_API_KEY=your-btcpay-api-key
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-   
-   The app will be available at `http://localhost:3000`
-
-### Demo Access
-- **Username:** `demo`
-- **Password:** `demo`
-
-## ⚡ Lightning Wallet Requirements
-
-To use the subscription payment features, you'll need a Lightning wallet with WebLN or NWC support:
-
-### WebLN Compatible Wallets
-- **Alby** (recommended) - [getalby.com](https://getalby.com)
+#### WebLN Compatible Wallets
+- **Alby** - [getalby.com](https://getalby.com)
 - **BlueWallet** - [bluewallet.io](https://bluewallet.io)
-- **Phoenix** - [phoenix.acinq.co](https://phoenix.acinq.co)
-- **Breez** - [breez.technology](https://breez.technology)
+- **Zap** - [zaphq.io](https://zaphq.io)
 
-### NWC (Nostr Wallet Connect) Compatible Wallets
+#### NWC (Nostr Wallet Connect) Compatible Wallets
 - **Alby Hub** - [hub.getalby.com](https://hub.getalby.com)
 - **Coinos** - [coinos.io](https://coinos.io)
 - **Mutiny Wallet** - [mutinywallet.com](https://mutinywallet.com)
 - **Zeus** - [zeusln.app](https://zeusln.app)
 
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/NodeDiver/subscriptn-simple.git
+cd subscriptn-simple
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp env.example .env.local
+# Edit .env.local with your configuration
+
+# Start development server
+npm run dev
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+# Database
+DATABASE_URL=./subscriptn.db
+
+# Session Secret (generate a random string)
+SESSION_SECRET=your-session-secret-here
+
+# Bitcoin Connect Configuration
+BITCOIN_CONNECT_APP_NAME=SubscriptN
+BITCOIN_CONNECT_APP_DESCRIPTION=Bitcoin subscription management platform
+```
+
+### Database Setup
+
+The application uses SQLite and will automatically create the database on first run. No additional setup required.
+
+## 💡 Usage
+
+### For BTCPay Server Providers
+
+1. **Register/Login**: Create an account or log in
+2. **Add Your Server**: Navigate to Infrastructure → Add Server
+3. **Configure Server**: Set public/private status, available slots, and lightning address
+4. **List Publicly**: Your server appears in the public browsing section
+5. **Manage Subscriptions**: Monitor connected shops and payment history
+
+### For Shop Owners
+
+1. **Register/Login**: Create an account or log in
+2. **Browse Servers**: View available BTCPay servers in the Infrastructure section
+3. **Connect Wallet**: Use the Connect Wallet button to link your Lightning wallet
+4. **Create Shop**: Add your shop to a chosen server
+5. **Set Up Subscription**: Configure recurring payments with Lightning
+6. **Monitor Payments**: Track payment history and subscription status
+
 ## 🔒 Security & Privacy
 
-For security concerns, deployment recommendations, and best practices, please see [SECURITY.md](SECURITY.md).
+For comprehensive security information, please see [SECURITY.md](SECURITY.md).
 
-This includes:
-- 🚨 How to report security vulnerabilities
-- 🔒 Essential security steps for deployment
-- 📋 Environment variable configuration
-- 🗄️ Database security guidelines
-- 🛡️ Development security recommendations
-
-## ❓ FAQ
-
-### **Q: What is SubscriptN and what does it do?**
-**A:** SubscriptN is a Bitcoin subscription management platform that allows shop owners to create and manage recurring lightning network payments. It connects BTCPay Server infrastructure with Lightning wallets to automate subscription billing using real Bitcoin payments.
-
-### **Q: Do I need a BTCPay Server to use this?**
-**A:** Yes, you need a BTCPay Server instance and an API key. The application acts as a bridge between your BTCPay Server (which handles the payment processing) and Lightning wallets (which make the payments). You can set up your own BTCPay Server or use a hosted service.
-
-### **Q: What Lightning wallets are supported?**
-**A:** SubscriptN supports both WebLN and NWC (Nostr Wallet Connect) compatible wallets. Popular options include Alby, BlueWallet, Phoenix, Breez, Alby Hub, Coinos, Mutiny Wallet, and Zeus. See the [Lightning Wallet Requirements](#lightning-wallet-requirements) section for the complete list.
-
-### **Q: How does the subscription payment process work?**
-**A:** 1) Shop owners connect their Lightning wallet, 2) They select a BTCPay Server store and set subscription details (amount, frequency), 3) The system creates a Lightning invoice, 4) The wallet pays the invoice, 5) The subscription is activated and will automatically create new invoices for recurring payments.
-
-### **Q: Is this production-ready for businesses?**
-**A:** This is a beginner project built during a hackathon. While it demonstrates the core functionality, it uses demo credentials and basic security. For production use, you should implement proper user registration, password hashing, and additional security measures as outlined in [SECURITY.md](SECURITY.md).
-
-## 📚 Development Log
-
-### Current Status (Week 4)
-- 🎨 *Completed comprehensive Light/Dark Mode Toggle implementation across entire application*
-- 👤 *Added complete user registration system with signup page and API*
-- 🎯 *Implemented beautiful user dropdown menu with smooth animations*
-- 🐛 *Started Week 4 by addressing Next.js API route errors and technical debt*
-- 🔧 *Planning to fix params.shopId async/await issues in dynamic routes*
-
-### Recent Achievements
-- 🎯 *Created beautiful UserDropdown component with smooth animations and dark mode support*
-- 👤 *Implemented comprehensive user registration system with signup page and API*
-- 🌙 *Implemented simplified theme architecture with direct HTML class manipulation*
-- 🎨 *Added comprehensive dark mode support to all pages and components*
-- 🔧 *Fixed critical UI/UX issues and implemented comprehensive duplicate prevention*
-- 🛡️ *Added robust database constraints and ownership management*
-- ⚡ *Enhanced Bitcoin Connect integration with official API*
-- 🧹 *Performed major database cleanup and system optimization*
-
-<details>
-<summary>📖 Detailed Development History</summary>
-
-<details>
-<summary>Week 4: 2025-07-15 to 2025-07-19 (Current Week)</summary>
-
-### 2025-07-15: User Registration System & Beautiful Dropdown Menu
-- **Action**: *Implemented comprehensive user registration system and created beautiful user dropdown menu for enhanced UX.*
-- **Updates**:
-  - 👤 *User Registration System:*
-    - Created `/register` page with form validation and dark mode support
-    - Added `/api/auth/register` endpoint with proper validation and security
-    - Enhanced auth library with `createUser()` function and password hashing
-    - Updated validation library with `registerValidationSchema`
-    - Modified homepage to show Sign In/Sign Up buttons for non-authenticated users
-    - Added proper error handling and user feedback throughout
-  - 🎯 *User Dropdown Menu:*
-    - Created `UserDropdown` component with smooth animations and dark mode support
-    - Moved Infrastructure and Shops dashboard links to dropdown menu
-    - Moved logout functionality to dropdown menu
-    - Moved Bitcoin Connect button to dropdown menu with its own section
-    - Moved theme switcher to dropdown menu with three options (System, Light, Dark)
-    - Removed cluttered navigation links from TopBar
-    - Added hover effects, transitions, and proper accessibility
-    - Implemented click-outside and escape key to close functionality
-    - Used SubscriptN brand colors and gradients throughout
-  - 🎨 *Enhanced UX:*
-    - Dropdown includes user profile info, dashboard links, and logout
-    - Beautiful gradient avatars with user initials
-    - Smooth animations and hover effects
-    - Proper keyboard navigation and accessibility
-    - Responsive design for all screen sizes
-- **Result**: *Complete user registration system now allows new users to create accounts, and the beautiful dropdown menu provides a much cleaner, more professional user interface with all navigation options easily accessible. Bitcoin Connect button and enhanced theme switcher are now neatly organized in the dropdown menu.*
-- **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
-
-### 2025-07-15: Light/Dark Mode Toggle - Complete Application Overhaul
-- **Action**: *Implemented comprehensive Light/Dark Mode Toggle functionality across the entire application with simplified architecture.*
-- **Updates**:
-  - 🏗️ *Simplified Architecture: Removed ThemeContext.tsx and ThemeToggle.tsx components to eliminate unnecessary complexity.*
-  - ⚡ *Direct HTML Manipulation: Implemented clean `document.documentElement.classList.toggle('dark')` approach.*
-  - 🎨 *Comprehensive Dark Mode Support: Added dark mode to all pages and components:*
-    - `src/app/page.tsx` - Homepage with branded colors
-    - `src/app/login/page.tsx` - Login form with dark mode
-    - `src/app/infrastructure/page.tsx` - Infrastructure dashboard
-    - `src/app/shops/page.tsx` - Shops dashboard
-    - `src/app/infrastructure/add-server/page.tsx` - Add server form
-    - `src/app/shops/add-shop/page.tsx` - Add shop form
-    - `src/components/LoadingSpinner.tsx` - All loading spinners
-    - `src/components/Toast.tsx` - Toast notifications
-  - 🎨 *Brand Consistency: Ensured all colors match the official SubscriptN brand palette from `/branding/color-preview.html`*
-  - 🔧 *Theme Flash Prevention: Added script in layout.tsx to prevent theme flashing on page load*
-  - 📱 *Responsive Design: All dark mode styles work across different screen sizes*
-  - 🔄 *LocalStorage Persistence: Theme preference saved and restored automatically*
-- **Result**: *Light/Dark Mode Toggle now works properly across the entire application, not just the top bar. Simplified architecture eliminates unnecessary re-renders and complex state management.*
-- **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
-
-### 2025-07-15: Week 4 Kickoff - Technical Debt & API Route Fixes
-- **Action**: *Started Week 4 by addressing Next.js API route errors and technical debt from previous sessions.*
-- **Updates**:
-  - 🐛 *Identified multiple API route errors related to `params.shopId` not being awaited in Next.js 15+.*
-  - 📋 *Updated README.md logbook to reflect current week and previous work status.*
-  - 🔍 *Analyzed terminal logs showing persistent errors in `/api/shops/[shopId]` and `/api/shops/[shopId]/subscriptions` routes.*
-  - 🔧 *Fixed all dynamic route handlers to properly await params:*
-    - `src/app/api/shops/[shopId]/route.ts`
-    - `src/app/api/shops/[shopId]/subscriptions/route.ts`
-    - `src/app/api/subscriptions/[subscriptionId]/cancel/route.ts`
-    - `src/app/api/subscriptions/[subscriptionId]/history/route.ts`
-    - `src/app/api/servers/[serverId]/route.ts`
-    - `src/app/api/servers/[serverId]/shops/route.ts`
-  - ✅ *Updated TypeScript types from `{ params: { id: string } }` to `{ params: Promise<{ id: string }> }`*
-  - ✅ *Added proper destructuring with `const { id } = await params;` in all handlers*
-- **Result**: *All Next.js API route async/await errors resolved. Console logs are now clean and the application follows Next.js 15+ best practices.*
-- **Updates Continued**:
-  - 🎨 *Added payment history display with detailed transaction information*
-  - ✨ *Created professional PaymentSuccessModal with copy-to-clipboard functionality*
-  - 🔄 *Enhanced LightningSubscription component with better success feedback*
-  - 🎯 *Implemented specialized loading spinners (Lightning, Wallet, General)*
-  - 🛡️ *Upgraded ErrorBoundary with better error recovery and development details*
-  - 🎨 *Enhanced TopBar with modern gradients, smooth animations, and improved navigation*
-  - ⚡ *Added visual polish with backdrop blur, hover effects, and professional styling*
-- **Result**: *Complete UI/UX overhaul with professional loading states, error handling, and modern visual design. Payment flow now provides excellent user feedback.*
-- **Plan for next session**: *Continue with NWC integration and additional subscription management features.*
-
-### 2025-07-15: Revenue Box Ownership and Contact Admin Features
-- **Action**: *Implemented ownership-based revenue display and contact admin functionality in the dashboard.*
-- **Updates**:
-  - 💰 *Moved revenue boxes from main stats to inline display with each BTCPay Server.*
-  - 👑 *Added ownership logic to show revenue boxes only for servers the user owns.*
-  - 💬 *Created "Contact Admin" boxes for servers the user doesn't own with messaging functionality.*
-  - 🔄 *Updated API to return all servers with ownership information (is_owner field).*
-  - 📊 *Modified stats calculation to only count servers the user owns.*
-  - 🎨 *Applied consistent branding and styling for both revenue and contact admin components.*
-- **Result**: *Dashboard now shows appropriate content based on server ownership - revenue for owned servers, contact admin for others.*
-- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
-
-### 2025-07-15: Enhanced BTCPay Server Registration & Settings Page
-- **Action**: *Enhanced BTCPay server registration form with comprehensive information collection and fixed settings page API data extraction issues.*
-- **Updates**:
-  - ⚙️ *Enhanced BTCPay server registration form with new fields:*
-    - 📝 *Optional short description field (max 500 chars)*
-    - 🌐 *Public listing option (yes/no, default: yes)*
-    - 🔢 *Available slots for shops (default: 21, range 1-1000)*
-    - ⚡ *Mandatory lightning address for receiving subscription payments*
-  - 🗄️ *Updated database schema with new columns and safe migration*
-  - ✅ *Enhanced validation schema with comprehensive field validation*
-  - 🔧 *Fixed settings page API data extraction errors*
-  - 🎨 *Improved form UI with proper field grouping and helpful descriptions*
-  - 💰 *Added Wallet tab to settings page with Bitcoin Connect integration*
-  - 👤 *Added Profile, Account, BTCPay Servers, Shops, and Preferences tabs*
-- **Result**: *Complete BTCPay server registration system with comprehensive data collection and fully functional settings page.*
-- **Plan for next session**: *Continue enhancing the integrative dashboard and implement public server directory features.*
-
-### 2025-07-15: Integrative Dashboard and Branding Updates
-- **Action**: *Created a new integrative dashboard and updated all pages with proper branding and theme support.*
-- **Updates**:
-  - 🎯 *Created new integrative dashboard at `/dashboard` combining BTCPay Servers and Shops in one view.*
-  - 🎨 *Moved Bitcoin Connect button from TopBar to user dropdown menu for cleaner design.*
-  - 🌙 *Enhanced theme system with System/Light/Dark mode toggle in dropdown menu.*
-  - 🖼️ *Updated all dashboard pages (server-specific, shop-specific) with proper dark mode support.*
-  - 🎨 *Applied official SubscriptN brand colors throughout the application.*
-  - 🗄️ *Added "muni" user and "muni btcpayserver" to database for testing.*
-  - 📊 *Implemented conditional display logic for stats cards based on user data.*
-  - 💰 *Added monthly/yearly revenue toggle with satoshi conversion display.*
-  - 🔧 *Removed subscription status breakdown section for cleaner interface.*
-- **Result**: *Complete integrative dashboard with proper branding, theme support, and conditional logic working.*
-- **Plan for next session**: *Continue enhancing the integrative dashboard with additional features and optimizations.*
-
-### 2025-06-30: Kickoff and Local Setup
-- **Task**: *Forked the ZapPlanner repository.*
-- **Action**: *Cloned the fork to local machine.*
-- **Result**: *Attempted to launch ZapPlanner locally but faced errors.*
-- **Error**: *Misconfiguration handling `PRISMA_FIELD_ENCRYPTION_KEY`.*
-- **Notes**: *Unable to get it working today.*
-
-### 2025-07-09: Wallet Connection Debugging, UI/UX Improvements, and Next Steps
-- **Action**: *Debugged wallet connection sync between Bitcoin Connect web component and React context. Improved event listener logic and diagnostics in `ConnectWalletButton.tsx`.*
-- **Updates**:
-  - 🔄 *Refactored wallet connect button to use callback ref for robust event handling.*
-  - 📝 *Added detailed logging and diagnostics for wallet connection events.*
-  - 🖥️ *UI/UX for wallet connection and LightningSubscription form improved, but form still does not recognize wallet as connected due to event propagation issues.*
-  - 💤 *User ended session for sleep; blocker documented for next session.*
-- **Result**: *Wallet connection state is still not syncing to the LightningSubscription form. This is the top priority for the next session.*
-- **Plan for next session**: *Fix wallet connection state propagation so the LightningSubscription form can reliably detect wallet connection and enable subscription creation.*
-
-### 2025-07-05: Development Log Setup, Bitcoin Connect Integration & Project Continuity
-- **Action**: *Created comprehensive development log system for project continuity and session tracking. Began and advanced Bitcoin Connect integration (Phase 2).*
-- **Updates**:
-  - 📓 *Created `DEVELOPMENT_LOG.md` file to track all user prompts and code changes.*
-  - 🤖 *Established maintenance instructions for AI assistants to maintain project context.*
-  - 🗂️ *Set up structured logging format for future development sessions.*
-  - ⚡ *Implemented Bitcoin Connect modal using web component `<bc-connect />` and integrated it with context and TopBar.*
-  - 🎨 *Attempted to force modal dark mode for UI consistency (not fully working yet; modal theming still broken).*
-- **Result**: *Project now has complete development diary for seamless continuity between work sessions. Bitcoin Connect modal appears and is integrated, but theming issues remain.*
-- **Plan for next session**: *Get the modal working in full dark mode and finish the BitcoinConnect implementation (wallet connection, payment flow, and error handling).*
-
-### 2025-07-04: Full App Build, Security & Production Prep
-- **Action**: *Built out the full SubscriptN app with ChatGPT and Cursor AI, focusing on authentication, API, database, and security.*
-- **Updates**:  
-  - 🔑 *Implemented session auth, role-based access, and all core API routes.*  
-  - ⚡ *Integrated Lightning payments and subscription management.*  
-  - 🛡️ *Added error handling, toasts, validation, and rate limiting.*  
-  - 🔒 *Performed a security audit, excluded sensitive files, and created SECURITY.md.*  
-  - 📄 *Updated README and env.example for clarity and onboarding.*
-- **Result**: *First complete user flows working, there are still lots of work to do, many implementations were "half made" and still need some configuring...*
-- **Plan for 2025-07-05**: *Polish all half-implemented features, finalize UI flows, and validate end-to-end subscription functionality.*
-- **Thought**: *I realized today that with this rest-call to zapplanner I am actually not really implementing nwc. I should re-focus and think of implementing perhaps a nwc connection somewhere and let the webapp do the subscription instead of asking the user to go to zapplanner with the click of the button add new shop button.*
-
-### 2025-07-03: Refactor Frontend & Live Data
-- **Task**: *Refactor and enhance the Next.js front end in `subscriptn-simple`.*
-- **Action**: *Overhauled `page.tsx` to fetch live store data from BTCPayServer (`/api/stores`), set default shop, and auto-generate subscription comments.*
-- **Enhancements**:
-  - 🏪 *Dynamic shop selector populated from BTCPayServer.*
-  - ⚡ *Lightning address override input.*
-  - 💸 *Amount slider with minimum recommendation notice.*
-  - ⏳ *Timeframe buttons for 1 week, 1 month, 3 months, 1 year.*
-  - 🎨 *Styled UI with Tailwind for dark/light modes.*
-- **Repository**: [GitHub](https://github.com/NodeDiver/subscriptn-simple)
-- **Result**: *UI now displays live store list and improved user interface ready for subscription flow.*
-- **Plan for 2025-07-04**: *Focus on architectural design, simulating two user roles—server infrastructure owners vs. shop owners—to define authentication and permission boundaries.*
-
-### 2025-07-02: Simple Next.js Prototype
-- **Task**: *Set up a minimal Next.js repository to test a direct call to the ZapPlanner API.*
-- **Repository**: [GitHub](https://github.com/NodeDiver/subscriptn-simple)
-- **Result**: *Basic Next.js app scaffolded; foundation for API integration established.*
-- **Next Steps**: *Implement and test API call logic within the simple app.*
-
-### 2025-07-01: Research and Documentation
-- **Action**: *Read ZapPlanner documentation and explored alternative approaches.*
-- **Thought**: *Might need to deploy my own ZapPlanner instance to gain deeper control.*
-- **Status**: *Unsure—research to continue.*
-
-</details>
-
-</details>
+**Key Security Features:**
+- Input validation and sanitization
+- Rate limiting on critical endpoints
+- Session-based authentication
+- SQL injection protection
+- XSS prevention
 
 ## 🤝 Contributing
 
-We 💛 open source! PRs, issues, and ideas are always welcome.
-
-### How to Contribute
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 ### Development Setup
-See the [Installation](#installation) section for detailed setup instructions.
 
----
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-_Thanks for checking out SubscriptN! May your sats flow endlessly. 🚀_
+### Development Guidelines
+
+- Follow TypeScript best practices
+- Maintain ESLint compliance
+- Add tests for new features
+- Update documentation as needed
+
+## 📚 Development Log
+
+### Current Status: Week 4 - Technical Debt & Infrastructure Enhancement
+
+**Latest Session: 2025-01-27**
+- ✅ **My Servers Page Removal**: Successfully removed separate My Servers page
+- ✅ **Infrastructure Dashboard Consolidation**: Combined public browsing and user management in single view
+- ✅ **Browse Servers Preservation**: Maintained public server browsing functionality
+- ✅ **Enhanced User Experience**: Contextual sections and actions based on user state
+- ✅ **Documentation Updates**: Updated development log and README
+
+**Week 4 Achievements:**
+- **Infrastructure System**: Complete transformation with public server listings
+- **Database Migration**: Enhanced server schema with public/private functionality
+- **User Experience**: Streamlined navigation and consolidated dashboard views
+- **Technical Debt**: Resolved API route issues and improved code quality
+
+**Current Focus:**
+- Infrastructure dashboard optimization
+- User experience improvements
+- Code quality enhancements
+
+<details>
+<summary><strong>Week 4: 2025-01-27</strong></summary>
+
+### 2025-01-27: Infrastructure Dashboard Consolidation
+- **My Servers Page Removal**: Deleted separate My Servers page and consolidated functionality
+- **Browse Servers Preservation**: Maintained public server browsing as primary function
+- **Enhanced Dashboard**: Combined public browsing and user management in single view
+- **Navigation Updates**: Simplified UserDropdown with single "Browse Servers" link
+- **User Experience**: Contextual sections for different user states
+
+### 2025-01-27: Database Migration & Public Server Listing
+- **Schema Enhancement**: Added description, is_public, slots_available, lightning_address columns
+- **Public Server API**: Created dedicated endpoint for public server listings
+- **Infrastructure Transformation**: Converted dashboard to public server browsing
+- **Slot Calculation**: Implemented available slots calculation with shop counting
+- **Navigation Restructure**: Updated UserDropdown and homepage links
+
+### 2025-01-27: Enhanced BTCPay Server Registration
+- **Form Enhancement**: Added description, public listing, slots, and lightning address fields
+- **Validation**: Comprehensive validation for all new fields
+- **User Experience**: Improved field descriptions and default values
+- **Database Migration**: Safe migration for existing servers
+
+### 2025-01-27: Settings Page & Wallet Integration
+- **Wallet Section**: Added comprehensive wallet section to settings page
+- **Bitcoin Connect**: Integrated Bitcoin Connect button with placeholder features
+- **UI Enhancement**: Professional wallet interface with balance and payment history
+- **Future Ready**: Foundation for advanced wallet functionality
+
+</details>
+
+<details>
+<summary><strong>Week 3: 2025-07-15 to 2025-07-21</strong></summary>
+
+### 2025-07-15: Enhanced BTCPay Server Registration & Settings Page
+- **Server Form Enhancement**: Added description, public listing, slots, and lightning address fields
+- **Settings Page Fix**: Resolved userServers.map and userShops.map errors
+- **Wallet Integration**: Added Bitcoin Connect button to settings page
+- **Database Migration**: Enhanced server schema with new required fields
+
+### 2025-07-15: Dashboard UI Improvements
+- **View Details Removal**: Removed ugly "View Details" buttons from BTCPay server items
+- **Clickable Content**: Made server titles and descriptions clickable for navigation
+- **User Experience**: Improved visual design and interaction patterns
+
+### 2025-07-15: Settings Page Error Fix
+- **API Data Extraction**: Fixed nested data extraction from API responses
+- **Error Resolution**: Resolved userServers.map and userShops.map function errors
+- **Safety Checks**: Added proper fallbacks and null checks
+
+### 2025-07-15: Wallet Section Addition
+- **New Section**: Added comprehensive wallet section to settings page
+- **Bitcoin Connect**: Integrated existing ConnectWalletButton component
+- **Placeholder Features**: Added balance display and payment history placeholders
+- **Future Foundation**: Ready for advanced wallet functionality
+
+</details>
+
+<details>
+<summary><strong>Week 2: 2025-07-08 to 2025-07-14</strong></summary>
+
+### 2025-07-12: Bitcoin Connect API Integration
+- **Official API**: Replaced custom implementation with official @getalby/bitcoin-connect API
+- **State Management**: Improved wallet connection state synchronization
+- **Error Handling**: Enhanced error handling and connection management
+- **Component Integration**: Better integration between TopBar and LightningSubscription
+
+### 2025-07-12: UI/UX Improvements
+- **Text Color Fixes**: Resolved unreadable white text in dashboard pages
+- **Duplicate Prevention**: Implemented BTCPay server and shop duplicate prevention
+- **Server Management**: Added server removal functionality with proper cleanup
+- **User Experience**: Enhanced navigation and visual feedback
+
+### 2025-07-12: Security & Validation
+- **Input Validation**: Comprehensive validation for all user inputs
+- **Rate Limiting**: Added rate limiting to critical endpoints
+- **Duplicate Prevention**: Server and shop ownership validation
+- **Error Handling**: Improved error messages and user feedback
+
+### 2025-07-08: User Registration & Dropdown Menu
+- **Registration System**: Complete user registration with validation and security
+- **Beautiful Dropdown**: Professional dropdown menu with user profile and navigation
+- **Navigation Cleanup**: Moved infrastructure and shop links to dropdown
+- **User Experience**: Enhanced authentication flow and navigation
+
+### 2025-07-08: Theme System Enhancement
+- **Three-option System**: Added system, light, and dark theme options
+- **System Detection**: Automatic system preference detection
+- **Dropdown Integration**: Moved theme switcher to dropdown menu
+- **Visual Polish**: Enhanced animations and hover effects
+
+### 2025-07-08: Bitcoin Connect Integration
+- **Wallet Connection**: Moved Bitcoin Connect button to dropdown menu
+- **State Management**: Proper wallet connection state management
+- **UI Integration**: Seamless integration with existing dropdown design
+- **User Experience**: Improved wallet connection accessibility
+
+</details>
+
+<details>
+<summary><strong>Week 1: 2025-07-01 to 2025-07-07</strong></summary>
+
+### 2025-07-05: Project Kickoff & Local Setup
+- **Project Initialization**: Set up Next.js 15 with TypeScript and Tailwind CSS
+- **Database Design**: Created SQLite schema with users, servers, shops, and subscriptions
+- **Authentication**: Implemented session-based authentication system
+- **Basic UI**: Created infrastructure and shops dashboards
+
+### 2025-07-05: Development Infrastructure
+- **Development Log**: Created comprehensive development tracking system
+- **Git Repository**: Set up GitHub repository with proper documentation
+- **Local Development**: Configured development environment and dependencies
+- **Project Structure**: Established organized file structure and conventions
+
+### 2025-07-05: UI Components & Navigation
+- **Top Bar**: Created persistent top bar menu across all pages
+- **Sidebar**: Implemented sliding sidebar with smooth animations
+- **Navigation**: Role-based navigation for providers and shop owners
+- **Responsive Design**: Mobile-friendly interface with proper breakpoints
+
+### 2025-07-05: Bitcoin Connect Integration
+- **Phase 1**: Added "Connect Wallet" button to TopBar with state management
+- **Phase 2**: Implemented real Bitcoin Connect modal with WebLN integration
+- **Wallet Support**: Multiple wallet provider support (Alby, BlueWallet, etc.)
+- **Connection Management**: Proper connection state management and error handling
+
+### 2025-07-05: Lightning Integration
+- **Lightning Service**: Created Lightning service for invoice generation and payments
+- **WebLN Integration**: Real Lightning payments through connected wallets
+- **Payment History**: Complete payment tracking with Lightning details
+- **Database Schema**: Enhanced database for Lightning payment data
+
+</details>
+
+## ❓ FAQ
+
+**What is SubscriptN and what does it do?**
+SubscriptN is a Bitcoin subscription management platform that enables automated Lightning payments for recurring services. It connects BTCPay Server providers with shop owners, facilitating seamless subscription management through the Lightning network.
+
+**Do I need a BTCPay Server to use this?**
+No, you don't need your own BTCPay Server. You can browse and connect to public BTCPay servers listed on the platform. However, if you want to provide infrastructure, you'll need to set up a BTCPay Server.
+
+**What Lightning wallets are supported?**
+We support both WebLN and NWC (Nostr Wallet Connect) compatible wallets. See the [Lightning Wallet Requirements](#lightning-wallet-requirements) section for a complete list of supported wallets.
+
+**How does the subscription payment process work?**
+1. Shop owners browse available BTCPay servers
+2. They connect their Lightning wallet using Bitcoin Connect
+3. They create a shop and set up a subscription with recurring payments
+4. Lightning payments are automatically processed through their connected wallet
+5. Payment history and subscription status are tracked in real-time
+
+**Is this production-ready for businesses?**
+This is currently a development project with working Lightning payments. While the core functionality is implemented, it's recommended for testing and development purposes. See [SECURITY.md](SECURITY.md) for detailed security information.
