@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
           s.lightning_address, 
           s.subscription_status, 
           s.created_at,
+          s.is_public,
           sr.name as server_name
         FROM shops s
         JOIN servers sr ON s.server_id = sr.id
@@ -70,10 +71,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, server_id, lightning_address } = validation.data;
+    const { name, server_id, lightning_address, is_public } = validation.data;
     const sanitizedName = sanitizeString(name as string);
     const sanitizedLightningAddress = lightning_address ? sanitizeString(lightning_address as string) : null;
     const serverId = Number(server_id);
+    const isPublic = is_public !== undefined ? Boolean(is_public) : true;
 
     const db = await getDatabase();
     
@@ -107,8 +109,8 @@ export async function POST(request: NextRequest) {
 
     // No existing shop with this name on this server, create new one
     const result = await db.run(
-      'INSERT INTO shops (name, lightning_address, server_id, owner_id) VALUES (?, ?, ?, ?)',
-      [sanitizedName, sanitizedLightningAddress, serverId, user.id]
+      'INSERT INTO shops (name, lightning_address, server_id, owner_id, is_public) VALUES (?, ?, ?, ?, ?)',
+      [sanitizedName, sanitizedLightningAddress, serverId, user.id, isPublic]
     );
 
     const newShop = await db.get(`
@@ -118,6 +120,7 @@ export async function POST(request: NextRequest) {
         s.lightning_address, 
         s.subscription_status, 
         s.created_at,
+        s.is_public,
         sr.name as server_name
       FROM shops s
       JOIN servers sr ON s.server_id = sr.id

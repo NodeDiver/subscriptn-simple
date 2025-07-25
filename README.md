@@ -38,25 +38,12 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ## ✨ Features
 
-### 🌩️ Lightning Payment Flow
-- **Real Lightning Payments**: Direct integration with Lightning wallets via WebLN
-- **Wallet Connection**: Seamless Bitcoin Connect integration for wallet management
-- **Payment History**: Complete transaction tracking with Lightning details
-- **Shop Management**: Comprehensive shop and subscription lifecycle management
-- **Lightning Integration**: Full Lightning network support with invoice generation
-
-### 🔧 Core Functionality
-- **Public Server Browsing**: Browse available BTCPay servers with slot availability
-- **Infrastructure Management**: Manage your own BTCPay servers with public/private options
-- **Shop Management**: Create and manage shops with subscription capabilities
-- **Payment Processing**: Automated Lightning payments with real-time status updates
-- **User Authentication**: Secure session-based authentication system
-
-### 🎨 User Experience
-- **Responsive Design**: Mobile-friendly interface with dark/light mode support
-- **Real-time Updates**: Live payment status and connection state management
-- **Professional UI**: Modern design with smooth animations and transitions
-- **Error Handling**: Comprehensive error boundaries and user feedback
+- **Lightning Payments**: Direct WebLN integration for real Bitcoin payments
+- **BTCPay Server Marketplace**: Browse and connect to public servers with available slots
+- **Shop Management**: Create shops with automated subscription payments
+- **Wallet Integration**: Bitcoin Connect for seamless wallet management
+- **Public/Private Options**: Control visibility for servers and shops
+- **Real-time Status**: Live payment tracking and connection monitoring
 
 ## 📸 Screenshots
 
@@ -157,31 +144,16 @@ The application uses SQLite and will automatically create the database on first 
 
 For comprehensive security information, please see [SECURITY.md](SECURITY.md).
 
-**Key Security Features:**
-- Input validation and sanitization
-- Rate limiting on critical endpoints
-- Session-based authentication
-- SQL injection protection
-- XSS prevention
+**Security measures will be implemented in the future.**
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
+We welcome contributions! Contact: nodediver@proton.me
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch  
 3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-### Development Guidelines
-
-- Follow TypeScript best practices
-- Maintain ESLint compliance
-- Add tests for new features
-- Update documentation as needed
+4. Submit a pull request
 
 ## 📚 Development Log
 

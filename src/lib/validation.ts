@@ -252,6 +252,10 @@ export const shopValidationSchema = {
     required: true,
     type: 'number' as const,
     min: 1
+  },
+  is_public: {
+    required: false,
+    type: 'boolean' as const
   }
 };
 

@@ -91,6 +91,9 @@ export async function getDatabase(): Promise<Database> {
     ALTER TABLE servers ADD COLUMN is_public BOOLEAN DEFAULT 1;
     ALTER TABLE servers ADD COLUMN slots_available INTEGER DEFAULT 21;
     ALTER TABLE servers ADD COLUMN lightning_address TEXT;
+    
+    -- Add new columns to shops table if they don't exist (migration)
+    ALTER TABLE shops ADD COLUMN is_public BOOLEAN DEFAULT 1;
   `);
 
   // Initialize with demo users if they don't exist
