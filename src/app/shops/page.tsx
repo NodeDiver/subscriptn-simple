@@ -74,7 +74,7 @@ export default function ShopsDashboard() {
         {/* Info Box */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{totalPublicShops}</div>
               <div className="text-gray-600 dark:text-gray-400">Public Shops</div>
@@ -87,20 +87,14 @@ export default function ShopsDashboard() {
               <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{totalMyShops}</div>
               <div className="text-gray-600 dark:text-gray-400">Your Shops</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                {myShops.filter((shop) => shop.subscription_status === 'inactive').length}
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">Lapsed Subscriptions</div>
-            </div>
           </div>
         </div>
         
-        {/* Public Shops Section - Browse Shops */}
+        {/* Public Shops Section - Shop listing */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Browse Public Shops</h2>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Shop listing</h2>
               <Link href="/shops/add-shop">
                 <button className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
                   Add Your Shop

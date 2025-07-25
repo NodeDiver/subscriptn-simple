@@ -157,25 +157,26 @@ We welcome contributions! Contact: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 4 - Technical Debt & Infrastructure Enhancement
+### Current Status: Week 4 - UI/UX Improvements & Homepage Optimization
 
 **Latest Session: 2025-01-27**
-- ✅ **My Servers Page Removal**: Successfully removed separate My Servers page
-- ✅ **Infrastructure Dashboard Consolidation**: Combined public browsing and user management in single view
-- ✅ **Browse Servers Preservation**: Maintained public server browsing functionality
-- ✅ **Enhanced User Experience**: Contextual sections and actions based on user state
-- ✅ **Documentation Updates**: Updated development log and README
+- ✅ **Homepage Layout Optimization**: Reduced spacing to show "Browse Servers" and "Browse Shops" buttons in first view
+- ✅ **Shops Dashboard Improvements**: Removed lapsed subscriptions counter, renamed "Browse Public Shops" to "Shop listing"
+- ✅ **Homepage Navigation Updates**: Changed dashboard link to /dashboard, removed "Browse Shops" button for logged-in users
+- ✅ **Footer Optimization**: Made footer more compact while maintaining all functionality
+- ✅ **README Streamlining**: Condensed features and contributing sections for better readability
 
 **Week 4 Achievements:**
 - **Infrastructure System**: Complete transformation with public server listings
 - **Database Migration**: Enhanced server schema with public/private functionality
 - **User Experience**: Streamlined navigation and consolidated dashboard views
+- **UI/UX Optimization**: Improved homepage layout and component spacing
 - **Technical Debt**: Resolved API route issues and improved code quality
 
 **Current Focus:**
-- Infrastructure dashboard optimization
 - User experience improvements
 - Code quality enhancements
+- Performance optimization
 
 <details>
 <summary><strong>Week 4: 2025-01-27</strong></summary>
