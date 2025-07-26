@@ -6,7 +6,12 @@ import { useToast } from '@/contexts/ToastContext';
 import LightningSubscription from '@/components/LightningSubscription';
 import ToggleSwitch from '@/components/ToggleSwitch';
 
-type Store = { id: string; name: string; lightningAddress?: string };
+type Store = { 
+  id: string; 
+  name: string; 
+  lightningAddress?: string;
+  hasActiveSubscription?: boolean;
+};
 
 interface BTCPayServer {
   id: number;
@@ -26,6 +31,8 @@ export default function AddShop() {
   // Shop configuration
   const [stores, setStores] = useState<Store[]>([]);
   const [selectedShop, setSelectedShop] = useState("");
+  const [selectedShopHasSubscription, setSelectedShopHasSubscription] = useState(false);
+  const [loadingStores, setLoadingStores] = useState(false);
 
   // Shop owner details (right side)
   const [shopOwnerLightningAddress, setShopOwnerLightningAddress] = useState("");
@@ -70,18 +77,58 @@ export default function AddShop() {
 
   // Fetch stores when server changes
   useEffect(() => {
-    if (!selectedServer) return;
+    if (!selectedServer) {
+      setStores([]);
+      setSelectedShop("");
+      setSelectedShopHasSubscription(false);
+      return;
+    }
     
-    fetch("/api/stores")
-      .then((res) => res.json())
-      .then(({ stores }: { stores: Store[] }) => {
-        setStores(stores);
-        if (stores.length > 0) {
-          setSelectedShop(stores[0].id);
+    const fetchStoresForServer = async () => {
+      setLoadingStores(true);
+      try {
+        const response = await fetch(`/api/stores/${selectedServer.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setStores(data.stores);
+          
+          // Select first available store (without active subscription)
+          const availableStore = data.stores.find((store: Store) => !store.hasActiveSubscription);
+          if (availableStore) {
+            setSelectedShop(availableStore.id);
+            setSelectedShopHasSubscription(false);
+          } else {
+            setSelectedShop("");
+            setSelectedShopHasSubscription(false);
+          }
+        } else {
+          console.error('Failed to fetch stores for server');
+          setStores([]);
+          setSelectedShop("");
+          setSelectedShopHasSubscription(false);
         }
-      })
-      .catch(console.error);
+      } catch (error) {
+        console.error('Error fetching stores:', error);
+        setStores([]);
+        setSelectedShop("");
+        setSelectedShopHasSubscription(false);
+      } finally {
+        setLoadingStores(false);
+      }
+    };
+
+    fetchStoresForServer();
   }, [selectedServer]);
+
+  // Update selected shop subscription status when selection changes
+  useEffect(() => {
+    if (selectedShop && stores.length > 0) {
+      const store = stores.find(s => s.id === selectedShop);
+      setSelectedShopHasSubscription(store?.hasActiveSubscription || false);
+    } else {
+      setSelectedShopHasSubscription(false);
+    }
+  }, [selectedShop, stores]);
 
   // Update comment whenever shop or server changes
   useEffect(() => {
@@ -105,6 +152,12 @@ export default function AddShop() {
 
     if (!shopOwnerLightningAddress) {
       showToast('Please enter your lightning address for refunds', 'error');
+      setLoading(false);
+      return;
+    }
+
+    if (selectedShopHasSubscription) {
+      showToast('Cannot create subscription to a shop that already has an active subscription', 'error');
       setLoading(false);
       return;
     }
@@ -215,19 +268,58 @@ export default function AddShop() {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Select Shop
                 </label>
-                <select
-                  value={selectedShop}
-                  onChange={(e) => setSelectedShop(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
-                >
-                  <option value="">Select a shop...</option>
-                  {stores.map((store) => (
-                    <option key={store.id} value={store.id}>
-                      {store.name}
-                    </option>
-                  ))}
-                </select>
+                {loadingStores ? (
+                  <div className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
+                    Loading shops from server...
+                  </div>
+                ) : stores.length === 0 ? (
+                  <div className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
+                    No shops found on this server
+                  </div>
+                ) : (
+                  <select
+                    value={selectedShop}
+                    onChange={(e) => setSelectedShop(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                  >
+                    <option value="">Select a shop...</option>
+                    {stores.map((store) => (
+                      <option 
+                        key={store.id} 
+                        value={store.id}
+                        disabled={store.hasActiveSubscription}
+                        className={store.hasActiveSubscription ? 'text-gray-400' : ''}
+                      >
+                        {store.name} {store.hasActiveSubscription ? '(Already subscribed)' : ''}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                
+                {/* Shop Status Messages */}
+                {!loadingStores && selectedServer && stores.length === 0 && (
+                  <div className="mt-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                      There are no shops on this BTCPay server. Please contact the server owner to add shops before creating a subscription.
+                    </p>
+                  </div>
+                )}
+                
+                {!loadingStores && selectedServer && stores.length > 0 && (
+                  <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    {stores.filter(s => !s.hasActiveSubscription).length} of {stores.length} shops available for subscription
+                  </div>
+                )}
               </div>
+
+              {/* Shop Subscription Status */}
+              {selectedShopHasSubscription && (
+                <div className="mb-6 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-sm text-red-800 dark:text-red-200">
+                    ⚠️ This shop already has an active subscription. Please select another shop or contact the server owner.
+                  </p>
+                </div>
+              )}
 
               {/* Server Owner's Lightning Address (Read-only) */}
               <div className="mb-6">
@@ -249,10 +341,14 @@ export default function AddShop() {
               {/* Subscribe Button */}
               <button
                 onClick={handleSubscribe}
-                disabled={loading || !selectedShop || !selectedServer || !shopOwnerLightningAddress}
+                disabled={loading || !selectedShop || !selectedServer || !shopOwnerLightningAddress || selectedShopHasSubscription || stores.length === 0 || stores.filter(s => !s.hasActiveSubscription).length === 0}
                 className="w-full bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {loading ? 'Creating Shop...' : 'Create Shop & Subscribe'}
+                {loading ? 'Creating Shop...' : 
+                 stores.length === 0 ? 'No Shops Available' :
+                 stores.filter(s => !s.hasActiveSubscription).length === 0 ? 'No Available Shops' :
+                 selectedShopHasSubscription ? 'Shop Already Subscribed' :
+                 'Create Shop & Subscribe'}
               </button>
             </div>
 

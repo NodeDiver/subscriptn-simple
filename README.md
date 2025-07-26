@@ -66,7 +66,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Lightning wallet (WebLN compatible)
+- Lightning wallet (NWC | WebLN compatible)
 
 ### Lightning Wallet Requirements
 
@@ -157,9 +157,13 @@ We welcome contributions! Contact: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 4 - UI/UX Improvements & Homepage Optimization
+### Current Status: Week 4 - Shop Creation Enhancement & UI/UX Improvements
 
 **Latest Session: 2025-01-27**
+- ✅ **Server-Specific Shop Fetching**: New API endpoint for fetching shops from selected BTCPay servers
+- ✅ **Subscription Validation**: Prevents duplicate subscriptions to shops with active subscriptions
+- ✅ **Enhanced Shop Selection**: Greys out subscribed shops, shows availability status
+- ✅ **No Shops Handling**: Warning messages when BTCPay servers have no shops
 - ✅ **Homepage Layout Optimization**: Reduced spacing to show "Browse Servers" and "Browse Shops" buttons in first view
 - ✅ **Shops Dashboard Improvements**: Removed lapsed subscriptions counter, renamed "Browse Public Shops" to "Shop listing"
 - ✅ **Homepage Navigation Updates**: Changed dashboard link to /dashboard, removed "Browse Shops" button for logged-in users
@@ -171,6 +175,7 @@ We welcome contributions! Contact: nodediver@proton.me
 - **Database Migration**: Enhanced server schema with public/private functionality
 - **User Experience**: Streamlined navigation and consolidated dashboard views
 - **UI/UX Optimization**: Improved homepage layout and component spacing
+- **Shop Creation System**: Advanced shop selection with subscription validation
 - **Technical Debt**: Resolved API route issues and improved code quality
 
 **Current Focus:**
