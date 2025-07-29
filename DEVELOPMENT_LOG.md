@@ -29,6 +29,29 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-01-27 (Afternoon)
 
+### User Prompt: Authentication Security Fix for Add Server Page
+**Time**: Afternoon session  
+**Request**: Fix security issue where "Add Server" page was accessible without authentication, while "Add Shop" correctly redirected to login. Both should require authentication since servers and shops need to be linked to logged-in users.
+
+**Actions Taken**:
+- **Step 1**: Identified the issue: Add Server page was missing ProtectedRoute component
+- **Step 2**: Added ProtectedRoute import and wrapped Add Server component
+- **Step 3**: Verified Add Shop page already had proper authentication protection
+- **Step 4**: Confirmed API endpoints are properly protected with user authentication
+- **Step 5**: Verified server creation links to authenticated user via provider_id
+
+**Files Modified**:
+- `src/app/infrastructure/add-server/page.tsx` - Added ProtectedRoute wrapper
+
+**Technical Details**:
+- **Security Issue**: Add Server page was accessible without login
+- **Root Cause**: Missing ProtectedRoute component on add-server page
+- **Solution**: Added ProtectedRoute import and wrapped entire component
+- **Verification**: API endpoints already properly check user authentication
+- **User Linking**: Server creation correctly links to authenticated user via provider_id
+
+**Result**: ✅ Both "Add Server" and "Add Shop" now properly redirect to login when user is not authenticated.
+
 ### User Prompt: Favicon Replacement with Custom Logo
 **Time**: Afternoon session  
 **Request**: Replace the default Vercel favicon with the custom SubscriptN logo (`public/screenshots/logo_square.webp`).
@@ -4376,7 +4399,7 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ### User Prompt: Consolidate Security Information and Simplify README
 **Time**: Current session  
-**Request**: Move security details from README Security & Privacy section to SECURITY.md and replace the section with a simple reference to check SECURITY.md.
+**Request**: Move the security details from README Security & Privacy section to SECURITY.md and replace the section with a simple reference to check SECURITY.md.
 
 **Actions Taken**:
 - **Step 1**: Enhanced SECURITY.md with missing details from README:

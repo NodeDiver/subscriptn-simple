@@ -3,10 +3,10 @@ import { getDatabase } from '@/lib/database';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { serverId: string } }
+  { params }: { params: Promise<{ serverId: string }> }
 ) {
   try {
-    const serverId = params.serverId;
+    const { serverId } = await params;
     
     // Get the server information to find the BTCPay host
     const db = await getDatabase();
