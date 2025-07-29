@@ -82,9 +82,7 @@ export async function getDatabase(): Promise<Database> {
     );
     
     -- Add missing columns if they don't exist (migration)
-    ALTER TABLE subscription_history ADD COLUMN payment_method TEXT;
-    ALTER TABLE subscription_history ADD COLUMN wallet_provider TEXT;
-    ALTER TABLE subscription_history ADD COLUMN preimage TEXT;
+    -- Note: payment_method, wallet_provider, and preimage are already in CREATE TABLE
     
     -- Add new columns to servers table if they don't exist (migration)
     ALTER TABLE servers ADD COLUMN description TEXT;
