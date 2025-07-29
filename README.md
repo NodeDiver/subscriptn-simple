@@ -157,9 +157,12 @@ We welcome contributions! Contact: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 4 - Shop Creation Enhancement & UI/UX Improvements
+### Current Status: Week 4 - Authentication Security & UI/UX Improvements
 
 **Latest Session: 2025-01-27**
+- ✅ **Authentication Security Fix**: Added ProtectedRoute to Add Server page, ensuring both Add Server and Add Shop require login
+- ✅ **Favicon Replacement**: Replaced default Vercel favicon with custom SubscriptN logo
+- ✅ **Database Migration Fix**: Resolved SQLite duplicate column error in subscription_history table
 - ✅ **Server-Specific Shop Fetching**: New API endpoint for fetching shops from selected BTCPay servers
 - ✅ **Subscription Validation**: Prevents duplicate subscriptions to shops with active subscriptions
 - ✅ **Enhanced Shop Selection**: Greys out subscribed shops, shows availability status
@@ -171,6 +174,9 @@ We welcome contributions! Contact: nodediver@proton.me
 - ✅ **README Streamlining**: Condensed features and contributing sections for better readability
 
 **Week 4 Achievements:**
+- **Security Enhancement**: Fixed authentication protection for Add Server page
+- **Branding**: Custom favicon implementation with SubscriptN logo
+- **Database Stability**: Resolved migration conflicts and SQLite errors
 - **Infrastructure System**: Complete transformation with public server listings
 - **Database Migration**: Enhanced server schema with public/private functionality
 - **User Experience**: Streamlined navigation and consolidated dashboard views
