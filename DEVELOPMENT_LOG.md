@@ -27,7 +27,31 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
-## Session: 2025-01-27 (Afternoon)
+## Session: 2025-01-27 (Afternoon) - Week 5
+
+### User Prompt: Move Toast Notifications to Bottom-Right Corner
+**Time**: Afternoon session  
+**Request**: Move toast notifications from top-right corner to bottom-right corner to avoid covering the user dropdown menu in the top-right corner. This improves UX by preventing overlap with important UI elements.
+
+**Actions Taken**:
+- **Step 1**: Identified the issue: Toast notifications were positioned at top-right corner
+- **Step 2**: Located the Toast component and examined its positioning classes
+- **Step 3**: Changed positioning from `top-4 right-4` to `bottom-4 right-4`
+- **Step 4**: Updated exit animation from `-translate-y-2` to `translate-y-2` for better UX
+- **Step 5**: Verified the change moves notifications to bottom-right corner
+
+**Files Modified**:
+- `src/components/Toast.tsx` - Updated positioning and animation classes
+
+**Technical Details**:
+- **Position Change**: `fixed top-4 right-4` → `fixed bottom-4 right-4`
+- **Animation Update**: Exit animation now slides down instead of up
+- **UX Improvement**: Prevents overlap with user dropdown menu
+- **Consistency**: All toast types (success, error, warning, info) now appear in bottom-right
+
+**Result**: ✅ Toast notifications now appear in bottom-right corner, avoiding UI conflicts with the user menu.
+
+## Session: 2025-01-27 (Afternoon) - Week 4
 
 ### User Prompt: Authentication Security Fix for Add Server Page
 **Time**: Afternoon session  

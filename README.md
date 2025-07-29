@@ -157,21 +157,51 @@ We welcome contributions! Contact: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 4 - Authentication Security & UI/UX Improvements
+### Current Status: Week 5 - UX Improvements & Toast Notification Enhancement
 
 **Latest Session: 2025-01-27**
-- ✅ **Authentication Security Fix**: Added ProtectedRoute to Add Server page, ensuring both Add Server and Add Shop require login
-- ✅ **Favicon Replacement**: Replaced default Vercel favicon with custom SubscriptN logo
-- ✅ **Database Migration Fix**: Resolved SQLite duplicate column error in subscription_history table
-- ✅ **Server-Specific Shop Fetching**: New API endpoint for fetching shops from selected BTCPay servers
-- ✅ **Subscription Validation**: Prevents duplicate subscriptions to shops with active subscriptions
-- ✅ **Enhanced Shop Selection**: Greys out subscribed shops, shows availability status
-- ✅ **No Shops Handling**: Warning messages when BTCPay servers have no shops
-- ✅ **Homepage Layout Optimization**: Reduced spacing to show "Browse Servers" and "Browse Shops" buttons in first view
-- ✅ **Shops Dashboard Improvements**: Removed lapsed subscriptions counter, renamed "Browse Public Shops" to "Shop listing"
-- ✅ **Homepage Navigation Updates**: Changed dashboard link to /dashboard, removed "Browse Shops" button for logged-in users
-- ✅ **Footer Optimization**: Made footer more compact while maintaining all functionality
-- ✅ **README Streamlining**: Condensed features and contributing sections for better readability
+- ✅ **Toast Notification Repositioning**: Moved notifications from top-right to bottom-right corner to avoid UI conflicts
+- ✅ **UX Enhancement**: Prevents toast notifications from covering the user dropdown menu
+- ✅ **Animation Improvement**: Updated exit animation to slide down for better visual consistency
+
+**Week 5 Achievements:**
+- **User Experience**: Improved notification positioning and visual flow
+- **UI Consistency**: Better integration between notifications and navigation elements
+
+**Current Focus:**
+- User experience improvements
+- UI/UX refinements
+- Performance optimization
+
+<details>
+<summary><strong>Week 4: 2025-01-27</strong></summary>
+
+### Week 4 Achievements:
+- **Authentication Security Fix**: Added ProtectedRoute to Add Server page, ensuring both Add Server and Add Shop require login
+- **Favicon Replacement**: Replaced default Vercel favicon with custom SubscriptN logo
+- **Database Migration Fix**: Resolved SQLite duplicate column error in subscription_history table
+- **Server-Specific Shop Fetching**: New API endpoint for fetching shops from selected BTCPay servers
+- **Subscription Validation**: Prevents duplicate subscriptions to shops with active subscriptions
+- **Enhanced Shop Selection**: Greys out subscribed shops, shows availability status
+- **No Shops Handling**: Warning messages when BTCPay servers have no shops
+- **Homepage Layout Optimization**: Reduced spacing to show "Browse Servers" and "Browse Shops" buttons in first view
+- **Shops Dashboard Improvements**: Removed lapsed subscriptions counter, renamed "Browse Public Shops" to "Shop listing"
+- **Homepage Navigation Updates**: Changed dashboard link to /dashboard, removed "Browse Shops" button for logged-in users
+- **Footer Optimization**: Made footer more compact while maintaining all functionality
+- **README Streamlining**: Condensed features and contributing sections for better readability
+
+**Week 4 Technical Achievements:**
+- **Security Enhancement**: Fixed authentication protection for Add Server page
+- **Branding**: Custom favicon implementation with SubscriptN logo
+- **Database Stability**: Resolved migration conflicts and SQLite errors
+- **Infrastructure System**: Complete transformation with public server listings
+- **Database Migration**: Enhanced server schema with public/private functionality
+- **User Experience**: Streamlined navigation and consolidated dashboard views
+- **UI/UX Optimization**: Improved homepage layout and component spacing
+- **Shop Creation System**: Advanced shop selection with subscription validation
+- **Technical Debt**: Resolved API route issues and improved code quality
+
+</details>
 
 **Week 4 Achievements:**
 - **Security Enhancement**: Fixed authentication protection for Add Server page
