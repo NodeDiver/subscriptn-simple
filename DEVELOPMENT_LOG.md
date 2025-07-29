@@ -29,6 +29,29 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ## Session: 2025-01-27 (Afternoon)
 
+### User Prompt: Favicon Replacement with Custom Logo
+**Time**: Afternoon session  
+**Request**: Replace the default Vercel favicon with the custom SubscriptN logo (`public/screenshots/logo_square.webp`).
+
+**Actions Taken**:
+- **Step 1**: Added favicon configuration to Next.js metadata in layout.tsx
+- **Step 2**: Configured icon, shortcut icon, and apple-touch-icon to use logo_square.webp
+- **Step 3**: Removed old favicon.ico file from src/app/ directory
+- **Step 4**: Cleaned Next.js build cache to ensure old favicon is completely removed
+- **Step 5**: Verified favicon is working correctly in browser
+
+**Files Modified**:
+- `src/app/layout.tsx` - Added icons configuration to metadata
+- `src/app/favicon.ico` - Removed old favicon file
+
+**Technical Details**:
+- **Configuration**: Used Next.js 13+ metadata API for favicon configuration
+- **File Format**: WebP format for modern browser support
+- **Multiple Formats**: Configured for standard favicon, shortcut icon, and Apple touch icon
+- **Verification**: Confirmed HTML output shows correct favicon links
+
+**Result**: ✅ Custom SubscriptN logo now appears as browser favicon across all pages.
+
 ### User Prompt: SQLite Database Migration Error
 **Time**: Afternoon session after 2 days break  
 **Request**: After running `npm run dev`, encountered SQLite error "duplicate column name: payment_method". Need to identify and fix the database migration issue.
@@ -3170,7 +3193,7 @@ This file serves as a comprehensive development diary for the SubscriptN project
 **Next Steps**: Test the duplicate prevention logic by attempting to add the same server multiple times.
 
 ### User Prompt: Implement Shop and Subscription Duplicate Prevention Logic
-**Time**: Current session  
+**Time**: End of session  
 **Request**: Prevent duplicate shops and subscriptions - implement unique ownership and prevent multiple active subscriptions per shop.
 
 **Actions Taken**:

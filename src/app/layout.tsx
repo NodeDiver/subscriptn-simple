@@ -21,6 +21,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'SubscriptN - Bitcoin Subscription Management',
   description: 'Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners',
+  icons: {
+    icon: '/screenshots/logo_square.webp',
+    shortcut: '/screenshots/logo_square.webp',
+    apple: '/screenshots/logo_square.webp',
+  },
 };
 
 export default function RootLayout({
