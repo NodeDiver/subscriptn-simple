@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../subscriptn.db"
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String    @map("password_hash")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  
+  // Relations
+  servers      Server[]  @relation("ServerOwner")
+  shops        Shop[]    @relation("ShopOwner")
+  
+  @@map("users")
+}
+
+model Server {
+  id              Int       @id @default(autoincrement())
+  name            String
+  hostUrl         String    @unique @map("host_url")
+  apiKey          String    @map("api_key")
+  ownerId         Int       @map("owner_id")
+  description     String?
+  isPublic        Boolean   @default(true) @map("is_public")
+  slotsAvailable  Int       @default(21) @map("slots_available")
+  lightningAddress String?  @map("lightning_address")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  
+  // Relations
+  owner           User      @relation("ServerOwner", fields: [ownerId], references: [id])
+  shops           Shop[]
+  
+  @@map("servers")
+}
+
+model Shop {
+  id                Int       @id @default(autoincrement())
+  name              String
+  lightningAddress  String?   @map("lightning_address")
+  serverId          Int       @map("server_id")
+  ownerId           Int       @map("owner_id")
+  subscriptionStatus String   @default("active") @map("subscription_status")
+  isPublic          Boolean   @default(true) @map("is_public")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  
+  // Relations
+  server            Server    @relation(fields: [serverId], references: [id])
+  owner             User      @relation("ShopOwner", fields: [ownerId], references: [id])
+  subscriptions     Subscription[]
+  
+  @@unique([name, serverId])
+  @@map("shops")
+}
+
+model Subscription {
+  id        Int      @id @default(autoincrement())
+  shopId    Int      @map("shop_id")
+  amountSats Int     @map("amount_sats")
+  interval  String
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  shop      Shop     @relation(fields: [shopId], references: [id])
+  payments  SubscriptionHistory[]
+  
+  @@map("subscriptions")
+}
+
+model SubscriptionHistory {
+  id            Int      @id @default(autoincrement())
+  subscriptionId Int     @map("subscription_id")
+  paymentAmount Int      @map("payment_amount")
+  paymentDate   DateTime @default(now()) @map("payment_date")
+  status        String
+  paymentMethod String?  @map("payment_method")
+  walletProvider String? @map("wallet_provider")
+  preimage      String?
+  
+  // Relations
+  subscription  Subscription @relation(fields: [subscriptionId], references: [id])
+  
+  @@map("subscription_history")
+}
