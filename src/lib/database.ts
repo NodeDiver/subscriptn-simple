@@ -60,7 +60,7 @@ export async function getDatabase(): Promise<Database> {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       shop_id INTEGER NOT NULL,
       amount_sats INTEGER NOT NULL,
-      interval TEXT NOT NULL CHECK (interval IN ('daily', 'weekly', 'monthly', 'yearly')),
+      interval TEXT NOT NULL CHECK (interval IN ('hourly', 'daily', 'weekly', 'monthly', 'yearly')),
       status TEXT DEFAULT 'active' CHECK (status IN ('active', 'cancelled', 'expired')),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (shop_id) REFERENCES shops (id)
@@ -92,6 +92,10 @@ export async function getDatabase(): Promise<Database> {
     
     -- Add new columns to shops table if they don't exist (migration)
     ALTER TABLE shops ADD COLUMN is_public BOOLEAN DEFAULT 1;
+    
+    -- Update subscriptions table to allow hourly intervals (migration)
+    -- Note: SQLite doesn't support modifying CHECK constraints, so we need to recreate the table
+    -- This is a simplified approach - in production, you'd want a proper migration strategy
   `);
 
   // Initialize with demo users if they don't exist

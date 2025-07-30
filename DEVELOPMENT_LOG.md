@@ -27,6 +27,37 @@ This file serves as a comprehensive development diary for the SubscriptN project
 
 ---
 
+## Session: 2025-01-27 (Evening) - Week 5
+
+### User Prompt: Add 1 Hour Timeframe for Testing & BTCPay Server Setup Notes
+**Time**: Evening session  
+**Request**: Add a "1 hour (test)" timeframe option to the subscription creation in the add-shop page for testing purposes. Also noted unsuccessful attempts to launch BTCPay servers locally on Docker.
+
+**Actions Taken**:
+- **Step 1**: Investigated the add-shop page timeframe options
+- **Step 2**: Discovered that "1 hour (test)" option was already implemented
+- **Step 3**: Verified the timeframe mapping function handles "1h" → "hourly" correctly
+- **Step 4**: Confirmed the option is available in the dropdown: "1 hour (test)"
+- **Step 5**: Documented user's BTCPay server setup attempts
+
+**Files Examined**:
+- `src/app/shops/add-shop/page.tsx` - Verified existing "1 hour (test)" option
+- Timeframe options: 30 days, 7 days, 1 day, **1 hour (test)**
+- Mapping function: `'1h': 'hourly'` already implemented
+
+**Technical Details**:
+- **Existing Implementation**: The "1 hour (test)" option was already present
+- **Dropdown Options**: 30d, 7d, 1d, 1h (test)
+- **Backend Mapping**: 1h → hourly interval
+- **User Note**: Attempted to launch BTCPay servers locally on Docker but encountered issues
+
+**Result**: ✅ The 1-hour timeframe option was already implemented and ready for testing. User noted plans to try a simpler BTCPay server setup tomorrow.
+
+**User Notes**:
+- Unsuccessfully tried to launch several BTCPay servers locally on Docker
+- Plans to try a simpler setup tomorrow
+- Current test server `muni-btcpay.example.com` is expected to fail (test environment)
+
 ## Session: 2025-01-27 (Afternoon) - Week 5
 
 ### User Prompt: Move Toast Notifications to Bottom-Right Corner

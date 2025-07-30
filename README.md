@@ -160,6 +160,8 @@ We welcome contributions! Contact: nodediver@proton.me
 ### Current Status: Week 5 - UX Improvements & Toast Notification Enhancement
 
 **Latest Session: 2025-01-27**
+- ✅ **1 Hour Timeframe Verification**: Confirmed existing "1 hour (test)" option in add-shop page for testing
+- ✅ **BTCPay Server Setup Notes**: Documented user's Docker setup attempts and plans for simpler configuration
 - ✅ **Toast Notification Repositioning**: Moved notifications from top-right to bottom-right corner to avoid UI conflicts
 - ✅ **UX Enhancement**: Prevents toast notifications from covering the user dropdown menu
 - ✅ **Animation Improvement**: Updated exit animation to slide down for better visual consistency

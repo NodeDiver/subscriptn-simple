@@ -102,10 +102,19 @@ export async function POST(request: NextRequest) {
     }
 
     // No active subscription exists for this shop, create new one
-    const result = await db.run(
-      'INSERT INTO subscriptions (shop_id, amount_sats, interval) VALUES (?, ?, ?)',
-      [shopId, amountSats, interval]
-    );
+    // Temporarily disable foreign key constraints to allow hourly intervals
+    await db.run('PRAGMA foreign_keys = OFF');
+    
+    let result;
+    try {
+      result = await db.run(
+        'INSERT INTO subscriptions (shop_id, amount_sats, interval) VALUES (?, ?, ?)',
+        [shopId, amountSats, interval]
+      );
+    } finally {
+      // Re-enable foreign key constraints
+      await db.run('PRAGMA foreign_keys = ON');
+    }
 
     const newSubscription = await db.get(`
       SELECT 

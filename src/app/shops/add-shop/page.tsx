@@ -52,6 +52,17 @@ export default function AddShop() {
   const [createdShopId, setCreatedShopId] = useState<string | null>(null);
   const [showLightningSub, setShowLightningSub] = useState(false);
 
+  // Helper function to convert frontend timeframe to backend interval
+  const convertTimeframeToInterval = (timeframe: string): string => {
+    const mapping: Record<string, string> = {
+      '1h': 'hourly',
+      '1d': 'daily', 
+      '7d': 'weekly',
+      '30d': 'monthly'
+    };
+    return mapping[timeframe] || 'daily';
+  };
+
   // Fetch available BTCPay servers (public with 2+ slots)
   useEffect(() => {
     const fetchAvailableServers = async () => {
@@ -400,6 +411,7 @@ export default function AddShop() {
                   <option value="30d">30 days</option>
                   <option value="7d">7 days</option>
                   <option value="1d">1 day</option>
+                  <option value="1h">1 hour (test)</option>
                 </select>
               </div>
 
@@ -433,7 +445,7 @@ export default function AddShop() {
                 <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview</h3>
                 <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                   <div><strong>Amount:</strong> {amount} sats</div>
-                  <div><strong>Timeframe:</strong> {timeframe}</div>
+                  <div><strong>Timeframe:</strong> {timeframe} ({convertTimeframeToInterval(timeframe)})</div>
                   <div><strong>Comment:</strong> {comment}</div>
                   <div><strong>Shop Visibility:</strong> {isShopPublic ? 'Public' : 'Private'}</div>
                 </div>
@@ -446,7 +458,7 @@ export default function AddShop() {
             <LightningSubscription
               shopId={createdShopId}
               amountSats={amount}
-              interval={timeframe}
+              interval={convertTimeframeToInterval(timeframe)}
               recipientAddress={selectedServer?.lightning_address || ''}
               comment={comment}
               onSuccess={() => {

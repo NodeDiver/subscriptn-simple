@@ -285,9 +285,9 @@ export const subscriptionValidationSchema = {
     required: true,
     type: 'string' as const,
     custom: (value: unknown) => {
-      const validIntervals = ['daily', 'weekly', 'monthly', 'yearly'];
+      const validIntervals = ['hourly', 'daily', 'weekly', 'monthly', 'yearly'];
       if (!validIntervals.includes(String(value))) {
-        return 'Interval must be one of: daily, weekly, monthly, yearly';
+        return 'Interval must be one of: hourly, daily, weekly, monthly, yearly';
       }
       return null;
     }
