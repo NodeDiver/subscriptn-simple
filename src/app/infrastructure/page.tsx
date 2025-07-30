@@ -3,35 +3,25 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-interface PublicServer {
+interface BTCPayServer {
   id: number;
   name: string;
   host_url: string;
-  description?: string;
-  slots_available: number;
+  description: string;
   lightning_address: string;
-  created_at: string;
-  provider_id: number;
-  current_shops: number;
   available_slots: number;
-}
-
-interface MyServer {
-  id: number;
-  name: string;
-  host_url: string;
-  description?: string;
-  slots_available: number;
-  lightning_address: string;
+  current_shops: number;
+  is_online: boolean;
+  last_seen_online?: string;
+  is_owner: number;
+  owner_id: number;
   created_at: string;
   is_public: boolean;
-  current_shops: number;
-  available_slots: number;
 }
 
 export default function InfrastructureDashboard() {
-  const [publicServers, setPublicServers] = useState<PublicServer[]>([]);
-  const [myServers, setMyServers] = useState<MyServer[]>([]);
+  const [publicServers, setPublicServers] = useState<BTCPayServer[]>([]);
+  const [myServers, setMyServers] = useState<BTCPayServer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 

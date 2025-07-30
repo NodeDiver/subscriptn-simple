@@ -16,22 +16,18 @@ export async function GET(
 
     const user = await getUserById(parseInt(userId));
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const db = await getDatabase();
     
-    // Verify the server belongs to the provider
-    const server = await db.get(
-      'SELECT id FROM servers WHERE id = ? AND provider_id = ?',
-      [serverId, user.id]
-    );
-
+    // Verify the server belongs to the user
+    const server = await db.get('SELECT id FROM servers WHERE id = ? AND owner_id = ?', [serverId, user.id]);
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });
     }
 
-    // Get shops on this server
+    // Get all shops for this server
     const shops = await db.all(`
       SELECT 
         s.id, 
@@ -39,9 +35,8 @@ export async function GET(
         s.lightning_address, 
         s.subscription_status, 
         s.created_at,
-        u.username as owner_username
+        s.is_public
       FROM shops s
-      JOIN users u ON s.owner_id = u.id
       WHERE s.server_id = ?
       ORDER BY s.created_at DESC
     `, [serverId]);

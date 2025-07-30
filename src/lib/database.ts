@@ -29,13 +29,13 @@ export async function getDatabase(): Promise<Database> {
       name TEXT NOT NULL,
       host_url TEXT NOT NULL,
       api_key TEXT NOT NULL,
-      provider_id INTEGER NOT NULL,
+      owner_id INTEGER NOT NULL,
       description TEXT,
       is_public BOOLEAN DEFAULT 1,
       slots_available INTEGER DEFAULT 21,
       lightning_address TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (provider_id) REFERENCES users (id)
+      FOREIGN KEY (owner_id) REFERENCES users (id)
     );
     
     -- Add unique constraint on host_url only if it doesn't exist
@@ -48,6 +48,7 @@ export async function getDatabase(): Promise<Database> {
       server_id INTEGER NOT NULL,
       owner_id INTEGER NOT NULL,
       subscription_status TEXT DEFAULT 'active' CHECK (subscription_status IN ('active', 'inactive', 'pending')),
+      is_public BOOLEAN DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (server_id) REFERENCES servers (id),
       FOREIGN KEY (owner_id) REFERENCES users (id)
@@ -81,8 +82,9 @@ export async function getDatabase(): Promise<Database> {
       FOREIGN KEY (subscription_id) REFERENCES subscriptions (id)
     );
     
-    -- Add missing columns if they don't exist (migration)
-    -- Note: payment_method, wallet_provider, and preimage are already in CREATE TABLE
+    -- Migration: Rename provider_id to owner_id in servers table if it exists
+    -- This handles the case where the old column name exists
+    ALTER TABLE servers ADD COLUMN owner_id INTEGER;
     
     -- Add new columns to servers table if they don't exist (migration)
     ALTER TABLE servers ADD COLUMN description TEXT;
@@ -125,11 +127,11 @@ export async function getDatabase(): Promise<Database> {
     // Create demo server if it doesn't exist
     const existingServer = await db.get('SELECT id FROM servers WHERE id = ?', [1]);
     if (!existingServer) {
-      // Get the first user to be the provider
+      // Get the first user to be the owner
       const firstUser = await db.get('SELECT id FROM users LIMIT 1');
       if (firstUser) {
         await db.run(
-          'INSERT INTO servers (id, name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?, ?)',
+          'INSERT INTO servers (id, name, host_url, api_key, owner_id) VALUES (?, ?, ?, ?, ?)',
           [1, 'Demo BTCPay Server', 'https://btcpay.aceptabitcoin.com', 'demo-api-key', firstUser.id]
         );
         console.log('Demo server created with ID 1');
@@ -139,10 +141,10 @@ export async function getDatabase(): Promise<Database> {
     // Create muni's BTCPay server if it doesn't exist
     const muniUser = await db.get('SELECT id FROM users WHERE username = ?', ['muni']);
     if (muniUser) {
-      const existingMuniServer = await db.get('SELECT id FROM servers WHERE name = ? AND provider_id = ?', ['muni btcpayserver', muniUser.id]);
+      const existingMuniServer = await db.get('SELECT id FROM servers WHERE name = ? AND owner_id = ?', ['muni btcpayserver', muniUser.id]);
       if (!existingMuniServer) {
         await db.run(
-          'INSERT INTO servers (name, host_url, api_key, provider_id) VALUES (?, ?, ?, ?)',
+          'INSERT INTO servers (name, host_url, api_key, owner_id) VALUES (?, ?, ?, ?)',
           ['muni btcpayserver', 'https://muni-btcpay.example.com', 'muni-api-key-123', muniUser.id]
         );
         console.log('Muni BTCPay server created');

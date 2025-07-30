@@ -10,15 +10,18 @@ interface Shop {
   subscription_status: string;
 }
 
-interface Server {
+interface BTCPayServer {
   id: number;
   name: string;
   host_url: string;
-  created_at: string;
-  provider_id: number;
-  is_owner: number; // 1 if user owns, 0 if not
-  is_online?: boolean;
+  description: string;
+  lightning_address: string;
+  available_slots: number;
+  current_shops: number;
+  is_online: boolean;
   last_seen_online?: string;
+  is_owner: number;
+  owner_id: number;
 }
 
 // Revenue Component for inline display - only shown to owners
@@ -114,7 +117,7 @@ function ContactAdminDisplay({ serverName }: { serverName: string }) {
 
 export default function Dashboard() {
   const [shops, setShops] = useState<Shop[]>([]);
-  const [servers, setServers] = useState<Server[]>([]);
+  const [servers, setServers] = useState<BTCPayServer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -133,7 +136,7 @@ export default function Dashboard() {
         if (serversResponse.ok) {
           const serversData = await serversResponse.json();
           // Add mock health data for demonstration
-          const serversWithHealth = serversData.servers.map((server: Server) => ({
+          const serversWithHealth = serversData.servers.map((server: BTCPayServer) => ({
             ...server,
             is_online: server.name === 'muni btcpayserver' ? true : Math.random() > 0.3, // muni server is online, others random
             last_seen_online: server.name === 'muni btcpayserver' ? new Date().toISOString() : 

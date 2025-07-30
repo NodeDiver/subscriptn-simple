@@ -184,9 +184,9 @@ export default function AddShop() {
         },
         body: JSON.stringify({
           name: selected?.name || 'My Shop',
-          serverId: selectedServer.id.toString(),
-          lightningAddress: shopOwnerLightningAddress,
-          isPublic: isShopPublic,
+          server_id: selectedServer.id,
+          lightning_address: shopOwnerLightningAddress,
+          is_public: isShopPublic,
         }),
       });
 

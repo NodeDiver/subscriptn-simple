@@ -16,14 +16,15 @@ export async function GET(
 
     const user = await getUserById(parseInt(userId));
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const db = await getDatabase();
-    const server = await db.get(
-      'SELECT id, name, host_url, created_at FROM servers WHERE id = ? AND provider_id = ?',
-      [serverId, user.id]
-    );
+    
+    // Get server details (only if user owns it)
+    const server = await db.get(`
+      SELECT id, name, host_url, created_at FROM servers WHERE id = ? AND owner_id = ?
+    `, [serverId, user.id]);
 
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 import { getUserById } from '@/lib/auth';
 import { validateApiRequest, serverValidationSchema, sanitizeString } from '@/lib/validation';
+import { serverRateLimiter } from '@/lib/rateLimit';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,35 +14,35 @@ export async function GET(request: NextRequest) {
 
     const user = await getUserById(parseInt(userId));
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     const db = await getDatabase();
-    // Get all servers with ownership information and shop counts
-    const servers = await db.all(
-      `SELECT 
-        s.id, 
-        s.name, 
-        s.host_url, 
+    
+    // Return all servers with ownership flag and slot information
+    const servers = await db.all(`
+      SELECT
+        s.id,
+        s.name,
+        s.host_url,
         s.created_at,
-        s.provider_id,
+        s.owner_id,
         s.description,
         s.is_public,
         s.slots_available,
         s.lightning_address,
-        CASE WHEN s.provider_id = ? THEN 1 ELSE 0 END as is_owner,
+        CASE WHEN s.owner_id = ? THEN 1 ELSE 0 END as is_owner,
         COALESCE(shop_counts.shop_count, 0) as current_shops,
         (s.slots_available - COALESCE(shop_counts.shop_count, 0)) as available_slots
-      FROM servers s 
+      FROM servers s
       LEFT JOIN (
-        SELECT server_id, COUNT(*) as shop_count 
-        FROM shops 
+        SELECT server_id, COUNT(*) as shop_count
+        FROM shops
         WHERE subscription_status = 'active'
         GROUP BY server_id
       ) shop_counts ON s.id = shop_counts.server_id
-      ORDER BY s.created_at DESC`,
-      [user.id]
-    );
+      ORDER BY s.created_at DESC
+    `, [user.id]);
 
     return NextResponse.json({ servers });
   } catch (error) {
@@ -52,6 +53,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    if (!serverRateLimiter.isAllowed(clientIP)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const userId = request.cookies.get('user_id')?.value;
     
     if (!userId) {
@@ -77,44 +87,55 @@ export async function POST(request: NextRequest) {
     const sanitizedHostUrl = sanitizeString(host_url as string);
     const sanitizedApiKey = sanitizeString(api_key as string);
     const sanitizedDescription = description ? sanitizeString(description as string) : null;
-    const sanitizedLightningAddress = sanitizeString(lightning_address as string);
-    const isPublic = Boolean(is_public);
-    const slotsAvailable = Number(slots_available);
+    const sanitizedLightningAddress = lightning_address ? sanitizeString(lightning_address as string) : null;
+    const isPublic = is_public !== undefined ? Boolean(is_public) : true;
+    const slotsAvailable = Number(slots_available) || 21;
 
     const db = await getDatabase();
     
-    // Check if this host_url already exists
+    // Check if this host URL already exists
     const existingServer = await db.get(
-      'SELECT id, provider_id FROM servers WHERE host_url = ?',
+      'SELECT id, owner_id FROM servers WHERE host_url = ?',
       [sanitizedHostUrl]
     );
 
     if (existingServer) {
-      // Check if the current user already owns this server
-      if (existingServer.provider_id === user.id) {
+      if (existingServer.owner_id === user.id) {
         return NextResponse.json(
-          { error: 'You already own a server with this host URL' },
+          { error: 'You already have a server with this host URL' },
           { status: 400 }
         );
       } else {
-        // Another user owns this server
         return NextResponse.json(
-          { error: 'This server is already owned by another user' },
+          { error: 'This host URL is already registered by another user' },
           { status: 409 }
         );
       }
     }
 
-    // No existing server with this host_url, create new one
+    // Create new server
     const result = await db.run(
-      'INSERT INTO servers (name, host_url, api_key, provider_id, description, is_public, slots_available, lightning_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO servers (name, host_url, api_key, owner_id, description, is_public, slots_available, lightning_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [sanitizedName, sanitizedHostUrl, sanitizedApiKey, user.id, sanitizedDescription, isPublic, slotsAvailable, sanitizedLightningAddress]
     );
 
-    const newServer = await db.get(
-      'SELECT id, name, host_url, created_at FROM servers WHERE id = ?',
-      [result.lastID]
-    );
+    const newServer = await db.get(`
+      SELECT 
+        s.id,
+        s.name,
+        s.host_url,
+        s.created_at,
+        s.owner_id,
+        s.description,
+        s.is_public,
+        s.slots_available,
+        s.lightning_address,
+        1 as is_owner,
+        0 as current_shops,
+        s.slots_available as available_slots
+      FROM servers s
+      WHERE s.id = ?
+    `, [result.lastID]);
 
     return NextResponse.json({ server: newServer }, { status: 201 });
   } catch (error) {
@@ -147,7 +168,7 @@ export async function DELETE(request: NextRequest) {
     
     // Check if the server exists and is owned by the current user
     const server = await db.get(
-      'SELECT id, name FROM servers WHERE id = ? AND provider_id = ?',
+      'SELECT id, name FROM servers WHERE id = ? AND owner_id = ?',
       [serverId, user.id]
     );
 
@@ -155,10 +176,30 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Server not found or not owned by you' }, { status: 404 });
     }
 
+    // Delete related shops first (cascade delete)
+    await db.run('DELETE FROM shops WHERE server_id = ?', [serverId]);
+    
+    // Delete related subscriptions
+    await db.run(`
+      DELETE FROM subscriptions 
+      WHERE shop_id IN (SELECT id FROM shops WHERE server_id = ?)
+    `, [serverId]);
+
+    // Delete related subscription history
+    await db.run(`
+      DELETE FROM subscription_history 
+      WHERE subscription_id IN (
+        SELECT id FROM subscriptions 
+        WHERE shop_id IN (SELECT id FROM shops WHERE server_id = ?)
+      )
+    `, [serverId]);
+
     // Delete the server
     await db.run('DELETE FROM servers WHERE id = ?', [serverId]);
 
-    return NextResponse.json({ message: 'Server removed successfully' });
+    return NextResponse.json({ 
+      message: 'Server removed successfully. All related shops and subscriptions have been cancelled.' 
+    });
   } catch (error) {
     console.error('Delete server error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

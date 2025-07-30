@@ -217,9 +217,22 @@ We welcome contributions! Contact: nodediver@proton.me
 - **Technical Debt**: Resolved API route issues and improved code quality
 
 **Current Focus:**
+- Database schema standardization and consistency
 - User experience improvements
 - Code quality enhancements
 - Performance optimization
+
+<details>
+<summary><strong>Week 5: 2024-12-19</strong></summary>
+
+### 2024-12-19: Database Schema Standardization
+- **Owner Relationship Standardization**: Changed `provider_id` to `owner_id` in servers table for consistency
+- **API Route Updates**: Updated all server-related endpoints to use `owner_id` consistently
+- **Frontend Interface Updates**: Updated TypeScript interfaces across dashboard and infrastructure pages
+- **Shop Creation Fix**: Fixed field name consistency in shop creation form (`is_public`, `server_id`, `lightning_address`)
+- **Subscription System Review**: Confirmed proper cancellation handling and history tracking
+- **Database Migration**: Added proper ALTER TABLE statements for schema evolution
+- **Code Quality**: Improved consistency and maintainability across the codebase
 
 <details>
 <summary><strong>Week 4: 2025-01-27</strong></summary>

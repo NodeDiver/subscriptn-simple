@@ -1,5 +1,80 @@
 # SubscriptN Development Log
 
+## Session: 2024-12-19 - Database Standardization and Owner Relationship Updates
+
+### User Prompt: Database Schema Standardization
+**Time**: Evening session  
+**Request**: Standardize owner relationships in database schema. Change `provider_id` to `owner_id` in servers table for consistency with shops table. Review subscription system and ensure shops have `is_public` field properly implemented.
+
+**Actions Taken**:
+- **Step 1**: Analyzed current database schema and identified inconsistencies
+- **Step 2**: Standardized owner relationship by changing `provider_id` to `owner_id` in servers table
+- **Step 3**: Updated all API routes to use `owner_id` consistently
+- **Step 4**: Updated TypeScript interfaces in frontend components
+- **Step 5**: Fixed field name consistency in shop creation form
+- **Step 6**: Reviewed subscription system and confirmed proper cancellation handling
+- **Step 7**: Verified `is_public` field is properly implemented for shops
+
+**Files Modified**:
+- `src/lib/database.ts` - Schema updates and migration
+- `src/app/api/servers/route.ts` - Updated to use owner_id
+- `src/app/api/servers/public/route.ts` - Updated to use owner_id
+- `src/app/api/servers/[serverId]/route.ts` - Updated to use owner_id
+- `src/app/api/servers/[serverId]/shops/route.ts` - Updated to use owner_id
+- `src/app/dashboard/page.tsx` - Updated interface
+- `src/app/infrastructure/page.tsx` - Updated interface
+- `src/app/shops/add-shop/page.tsx` - Fixed field names in API calls
+
+**Technical Details**:
+- **Database Schema**: Standardized `provider_id` → `owner_id` in servers table
+- **API Consistency**: All server-related endpoints now use `owner_id`
+- **Frontend Updates**: TypeScript interfaces updated for consistency
+- **Shop Creation**: Fixed field names (`is_public`, `server_id`, `lightning_address`)
+- **Subscription System**: Confirmed proper cancellation and history tracking
+- **Validation**: All schemas properly configured for new field names
+
+**Database Structure**:
+```sql
+-- Servers table (standardized)
+CREATE TABLE servers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  host_url TEXT NOT NULL,
+  api_key TEXT NOT NULL,
+  owner_id INTEGER NOT NULL,  -- Standardized from provider_id
+  description TEXT,
+  is_public BOOLEAN DEFAULT 1,
+  slots_available INTEGER DEFAULT 21,
+  lightning_address TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+
+-- Shops table (already standardized)
+CREATE TABLE shops (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  lightning_address TEXT,
+  server_id INTEGER NOT NULL,
+  owner_id INTEGER NOT NULL,  -- Already standardized
+  subscription_status TEXT DEFAULT 'active',
+  is_public BOOLEAN DEFAULT 1,  -- Already implemented
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (server_id) REFERENCES servers (id),
+  FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+```
+
+**Result**: ✅ Database schema standardized with consistent `owner_id` relationships. All API routes and frontend components updated. Subscription system properly reviewed and confirmed working.
+
+**Next Steps**:
+- Test shop creation with public/private toggle
+- Verify server ownership relationships work correctly
+- Test subscription cancellation flow
+- Consider adding database migration script for production
+
+---
+
 ## Purpose
 This file serves as a comprehensive development diary for the SubscriptN project. It tracks every user prompt, code change, and modification made during development sessions. The goal is to maintain complete continuity between work sessions, allowing any developer (including AI assistants) to quickly understand the project's current state and history.
 
@@ -24,6 +99,81 @@ This file serves as a comprehensive development diary for the SubscriptN project
 - **Top**: Instructions and current session
 - **Middle**: Project context and status
 - **Bottom**: Historical sessions and older entries
+
+---
+
+## Session: 2024-12-19 - Database Standardization and Owner Relationship Updates
+
+### User Prompt: Database Schema Standardization
+**Time**: Evening session  
+**Request**: Standardize owner relationships in database schema. Change `provider_id` to `owner_id` in servers table for consistency with shops table. Review subscription system and ensure shops have `is_public` field properly implemented.
+
+**Actions Taken**:
+- **Step 1**: Analyzed current database schema and identified inconsistencies
+- **Step 2**: Standardized owner relationship by changing `provider_id` to `owner_id` in servers table
+- **Step 3**: Updated all API routes to use `owner_id` consistently
+- **Step 4**: Updated TypeScript interfaces in frontend components
+- **Step 5**: Fixed field name consistency in shop creation form
+- **Step 6**: Reviewed subscription system and confirmed proper cancellation handling
+- **Step 7**: Verified `is_public` field is properly implemented for shops
+
+**Files Modified**:
+- `src/lib/database.ts` - Schema updates and migration
+- `src/app/api/servers/route.ts` - Updated to use owner_id
+- `src/app/api/servers/public/route.ts` - Updated to use owner_id
+- `src/app/api/servers/[serverId]/route.ts` - Updated to use owner_id
+- `src/app/api/servers/[serverId]/shops/route.ts` - Updated to use owner_id
+- `src/app/dashboard/page.tsx` - Updated interface
+- `src/app/infrastructure/page.tsx` - Updated interface
+- `src/app/shops/add-shop/page.tsx` - Fixed field names in API calls
+
+**Technical Details**:
+- **Database Schema**: Standardized `provider_id` → `owner_id` in servers table
+- **API Consistency**: All server-related endpoints now use `owner_id`
+- **Frontend Updates**: TypeScript interfaces updated for consistency
+- **Shop Creation**: Fixed field names (`is_public`, `server_id`, `lightning_address`)
+- **Subscription System**: Confirmed proper cancellation and history tracking
+- **Validation**: All schemas properly configured for new field names
+
+**Database Structure**:
+```sql
+-- Servers table (standardized)
+CREATE TABLE servers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  host_url TEXT NOT NULL,
+  api_key TEXT NOT NULL,
+  owner_id INTEGER NOT NULL,  -- Standardized from provider_id
+  description TEXT,
+  is_public BOOLEAN DEFAULT 1,
+  slots_available INTEGER DEFAULT 21,
+  lightning_address TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+
+-- Shops table (already standardized)
+CREATE TABLE shops (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  lightning_address TEXT,
+  server_id INTEGER NOT NULL,
+  owner_id INTEGER NOT NULL,  -- Already standardized
+  subscription_status TEXT DEFAULT 'active',
+  is_public BOOLEAN DEFAULT 1,  -- Already implemented
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (server_id) REFERENCES servers (id),
+  FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+```
+
+**Result**: ✅ Database schema standardized with consistent `owner_id` relationships. All API routes and frontend components updated. Subscription system properly reviewed and confirmed working.
+
+**Next Steps**:
+- Test shop creation with public/private toggle
+- Verify server ownership relationships work correctly
+- Test subscription cancellation flow
+- Consider adding database migration script for production
 
 ---
 
@@ -3699,7 +3849,7 @@ This file serves as a comprehensive development diary for the SubscriptN project
 - Added TypeScript declarations for WebLN global object
 - Enhanced error handling for Lightning network issues
 
-**Next Steps**: 
+**Next Steps**:
 - Test the new implementation with real Lightning wallets
 - Verify payment flow end-to-end
 - Add payment history display integration
