@@ -225,7 +225,7 @@ We welcome contributions! Contact: nodediver@proton.me
 <details>
 <summary><strong>Week 5: 2024-12-19</strong></summary>
 
-### 2024-12-19: Prisma ORM Implementation & Database Schema Standardization
+### 2024-12-19: Prisma ORM Implementation & Logo Updates
 - **🎉 PRISMA MIGRATION COMPLETE**: All major database operations now use Prisma ORM
 - **User Authentication**: Migrated registration, login, and user info to use Prisma
 - **Server Management**: Migrated all server operations (GET, POST, DELETE) to use Prisma
@@ -235,6 +235,7 @@ We welcome contributions! Contact: nodediver@proton.me
 - **Error Handling**: Improved error handling with Prisma-specific error codes
 - **Database Schema**: Standardized `owner_id` relationships and added new fields
 - **Code Quality**: Improved consistency, maintainability, and developer experience
+- **🎨 Logo Updates**: Replaced gradient square logos with new `logo_square.webp` image in header and footer
 
 <details>
 <summary><strong>Week 4: 2025-01-27</strong></summary>

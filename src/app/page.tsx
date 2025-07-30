@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
@@ -16,48 +17,43 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-subscriptn-green-50 via-subscriptn-teal-50 to-subscriptn-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Welcome to{' '}
-              <span className="bg-gradient-to-r from-subscriptn-green-500 via-subscriptn-teal-500 to-subscriptn-blue-500 dark:from-green-500 dark:via-teal-500 dark:to-blue-500 bg-clip-text text-transparent">
-                SubscriptN
-              </span>
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-3xl mx-auto">
-              Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners. Streamline recurring payments and server management in one platform.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {user ? (
-                // User is logged in - show dashboard link only
+      <section className="py-20 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            Welcome to{' '}
+            <span className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 bg-clip-text text-transparent">
+              SubscriptN
+            </span>
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners. Streamline recurring payments and server management in one platform.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-4 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
                 <Link
-                  href="/dashboard"
-                  className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-3 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  href="/login"
+                  className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-4 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  Go to Dashboard
+                  Get Started
                 </Link>
-              ) : (
-                // User is not logged in - show auth options
-                <>
-                  <Link
-                    href="/login"
-                    className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-3 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="border-2 border-subscriptn-blue-500 dark:border-blue-500 text-subscriptn-blue-500 dark:text-blue-400 px-8 py-3 rounded-lg hover:bg-subscriptn-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-200 text-lg font-medium"
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </div>
+                <Link
+                  href="/shops"
+                  className="bg-green-600 dark:bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Browse Shops
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -126,8 +122,14 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-6">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-subscriptn-green-500 via-subscriptn-teal-500 to-subscriptn-blue-500 dark:from-green-500 dark:via-teal-500 dark:to-blue-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">S</span>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/screenshots/logo_square.webp"
+                    alt="SubscriptN Logo"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <span className="text-xl font-bold text-gray-900 dark:text-white">SubscriptN</span>
               </div>

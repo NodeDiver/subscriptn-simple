@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import UserDropdown from './UserDropdown';
@@ -23,8 +24,14 @@ export default function TopBar() {
               onClick={handleLogoClick}
               className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 hover:scale-105 cursor-pointer"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-subscriptn-green-500 via-subscriptn-teal-500 to-subscriptn-blue-500 dark:from-green-500 dark:via-teal-500 dark:to-blue-500 rounded-xl flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-lg">S</span>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
+                <Image
+                  src="/screenshots/logo_square.webp"
+                  alt="SubscriptN Logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-gray-900 dark:text-white">SubscriptN</span>
