@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(
   request: NextRequest,
@@ -19,27 +19,27 @@ export async function GET(
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const db = await getDatabase();
+    // Verify the server belongs to the user using Prisma
+    const server = await prisma.server.findFirst({
+      where: {
+        id: parseInt(serverId),
+        ownerId: user.id
+      }
+    });
     
-    // Verify the server belongs to the user
-    const server = await db.get('SELECT id FROM servers WHERE id = ? AND owner_id = ?', [serverId, user.id]);
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });
     }
 
-    // Get all shops for this server
-    const shops = await db.all(`
-      SELECT 
-        s.id, 
-        s.name, 
-        s.lightning_address, 
-        s.subscription_status, 
-        s.created_at,
-        s.is_public
-      FROM shops s
-      WHERE s.server_id = ?
-      ORDER BY s.created_at DESC
-    `, [serverId]);
+    // Get all shops for this server using Prisma
+    const shops = await prisma.shop.findMany({
+      where: {
+        serverId: parseInt(serverId)
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
 
     return NextResponse.json({ shops });
   } catch (error) {

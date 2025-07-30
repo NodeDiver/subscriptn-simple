@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(
   request: NextRequest,
@@ -26,58 +26,64 @@ export async function POST(
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const db = await getDatabase();
-
-    // Verify the subscription belongs to the authenticated user
-    const subscription = await db.get(`
-      SELECT s.id, s.shop_id, sh.owner_id 
-      FROM subscriptions s 
-      JOIN shops sh ON s.shop_id = sh.id 
-      WHERE s.id = ? AND sh.owner_id = ?
-    `, [subscriptionId, user.id]);
+    // Verify the subscription belongs to the authenticated user using Prisma
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        id: parseInt(subscriptionId),
+        shop: {
+          ownerId: user.id
+        }
+      },
+      include: {
+        shop: {
+          select: {
+            id: true
+          }
+        }
+      }
+    });
 
     if (!subscription) {
       return NextResponse.json({ error: 'Subscription not found' }, { status: 404 });
     }
 
-    // Record the payment in subscription history
-    const result = await db.run(`
-      INSERT INTO subscription_history (
-        subscription_id, 
-        payment_amount, 
-        status, 
-        payment_method,
-        wallet_provider,
-        preimage
-      ) VALUES (?, ?, ?, ?, ?, ?)
-    `, [subscriptionId, amountSats, status, paymentMethod, walletProvider || null, preimage || null]);
+    // Record the payment in subscription history using Prisma
+    const payment = await prisma.subscriptionHistory.create({
+      data: {
+        subscriptionId: parseInt(subscriptionId),
+        paymentAmount: amountSats,
+        status,
+        paymentMethod,
+        walletProvider: walletProvider || null,
+        preimage: preimage || null,
+        paymentDate: new Date()
+      }
+    });
 
     // Update subscription status if payment was successful
     if (status === 'success') {
-      await db.run(`
-        UPDATE subscriptions 
-        SET status = 'active' 
-        WHERE id = ?
-      `, [subscriptionId]);
-
-      // Update shop subscription status
-      await db.run(`
-        UPDATE shops 
-        SET subscription_status = 'active' 
-        WHERE id = ?
-      `, [subscription.shop_id]);
+      await prisma.$transaction([
+        prisma.subscription.update({
+          where: { id: parseInt(subscriptionId) },
+          data: { status: 'active' }
+        }),
+        prisma.shop.update({
+          where: { id: subscription.shop.id },
+          data: { subscriptionStatus: 'active' }
+        })
+      ]);
     }
 
     return NextResponse.json({
       success: true,
       payment: {
-        id: result.lastID,
+        id: payment.id,
         subscriptionId,
         amountSats,
         status,
         paymentMethod,
         walletProvider,
-        timestamp: new Date().toISOString()
+        timestamp: payment.paymentDate.toISOString()
       }
     });
 
@@ -104,40 +110,41 @@ export async function GET(
     }
 
     const { subscriptionId } = await params;
-    const db = await getDatabase();
 
-    // Verify the subscription belongs to the authenticated user
-    const subscription = await db.get(`
-      SELECT s.id, s.shop_id, sh.owner_id 
-      FROM subscriptions s 
-      JOIN shops sh ON s.shop_id = sh.id 
-      WHERE s.id = ? AND sh.owner_id = ?
-    `, [subscriptionId, user.id]);
+    // Verify the subscription belongs to the authenticated user using Prisma
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        id: parseInt(subscriptionId),
+        shop: {
+          ownerId: user.id
+        }
+      }
+    });
 
     if (!subscription) {
       return NextResponse.json({ error: 'Subscription not found' }, { status: 404 });
     }
 
-    // Get payment history for this subscription
-    const payments = await db.all(`
-      SELECT 
-        id,
-        payment_amount,
-        status,
-        payment_method,
-        wallet_provider,
-        preimage,
-        payment_date
-      FROM subscription_history 
-      WHERE subscription_id = ? 
-      ORDER BY payment_date DESC
-    `, [subscriptionId]);
+    // Get payment history for this subscription using Prisma
+    const payments = await prisma.subscriptionHistory.findMany({
+      where: {
+        subscriptionId: parseInt(subscriptionId)
+      },
+      orderBy: {
+        paymentDate: 'desc'
+      }
+    });
 
     return NextResponse.json({
       success: true,
       payments: payments.map(payment => ({
-        ...payment,
-        payment_date: new Date(payment.payment_date).toISOString()
+        id: payment.id,
+        payment_amount: payment.paymentAmount,
+        status: payment.status,
+        payment_method: payment.paymentMethod,
+        wallet_provider: payment.walletProvider,
+        preimage: payment.preimage,
+        payment_date: payment.paymentDate.toISOString()
       }))
     });
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { getUserShops, createShop, deleteShop } from '@/lib/shop-prisma';
 import { validateApiRequest, shopValidationSchema, sanitizeString } from '@/lib/validation';
 import { shopRateLimiter } from '@/lib/rateLimit';
 
@@ -17,23 +17,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const db = await getDatabase();
-    // Always return only shops owned by the user
-      const shops = await db.all(`
-        SELECT 
-          s.id, 
-          s.name, 
-          s.lightning_address, 
-          s.subscription_status, 
-          s.created_at,
-          s.is_public,
-          sr.name as server_name
-        FROM shops s
-        JOIN servers sr ON s.server_id = sr.id
-        WHERE s.owner_id = ?
-        ORDER BY s.created_at DESC
-      `, [user.id]);
-      return NextResponse.json({ shops });
+    // Get user shops using Prisma
+    const shops = await getUserShops(user.id);
+    return NextResponse.json({ shops });
   } catch (error) {
     console.error('Get shops error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -77,57 +63,34 @@ export async function POST(request: NextRequest) {
     const serverId = Number(server_id);
     const isPublic = is_public !== undefined ? Boolean(is_public) : true;
 
-    const db = await getDatabase();
-    
-    // Verify the server exists
-    const server = await db.get('SELECT id FROM servers WHERE id = ?', [serverId]);
-    if (!server) {
-      return NextResponse.json({ error: 'Server not found' }, { status: 404 });
-    }
+    try {
+      // Create shop using Prisma
+      const newShop = await createShop({
+        name: sanitizedName,
+        serverId,
+        ownerId: user.id,
+        lightningAddress: sanitizedLightningAddress,
+        isPublic
+      });
 
-    // Check if this shop name already exists on this server
-    const existingShop = await db.get(
-      'SELECT id, owner_id FROM shops WHERE name = ? AND server_id = ?',
-      [name, serverId]
-    );
-
-    if (existingShop) {
-      // Check if the current user already owns this shop
-      if (existingShop.owner_id === user.id) {
+      return NextResponse.json({ shop: newShop }, { status: 201 });
+    } catch (error: any) {
+      // Handle specific error messages from Prisma service
+      if (error.message === 'Server not found') {
+        return NextResponse.json({ error: 'Server not found' }, { status: 404 });
+      } else if (error.message === 'You already own a shop with this name on this server') {
         return NextResponse.json(
           { error: 'You already own a shop with this name on this server' },
           { status: 400 }
         );
-      } else {
-        // Another user owns this shop
+      } else if (error.message === 'This shop is already owned by another user') {
         return NextResponse.json(
           { error: 'This shop is already owned by another user' },
           { status: 409 }
         );
       }
+      throw error;
     }
-
-    // No existing shop with this name on this server, create new one
-    const result = await db.run(
-      'INSERT INTO shops (name, lightning_address, server_id, owner_id, is_public) VALUES (?, ?, ?, ?, ?)',
-      [sanitizedName, sanitizedLightningAddress, serverId, user.id, isPublic]
-    );
-
-    const newShop = await db.get(`
-      SELECT 
-        s.id, 
-        s.name, 
-        s.lightning_address, 
-        s.subscription_status, 
-        s.created_at,
-        s.is_public,
-        sr.name as server_name
-      FROM shops s
-      JOIN servers sr ON s.server_id = sr.id
-      WHERE s.id = ?
-    `, [result.lastID]);
-
-    return NextResponse.json({ shop: newShop }, { status: 201 });
   } catch (error) {
     console.error('Create shop error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -154,29 +117,12 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Shop ID is required' }, { status: 400 });
     }
 
-    const db = await getDatabase();
-    
-    // Check if the shop exists and is owned by the current user
-    const shop = await db.get(
-      'SELECT id, name FROM shops WHERE id = ? AND owner_id = ?',
-      [shopId, user.id]
-    );
+    // Delete shop using Prisma
+    const success = await deleteShop(parseInt(shopId), user.id);
 
-    if (!shop) {
+    if (!success) {
       return NextResponse.json({ error: 'Shop not found or not owned by you' }, { status: 404 });
     }
-
-    // Delete related subscriptions first (cascade delete)
-    await db.run('DELETE FROM subscriptions WHERE shop_id = ?', [shopId]);
-    
-    // Delete related subscription history
-    await db.run(`
-      DELETE FROM subscription_history 
-      WHERE subscription_id IN (SELECT id FROM subscriptions WHERE shop_id = ?)
-    `, [shopId]);
-
-    // Delete the shop
-    await db.run('DELETE FROM shops WHERE id = ?', [shopId]);
 
     return NextResponse.json({ 
       message: 'Shop removed successfully. All related subscriptions and payments have been cancelled.' 

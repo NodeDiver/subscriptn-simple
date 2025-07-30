@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Get user using Prisma
     const user = await getUserById(parseInt(userId));
 
     if (!user) {

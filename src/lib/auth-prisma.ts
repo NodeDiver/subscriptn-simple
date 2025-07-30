@@ -95,4 +95,7 @@ export async function verifyUser(username: string, password: string): Promise<Us
     console.error('Verify user error:', error);
     return null;
   }
-} 
+}
+
+// Alias for backward compatibility with existing API
+export const authenticateUser = verifyUser; 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { getShopSubscriptions } from '@/lib/subscription-prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(
   request: NextRequest,
@@ -19,32 +20,20 @@ export async function GET(
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const db = await getDatabase();
-    
-    // Only allow access if the shop is owned by the user
-    const shop = await db.get(
-        'SELECT id FROM shops WHERE id = ? AND owner_id = ?',
-        [shopId, user.id]
-      );
+    // Verify the shop belongs to the user first
+    const shop = await prisma.shop.findFirst({
+      where: {
+        id: parseInt(shopId),
+        ownerId: user.id
+      }
+    });
 
     if (!shop) {
       return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
     }
 
-    // Get subscriptions for this shop
-    const subscriptions = await db.all(`
-      SELECT 
-        sub.id,
-        sub.amount_sats,
-        sub.interval,
-        sub.status,
-        sub.created_at,
-        s.name as shop_name
-      FROM subscriptions sub
-      JOIN shops s ON sub.shop_id = s.id
-      WHERE s.id = ? AND s.owner_id = ?
-      ORDER BY sub.created_at DESC
-    `, [shopId, user.id]);
+    // Get subscriptions for this shop using Prisma
+    const subscriptions = await getShopSubscriptions(parseInt(shopId));
 
     return NextResponse.json({ subscriptions });
   } catch (error) {

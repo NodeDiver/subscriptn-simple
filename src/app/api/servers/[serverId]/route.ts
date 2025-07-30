@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { getServerById } from '@/lib/server-prisma';
 
 export async function GET(
   request: NextRequest,
@@ -19,12 +19,8 @@ export async function GET(
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const db = await getDatabase();
-    
-    // Get server details (only if user owns it)
-    const server = await db.get(`
-      SELECT id, name, host_url, created_at FROM servers WHERE id = ? AND owner_id = ?
-    `, [serverId, user.id]);
+    // Get server using Prisma
+    const server = await getServerById(parseInt(serverId), user.id);
 
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });

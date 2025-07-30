@@ -194,4 +194,47 @@ export async function deleteServer(serverId: number, ownerId: number) {
     console.error('Delete server error:', error);
     return false;
   }
+}
+
+export async function getServerById(serverId: number, ownerId: number): Promise<ServerWithStats | null> {
+  try {
+    const server = await prisma.server.findFirst({
+      where: {
+        id: serverId,
+        ownerId
+      },
+      include: {
+        _count: {
+          select: {
+            shops: {
+              where: {
+                subscriptionStatus: 'active'
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!server) {
+      return null;
+    }
+
+    return {
+      id: server.id,
+      name: server.name,
+      hostUrl: server.hostUrl,
+      description: server.description,
+      isPublic: server.isPublic,
+      slotsAvailable: server.slotsAvailable,
+      lightningAddress: server.lightningAddress,
+      createdAt: server.createdAt,
+      isOwner: true,
+      currentShops: server._count.shops,
+      availableSlots: server.slotsAvailable - server._count.shops
+    };
+  } catch (error) {
+    console.error('Get server by ID error:', error);
+    return null;
+  }
 } 

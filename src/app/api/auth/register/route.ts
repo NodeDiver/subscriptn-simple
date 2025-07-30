@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser } from '@/lib/auth';
+import { createUser } from '@/lib/auth-prisma';
 import { authRateLimiter } from '@/lib/rateLimit';
 import { validateApiRequest, registerValidationSchema, sanitizeString } from '@/lib/validation';
 
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const sanitizedUsername = sanitizeString(username as string);
     const sanitizedPassword = sanitizeString(password as string);
 
-    // Create user
+    // Create user using Prisma
     const user = await createUser(sanitizedUsername, sanitizedPassword);
 
     if (!user) {

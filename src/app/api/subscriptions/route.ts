@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
-import { getUserById } from '@/lib/auth';
+import { getUserById } from '@/lib/auth-prisma';
+import { getUserSubscriptions, createSubscription } from '@/lib/subscription-prisma';
 import { validateApiRequest, subscriptionValidationSchema } from '@/lib/validation';
 import { subscriptionRateLimiter } from '@/lib/rateLimit';
 
@@ -17,25 +17,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const db = await getDatabase();
-    
-    // Only return subscriptions for shops owned by the user
-      const subscriptions = await db.all(`
-        SELECT 
-          sub.id,
-          sub.amount_sats,
-          sub.interval,
-          sub.status,
-          sub.created_at,
-          s.name as shop_name,
-          sr.name as server_name
-        FROM subscriptions sub
-        JOIN shops s ON sub.shop_id = s.id
-        JOIN servers sr ON s.server_id = sr.id
-        WHERE s.owner_id = ?
-        ORDER BY sub.created_at DESC
-      `, [user.id]);
-      return NextResponse.json({ subscriptions });
+    // Get user subscriptions using Prisma
+    const subscriptions = await getUserSubscriptions(user.id);
+    return NextResponse.json({ subscriptions });
   } catch (error) {
     console.error('Get subscriptions error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -77,61 +61,28 @@ export async function POST(request: NextRequest) {
     const shopId = Number(shop_id);
     const amountSats = Number(amount_sats);
 
-    const db = await getDatabase();
-    
-    // Verify the shop belongs to the user
-    const shop = await db.get(
-      'SELECT id FROM shops WHERE id = ? AND owner_id = ?',
-      [shopId, user.id]
-    );
-    if (!shop) {
-      return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
-    }
-
-    // Check if this shop already has an active subscription
-    const existingSubscription = await db.get(
-      'SELECT id, status FROM subscriptions WHERE shop_id = ? AND status = ?',
-      [shopId, 'active']
-    );
-
-    if (existingSubscription) {
-      return NextResponse.json(
-        { error: 'This shop already has an active subscription. Please cancel the existing subscription before creating a new one.' },
-        { status: 409 }
-      );
-    }
-
-    // No active subscription exists for this shop, create new one
-    // Temporarily disable foreign key constraints to allow hourly intervals
-    await db.run('PRAGMA foreign_keys = OFF');
-    
-    let result;
     try {
-      result = await db.run(
-        'INSERT INTO subscriptions (shop_id, amount_sats, interval) VALUES (?, ?, ?)',
-        [shopId, amountSats, interval]
-      );
-    } finally {
-      // Re-enable foreign key constraints
-      await db.run('PRAGMA foreign_keys = ON');
+      // Create subscription using Prisma
+      const newSubscription = await createSubscription({
+        shopId,
+        ownerId: user.id,
+        amountSats,
+        interval: interval as string
+      });
+
+      return NextResponse.json({ subscription: newSubscription }, { status: 201 });
+    } catch (error: any) {
+      // Handle specific error messages from Prisma service
+      if (error.message === 'Shop not found') {
+        return NextResponse.json({ error: 'Shop not found' }, { status: 404 });
+      } else if (error.message.includes('already has an active subscription')) {
+        return NextResponse.json(
+          { error: 'This shop already has an active subscription. Please cancel the existing subscription before creating a new one.' },
+          { status: 409 }
+        );
+      }
+      throw error;
     }
-
-    const newSubscription = await db.get(`
-      SELECT 
-        sub.id,
-        sub.amount_sats,
-        sub.interval,
-        sub.status,
-        sub.created_at,
-        s.name as shop_name,
-        sr.name as server_name
-      FROM subscriptions sub
-      JOIN shops s ON sub.shop_id = s.id
-      JOIN servers sr ON s.server_id = sr.id
-      WHERE sub.id = ?
-    `, [result.lastID]);
-
-    return NextResponse.json({ subscription: newSubscription }, { status: 201 });
   } catch (error) {
     console.error('Create subscription error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
