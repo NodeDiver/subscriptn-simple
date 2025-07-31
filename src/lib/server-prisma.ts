@@ -237,4 +237,46 @@ export async function getServerById(serverId: number, ownerId: number): Promise<
     console.error('Get server by ID error:', error);
     return null;
   }
+}
+
+export async function getServerByIdForDetails(serverId: number, userId: number): Promise<ServerWithStats | null> {
+  try {
+    const server = await prisma.server.findUnique({
+      where: {
+        id: serverId
+      },
+      include: {
+        _count: {
+          select: {
+            shops: {
+              where: {
+                subscriptionStatus: 'active'
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!server) {
+      return null;
+    }
+
+    return {
+      id: server.id,
+      name: server.name,
+      hostUrl: server.hostUrl,
+      description: server.description,
+      isPublic: server.isPublic,
+      slotsAvailable: server.slotsAvailable,
+      lightningAddress: server.lightningAddress,
+      createdAt: server.createdAt,
+      isOwner: server.ownerId === userId,
+      currentShops: server._count.shops,
+      availableSlots: server.slotsAvailable - server._count.shops
+    };
+  } catch (error) {
+    console.error('Get server by ID for details error:', error);
+    return null;
+  }
 } 

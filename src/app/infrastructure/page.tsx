@@ -95,11 +95,13 @@ export default function InfrastructureDashboard() {
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Browse BTCPay Servers</h2>
-              <Link href="/infrastructure/add-server">
-                <button className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
-                  List Your Server
-                </button>
-              </Link>
+              {publicServers.length > 0 && (
+                <Link href="/infrastructure/add-server">
+                  <button className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
+                    Add another BTCPay Server
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
           <div className="p-6">
@@ -228,23 +230,6 @@ export default function InfrastructureDashboard() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Add Server Section - Only show if user has no servers */}
-        {myServers.length === 0 && !loading && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="p-6 text-center">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Start Your Infrastructure</h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Don't have any BTCPay servers yet? Add your first server to start providing infrastructure to shop owners.
-              </p>
-              <Link href="/infrastructure/add-server">
-                <button className="bg-green-600 dark:bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors">
-                  Add Your First Server
-                </button>
-              </Link>
             </div>
           </div>
         )}

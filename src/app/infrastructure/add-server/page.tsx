@@ -19,6 +19,30 @@ export default function AddServer() {
   const router = useRouter();
   const { showToast } = useToast();
 
+  // Function to format URL automatically
+  const formatHostUrl = (url: string): string => {
+    if (!url) return url;
+    
+    // If it already has a protocol, return as is
+    if (url.match(/^https?:\/\//)) {
+      return url;
+    }
+    
+    // If it looks like a domain (contains dots and no spaces), add https://
+    if (url.includes('.') && !url.includes(' ')) {
+      return `https://${url}`;
+    }
+    
+    return url;
+  };
+
+  const handleHostUrlBlur = () => {
+    const formattedUrl = formatHostUrl(hostUrl);
+    if (formattedUrl !== hostUrl) {
+      setHostUrl(formattedUrl);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -43,7 +67,7 @@ export default function AddServer() {
 
       if (response.ok) {
         showToast('Server added successfully!', 'success');
-        router.push('/infrastructure');
+        router.push('/dashboard');
       } else {
         const data = await response.json();
         if (data.details) {
@@ -126,6 +150,7 @@ export default function AddServer() {
                 id="hostUrl"
                 value={hostUrl}
                 onChange={(e) => setHostUrl(e.target.value)}
+                onBlur={handleHostUrlBlur}
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
                   errors.host_url ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
@@ -166,10 +191,14 @@ export default function AddServer() {
                 id="lightningAddress"
                 value={lightningAddress}
                 onChange={(e) => setLightningAddress(e.target.value)}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
                   errors.lightning_address ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
-                placeholder="username@domain.com"
+                placeholder="⚡yourlightningaddress@domain.com"
                 required
               />
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

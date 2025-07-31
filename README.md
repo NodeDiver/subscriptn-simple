@@ -157,14 +157,17 @@ We welcome contributions! Contact: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 5 - UX Improvements & Toast Notification Enhancement
+### Current Status: Week 5 - Delete Server & Infrastructure Improvements
 
-**Latest Session: 2025-01-27**
-- ✅ **1 Hour Timeframe Verification**: Confirmed existing "1 hour (test)" option in add-shop page for testing
-- ✅ **BTCPay Server Setup Notes**: Documented user's Docker setup attempts and plans for simpler configuration
-- ✅ **Toast Notification Repositioning**: Moved notifications from top-right to bottom-right corner to avoid UI conflicts
-- ✅ **UX Enhancement**: Prevents toast notifications from covering the user dropdown menu
-- ✅ **Animation Improvement**: Updated exit animation to slide down for better visual consistency
+**Latest Session: 2024-12-19**
+- ✅ **Delete Server Button**: Added delete functionality to server details page with confirmation modal
+- ✅ **Infrastructure Page Cleanup**: Removed redundant "Start Your Infrastructure" section
+- ✅ **Smart Button Logic**: "Add another BTCPay Server" only shows when servers exist
+- ✅ **Add Server Form Enhancements**: Auto URL formatting and lightning address improvements
+- ✅ **Shop Counting Fixes**: Dashboard and server details now show actual shop counts from BTCPay servers
+- ✅ **Real-time Data**: Server details fetch actual shops from BTCPay server API
+- ✅ **Form Validation**: Improved lightning address validation with ⚡ emoji placeholder
+- ✅ **URL Auto-Formatting**: Automatically adds "https://" when user enters domain names
 
 **Week 5 Achievements:**
 - **User Experience**: Improved notification positioning and visual flow

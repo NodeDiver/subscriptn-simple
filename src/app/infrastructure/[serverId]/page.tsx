@@ -2,30 +2,58 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function ServerDashboard({ params }: { params: Promise<{ serverId: string }> }) {
   const { user, logout } = useAuth();
+  const router = useRouter();
   const [server, setServer] = useState<{
     id: number;
     name: string;
     host_url: string;
+    isOwner: boolean;
   } | null>(null);
   const [shops, setShops] = useState<Array<{
-    id: number;
+    id: string;
     name: string;
-    owner_username: string;
-    lightning_address?: string;
-    created_at: string;
-    subscription_status: string;
+    lightningAddress?: string;
+    hasActiveSubscription: boolean;
   }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [serverId, setServerId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleDeleteServer = async () => {
+    if (!server || !serverId) return;
+    
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/servers/${serverId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Redirect to infrastructure page after successful deletion
+        router.push('/infrastructure');
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Failed to delete server');
+      }
+    } catch (error) {
+      console.error('Error deleting server:', error);
+      setError('Failed to delete server');
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
+    }
   };
 
   useEffect(() => {
@@ -42,10 +70,10 @@ export default function ServerDashboard({ params }: { params: Promise<{ serverId
         }
 
         // Fetch shops for this server
-        const shopsResponse = await fetch(`/api/servers/${resolvedServerId}/shops`);
+        const shopsResponse = await fetch(`/api/stores/${resolvedServerId}`);
         if (shopsResponse.ok) {
           const shopsData = await shopsResponse.json();
-          setShops(shopsData.shops);
+          setShops(shopsData.stores);
         }
       } catch (error) {
         console.error('Error fetching server data:', error);
@@ -75,15 +103,51 @@ export default function ServerDashboard({ params }: { params: Promise<{ serverId
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600 dark:text-gray-300">Welcome, {user?.username}</span>
-              <button
-                onClick={handleLogout}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
-              >
-                Logout
-              </button>
+              {server && server.isOwner && (
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  disabled={isDeleting}
+                  className="bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  {isDeleting ? 'Deleting...' : 'Delete Server'}
+                </button>
+              )}
             </div>
           </div>
+
+          {/* Delete Confirmation Modal */}
+          {showDeleteConfirm && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Delete Server
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Are you sure you want to delete "{server?.name}"? This action cannot be undone and will:
+                </p>
+                <ul className="text-sm text-gray-600 dark:text-gray-400 mb-6 space-y-1">
+                  <li>• Remove the server from your account</li>
+                  <li>• Cancel all active subscriptions</li>
+                  <li>• Delete all associated shop data</li>
+                </ul>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setShowDeleteConfirm(false)}
+                    className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleDeleteServer}
+                    disabled={isDeleting}
+                    className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    {isDeleting ? 'Deleting...' : 'Delete'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {loading ? (
             <div className="text-center py-8">
@@ -131,27 +195,28 @@ export default function ServerDashboard({ params }: { params: Promise<{ serverId
                         <div key={shop.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">{shop.name}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Owner: {shop.owner_username}</p>
-                            {shop.lightning_address && (
-                              <p className="text-sm text-gray-500 dark:text-gray-500">{shop.lightning_address}</p>
+                            {shop.lightningAddress && (
+                              <p className="text-sm text-gray-500 dark:text-gray-500">{shop.lightningAddress}</p>
                             )}
-                            <p className="text-xs text-gray-500 dark:text-gray-500">Added {new Date(shop.created_at).toLocaleDateString()}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-500">
+                              Subscription: {shop.hasActiveSubscription ? 'Active' : 'Inactive'}
+                            </p>
                           </div>
                           <div className="flex items-center space-x-4">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              shop.subscription_status === 'active' 
-                                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' 
-                                : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
-                            }`}>
-                              {shop.subscription_status}
-                            </span>
-                            <Link
-                              href={`/infrastructure/${serverId}/shops/${shop.id}`}
-                              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-                            >
-                              View Details →
-                            </Link>
-                          </div>
+                                shop.hasActiveSubscription 
+                                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' 
+                                  : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                              }`}>
+                                {shop.hasActiveSubscription ? 'Subscribed' : 'Available'}
+                              </span>
+                              <Link
+                                href={`/infrastructure/${serverId}/stores/${shop.id}`}
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
+                              >
+                                View Details →
+                              </Link>
+                            </div>
                         </div>
                       ))}
                     </div>

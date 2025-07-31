@@ -160,6 +160,9 @@ export default function Dashboard() {
   const pendingSubscriptions = shops.filter(shop => shop.subscription_status === 'pending').length;
   const cancelledSubscriptions = shops.filter(shop => shop.subscription_status === 'cancelled').length;
 
+  // Calculate total shops across all servers
+  const totalShops = servers.reduce((sum, server) => sum + (server.current_shops || 0), 0);
+
   // Conditional display logic
   const ownedServers = servers.filter(server => server.is_owner === 1);
   const hasOwnedServers = ownedServers.length > 0;
@@ -195,12 +198,12 @@ export default function Dashboard() {
               <div className="text-gray-600 dark:text-gray-400">Total Servers</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 dark:text-green-400">0</div>
-              <div className="text-gray-600 dark:text-gray-400">Shops Subscribed</div>
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{totalShops}</div>
+              <div className="text-gray-600 dark:text-gray-400">Total Shops</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">0</div>
-              <div className="text-gray-600 dark:text-gray-400">other info</div>
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{activeSubscriptions}</div>
+              <div className="text-gray-600 dark:text-gray-400">Active Subscriptions</div>
             </div>
           </div>
         </div>
@@ -245,6 +248,9 @@ export default function Dashboard() {
                         </div>
                         <p className="text-sm text-gray-600 dark:text-gray-400 hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">{server.host_url}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-500 hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">Added {new Date(server.created_at).toLocaleDateString()}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 hover:text-[#1E3A8A] dark:hover:text-[#3B82F6] transition-colors">
+                          {server.current_shops || 0} shops connected
+                        </p>
                         {!server.is_online && server.last_seen_online && (
                           <p className="text-xs text-red-500 dark:text-red-400 mt-1">
                             Last seen online: {formatLastSeen(server.last_seen_online)}

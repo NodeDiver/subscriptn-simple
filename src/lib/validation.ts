@@ -217,11 +217,22 @@ export const serverValidationSchema = {
   lightning_address: {
     required: true,
     type: 'string' as const,
-    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     custom: (value: unknown) => {
       const address = String(value);
       if (!address.includes('@')) {
         return 'Lightning address must be in format: username@domain.com';
+      }
+      // Basic lightning address validation - more permissive than email
+      const parts = address.split('@');
+      if (parts.length !== 2) {
+        return 'Lightning address must contain exactly one @ symbol';
+      }
+      const [username, domain] = parts;
+      if (!username || !domain) {
+        return 'Lightning address must have both username and domain';
+      }
+      if (!domain.includes('.')) {
+        return 'Lightning address domain must include a top-level domain (e.g., .com, .net)';
       }
       return null;
     }

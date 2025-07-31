@@ -1,5 +1,114 @@
 # SubscriptN Development Log
 
+## Session: 2024-12-19 - Delete Server & Infrastructure Improvements
+
+### User Prompt: Delete Server Button & Infrastructure Page Cleanup
+**Time**: Evening session  
+**Request**: Add delete server button to server details page, clean up infrastructure page, improve add server form, and fix shop counting issues.
+
+**Actions Taken**:
+- **Step 1**: Added DELETE method to `/api/servers/[serverId]/route.ts`
+- **Step 2**: Implemented delete server button with confirmation modal in server details page
+- **Step 3**: Cleaned up infrastructure page by removing redundant "Start Your Infrastructure" section
+- **Step 4**: Updated button logic to only show "Add another BTCPay Server" when servers exist
+- **Step 5**: Enhanced add server form with automatic URL formatting and lightning address improvements
+- **Step 6**: Fixed shop counting issues in dashboard and server details pages
+
+**Implementation Details**:
+- ✅ **Delete Server Functionality**: Added to server details page with proper authorization
+- ✅ **Infrastructure Page Cleanup**: Removed redundant sections and improved button logic
+- ✅ **Add Server Form Enhancements**: Auto URL formatting and lightning address improvements
+- ✅ **Shop Counting Fixes**: Dashboard and server details now show actual shop counts
+- ✅ **API Integration**: Server details now fetch real shops from BTCPay server
+
+**UI/UX Improvements**:
+- **Delete Button**: Red button in header, only visible to server owners
+- **Confirmation Modal**: Clear warning about deletion consequences
+- **URL Auto-Formatting**: Automatically adds "https://" to domains
+- **Lightning Address**: Better placeholder with ⚡ emoji, prevents email suggestions
+- **Shop Display**: Real-time shop data from BTCPay server with subscription status
+
+**Technical Fixes**:
+- **Dashboard Overview**: Now shows actual shop counts instead of hardcoded zeros
+- **Server Details**: Uses stores API to fetch real BTCPay server shops
+- **Data Accuracy**: No more "NaN" or "0" when shops exist on servers
+- **Form Validation**: Improved lightning address validation for better UX
+
+**Files Modified**:
+- `src/app/api/servers/[serverId]/route.ts` - Added DELETE method
+- `src/app/infrastructure/[serverId]/page.tsx` - Added delete button and updated shop fetching
+- `src/app/infrastructure/page.tsx` - Cleaned up redundant sections and button logic
+- `src/app/infrastructure/add-server/page.tsx` - Enhanced form with auto URL formatting
+- `src/app/dashboard/page.tsx` - Fixed shop counting and overview display
+- `src/lib/validation.ts` - Improved lightning address validation
+
+**Test Results**:
+- ✅ **Delete Server**: Proper authorization and confirmation flow
+- ✅ **Infrastructure Page**: Cleaner interface with conditional button display
+- ✅ **Add Server Form**: Auto URL formatting and lightning address improvements work
+- ✅ **Shop Counting**: Dashboard and server details show accurate shop counts
+- ✅ **Data Integration**: Real BTCPay server shops displayed correctly
+
+**Current Status**:
+- ✅ **Server Management**: Complete delete functionality with proper UX
+- ✅ **Infrastructure Interface**: Streamlined and user-friendly
+- ✅ **Form Enhancements**: Better user experience with smart formatting
+- ✅ **Data Accuracy**: Real-time shop data from BTCPay servers
+- ✅ **User Experience**: Intuitive and responsive interface
+
+---
+
+## Session: 2024-12-19 - Delete Server Functionality Implementation
+
+### User Prompt: Add Delete Server Button
+**Time**: Evening session  
+**Request**: Add a delete server button to the server details page at `/infrastructure/[serverId]` so users can delete their own servers.
+
+**Actions Taken**:
+- **Step 1**: Added DELETE method to `/api/servers/[serverId]/route.ts`
+- **Step 2**: Updated server details page to include delete button with confirmation modal
+- **Step 3**: Added proper authorization checks (only server owners can delete)
+- **Step 4**: Implemented user-friendly confirmation dialog with clear warnings
+- **Step 5**: Added loading states and error handling for delete operation
+
+**Implementation Details**:
+- ✅ **API Route**: Added DELETE method to individual server route
+- ✅ **Authorization**: Only server owners can see and use delete button
+- ✅ **Confirmation Modal**: Clear warning about consequences of deletion
+- ✅ **Loading States**: Visual feedback during delete operation
+- ✅ **Error Handling**: Proper error messages and fallback behavior
+- ✅ **Navigation**: Redirects to infrastructure page after successful deletion
+
+**UI/UX Features**:
+- **Delete Button**: Red button in header, only visible to server owners
+- **Confirmation Dialog**: Modal with clear explanation of consequences
+- **Warning List**: Shows what will be deleted (server, subscriptions, shop data)
+- **Loading States**: Button shows "Deleting..." during operation
+- **Responsive Design**: Works on all screen sizes
+
+**Security Features**:
+- **Owner Verification**: Server owner_id must match current user
+- **Authentication Required**: Must be logged in to delete
+- **Cascade Deletion**: All related data (shops, subscriptions) properly cleaned up
+
+**Files Modified**:
+- `src/app/api/servers/[serverId]/route.ts` - Added DELETE method
+- `src/app/infrastructure/[serverId]/page.tsx` - Added delete button and confirmation modal
+
+**Test Results**:
+- ✅ **Delete Button**: Only appears for server owners
+- ✅ **Confirmation Modal**: Properly warns about consequences
+- ✅ **Delete Operation**: Successfully removes server and related data
+- ✅ **Navigation**: Redirects to infrastructure page after deletion
+- ✅ **Error Handling**: Shows appropriate error messages
+
+**Current Status**:
+- ✅ **Server Deletion**: Fully implemented with proper authorization
+- ✅ **User Experience**: Intuitive and safe deletion process
+- ✅ **Data Integrity**: Proper cascade deletion of related data
+
+---
+
 ## Session: 2024-12-19 - Prisma ORM Implementation
 
 ### User Prompt: ORM Implementation for SQLite
