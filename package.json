@@ -15,7 +15,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/sqlite3": "^3.1.11",
     "bcryptjs": "^3.0.2",
-    "next": "^15.4.2",
+    "next": "^15.4.7",
     "prisma": "^6.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
