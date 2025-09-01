@@ -148,18 +148,52 @@ For comprehensive security information, please see [SECURITY.md](SECURITY.md).
 
 ## 🤝 Contributing
 
-We welcome contributions! Contact: nodediver@proton.me
+**SubscriptN** is an open-source project and we welcome contributions! Here's how you can help:
 
-1. Fork the repository
-2. Create a feature branch  
-3. Make your changes
-4. Submit a pull request
+### Development Setup
+1. **Fork the repository** and clone it locally
+2. **Install dependencies**: `npm install`
+3. **Set up environment**: Copy `env.example` to `.env.local` and configure
+4. **Start development**: `npm run dev`
+5. **Make changes** and test thoroughly
+6. **Submit a pull request** with clear description
+
+### AI Agent Support
+This project includes an `AGENTS.md` file that provides comprehensive guidance for AI coding agents (like GitHub Copilot, Cursor, etc.). The file contains:
+- Project-specific coding standards and patterns
+- Development environment setup instructions
+- Testing and validation requirements
+- Lightning network integration guidelines
+- Security and safety boundaries
+
+### Contribution Guidelines
+- Follow the existing code style and patterns
+- Add tests for new functionality
+- Ensure all tests pass before submitting
+- Use conventional commit messages
+- Test with multiple Lightning wallets
+- Follow security best practices
+- **For AI agents**: Follow the guidelines in `AGENTS.md`
+
+### Areas for Contribution
+- **UI/UX Improvements**: Better user experience and accessibility
+- **Testing**: Unit tests, integration tests, and E2E tests
+- **Documentation**: Code comments, API documentation, and guides
+- **Performance**: Optimization and performance improvements
+- **Security**: Security audits and improvements
+- **Lightning Integration**: Enhanced wallet compatibility and features
+
+**Contact**: nodediver@proton.me
 
 ## 📚 Development Log
 
-### Current Status: Week 5 - Delete Server & Infrastructure Improvements
+### Current Status: Week 5 - AI Agent Integration & Infrastructure Improvements
 
 **Latest Session: 2024-12-19**
+- ✅ **AGENTS.md Creation**: Comprehensive AI agent guide for SubscriptN development
+- ✅ **AI Agent Support**: Added support for GitHub Copilot, Cursor, and other AI coding agents
+- ✅ **Development Guidelines**: Clear instructions for AI agents on coding standards and patterns
+- ✅ **Lightning Network Guidelines**: Specific guidance for Bitcoin and lightning integration
 - ✅ **Delete Server Button**: Added delete functionality to server details page with confirmation modal
 - ✅ **Infrastructure Page Cleanup**: Removed redundant "Start Your Infrastructure" section
 - ✅ **Smart Button Logic**: "Add another BTCPay Server" only shows when servers exist

@@ -1,8 +1,54 @@
 # SubscriptN Development Log
 
-## Session: 2024-12-19 - Delete Server & Infrastructure Improvements
+## Session: 2024-12-19 - AGENTS.md Creation & Infrastructure Improvements
 
-### User Prompt: Delete Server Button & Infrastructure Page Cleanup
+### User Prompt: Create Standard AGENTS.md for AI Agent Support
+**Time**: Evening session  
+**Request**: Create a standard AGENTS.md file for AI coding agents (GitHub Copilot, Cursor, etc.) to understand and work with the SubscriptN project. Make it as standard as possible and integrate it with the existing DEVELOPMENT_LOG.md.
+
+**Actions Taken**:
+- **Step 1**: Created comprehensive AGENTS.md file:
+  - **File**: `AGENTS.md` in project root
+  - **Content**: Standard AI agent guide following conventional format
+  - **Scope**: Complete development guidelines for AI agents
+- **Step 2**: Updated README.md contributing section:
+  - Added AI Agent Support subsection
+  - Referenced AGENTS.md for comprehensive guidance
+  - Enhanced contribution guidelines for AI agents
+- **Step 3**: Updated README.md logbook:
+  - Added AGENTS.md creation to Week 5 achievements
+  - Documented AI agent integration benefits
+- **Step 4**: Integrated with existing documentation:
+  - Referenced DEVELOPMENT_LOG.md for project context
+  - Maintained consistency with existing project structure
+  - Added proper cross-references between files
+
+**Files Created/Modified**:
+- `AGENTS.md` - New comprehensive AI agent guide (standard format)
+- `README.md` - Enhanced contributing section with AI agent support
+- `README.md` - Updated logbook with AGENTS.md creation
+
+**Technical Documentation Includes**:
+- **Development Setup**: Complete environment setup instructions
+- **Code Standards**: TypeScript, React, Next.js, and Tailwind guidelines
+- **Project-Specific Rules**: Bitcoin/lightning network conventions
+- **Safety Boundaries**: Clear DO NOT TOUCH guidelines
+- **Testing Requirements**: Pre-commit validation steps
+- **Runbooks**: Step-by-step guides for common tasks
+- **Troubleshooting**: Common issues and debug commands
+
+**AI Agent Benefits**:
+- **Onboarding**: Agents understand project instantly
+- **Consistency**: Standardized coding patterns and conventions
+- **Security**: Clear boundaries and safety guidelines
+- **Efficiency**: Prevents common mistakes and rework
+- **Quality**: Built-in testing and validation requirements
+
+**Result**: ✅ Standard AGENTS.md created and integrated with project documentation. AI agents now have comprehensive guidance for working on SubscriptN.
+
+---
+
+## Session: 2024-12-19 - Delete Server Button & Infrastructure Page Cleanup
 **Time**: Evening session  
 **Request**: Add delete server button to server details page, clean up infrastructure page, improve add server form, and fix shop counting issues.
 
