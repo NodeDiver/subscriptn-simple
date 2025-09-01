@@ -2,49 +2,47 @@
 
 ## Session: 2024-12-19 - AGENTS.md Creation & Infrastructure Improvements
 
-### User Prompt: Create Standard AGENTS.md for AI Agent Support
+### User Prompt: Create Simple Standard AGENTS.md for AI Agent Support
 **Time**: Evening session  
-**Request**: Create a standard AGENTS.md file for AI coding agents (GitHub Copilot, Cursor, etc.) to understand and work with the SubscriptN project. Make it as standard as possible and integrate it with the existing DEVELOPMENT_LOG.md.
+**Request**: Create a simple, standard AGENTS.md file for AI coding agents (GitHub Copilot, Cursor, etc.) following real examples like OpenAI's AGENTS.md. Keep it simple and focused.
 
 **Actions Taken**:
-- **Step 1**: Created comprehensive AGENTS.md file:
+- **Step 1**: Created simple AGENTS.md file:
   - **File**: `AGENTS.md` in project root
-  - **Content**: Standard AI agent guide following conventional format
-  - **Scope**: Complete development guidelines for AI agents
+  - **Content**: Simple guidelines following real AGENTS.md standards
+  - **Scope**: Essential development guidelines without overcomplication
 - **Step 2**: Updated README.md contributing section:
   - Added AI Agent Support subsection
-  - Referenced AGENTS.md for comprehensive guidance
+  - Referenced AGENTS.md for guidance
   - Enhanced contribution guidelines for AI agents
 - **Step 3**: Updated README.md logbook:
   - Added AGENTS.md creation to Week 5 achievements
   - Documented AI agent integration benefits
-- **Step 4**: Integrated with existing documentation:
-  - Referenced DEVELOPMENT_LOG.md for project context
-  - Maintained consistency with existing project structure
-  - Added proper cross-references between files
+- **Step 4**: Kept it simple:
+  - Focused on essential commands and safety boundaries
+  - Removed unnecessary complexity and verbose explanations
+  - Followed real AGENTS.md examples from popular repositories
 
 **Files Created/Modified**:
-- `AGENTS.md` - New comprehensive AI agent guide (standard format)
+- `AGENTS.md` - New simple AI agent guide (standard format)
 - `README.md` - Enhanced contributing section with AI agent support
 - `README.md` - Updated logbook with AGENTS.md creation
 
-**Technical Documentation Includes**:
-- **Development Setup**: Complete environment setup instructions
-- **Code Standards**: TypeScript, React, Next.js, and Tailwind guidelines
-- **Project-Specific Rules**: Bitcoin/lightning network conventions
-- **Safety Boundaries**: Clear DO NOT TOUCH guidelines
-- **Testing Requirements**: Pre-commit validation steps
-- **Runbooks**: Step-by-step guides for common tasks
-- **Troubleshooting**: Common issues and debug commands
+**Simple Guidelines Include**:
+- **Development Server**: Use `npm run dev`, not `npm run build`
+- **Dependencies**: Keep in sync and restart server
+- **Coding**: Follow existing patterns and conventions
+- **Database**: Use Prisma properly
+- **Lightning**: Use existing components
+- **Safety**: Clear boundaries of what not to touch
 
 **AI Agent Benefits**:
-- **Onboarding**: Agents understand project instantly
-- **Consistency**: Standardized coding patterns and conventions
-- **Security**: Clear boundaries and safety guidelines
-- **Efficiency**: Prevents common mistakes and rework
-- **Quality**: Built-in testing and validation requirements
+- **Simple**: Easy to understand and follow
+- **Focused**: Only essential information
+- **Standard**: Follows real AGENTS.md conventions
+- **Practical**: Actionable guidelines without overcomplication
 
-**Result**: ✅ Standard AGENTS.md created and integrated with project documentation. AI agents now have comprehensive guidance for working on SubscriptN.
+**Result**: ✅ Simple, standard AGENTS.md created following real examples. AI agents now have clear, focused guidance without unnecessary complexity.
 
 ---
 
