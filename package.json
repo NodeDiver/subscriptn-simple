@@ -13,14 +13,13 @@
     "@getalby/lightning-tools": "^5.2.0",
     "@prisma/client": "^6.13.0",
     "@types/bcryptjs": "^2.4.6",
-    "@types/sqlite3": "^3.1.11",
+    "@types/pg": "^8.15.5",
     "bcryptjs": "^3.0.2",
     "next": "^15.4.2",
+    "pg": "^8.16.3",
     "prisma": "^6.13.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
