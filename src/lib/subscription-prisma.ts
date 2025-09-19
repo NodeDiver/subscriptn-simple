@@ -146,9 +146,9 @@ export async function cancelSubscription(subscriptionId: number, ownerId: number
     await prisma.subscriptionHistory.create({
       data: {
         subscriptionId,
-        action: 'cancelled',
-        amountSats: subscription.amountSats,
-        timestamp: new Date()
+        paymentAmount: subscription.amountSats,
+        paymentDate: new Date(),
+        status: 'cancelled'
       }
     });
 
@@ -180,7 +180,7 @@ export async function getSubscriptionHistory(subscriptionId: number, ownerId: nu
         subscriptionId
       },
       orderBy: {
-        timestamp: 'desc'
+        paymentDate: 'desc'
       }
     });
 

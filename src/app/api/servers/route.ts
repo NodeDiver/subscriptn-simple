@@ -74,10 +74,10 @@ export async function POST(request: NextRequest) {
         hostUrl: sanitizedHostUrl,
         apiKey: sanitizedApiKey,
         ownerId: user.id,
-        description: sanitizedDescription,
+        description: sanitizedDescription || undefined,
         isPublic,
         slotsAvailable,
-        lightningAddress: sanitizedLightningAddress
+        lightningAddress: sanitizedLightningAddress || undefined
       });
 
       return NextResponse.json({ server: newServer }, { status: 201 });

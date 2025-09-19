@@ -22,6 +22,7 @@ interface BTCPayServer {
   last_seen_online?: string;
   is_owner: number;
   owner_id: number;
+  created_at: string;
 }
 
 // Revenue Component for inline display - only shown to owners

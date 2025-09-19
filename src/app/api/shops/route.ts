@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
         name: sanitizedName,
         serverId,
         ownerId: user.id,
-        lightningAddress: sanitizedLightningAddress,
+        lightningAddress: sanitizedLightningAddress || undefined,
         isPublic
       });
 
