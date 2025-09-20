@@ -26,7 +26,7 @@ services:
       dockerfile: Dockerfile
     container_name: subscriptn-app
     ports:
-      - "3002:3000"
+      - "3003:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:password@postgres:5432/subscriptn?schema=public
