@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useToast } from '@/contexts/ToastContext';
-import LightningSubscription from '@/components/LightningSubscription';
 import ToggleSwitch from '@/components/ToggleSwitch';
 
 type Store = { 
@@ -453,23 +452,52 @@ export default function AddShop() {
             </div>
           </div>
 
-          {/* Lightning Subscription Modal */}
+          {/* NWC Setup Modal */}
           {showLightningSub && createdShopId && (
-            <LightningSubscription
-              shopId={createdShopId}
-              amountSats={amount}
-              interval={convertTimeframeToInterval(timeframe)}
-              recipientAddress={selectedServer?.lightning_address || ''}
-              comment={comment}
-              onSuccess={() => {
-                setShowLightningSub(false);
-                setCreatedShopId(null);
-              }}
-              onCancel={() => {
-                setShowLightningSub(false);
-                setCreatedShopId(null);
-              }}
-            />
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="p-6">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      Shop Created Successfully!
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Your shop has been created. To enable automatic subscription payments, 
+                      you'll need to set up a NWC (Nostr Wallet Connect) connection.
+                    </p>
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+                    <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                      Next Steps:
+                    </h4>
+                    <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                      <li>• Go to NWC Management to set up your wallet connection</li>
+                      <li>• Connect your Nostr wallet via NWC</li>
+                      <li>• Configure automatic payments for your subscription</li>
+                    </ul>
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <Link
+                      href="/nwc-management"
+                      className="flex-1 bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 text-center"
+                    >
+                      Setup NWC Connection
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setShowLightningSub(false);
+                        setCreatedShopId(null);
+                      }}
+                      className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>

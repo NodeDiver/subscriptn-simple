@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
-import { BitcoinConnectProvider } from '@/contexts/BitcoinConnectContext';
 import { ToastProvider } from '@/contexts/ToastContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import TopBar from '@/components/TopBar';
@@ -65,16 +64,14 @@ export default function RootLayout({
         <ErrorBoundary>
           <ThemeProvider>
             <AuthProvider>
-              <BitcoinConnectProvider>
-                <ToastProvider>
-                  <div className="min-h-screen bg-white dark:bg-gray-900">
-                    <TopBar />
-                    <main className="flex-1">
-                      {children}
-                    </main>
-                  </div>
-                </ToastProvider>
-              </BitcoinConnectProvider>
+              <ToastProvider>
+                <div className="min-h-screen bg-white dark:bg-gray-900">
+                  <TopBar />
+                  <main className="flex-1">
+                    {children}
+                  </main>
+                </div>
+              </ToastProvider>
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>

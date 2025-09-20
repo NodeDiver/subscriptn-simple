@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
-import ConnectWalletButton from '@/components/ConnectWalletButton';
 import ToggleSwitch from '@/components/ToggleSwitch';
 
 interface Shop {
@@ -282,14 +281,12 @@ export default function Settings() {
                           </p>
                         </div>
                         <div className="flex justify-center">
-                          <ConnectWalletButton 
-                            onConnect={() => {
-                              console.log('Bitcoin wallet connected from settings');
-                            }}
-                            onDisconnect={() => {
-                              console.log('Bitcoin wallet disconnected from settings');
-                            }}
-                          />
+                          <Link
+                            href="/nwc-management"
+                            className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                          >
+                            Setup NWC Connection
+                          </Link>
                         </div>
                       </div>
                       

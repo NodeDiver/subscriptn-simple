@@ -69,6 +69,10 @@ model Subscription {
   status    String   @default("active")
   createdAt DateTime @default(now()) @map("created_at")
   
+  // NWC Connection for payments
+  nwcConnectionString String? @map("nwc_connection_string") // Encrypted NWC connection string
+  nwcEncryptedKey     String? @map("nwc_encrypted_key")     // Additional encryption layer
+  
   // Relations
   shop      Shop     @relation(fields: [shopId], references: [id])
   payments  SubscriptionHistory[]

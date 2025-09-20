@@ -4,9 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { useBitcoinConnectContext } from '@/contexts/BitcoinConnectContext';
 import { User } from '@/lib/auth';
-import ConnectWalletButton from './ConnectWalletButton';
 import ThemeSwitcher from './ThemeSwitcher';
 
 interface UserDropdownProps {
@@ -17,7 +15,6 @@ export default function UserDropdown({ user }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth();
-  const { isConnected, connect, disconnect } = useBitcoinConnectContext();
   const router = useRouter();
 
   // Close dropdown when clicking outside
@@ -166,20 +163,19 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             {/* Divider */}
             <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
 
-            {/* Bitcoin Connect Section */}
-            <div className="px-4 py-2">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Bitcoin Wallet</div>
-              <div className="flex items-center justify-center">
-                <ConnectWalletButton 
-                  onConnect={() => {
-                    console.log('Bitcoin wallet connected from dropdown');
-                  }}
-                  onDisconnect={() => {
-                    console.log('Bitcoin wallet disconnected from dropdown');
-                  }}
-                />
+            {/* NWC Management */}
+            <Link
+              href="/nwc-management"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-subscriptn-purple-50 dark:hover:bg-purple-500/10 hover:text-subscriptn-purple-600 dark:hover:text-purple-400 transition-all duration-200 group"
+            >
+              <div className="w-5 h-5 text-subscriptn-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform duration-200">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
               </div>
-            </div>
+              <span>NWC Management</span>
+            </Link>
 
             {/* Divider */}
             <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>

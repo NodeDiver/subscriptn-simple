@@ -12,8 +12,6 @@
     "db:migrate": "prisma migrate deploy"
   },
   "dependencies": {
-    "@getalby/bitcoin-connect": "^3.8.2",
-    "@getalby/lightning-tools": "^5.2.0",
     "@prisma/client": "^6.13.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/pg": "^8.15.5",
@@ -22,7 +20,8 @@
     "pg": "^8.16.3",
     "prisma": "^6.13.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
