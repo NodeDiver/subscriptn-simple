@@ -191,7 +191,7 @@ export default function Dashboard() {
         </div>
         
         {/* Enhanced Overview Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm p-6 mb-8 border border-neutral-200 dark:border-neutral-700">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Overview</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
@@ -212,8 +212,8 @@ export default function Dashboard() {
         {/* Two Boxes Side by Side */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Box - BTCPay Servers */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
+            <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">BTCPay Servers</h2>
             </div>
             <div className="p-6">
@@ -272,8 +272,8 @@ export default function Dashboard() {
           </div>
 
           {/* Right Box - My Shops */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
+            <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">My Shops</h2>
             </div>
             <div className="p-6">
