@@ -25,10 +25,11 @@ export async function POST(request: NextRequest) {
 
     const { username, password } = validation.data;
     const sanitizedUsername = sanitizeString(username as string);
-    const sanitizedPassword = sanitizeString(password as string);
+    // Don't sanitize password - it can contain special characters
+    const rawPassword = password as string;
 
     // Create user using Prisma
-    const user = await createUser(sanitizedUsername, sanitizedPassword);
+    const user = await createUser(sanitizedUsername, rawPassword);
 
     if (!user) {
       return NextResponse.json(
