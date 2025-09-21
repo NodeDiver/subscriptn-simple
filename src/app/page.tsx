@@ -458,7 +458,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Link
               href="/shops/add-shop"
-              className="bg-gradient-to-r from-orange-700 to-amber-600 hover:from-orange-800 hover:to-amber-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+              className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -468,7 +468,7 @@ export default function HomePage() {
             {publicShops.length > 0 && (
               <Link
                 href="#shops-list"
-                className="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+                className="bg-gradient-to-r from-slate-600 to-amber-500 hover:from-slate-700 hover:to-amber-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -485,7 +485,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Shops</h3>
                 {publicShops.length > 0 && (
                   <Link href="/shops/add-shop">
-                    <button className="bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-700 hover:to-amber-600 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-orange-400 hover:from-slate-700 hover:to-orange-500 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
                       List Your Shop
                     </button>
                   </Link>
@@ -512,7 +512,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No shops available yet</h4>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">Be the first to list your shop in the marketplace!</p>
                   <Link href="/shops/add-shop">
-                    <button className="bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-700 hover:to-orange-600 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-amber-400 hover:from-slate-700 hover:to-amber-500 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
                       List Your Shop
                     </button>
                   </Link>
