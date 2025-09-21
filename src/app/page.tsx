@@ -117,9 +117,9 @@ export default function HomePage() {
   const totalActiveSubscriptions = myShops.filter((shop) => shop.subscription_status === 'active').length;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       {/* Hero Section */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      <section className="py-20 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Welcome to{' '}
@@ -159,7 +159,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 bg-white dark:bg-gray-900">
+      <section className="py-12 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
@@ -217,7 +217,7 @@ export default function HomePage() {
       </section>
 
       {/* Infrastructure Dashboard Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section className="py-16 bg-neutral-50 dark:bg-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -303,7 +303,7 @@ export default function HomePage() {
                 </div>
               ) : publicServers.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
@@ -445,7 +445,7 @@ export default function HomePage() {
       </section>
 
       {/* Shops Dashboard Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -531,7 +531,7 @@ export default function HomePage() {
                 </div>
               ) : publicShops.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
@@ -610,7 +610,7 @@ export default function HomePage() {
 
           {/* My Shops Section - Only show if user has shops */}
           {user && myShops.length > 0 && (
-            <div className="mt-8 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="mt-8 bg-neutral-50 dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
               <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Your Shops</h3>
@@ -674,7 +674,7 @@ export default function HomePage() {
 
           {/* Add Shop Section - Only show if user has no shops and is authenticated */}
           {user && myShops.length === 0 && !shopsLoading && (
-            <div className="mt-8 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="mt-8 bg-neutral-50 dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
               <div className="p-6 text-center">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Start Your Shop Journey</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
@@ -692,7 +692,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <footer className="bg-neutral-50 dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid md:grid-cols-4 gap-6">
             <div className="col-span-2">
