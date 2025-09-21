@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ToastProvider } from '@/contexts/ToastContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import SessionProvider from '@/components/SessionProvider';
 import TopBar from '@/components/TopBar';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -62,18 +63,20 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ErrorBoundary>
-          <ThemeProvider>
-            <AuthProvider>
-              <ToastProvider>
-                <div className="min-h-screen bg-white dark:bg-gray-900">
-                  <TopBar />
-                  <main className="flex-1">
-                    {children}
-                  </main>
-                </div>
-              </ToastProvider>
-            </AuthProvider>
-          </ThemeProvider>
+          <SessionProvider>
+            <ThemeProvider>
+              <AuthProvider>
+                <ToastProvider>
+                  <div className="min-h-screen bg-white dark:bg-gray-900">
+                    <TopBar />
+                    <main className="flex-1">
+                      {children}
+                    </main>
+                  </div>
+                </ToastProvider>
+              </AuthProvider>
+            </ThemeProvider>
+          </SessionProvider>
         </ErrorBoundary>
       </body>
     </html>
