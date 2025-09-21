@@ -136,14 +136,14 @@ export default function HomePage() {
             {user ? (
               <Link
                 href="/dashboard"
-                className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105"
+                className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl magnetic-pull glow-effect color-wave"
               >
                 Go to Dashboard
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105"
+                className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl magnetic-pull glow-effect color-wave"
               >
                 Get Started
               </Link>
@@ -178,10 +178,10 @@ export default function HomePage() {
               </p>
               <Link
                 href="#servers-list"
-                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md magnetic-pull glow-effect"
               >
                 Explore servers
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 ml-1 icon-rotate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
@@ -200,10 +200,10 @@ export default function HomePage() {
               </p>
               <Link
                 href="#shops-list"
-                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md magnetic-pull glow-effect"
               >
                 Browse shops
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 ml-1 icon-rotate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
@@ -233,7 +233,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Servers</h3>
                 {publicServers.length > 0 && (
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-gradient-to-r from-slate-600 to-teal-500 hover:from-slate-700 hover:to-teal-600 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-teal-500 hover:from-slate-700 hover:to-teal-600 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg magnetic-pull shadow-pulse">
                       List Your Server
                     </button>
                   </Link>
@@ -260,7 +260,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">No servers available</h4>
                   <p className="text-neutral-600 dark:text-neutral-400 mb-6">Be the first to list your infrastructure</p>
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-gradient-to-r from-slate-600 to-emerald-400 hover:from-slate-700 hover:to-emerald-500 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-emerald-400 hover:from-slate-700 hover:to-emerald-500 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl magnetic-pull shadow-pulse">
                       List Your Server
                     </button>
                   </Link>
@@ -401,7 +401,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Shops</h3>
                 {publicShops.length > 0 && (
                   <Link href="/shops/add-shop">
-                    <button className="bg-gradient-to-r from-slate-600 to-orange-400 hover:from-slate-700 hover:to-orange-500 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-orange-400 hover:from-slate-700 hover:to-orange-500 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg magnetic-pull shadow-pulse">
                       List Your Shop
                     </button>
                   </Link>
@@ -428,7 +428,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No shops available yet</h4>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">Be the first to list your shop in the marketplace!</p>
                   <Link href="/shops/add-shop">
-                    <button className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl magnetic-pull shadow-pulse">
                       List Your Shop
                     </button>
                   </Link>

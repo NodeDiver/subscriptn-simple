@@ -52,7 +52,7 @@ export default function TopBar() {
             ) : (
               <Link
                 href="/login"
-                className="bg-gradient-to-r from-slate-600 to-login-500 hover:from-slate-700 hover:to-login-600 text-white px-6 py-2 rounded-lg transition-all duration-300 text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="bg-gradient-to-r from-slate-600 to-login-500 hover:from-slate-700 hover:to-login-600 text-white px-6 py-2 rounded-lg transition-all duration-300 text-sm font-semibold shadow-lg hover:shadow-xl magnetic-pull glow-effect"
               >
                 Login
               </Link>
