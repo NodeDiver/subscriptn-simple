@@ -15,14 +15,14 @@ export default function TopBar() {
   };
 
   return (
-    <nav className="bg-white/95 dark:bg-gray-900/95 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 backdrop-blur-sm">
+    <nav className="bg-white/95 dark:bg-neutral-900/95 shadow-sm border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
             <button 
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200 cursor-pointer"
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
                 <Image
@@ -35,7 +35,7 @@ export default function TopBar() {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-gray-900 dark:text-white">SubscriptN</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 -mt-1">BTCPay & Bitcoin Shops</span>
+                <span className="text-xs text-neutral-500 dark:text-neutral-400 -mt-1">BTCPay & Bitcoin Shops</span>
               </div>
             </button>
           </div>
