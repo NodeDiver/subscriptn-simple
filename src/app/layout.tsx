@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import SessionProvider from '@/components/SessionProvider';
 import TopBar from '@/components/TopBar';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import HydrationFix from '@/components/HydrationFix';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -61,7 +62,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+        <HydrationFix />
         <ErrorBoundary>
           <SessionProvider>
             <ThemeProvider>
