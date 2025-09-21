@@ -27,7 +27,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ## 🎯 Overview
 
-**SubscriptN** is a Bitcoin subscription management platform that enables automated Lightning payments for recurring services. Built with Next.js 15, TypeScript, and SQLite, it provides a seamless interface for both BTCPay Server providers and shop owners to manage subscriptions through the Lightning network.
+**SubscriptN** is a Bitcoin subscription management platform that enables automated Lightning payments for recurring services. Built with Next.js 15, TypeScript, and PostgreSQL, it provides a seamless interface for both BTCPay Server providers and shop owners to manage subscriptions through the Lightning network and Nostr Wallet Connect (NWC).
 
 ### How It Works
 
@@ -38,12 +38,15 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ## ✨ Features
 
-- **Lightning Payments**: Direct WebLN integration for real Bitcoin payments
-- **BTCPay Server Marketplace**: Browse and connect to public servers with available slots
-- **Shop Management**: Create shops with automated subscription payments
-- **Wallet Integration**: Bitcoin Connect for seamless wallet management
-- **Public/Private Options**: Control visibility for servers and shops
-- **Real-time Status**: Live payment tracking and connection monitoring
+- **🏠 Unified Homepage**: Complete dashboard with infrastructure and shops management
+- **⚡ Lightning Payments**: NWC (Nostr Wallet Connect) integration for secure Bitcoin payments
+- **🖥️ BTCPay Server Marketplace**: Browse and connect to public servers with available slots
+- **🛍️ Shop Management**: Create shops with automated subscription payments
+- **🔐 Secure Wallet Integration**: Encrypted NWC connection strings for wallet management
+- **👁️ Public/Private Options**: Control visibility for servers and shops
+- **📊 Real-time Status**: Live payment tracking and connection monitoring
+- **🐳 Docker Ready**: Full containerization with PostgreSQL database
+- **🔒 Enterprise Security**: Rate limiting, input validation, and encryption
 
 ## 📸 Screenshots
 
