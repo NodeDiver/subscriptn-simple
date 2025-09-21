@@ -3,15 +3,15 @@ import { prisma } from './prisma';
 export interface ServerWithStats {
   id: number;
   name: string;
-  hostUrl: string;
+  host_url: string; // Changed to snake_case for frontend compatibility
   description: string | null;
-  isPublic: boolean;
-  slotsAvailable: number;
-  lightningAddress: string | null;
-  createdAt: Date;
-  isOwner: boolean;
-  currentShops: number;
-  availableSlots: number;
+  is_public: boolean;
+  slots_available: number;
+  lightning_address: string | null;
+  created_at: Date;
+  is_owner: number; // Changed to number for frontend compatibility
+  current_shops: number;
+  available_slots: number;
 }
 
 export async function getServersWithStats(userId: number): Promise<ServerWithStats[]> {
@@ -36,15 +36,15 @@ export async function getServersWithStats(userId: number): Promise<ServerWithSta
     return servers.map(server => ({
       id: server.id,
       name: server.name,
-      hostUrl: server.hostUrl,
+      host_url: server.hostUrl, // Convert to snake_case for frontend compatibility
       description: server.description,
-      isPublic: server.isPublic,
-      slotsAvailable: server.slotsAvailable,
-      lightningAddress: server.lightningAddress,
-      createdAt: server.createdAt,
-      isOwner: server.ownerId === userId,
-      currentShops: server._count.shops,
-      availableSlots: server.slotsAvailable - server._count.shops
+      is_public: server.isPublic,
+      slots_available: server.slotsAvailable,
+      lightning_address: server.lightningAddress,
+      created_at: server.createdAt,
+      is_owner: server.ownerId === userId ? 1 : 0, // Convert boolean to number for frontend compatibility
+      current_shops: server._count.shops,
+      available_slots: server.slotsAvailable - server._count.shops
     }));
   } catch (error) {
     console.error('Get servers with stats error:', error);
@@ -79,15 +79,15 @@ export async function getPublicServers(): Promise<ServerWithStats[]> {
       .map(server => ({
         id: server.id,
         name: server.name,
-        hostUrl: server.hostUrl,
+        host_url: server.hostUrl, // Convert to snake_case for frontend compatibility
         description: server.description,
-        isPublic: server.isPublic,
-        slotsAvailable: server.slotsAvailable,
-        lightningAddress: server.lightningAddress,
-        createdAt: server.createdAt,
-        isOwner: false, // Public servers view
-        currentShops: server._count.shops,
-        availableSlots: server.slotsAvailable - server._count.shops
+        is_public: server.isPublic,
+        slots_available: server.slotsAvailable,
+        lightning_address: server.lightningAddress,
+        created_at: server.createdAt,
+        is_owner: 0, // Public servers view - always 0
+        current_shops: server._count.shops,
+        available_slots: server.slotsAvailable - server._count.shops
       }));
   } catch (error) {
     console.error('Get public servers error:', error);
@@ -133,15 +133,15 @@ export async function createServer(data: {
     return {
       id: server.id,
       name: server.name,
-      hostUrl: server.hostUrl,
+      host_url: server.hostUrl, // Convert to snake_case for frontend compatibility
       description: server.description,
-      isPublic: server.isPublic,
-      slotsAvailable: server.slotsAvailable,
-      lightningAddress: server.lightningAddress,
-      createdAt: server.createdAt,
-      isOwner: true,
-      currentShops: server._count.shops,
-      availableSlots: server.slotsAvailable - server._count.shops
+      is_public: server.isPublic,
+      slots_available: server.slotsAvailable,
+      lightning_address: server.lightningAddress,
+      created_at: server.createdAt,
+      is_owner: 1, // Creator is always owner
+      current_shops: server._count.shops,
+      available_slots: server.slotsAvailable - server._count.shops
     };
   } catch (error) {
     console.error('Create server error:', error);
@@ -223,15 +223,15 @@ export async function getServerById(serverId: number, ownerId: number): Promise<
     return {
       id: server.id,
       name: server.name,
-      hostUrl: server.hostUrl,
+      host_url: server.hostUrl, // Convert to snake_case for frontend compatibility
       description: server.description,
-      isPublic: server.isPublic,
-      slotsAvailable: server.slotsAvailable,
-      lightningAddress: server.lightningAddress,
-      createdAt: server.createdAt,
-      isOwner: true,
-      currentShops: server._count.shops,
-      availableSlots: server.slotsAvailable - server._count.shops
+      is_public: server.isPublic,
+      slots_available: server.slotsAvailable,
+      lightning_address: server.lightningAddress,
+      created_at: server.createdAt,
+      is_owner: 1, // Owner view
+      current_shops: server._count.shops,
+      available_slots: server.slotsAvailable - server._count.shops
     };
   } catch (error) {
     console.error('Get server by ID error:', error);
@@ -265,15 +265,15 @@ export async function getServerByIdForDetails(serverId: number, userId: number):
     return {
       id: server.id,
       name: server.name,
-      hostUrl: server.hostUrl,
+      host_url: server.hostUrl, // Convert to snake_case for frontend compatibility
       description: server.description,
-      isPublic: server.isPublic,
-      slotsAvailable: server.slotsAvailable,
-      lightningAddress: server.lightningAddress,
-      createdAt: server.createdAt,
-      isOwner: server.ownerId === userId,
-      currentShops: server._count.shops,
-      availableSlots: server.slotsAvailable - server._count.shops
+      is_public: server.isPublic,
+      slots_available: server.slotsAvailable,
+      lightning_address: server.lightningAddress,
+      created_at: server.createdAt,
+      is_owner: server.ownerId === userId ? 1 : 0, // Convert boolean to number
+      current_shops: server._count.shops,
+      available_slots: server.slotsAvailable - server._count.shops
     };
   } catch (error) {
     console.error('Get server by ID for details error:', error);

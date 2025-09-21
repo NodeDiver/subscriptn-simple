@@ -3,11 +3,11 @@ import { prisma } from './prisma';
 export interface ShopWithServer {
   id: number;
   name: string;
-  lightningAddress: string | null;
-  subscriptionStatus: string;
-  createdAt: Date;
-  isPublic: boolean;
-  serverName: string;
+  lightning_address: string | null; // Changed to snake_case for frontend compatibility
+  subscription_status: string; // Changed to snake_case for frontend compatibility
+  created_at: Date; // Changed to snake_case for frontend compatibility
+  is_public: boolean; // Changed to snake_case for frontend compatibility
+  server_name: string; // Changed to snake_case for frontend compatibility
 }
 
 export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
@@ -31,11 +31,11 @@ export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
-      lightningAddress: shop.lightningAddress,
-      subscriptionStatus: shop.subscriptionStatus,
-      createdAt: shop.createdAt,
-      isPublic: shop.isPublic,
-      serverName: shop.server.name
+      lightning_address: shop.lightningAddress, // Convert to snake_case for frontend compatibility
+      subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
+      created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
+      is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
+      server_name: shop.server.name // Convert to snake_case for frontend compatibility
     }));
   } catch (error) {
     console.error('Get user shops error:', error);
@@ -69,11 +69,11 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
-      lightningAddress: shop.lightningAddress,
-      subscriptionStatus: shop.subscriptionStatus,
-      createdAt: shop.createdAt,
-      isPublic: shop.isPublic,
-      serverName: shop.server.name
+      lightning_address: shop.lightningAddress, // Convert to snake_case for frontend compatibility
+      subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
+      created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
+      is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
+      server_name: shop.server.name // Convert to snake_case for frontend compatibility
     }));
   } catch (error) {
     console.error('Get public shops error:', error);
