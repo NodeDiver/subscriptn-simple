@@ -132,29 +132,21 @@ export default function HomePage() {
             Connect BTCPay Server providers with shop owners through automated Bitcoin subscriptions. 
             Streamline payments and grow your Bitcoin business.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             {user ? (
               <Link
                 href="/dashboard"
-                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg transition-colors duration-200 text-base font-medium shadow-lg hover:shadow-xl"
+                className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105"
               >
                 Go to Dashboard
               </Link>
             ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg transition-colors duration-200 text-base font-medium shadow-lg hover:shadow-xl"
-                >
-                  Start Building
-                </Link>
-                <Link
-                  href="#marketplace"
-                  className="border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 px-8 py-3 rounded-lg transition-colors duration-200 text-base font-medium"
-                >
-                  Explore Marketplace
-                </Link>
-              </>
+              <Link
+                href="/login"
+                className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-10 py-4 rounded-xl transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105"
+              >
+                Get Started
+              </Link>
             )}
           </div>
         </div>
@@ -253,12 +245,12 @@ export default function HomePage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Link
               href="/infrastructure/add-server"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center"
+              className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               Add Your Server
@@ -266,9 +258,9 @@ export default function HomePage() {
             {publicServers.length > 0 && (
               <Link
                 href="#servers-list"
-                className="border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 px-6 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center"
+                className="bg-gradient-to-r from-support-600 to-support-700 hover:from-support-700 hover:to-support-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 Browse Servers
@@ -283,7 +275,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Servers</h3>
                 {publicServers.length > 0 && (
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium">
+                    <button className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
                       List Your Server
                     </button>
                   </Link>
@@ -310,7 +302,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">No servers available</h4>
                   <p className="text-neutral-600 dark:text-neutral-400 mb-6">Be the first to list your infrastructure</p>
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg transition-colors font-medium">
+                    <button className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
                       List Your Server
                     </button>
                   </Link>
@@ -463,12 +455,12 @@ export default function HomePage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Link
               href="/shops/add-shop"
-              className="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center"
+              className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               Add Your Shop
@@ -476,9 +468,9 @@ export default function HomePage() {
             {publicShops.length > 0 && (
               <Link
                 href="#shops-list"
-                className="border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 px-6 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center"
+                className="bg-gradient-to-r from-support-600 to-support-700 hover:from-support-700 hover:to-support-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 Browse Shops
@@ -493,7 +485,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Shops</h3>
                 {publicShops.length > 0 && (
                   <Link href="/shops/add-shop">
-                    <button className="bg-accent-600 hover:bg-accent-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium">
+                    <button className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
                       List Your Shop
                     </button>
                   </Link>
