@@ -17,10 +17,13 @@ export default function LoadingSpinner({ size = 'md', text, className = '' }: Lo
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center ${className}`}>
-      <div className={`animate-spin rounded-full border-b-2 border-primary-500 ${sizeClasses[size]}`}></div>
+    <div className={`flex flex-col items-center justify-center ${className}`} role="status" aria-live="polite">
+      <div 
+        className={`animate-spin rounded-full border-b-2 border-primary-500 ${sizeClasses[size]}`}
+        aria-hidden="true"
+      ></div>
       {text && (
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 animate-pulse">{text}</p>
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 animate-pulse" id="loading-message">{text}</p>
       )}
     </div>
   );
@@ -29,14 +32,17 @@ export default function LoadingSpinner({ size = 'md', text, className = '' }: Lo
 // Specialized loading components
 export function LightningLoadingSpinner({ text = "Processing Lightning payment..." }: { text?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center p-6">
+    <div className="flex flex-col items-center justify-center p-6" role="status" aria-live="polite">
       <div className="relative">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-neutral-200 dark:border-neutral-700 border-t-primary-500"></div>
+        <div 
+          className="h-12 w-12 animate-spin rounded-full border-4 border-neutral-200 dark:border-neutral-700 border-t-primary-500"
+          aria-hidden="true"
+        ></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <BoltIcon className="w-6 h-6 text-primary-500" />
+          <BoltIcon className="w-6 h-6 text-primary-500" aria-hidden="true" />
         </div>
       </div>
-      <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 font-medium">{text}</p>
+      <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-400 font-medium" id="loading-message">{text}</p>
       <div className="mt-2 flex space-x-1">
         <div className="h-2 w-2 bg-primary-500 rounded-full animate-bounce"></div>
         <div className="h-2 w-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>

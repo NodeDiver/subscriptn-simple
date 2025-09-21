@@ -97,7 +97,11 @@ export default function RegisterPage() {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 border border-gray-200 dark:border-gray-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-md">
+              <div 
+                className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-md"
+                role="alert"
+                aria-live="polite"
+              >
                 {error}
               </div>
             )}
@@ -156,6 +160,7 @@ export default function RegisterPage() {
               type="submit"
               disabled={loading}
               className="w-full bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-md transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-describedby={loading ? 'loading-message' : undefined}
             >
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
