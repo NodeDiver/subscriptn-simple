@@ -248,7 +248,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Link
               href="/infrastructure/add-server"
-              className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+              className="bg-gradient-to-r from-emerald-700 to-green-600 hover:from-emerald-800 hover:to-green-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -258,7 +258,7 @@ export default function HomePage() {
             {publicServers.length > 0 && (
               <Link
                 href="#servers-list"
-                className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+                className="bg-gradient-to-r from-green-700 to-teal-600 hover:from-green-800 hover:to-teal-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -275,7 +275,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">Available Servers</h3>
                 {publicServers.length > 0 && (
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white px-6 py-3 rounded-lg transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105">
                       List Your Server
                     </button>
                   </Link>
@@ -302,7 +302,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">No servers available</h4>
                   <p className="text-neutral-600 dark:text-neutral-400 mb-6">Be the first to list your infrastructure</p>
                   <Link href="/infrastructure/add-server">
-                    <button className="bg-gradient-to-r from-slate-700 to-emerald-600 hover:from-slate-800 hover:to-emerald-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
                       List Your Server
                     </button>
                   </Link>
