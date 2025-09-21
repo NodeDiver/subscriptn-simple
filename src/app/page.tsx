@@ -225,29 +225,6 @@ export default function HomePage() {
           </div>
 
 
-          {/* Quick Actions */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-            <Link
-              href="/infrastructure/add-server"
-              className="bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
-            >
-              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              Add Your Server
-            </Link>
-            {publicServers.length > 0 && (
-              <Link
-                href="#servers-list"
-                className="bg-gradient-to-r from-slate-600 to-green-500 hover:from-slate-700 hover:to-green-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
-              >
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Browse Servers
-              </Link>
-            )}
-          </div>
 
           {/* Servers List */}
           <div id="servers-list" className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700">
