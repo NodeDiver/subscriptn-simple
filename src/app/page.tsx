@@ -258,7 +258,7 @@ export default function HomePage() {
             {publicServers.length > 0 && (
               <Link
                 href="#servers-list"
-                className="bg-gradient-to-r from-support-600 to-support-700 hover:from-support-700 hover:to-support-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+                className="bg-gradient-to-r from-neutral-700 to-btcpay-600 hover:from-neutral-800 hover:to-btcpay-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -468,7 +468,7 @@ export default function HomePage() {
             {publicShops.length > 0 && (
               <Link
                 href="#shops-list"
-                className="bg-gradient-to-r from-support-600 to-support-700 hover:from-support-700 hover:to-support-800 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
+                className="bg-gradient-to-r from-neutral-700 to-btcpay-600 hover:from-neutral-800 hover:to-btcpay-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
