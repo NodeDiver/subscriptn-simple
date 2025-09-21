@@ -428,7 +428,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No shops available yet</h4>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">Be the first to list your shop in the marketplace!</p>
                   <Link href="/shops/add-shop">
-                    <button className="bg-gradient-to-r from-slate-600 to-amber-400 hover:from-slate-700 hover:to-amber-500 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <button className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
                       List Your Shop
                     </button>
                   </Link>
