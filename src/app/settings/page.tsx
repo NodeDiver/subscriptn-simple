@@ -5,6 +5,14 @@ import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 import ToggleSwitch from '@/components/ToggleSwitch';
+import { 
+  UserIcon, 
+  LockClosedIcon, 
+  CurrencyDollarIcon, 
+  BoltIcon, 
+  BuildingStorefrontIcon, 
+  Cog6ToothIcon 
+} from '@heroicons/react/24/outline';
 
 interface Shop {
   id: number;
@@ -116,23 +124,23 @@ export default function Settings() {
             <div className="border-b border-gray-200 dark:border-gray-700">
               <nav className="flex space-x-8 px-6">
                 {[
-                  { id: 'profile', name: 'Profile', icon: '👤' },
-                  { id: 'account', name: 'Account', icon: '🔐' },
-                  { id: 'wallet', name: 'Wallet', icon: '💰' },
-                  { id: 'servers', name: 'BTCPay Servers', icon: '⚡' },
-                  { id: 'shops', name: 'Shops', icon: '🏪' },
-                  { id: 'preferences', name: 'Preferences', icon: '⚙️' }
+                  { id: 'profile', name: 'Profile', icon: UserIcon },
+                  { id: 'account', name: 'Account', icon: LockClosedIcon },
+                  { id: 'wallet', name: 'Wallet', icon: CurrencyDollarIcon },
+                  { id: 'servers', name: 'BTCPay Servers', icon: BoltIcon },
+                  { id: 'shops', name: 'Shops', icon: BuildingStorefrontIcon },
+                  { id: 'preferences', name: 'Preferences', icon: Cog6ToothIcon }
                 ].map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                       activeTab === tab.id
-                        ? 'border-[#2D5A3D] dark:border-[#10B981] text-[#2D5A3D] dark:text-[#10B981]'
-                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                        ? 'border-primary-500 text-primary-500'
+                        : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
                     }`}
                   >
-                    <span className="mr-2">{tab.icon}</span>
+                    <tab.icon className="w-5 h-5 mr-2" />
                     {tab.name}
                   </button>
                 ))}

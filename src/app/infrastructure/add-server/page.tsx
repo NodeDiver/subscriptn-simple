@@ -198,7 +198,7 @@ export default function AddServer() {
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
                   errors.lightning_address ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                 }`}
-                placeholder="⚡yourlightningaddress@domain.com"
+                placeholder="yourlightningaddress@domain.com"
                 required
               />
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

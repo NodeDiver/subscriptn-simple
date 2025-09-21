@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useToast } from '@/contexts/ToastContext';
 import ToggleSwitch from '@/components/ToggleSwitch';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 type Store = { 
   id: string; 
@@ -325,9 +326,12 @@ export default function AddShop() {
               {/* Shop Subscription Status */}
               {selectedShopHasSubscription && (
                 <div className="mb-6 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                  <p className="text-sm text-red-800 dark:text-red-200">
-                    ⚠️ This shop already has an active subscription. Please select another shop or contact the server owner.
-                  </p>
+                  <div className="flex items-center">
+                    <ExclamationTriangleIcon className="w-5 h-5 text-red-600 dark:text-red-400 mr-2 flex-shrink-0" />
+                    <p className="text-sm text-red-800 dark:text-red-200">
+                      This shop already has an active subscription. Please select another shop or contact the server owner.
+                    </p>
+                  </div>
                 </div>
               )}
 
