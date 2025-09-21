@@ -200,7 +200,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="#shops-list"
-                className="inline-flex items-center bg-white dark:bg-neutral-800 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium px-4 py-2 rounded-lg border border-accent-200 dark:border-accent-700 shadow-sm hover:shadow-md transition-all duration-200"
+                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
               >
                 Browse shops
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
