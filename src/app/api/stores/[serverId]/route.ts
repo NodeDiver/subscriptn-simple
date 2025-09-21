@@ -8,20 +8,20 @@ export async function GET(
   try {
     const { serverId } = await params;
     
-    // Get the server information to find the BTCPay host using Prisma
+    // Get the server information to find the BTCPay host and API key using Prisma
     const server = await prisma.server.findUnique({
       where: { id: parseInt(serverId) },
-      select: { hostUrl: true }
+      select: { hostUrl: true, apiKey: true }
     });
     
     if (!server) {
       return NextResponse.json({ error: 'Server not found' }, { status: 404 });
     }
 
-    const { BTCPAY_API_KEY } = process.env;
-    if (!BTCPAY_API_KEY) {
+    // Use the server's stored API key instead of global environment variable
+    if (!server.apiKey) {
       return NextResponse.json(
-        { error: "BTCPAY_API_KEY must be set" },
+        { error: "Server API key not configured" },
         { status: 500 }
       );
     }
@@ -29,7 +29,7 @@ export async function GET(
     // Fetch stores from the BTCPay server
     const url = `${server.hostUrl.replace(/\/+$/, "")}/api/v1/stores`;
     const resp = await fetch(url, {
-      headers: { Authorization: `token ${BTCPAY_API_KEY}` },
+      headers: { Authorization: `token ${server.apiKey}` },
     });
     
     if (!resp.ok) {
@@ -53,12 +53,22 @@ export async function GET(
     // Check for existing subscriptions in our database for each store using Prisma
     const storesWithSubscriptionStatus = await Promise.all(
       stores.map(async (store) => {
-        const existingSubscription = await prisma.subscription.findFirst({
+        // Find the local shop that corresponds to this BTCPay store
+        const localShop = await prisma.shop.findFirst({
           where: {
-            shopId: parseInt(store.id),
-            status: 'active'
+            serverId: parseInt(serverId),
+            // We need to match by some identifier - for now we'll check if there's a shop with this name
+            // In a real implementation, you'd want to store the BTCPay store ID in the shop record
+            name: store.name
           }
         });
+        
+        const existingSubscription = localShop ? await prisma.subscription.findFirst({
+          where: {
+            shopId: localShop.id,
+            status: 'active'
+          }
+        }) : null;
         
         return {
           ...store,
