@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { BoltIcon } from '@heroicons/react/24/outline';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -17,7 +18,7 @@ export default function LoadingSpinner({ size = 'md', text, className = '' }: Lo
 
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
-      <div className={`animate-spin rounded-full border-b-2 border-blue-600 dark:border-blue-400 ${sizeClasses[size]}`}></div>
+      <div className={`animate-spin rounded-full border-b-2 border-primary-500 ${sizeClasses[size]}`}></div>
       {text && (
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 animate-pulse">{text}</p>
       )}
@@ -30,16 +31,16 @@ export function LightningLoadingSpinner({ text = "Processing Lightning payment..
   return (
     <div className="flex flex-col items-center justify-center p-6">
       <div className="relative">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400"></div>
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-neutral-200 dark:border-neutral-700 border-t-primary-500"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl">⚡</span>
+          <BoltIcon className="w-6 h-6 text-primary-500" />
         </div>
       </div>
       <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 font-medium">{text}</p>
       <div className="mt-2 flex space-x-1">
-        <div className="h-2 w-2 bg-blue-600 dark:bg-blue-400 rounded-full animate-bounce"></div>
-        <div className="h-2 w-2 bg-blue-600 dark:bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-        <div className="h-2 w-2 bg-blue-600 dark:bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+        <div className="h-2 w-2 bg-primary-500 rounded-full animate-bounce"></div>
+        <div className="h-2 w-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+        <div className="h-2 w-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
       </div>
     </div>
   );

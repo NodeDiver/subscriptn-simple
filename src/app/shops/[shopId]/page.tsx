@@ -55,7 +55,7 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
 
   // Handle remove shop
   const handleRemoveShop = async (shopId: number) => {
-    const warningMessage = `Are you sure you want to remove this shop?\n\n⚠️ WARNING: This will also:\n• Cancel all active subscriptions\n• Stop recurring payments to the BTCPay Server owner\n• Permanently delete all subscription history\n\nThis action cannot be undone.`;
+    const warningMessage = `Are you sure you want to remove this shop?\n\nWARNING: This will also:\n• Cancel all active subscriptions\n• Stop recurring payments to the BTCPay Server owner\n• Permanently delete all subscription history\n\nThis action cannot be undone.`;
     
     if (!confirm(warningMessage)) {
       return;

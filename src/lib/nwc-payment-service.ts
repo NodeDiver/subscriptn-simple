@@ -254,7 +254,7 @@ class NWCPaymentService {
       // In a real implementation, you would use a proper NWC client library
       // to establish connection and send payments
       
-      console.log('🔄 Sending NWC payment...', {
+      console.log('Sending NWC payment...', {
         relayUrl: nwcInfo.relayUrl,
         invoice: invoice.substring(0, 50) + '...'
       });

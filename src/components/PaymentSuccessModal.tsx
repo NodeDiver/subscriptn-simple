@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { BoltIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 
 interface PaymentSuccessModalProps {
   isOpen: boolean;
@@ -30,9 +31,12 @@ export default function PaymentSuccessModal({ isOpen, onClose, paymentDetails }:
 
         {/* Success Message */}
         <div className="text-center mb-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
-            Payment Successful! ⚡
-          </h3>
+          <div className="flex items-center justify-center mb-2">
+            <CheckCircleIcon className="w-8 h-8 text-green-500 mr-2" />
+            <h3 className="text-xl font-semibold text-gray-900">
+              Payment Successful!
+            </h3>
+          </div>
           <p className="text-gray-600">
             Your Lightning payment has been processed successfully.
           </p>
@@ -87,9 +91,10 @@ export default function PaymentSuccessModal({ isOpen, onClose, paymentDetails }:
 
         {/* lightning network Info */}
         <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
-            Powered by the lightning network ⚡
-          </p>
+          <div className="flex items-center justify-center text-xs text-gray-500">
+            <BoltIcon className="w-4 h-4 mr-1" />
+            Powered by the lightning network
+          </div>
         </div>
       </div>
     </div>
