@@ -9,62 +9,69 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // SubscriptN Brand Colors
+        // Professional Bitcoin-focused palette
+        primary: {
+          50: '#f0f4ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#14213D', // Deep navy - main primary
+          600: '#0F1A2E', // Darker navy
+          700: '#0A1120', // Darkest navy
+          800: '#050A10',
+          900: '#020508',
+        },
+        accent: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#F7931A', // Bitcoin orange - main accent
+          600: '#E8841A', // Darker orange
+          700: '#D9751A', // Darkest orange
+          800: '#CA6619',
+          900: '#BB5718',
+        },
+        support: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#2A9D8F', // Professional teal - main support
+          600: '#268B7D', // Darker teal
+          700: '#22796B', // Darkest teal
+          800: '#1E6759',
+          900: '#1A5547',
+        },
+        neutral: {
+          50: '#F4F6F8',  // Light background
+          100: '#E5E8EB', // Light border
+          200: '#D1D5DB', // Light accent
+          300: '#9CA3AF', // Medium light
+          400: '#6B7280', // Medium
+          500: '#4B5563', // Medium dark
+          600: '#374151', // Dark
+          700: '#1F2937', // Darker
+          800: '#1F2933', // Dark background
+          900: '#111827', // Darkest background
+        },
+        // Legacy support (will be removed gradually)
         'subscriptn': {
-          // Primary Colors
           'green': {
-            50: '#f0fdf4',
-            100: '#dcfce7',
-            200: '#bbf7d0',
-            300: '#86efac',
-            400: '#4ade80',
-            500: '#2D5A3D', // Primary green
+            500: '#2D5A3D',
             600: '#16a34a',
-            700: '#15803d',
-            800: '#166534',
-            900: '#14532d',
           },
           'blue': {
-            50: '#eff6ff',
-            100: '#dbeafe',
-            200: '#bfdbfe',
-            300: '#93c5fd',
-            400: '#60a5fa',
-            500: '#1E3A8A', // Primary blue
+            500: '#1E3A8A',
             600: '#2563eb',
-            700: '#1d4ed8',
-            800: '#1e40af',
-            900: '#1e3a8a',
           },
           'teal': {
-            50: '#f0fdfa',
-            100: '#ccfbf1',
-            200: '#99f6e4',
-            300: '#5eead4',
-            400: '#2dd4bf',
-            500: '#0F766E', // Primary teal
+            500: '#0F766E',
             600: '#0d9488',
-            700: '#0f766e',
-            800: '#115e59',
-            900: '#134e4a',
           },
-          // Dark mode variants
-          'dark': {
-            'green': '#10B981',
-            'blue': '#3B82F6',
-            'teal': '#14B8A6',
-            'light-green': '#34D399',
-            'light-blue': '#60A5FA',
-          }
-        },
-        // Background colors
-        background: {
-          light: '#ffffff',
-          dark: '#111827',
-        },
-        surface: {
-          light: '#f9fafb',
-          dark: '#1f2937',
         }
       },
       fontFamily: {
@@ -72,12 +79,14 @@ module.exports = {
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #2D5A3D 0%, #1E3A8A 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #0F766E 0%, #86EFAC 100%)',
-        'gradient-logo': 'linear-gradient(135deg, #2D5A3D 0%, #0F766E 50%, #1E3A8A 100%)',
-        'gradient-primary-dark': 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
-        'gradient-accent-dark': 'linear-gradient(135deg, #14B8A6 0%, #34D399 100%)',
-        'gradient-logo-dark': 'linear-gradient(135deg, #10B981 0%, #14B8A6 50%, #3B82F6 100%)',
+        // Professional gradients - minimal usage
+        'gradient-primary': 'linear-gradient(135deg, #14213D 0%, #0F1A2E 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #F7931A 0%, #E8841A 100%)',
+        'gradient-subtle': 'linear-gradient(135deg, #2A9D8F 0%, #268B7D 100%)',
+        // Dark mode variants
+        'gradient-primary-dark': 'linear-gradient(135deg, #14213D 0%, #0A1120 100%)',
+        'gradient-accent-dark': 'linear-gradient(135deg, #F7931A 0%, #D9751A 100%)',
+        'gradient-subtle-dark': 'linear-gradient(135deg, #2A9D8F 0%, #22796B 100%)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
