@@ -178,7 +178,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="#servers-list"
-                className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
+                className="inline-flex items-center bg-white dark:bg-neutral-800 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium px-4 py-2 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm hover:shadow-md transition-all duration-200"
               >
                 Explore servers
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="#shops-list"
-                className="inline-flex items-center text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium"
+                className="inline-flex items-center bg-white dark:bg-neutral-800 text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 font-medium px-4 py-2 rounded-lg border border-accent-200 dark:border-accent-700 shadow-sm hover:shadow-md transition-all duration-200"
               >
                 Browse shops
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
