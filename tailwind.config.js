@@ -58,6 +58,18 @@ module.exports = {
           800: '#2b5a3a',
           900: '#254a31',
         },
+        login: {
+          50: '#f1f5f9',
+          100: '#e2e8f0',
+          200: '#cbd5e1',
+          300: '#94a3b8',
+          400: '#64748b',
+          500: '#101828', // Custom blue - main
+          600: '#0e1424', // Darker blue
+          700: '#0c1020', // Darkest blue
+          800: '#0a0c1c',
+          900: '#080818',
+        },
         neutral: {
           50: '#F4F6F8',  // Light background
           100: '#E5E8EB', // Light border
