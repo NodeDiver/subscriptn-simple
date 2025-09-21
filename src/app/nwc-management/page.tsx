@@ -36,7 +36,7 @@ export default function NWCManagementPage() {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               NWC Management
             </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-300">
               Manage your Nostr Wallet Connect connections for automatic subscription payments
             </p>
           </div>
