@@ -481,7 +481,7 @@ export default function AddShop() {
                   <div className="flex space-x-4">
                     <Link
                       href="/nwc-management"
-                      className="flex-1 bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 text-center"
+                      className="flex-1 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-center"
                     >
                       Setup NWC Connection
                     </Link>

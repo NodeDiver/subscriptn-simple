@@ -192,7 +192,7 @@ export default function NWCConnectionForm({
             <button
               type="submit"
               disabled={isSubmitting || !nwcConnectionString.trim()}
-              className="flex-1 bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 disabled:from-gray-400 disabled:to-gray-400 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200"
+              className="flex-1 bg-primary-500 hover:bg-primary-600 disabled:bg-neutral-400 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200"
             >
               {isSubmitting ? 'Storing...' : 'Store NWC Connection'}
             </button>

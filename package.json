@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
+    "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.13.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/pg": "^8.15.5",

@@ -123,7 +123,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Welcome to{' '}
-            <span className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
               SubscriptN
             </span>
           </h1>
@@ -134,7 +134,7 @@ export default function HomePage() {
             {user ? (
               <Link
                 href="/dashboard"
-                className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-4 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg transition-colors duration-200 text-lg font-medium shadow-sm hover:shadow-md"
               >
                 Go to Dashboard
               </Link>
@@ -142,13 +142,13 @@ export default function HomePage() {
               <>
                 <Link
                   href="/login"
-                  className="bg-gradient-to-r from-subscriptn-green-500 to-subscriptn-blue-500 dark:from-green-500 dark:to-blue-500 text-white px-8 py-4 rounded-lg hover:from-subscriptn-teal-500 hover:to-subscriptn-teal-500 dark:hover:from-teal-500 dark:hover:to-teal-500 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg transition-colors duration-200 text-lg font-medium shadow-sm hover:shadow-md"
                 >
                   Get Started
                 </Link>
                 <Link
                   href="/shops"
-                  className="bg-green-600 dark:bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-all duration-200 text-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-lg transition-colors duration-200 text-lg font-medium shadow-sm hover:shadow-md"
                 >
                   Browse Shops
                 </Link>
