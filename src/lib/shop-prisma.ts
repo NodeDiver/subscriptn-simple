@@ -203,11 +203,11 @@ export async function getShopsByServer(serverId: number): Promise<ShopWithServer
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
-      lightningAddress: shop.lightningAddress,
-      subscriptionStatus: shop.subscriptionStatus,
-      createdAt: shop.createdAt,
-      isPublic: shop.isPublic,
-      serverName: shop.server.name
+      lightning_address: shop.lightningAddress,
+      subscription_status: shop.subscriptionStatus,
+      created_at: shop.createdAt,
+      is_public: shop.isPublic,
+      server_name: shop.server.name
     }));
   } catch (error) {
     console.error('Get shops by server error:', error);
