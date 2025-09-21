@@ -415,25 +415,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Shop Stats Overview */}
-          <div className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl shadow-sm p-8 mb-12 border border-neutral-200 dark:border-neutral-700">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-2">{totalPublicShops}</div>
-                <div className="text-neutral-600 dark:text-neutral-300 font-medium">Available Shops</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-support-600 dark:text-support-400 mb-2">{totalActiveSubscriptions}</div>
-                <div className="text-neutral-600 dark:text-neutral-300 font-medium">Active Subscriptions</div>
-              </div>
-              {user && (
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">{totalMyShops}</div>
-                  <div className="text-neutral-600 dark:text-neutral-300 font-medium">Your Shops</div>
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Quick Actions */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
