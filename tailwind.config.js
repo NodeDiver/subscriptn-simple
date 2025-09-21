@@ -46,6 +46,18 @@ module.exports = {
           800: '#1E6759',
           900: '#1A5547',
         },
+        btcpay: {
+          50: '#f0f9f4',
+          100: '#dcf2e4',
+          200: '#bce5cd',
+          300: '#8dd1a8',
+          400: '#56b67d',
+          500: '#51B463', // BTCPay Server green - main
+          600: '#3d8b54', // Darker green
+          700: '#326f45', // Darkest green
+          800: '#2b5a3a',
+          900: '#254a31',
+        },
         neutral: {
           50: '#F4F6F8',  // Light background
           100: '#E5E8EB', // Light border
@@ -78,16 +90,19 @@ module.exports = {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
-      backgroundImage: {
-        // Professional gradients - minimal usage
-        'gradient-primary': 'linear-gradient(135deg, #14213D 0%, #0F1A2E 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #F7931A 0%, #E8841A 100%)',
-        'gradient-subtle': 'linear-gradient(135deg, #2A9D8F 0%, #268B7D 100%)',
-        // Dark mode variants
-        'gradient-primary-dark': 'linear-gradient(135deg, #14213D 0%, #0A1120 100%)',
-        'gradient-accent-dark': 'linear-gradient(135deg, #F7931A 0%, #D9751A 100%)',
-        'gradient-subtle-dark': 'linear-gradient(135deg, #2A9D8F 0%, #22796B 100%)',
-      },
+          backgroundImage: {
+            // Professional gradients - minimal usage
+            'gradient-primary': 'linear-gradient(135deg, #14213D 0%, #0F1A2E 100%)',
+            'gradient-accent': 'linear-gradient(135deg, #F7931A 0%, #E8841A 100%)',
+            'gradient-subtle': 'linear-gradient(135deg, #2A9D8F 0%, #268B7D 100%)',
+            'gradient-btcpay': 'linear-gradient(135deg, #51B463 0%, #3d8b54 100%)',
+            'gradient-dark-green': 'linear-gradient(135deg, #326f45 0%, #2b5a3a 100%)',
+            // Dark mode variants
+            'gradient-primary-dark': 'linear-gradient(135deg, #14213D 0%, #0A1120 100%)',
+            'gradient-accent-dark': 'linear-gradient(135deg, #F7931A 0%, #D9751A 100%)',
+            'gradient-subtle-dark': 'linear-gradient(135deg, #2A9D8F 0%, #22796B 100%)',
+            'gradient-btcpay-dark': 'linear-gradient(135deg, #51B463 0%, #326f45 100%)',
+          },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
