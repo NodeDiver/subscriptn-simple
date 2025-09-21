@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { User } from '@/lib/auth';
+import { User } from '@/lib/auth-prisma';
 import ThemeSwitcher from './ThemeSwitcher';
 
 interface UserDropdownProps {
