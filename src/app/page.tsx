@@ -122,15 +122,15 @@ export default function HomePage() {
       <section className="py-24 bg-gradient-to-br from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-8 leading-tight">
-            Bitcoin Infrastructure
+            Connect Bitcoin
             <br />
             <span className="text-primary-600 dark:text-primary-400">
-              Made Simple
+              Infrastructure & Shops
             </span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Connect BTCPay Server providers with shop owners through automated Bitcoin subscriptions. 
-            Streamline payments and grow your Bitcoin business.
+            Browse available BTCPay Server infrastructure providers and find shops already accepting Bitcoin. 
+            Connect providers with merchants through our marketplace.
           </p>
           <div className="flex justify-center">
             {user ? (
@@ -157,10 +157,10 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white mb-4">
-              How It Works
+              Marketplace for Bitcoin Payments
             </h2>
             <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
-              Simple, secure Bitcoin infrastructure for everyone
+              Discover infrastructure providers and shops already using Bitcoin
             </p>
           </div>
 
