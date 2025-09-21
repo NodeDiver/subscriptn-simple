@@ -178,7 +178,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="#servers-list"
-                className="inline-flex items-center bg-white dark:bg-neutral-800 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium px-4 py-2 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm hover:shadow-md transition-all duration-200"
+                className="inline-flex items-center bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
               >
                 Explore servers
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
