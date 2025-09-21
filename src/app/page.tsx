@@ -393,29 +393,6 @@ export default function HomePage() {
           </div>
 
 
-          {/* Quick Actions */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-            <Link
-              href="/shops/add-shop"
-              className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
-            >
-              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              Add Your Shop
-            </Link>
-            {publicShops.length > 0 && (
-              <Link
-                href="#shops-list"
-                className="bg-gradient-to-r from-slate-600 to-amber-500 hover:from-slate-700 hover:to-amber-600 text-white px-8 py-4 rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center"
-              >
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Browse Shops
-              </Link>
-            )}
-          </div>
 
           {/* Shops List */}
           <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700">
