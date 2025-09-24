@@ -99,8 +99,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'monospace'],
+        sans: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-roboto-mono)', 'monospace'],
       },
           backgroundImage: {
             // Professional gradients - minimal usage

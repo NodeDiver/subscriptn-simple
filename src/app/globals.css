@@ -3,7 +3,7 @@
 @layer base {
   body {
     @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300;
-    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    font-family: var(--font-manrope), system-ui, sans-serif;
   }
 }
 
