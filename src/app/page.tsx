@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import Avatar from '@/components/Avatar';
 
 interface BTCPayServer {
   id: number;
@@ -269,12 +270,15 @@ export default function HomePage() {
                 <div className="space-y-3">
                   {publicServers.slice(0, 6).map((server) => (
                     <div key={server.id} className="flex items-center justify-between p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-neutral-900 dark:text-white mb-1">{server.name}</h4>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{server.host_url}</p>
-                        {server.description && (
-                          <p className="text-sm text-neutral-500 dark:text-neutral-500">{server.description}</p>
-                        )}
+                      <div className="flex items-start gap-3 flex-1">
+                        <Avatar name={server.name} type="server" size="md" />
+                        <div className="flex-1">
+                          <h4 className="font-medium text-neutral-900 dark:text-white mb-1">{server.name}</h4>
+                          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{server.host_url}</p>
+                          {server.description && (
+                            <p className="text-sm text-neutral-500 dark:text-neutral-500">{server.description}</p>
+                          )}
+                        </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
@@ -326,9 +330,11 @@ export default function HomePage() {
                 <div className="space-y-4">
                   {myServers.map((server) => (
                     <div key={server.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
+                      <div className="flex items-start gap-3 flex-1">
+                        <Avatar name={server.name} type="server" size="md" />
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between">
+                            <div>
                             <div className="flex items-center gap-2 mb-1">
                               <h4 className="font-medium text-gray-900 dark:text-white">{server.name}</h4>
                               <span className={`px-2 py-1 text-xs rounded-full ${
@@ -349,16 +355,17 @@ export default function HomePage() {
                                 <span>Lightning: {server.lightning_address}</span>
                               )}
                             </div>
-                          </div>
-                          <div className="text-right ml-4">
-                            <div className="text-lg font-bold text-green-600 dark:text-green-400">
-                              {server.available_slots}
                             </div>
-                            <div className="text-xs text-gray-500 dark:text-gray-500">
-                              slots available
-                            </div>
-                            <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
-                              {server.current_shops} connected
+                            <div className="text-right ml-4">
+                              <div className="text-lg font-bold text-green-600 dark:text-green-400">
+                                {server.available_slots}
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-500">
+                                slots available
+                              </div>
+                              <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
+                                {server.current_shops} connected
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -437,9 +444,11 @@ export default function HomePage() {
                 <div className="space-y-4">
                   {publicShops.slice(0, 6).map((shop) => (
                     <div key={shop.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
+                      <div className="flex items-start gap-3 flex-1">
+                        <Avatar name={shop.name} type="shop" size="md" />
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between">
+                            <div>
                             <div className="flex items-center gap-2 mb-1">
                               <h4 className="font-medium text-gray-900 dark:text-white">{shop.name}</h4>
                               <span className={`px-2 py-1 text-xs rounded-full ${
@@ -458,16 +467,17 @@ export default function HomePage() {
                                 <span>Lightning: {shop.lightning_address}</span>
                               )}
                             </div>
-                          </div>
-                          <div className="text-right ml-4">
-                            <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              shop.subscription_status === 'active' 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                                : shop.subscription_status === 'pending'
-                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                            }`}>
-                              {shop.subscription_status.charAt(0).toUpperCase() + shop.subscription_status.slice(1)}
+                            </div>
+                            <div className="text-right ml-4">
+                              <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                shop.subscription_status === 'active' 
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                  : shop.subscription_status === 'pending'
+                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                  : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                              }`}>
+                                {shop.subscription_status.charAt(0).toUpperCase() + shop.subscription_status.slice(1)}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -514,9 +524,11 @@ export default function HomePage() {
                 <div className="space-y-4">
                   {myShops.map((shop) => (
                     <div key={shop.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
+                      <div className="flex items-start gap-3 flex-1">
+                        <Avatar name={shop.name} type="shop" size="md" />
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between">
+                            <div>
                             <div className="flex items-center gap-2 mb-1">
                               <h4 className="font-medium text-gray-900 dark:text-white">{shop.name}</h4>
                               <span className={`px-2 py-1 text-xs rounded-full ${
@@ -532,16 +544,17 @@ export default function HomePage() {
                             <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-500">
                               <span>Added {new Date(shop.created_at).toLocaleDateString()}</span>
                             </div>
-                          </div>
-                          <div className="text-right ml-4">
-                            <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              shop.subscription_status === 'active' 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                                : shop.subscription_status === 'pending'
-                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                            }`}>
-                              {shop.subscription_status.charAt(0).toUpperCase() + shop.subscription_status.slice(1)}
+                            </div>
+                            <div className="text-right ml-4">
+                              <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                shop.subscription_status === 'active' 
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                  : shop.subscription_status === 'pending'
+                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                  : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                              }`}>
+                                {shop.subscription_status.charAt(0).toUpperCase() + shop.subscription_status.slice(1)}
+                              </div>
                             </div>
                           </div>
                         </div>
