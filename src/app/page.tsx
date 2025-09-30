@@ -274,9 +274,16 @@ export default function HomePage() {
                         <Avatar name={server.name} type="server" size="md" />
                         <div className="flex-1">
                           <h4 className="font-medium text-neutral-900 dark:text-white mb-1">{server.name}</h4>
-                          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{server.host_url}</p>
+                          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">{server.host_url}</p>
+                          <p className="text-sm text-neutral-500 dark:text-neutral-500 mb-1">Owner: {server.owner_username}</p>
+                          <div className="flex items-center gap-4 text-xs text-neutral-500 dark:text-neutral-500">
+                            <span>Added {new Date(server.created_at).toLocaleDateString()}</span>
+                            {server.lightning_address && (
+                              <span>Lightning: {server.lightning_address}</span>
+                            )}
+                          </div>
                           {server.description && (
-                            <p className="text-sm text-neutral-500 dark:text-neutral-500">{server.description}</p>
+                            <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">{server.description}</p>
                           )}
                         </div>
                       </div>

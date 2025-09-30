@@ -50,7 +50,8 @@ export async function getServersWithStats(userId: number): Promise<ServerWithSta
       created_at: server.createdAt,
       is_owner: server.ownerId === userId ? 1 : 0, // Convert boolean to number for frontend compatibility
       current_shops: server._count.shops,
-      available_slots: server.slotsAvailable - server._count.shops
+      available_slots: server.slotsAvailable - server._count.shops,
+      owner_username: server.owner.username
     }));
   } catch (error) {
     console.error('Get servers with stats error:', error);
@@ -65,6 +66,11 @@ export async function getPublicServers(): Promise<ServerWithStats[]> {
         isPublic: true
       },
       include: {
+        owner: {
+          select: {
+            username: true
+          }
+        },
         _count: {
           select: {
             shops: {
@@ -93,7 +99,8 @@ export async function getPublicServers(): Promise<ServerWithStats[]> {
         created_at: server.createdAt,
         is_owner: 0, // Public servers view - always 0
         current_shops: server._count.shops,
-        available_slots: server.slotsAvailable - server._count.shops
+        available_slots: server.slotsAvailable - server._count.shops,
+        owner_username: server.owner.username
       }));
   } catch (error) {
     console.error('Get public servers error:', error);
