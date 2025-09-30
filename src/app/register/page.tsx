@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
+
+type UserType = 'server-admin' | 'shop-owner' | 'explorer';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -12,9 +14,23 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userType, setUserType] = useState<UserType>('explorer');
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user } = useAuth();
   const { showToast } = useToast();
+
+  // Get user type from URL params or sessionStorage
+  useEffect(() => {
+    const typeFromUrl = searchParams.get('type') as UserType;
+    const typeFromStorage = sessionStorage.getItem('selectedUserType') as UserType;
+    
+    if (typeFromUrl && ['server-admin', 'shop-owner', 'explorer'].includes(typeFromUrl)) {
+      setUserType(typeFromUrl);
+    } else if (typeFromStorage && ['server-admin', 'shop-owner', 'explorer'].includes(typeFromStorage)) {
+      setUserType(typeFromStorage);
+    }
+  }, [searchParams]);
 
   // Redirect when user is authenticated
   useEffect(() => {
@@ -70,7 +86,12 @@ export default function RegisterPage() {
 
       if (response.ok) {
         showToast('Registration successful! Please sign in.', 'success');
-        router.push('/login');
+        
+        // Clear the stored user type
+        sessionStorage.removeItem('selectedUserType');
+        
+        // Redirect to login with user type for post-login redirect
+        router.push(`/login?redirect=${encodeURIComponent(getRedirectPath())}`);
       } else {
         setError(data.error || 'Registration failed');
         showToast(data.error || 'Registration failed', 'error');
@@ -84,13 +105,56 @@ export default function RegisterPage() {
     }
   };
 
+  // Get redirect path based on user type
+  const getRedirectPath = (): string => {
+    switch (userType) {
+      case 'server-admin':
+        return '/infrastructure/add-server';
+      case 'shop-owner':
+        return '/shops/add-shop';
+      case 'explorer':
+      default:
+        return '/';
+    }
+  };
+
+  // Get user type display info
+  const getUserTypeInfo = () => {
+    switch (userType) {
+      case 'server-admin':
+        return {
+          title: 'BTCPay Server Administrator',
+          description: 'You\'ll be able to add your server after registration',
+          color: 'emerald'
+        };
+      case 'shop-owner':
+        return {
+          title: 'Shop Owner',
+          description: 'You\'ll be able to add your shop after registration',
+          color: 'orange'
+        };
+      case 'explorer':
+      default:
+        return {
+          title: 'Explorer',
+          description: 'You can explore the platform and add servers or shops anytime',
+          color: 'blue'
+        };
+    }
+  };
+
+  const userTypeInfo = getUserTypeInfo();
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-6">
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Create Account</h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-300">Join SubscriptN to manage your Bitcoin subscriptions</p>
+          <div className={`inline-block px-4 py-2 rounded-lg mb-3 bg-${userTypeInfo.color}-100 dark:bg-${userTypeInfo.color}-900/20 text-${userTypeInfo.color}-700 dark:text-${userTypeInfo.color}-300`}>
+            <span className="text-sm font-medium">{userTypeInfo.title}</span>
+          </div>
+          <p className="text-lg text-neutral-600 dark:text-neutral-300">{userTypeInfo.description}</p>
         </div>
 
         {/* Registration Form */}

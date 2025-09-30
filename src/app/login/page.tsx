@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { signIn, getSession } from 'next-auth/react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,15 +13,21 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login, user } = useAuth();
   const { showToast } = useToast();
 
   // Redirect when user is authenticated
   useEffect(() => {
     if (user) {
-      router.push('/');
+      const redirectTo = searchParams.get('redirect');
+      if (redirectTo) {
+        router.push(decodeURIComponent(redirectTo));
+      } else {
+        router.push('/');
+      }
     }
-  }, [user, router]);
+  }, [user, router, searchParams]);
 
   // If user is already logged in, show loading while redirecting
   if (user) {
@@ -75,7 +81,12 @@ export default function LoginPage() {
       } else {
         showToast('Google login successful!', 'success');
         // Refresh the page to update auth state
-        window.location.href = '/';
+        const redirectTo = searchParams.get('redirect');
+        if (redirectTo) {
+          window.location.href = decodeURIComponent(redirectTo);
+        } else {
+          window.location.href = '/';
+        }
       }
     } catch (error) {
       console.error('Google login error:', error);
