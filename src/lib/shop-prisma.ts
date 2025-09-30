@@ -9,6 +9,7 @@ export interface ShopWithServer {
   created_at: Date; // Changed to snake_case for frontend compatibility
   is_public: boolean; // Changed to snake_case for frontend compatibility
   server_name: string; // Changed to snake_case for frontend compatibility
+  owner_username?: string; // Add owner username
 }
 
 export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
@@ -21,6 +22,11 @@ export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
         server: {
           select: {
             name: true
+          }
+        },
+        owner: {
+          select: {
+            username: true
           }
         }
       },
@@ -37,7 +43,8 @@ export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
       is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
-      server_name: shop.server.name // Convert to snake_case for frontend compatibility
+      server_name: shop.server.name, // Convert to snake_case for frontend compatibility
+      owner_username: shop.owner.username
     }));
   } catch (error) {
     console.error('Get user shops error:', error);
@@ -76,7 +83,8 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
       is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
-      server_name: shop.server.name // Convert to snake_case for frontend compatibility
+      server_name: shop.server.name, // Convert to snake_case for frontend compatibility
+      owner_username: shop.owner.username
     }));
   } catch (error) {
     console.error('Get public shops error:', error);
@@ -199,6 +207,11 @@ export async function getShopsByServer(serverId: number): Promise<ShopWithServer
           select: {
             name: true
           }
+        },
+        owner: {
+          select: {
+            username: true
+          }
         }
       },
       orderBy: {
@@ -209,11 +222,13 @@ export async function getShopsByServer(serverId: number): Promise<ShopWithServer
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
+      description: shop.description,
       lightning_address: shop.lightningAddress,
       subscription_status: shop.subscriptionStatus,
       created_at: shop.createdAt,
       is_public: shop.isPublic,
-      server_name: shop.server.name
+      server_name: shop.server.name,
+      owner_username: shop.owner.username
     }));
   } catch (error) {
     console.error('Get shops by server error:', error);
