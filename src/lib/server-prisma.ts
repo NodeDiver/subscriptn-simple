@@ -12,12 +12,18 @@ export interface ServerWithStats {
   is_owner: number; // Changed to number for frontend compatibility
   current_shops: number;
   available_slots: number;
+  owner_username?: string; // Add owner username
 }
 
 export async function getServersWithStats(userId: number): Promise<ServerWithStats[]> {
   try {
     const servers = await prisma.server.findMany({
       include: {
+        owner: {
+          select: {
+            username: true
+          }
+        },
         _count: {
           select: {
             shops: {
