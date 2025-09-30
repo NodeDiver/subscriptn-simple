@@ -3,6 +3,7 @@ import { prisma } from './prisma';
 export interface ShopWithServer {
   id: number;
   name: string;
+  description: string | null; // Add description field
   lightning_address: string | null; // Changed to snake_case for frontend compatibility
   subscription_status: string; // Changed to snake_case for frontend compatibility
   created_at: Date; // Changed to snake_case for frontend compatibility
@@ -31,6 +32,7 @@ export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
+      description: shop.description, // Add description field
       lightning_address: shop.lightningAddress, // Convert to snake_case for frontend compatibility
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
@@ -69,6 +71,7 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
     return shops.map(shop => ({
       id: shop.id,
       name: shop.name,
+      description: shop.description, // Add description field
       lightning_address: shop.lightningAddress, // Convert to snake_case for frontend compatibility
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
@@ -83,6 +86,7 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
 
 export async function createShop(data: {
   name: string;
+  description?: string;
   serverId: number;
   ownerId: number;
   lightningAddress?: string;
@@ -117,6 +121,7 @@ export async function createShop(data: {
     const shop = await prisma.shop.create({
       data: {
         name: data.name,
+        description: data.description,
         lightningAddress: data.lightningAddress,
         serverId: data.serverId,
         ownerId: data.ownerId,
@@ -134,11 +139,12 @@ export async function createShop(data: {
     return {
       id: shop.id,
       name: shop.name,
-      lightningAddress: shop.lightningAddress,
-      subscriptionStatus: shop.subscriptionStatus,
-      createdAt: shop.createdAt,
-      isPublic: shop.isPublic,
-      serverName: shop.server.name
+      description: shop.description,
+      lightning_address: shop.lightningAddress,
+      subscription_status: shop.subscriptionStatus,
+      created_at: shop.createdAt,
+      is_public: shop.isPublic,
+      server_name: shop.server.name
     };
   } catch (error) {
     console.error('Create shop error:', error);

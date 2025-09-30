@@ -474,6 +474,9 @@ export default function HomePage() {
                                 <span>Lightning: {shop.lightning_address}</span>
                               )}
                             </div>
+                            {shop.description && (
+                              <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">{shop.description}</p>
+                            )}
                             </div>
                             <div className="text-right ml-4">
                               <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -551,6 +554,9 @@ export default function HomePage() {
                             <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-500">
                               <span>Added {new Date(shop.created_at).toLocaleDateString()}</span>
                             </div>
+                            {shop.description && (
+                              <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">{shop.description}</p>
+                            )}
                             </div>
                             <div className="text-right ml-4">
                               <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

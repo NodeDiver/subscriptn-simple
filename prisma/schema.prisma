@@ -92,6 +92,7 @@ model Server {
 model Shop {
   id                Int       @id @default(autoincrement())
   name              String
+  description       String?   // Add description field
   lightningAddress  String?   @map("lightning_address")
   serverId          Int       @map("server_id")
   ownerId           Int       @map("owner_id")
