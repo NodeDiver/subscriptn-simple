@@ -24,10 +24,10 @@ export default function Avatar({ name, imageUrl, type, size = 'md' }: AvatarProp
     lg: 'w-16 h-16 text-xl'
   };
 
-  // Theme colors based on type
+  // Theme colors based on type - softer gradients matching button styles
   const bgColorClass = type === 'server' 
-    ? 'bg-gradient-to-br from-emerald-500 to-teal-600 dark:from-emerald-600 dark:to-teal-700' 
-    : 'bg-gradient-to-br from-orange-400 to-amber-500 dark:from-orange-500 dark:to-amber-600';
+    ? 'bg-gradient-to-br from-slate-600 to-emerald-500 dark:from-slate-700 dark:to-emerald-600' 
+    : 'bg-gradient-to-br from-slate-600 to-orange-500 dark:from-slate-700 dark:to-orange-600';
 
   return (
     <div className="flex-shrink-0">
