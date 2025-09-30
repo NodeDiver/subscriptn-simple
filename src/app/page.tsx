@@ -296,12 +296,17 @@ export default function HomePage() {
                             {server.current_shops} connected
                           </div>
                         </div>
-                        <Link
-                          href={`/infrastructure/${server.id}`}
-                          className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium text-sm"
-                        >
-                          View →
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <button className="bg-gradient-to-r from-slate-600 to-blue-600 hover:from-slate-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull">
+                            Contact Admin
+                          </button>
+                          <Link
+                            href={`/infrastructure/${server.id}`}
+                            className="bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull"
+                          >
+                            More Details
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -380,9 +385,9 @@ export default function HomePage() {
                       <div className="ml-4">
                         <Link
                           href={`/infrastructure/${server.id}`}
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm"
+                          className="bg-gradient-to-r from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull"
                         >
-                          Manage →
+                          Manage Server
                         </Link>
                       </div>
                     </div>
@@ -492,12 +497,15 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <div className="ml-4">
+                      <div className="ml-4 flex items-center gap-2">
+                        <button className="bg-gradient-to-r from-slate-600 to-blue-600 hover:from-slate-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull">
+                          Contact Shop
+                        </button>
                         <Link
                           href={`/shops/${shop.id}`}
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm"
+                          className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull"
                         >
-                          View Details →
+                          More Details
                         </Link>
                       </div>
                     </div>
@@ -575,9 +583,9 @@ export default function HomePage() {
                       <div className="ml-4">
                         <Link
                           href={`/shops/${shop.id}`}
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm"
+                          className="bg-gradient-to-r from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-200 magnetic-pull"
                         >
-                          Manage →
+                          Manage Shop
                         </Link>
                       </div>
                     </div>
