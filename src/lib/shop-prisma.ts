@@ -259,11 +259,12 @@ export async function getShopById(shopId: number, ownerId: number): Promise<Shop
     return {
       id: shop.id,
       name: shop.name,
-      lightningAddress: shop.lightningAddress,
-      subscriptionStatus: shop.subscriptionStatus,
-      createdAt: shop.createdAt,
-      isPublic: shop.isPublic,
-      serverName: shop.server.name
+      description: shop.description,
+      lightning_address: shop.lightningAddress,
+      subscription_status: shop.subscriptionStatus,
+      created_at: shop.createdAt,
+      is_public: shop.isPublic,
+      server_name: shop.server.name
     };
   } catch (error) {
     console.error('Get shop by ID error:', error);
