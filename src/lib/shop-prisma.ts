@@ -8,8 +8,9 @@ export interface ShopWithServer {
   subscription_status: string; // Changed to snake_case for frontend compatibility
   created_at: Date; // Changed to snake_case for frontend compatibility
   is_public: boolean; // Changed to snake_case for frontend compatibility
+  server_linked: boolean; // Track if shop is connected to a server
   server_name: string; // Changed to snake_case for frontend compatibility
-  owner_username?: string; // Add owner username
+  owner_username?: string | null; // Fix type to match database
 }
 
 export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
@@ -43,7 +44,8 @@ export async function getUserShops(userId: number): Promise<ShopWithServer[]> {
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
       is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
-      server_name: shop.server.name, // Convert to snake_case for frontend compatibility
+      server_linked: shop.serverLinked, // Track if shop is connected to a server
+      server_name: shop.server?.name ?? 'Unlinked', // Handle null server for unlinked shops
       owner_username: shop.owner.username
     }));
   } catch (error) {
@@ -56,7 +58,8 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
   try {
     const shops = await prisma.shop.findMany({
       where: {
-        isPublic: true
+        isPublic: true,
+        serverLinked: true // Only show linked shops in public endpoint
       },
       include: {
         server: {
@@ -83,7 +86,8 @@ export async function getPublicShops(): Promise<ShopWithServer[]> {
       subscription_status: shop.subscriptionStatus, // Convert to snake_case for frontend compatibility
       created_at: shop.createdAt, // Convert to snake_case for frontend compatibility
       is_public: shop.isPublic, // Convert to snake_case for frontend compatibility
-      server_name: shop.server.name, // Convert to snake_case for frontend compatibility
+      server_linked: shop.serverLinked, // Track if shop is connected to a server
+      server_name: shop.server?.name ?? 'Unlinked', // Handle null server for unlinked shops
       owner_username: shop.owner.username
     }));
   } catch (error) {
