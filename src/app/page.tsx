@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import Avatar from '@/components/Avatar';
+import MarketplaceSwitch from '@/components/MarketplaceSwitch';
+import MarketplaceTable from '@/components/MarketplaceTable';
 
 interface BTCPayServer {
   id: number;
@@ -21,6 +23,7 @@ interface BTCPayServer {
   owner_id: number;
   created_at: string;
   is_public: boolean;
+  owner_username?: string | null;
 }
 
 interface Shop {
@@ -31,7 +34,8 @@ interface Shop {
   lightning_address: string;
   is_public: boolean;
   created_at: string;
-  owner_username?: string;
+  owner_username?: string | null;
+  description?: string | null;
 }
 
 interface PublicShop {
@@ -43,6 +47,7 @@ interface PublicShop {
   is_public: boolean;
   created_at: string;
   owner_username: string;
+  description?: string | null;
 }
 
 export default function HomePage() {
@@ -55,6 +60,11 @@ export default function HomePage() {
   const [myShops, setMyShops] = useState<Shop[]>([]);
   const [shopsLoading, setShopsLoading] = useState(true);
   const [shopsError, setShopsError] = useState('');
+  
+  // Marketplace state
+  const [isServerView, setIsServerView] = useState(true);
+  const [unlinkedShops, setUnlinkedShops] = useState<PublicShop[]>([]);
+  const [unlinkedShopsLoading, setUnlinkedShopsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,12 +83,19 @@ export default function HomePage() {
           setPublicShops(publicShopsData.shops);
         }
 
+        // Fetch unlinked shops
+        const unlinkedShopsResponse = await fetch('/api/shops/unlinked');
+        if (unlinkedShopsResponse.ok) {
+          const unlinkedShopsData = await unlinkedShopsResponse.json();
+          setUnlinkedShops(unlinkedShopsData.shops);
+        }
+
         // Fetch user's servers if authenticated
         if (user) {
           const myServersResponse = await fetch('/api/servers');
           if (myServersResponse.ok) {
             const myServersData = await myServersResponse.json();
-            const myOwnServers = myServersData.servers.filter((server: any) => server.is_owner);
+            const myOwnServers = myServersData.servers.filter((server: BTCPayServer) => server.is_owner);
             setMyServers(myOwnServers);
           }
 
@@ -96,6 +113,7 @@ export default function HomePage() {
       } finally {
         setServersLoading(false);
         setShopsLoading(false);
+        setUnlinkedShopsLoading(false);
       }
     };
 
@@ -207,6 +225,58 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Marketplace Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white mb-4">
+              Live Marketplace
+            </h2>
+            <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
+              Browse available infrastructure or discover shops looking for hosting
+            </p>
+          </div>
+
+          {/* Marketplace Switch and Table */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Browse Marketplace
+                  </h3>
+                  <div className="hidden sm:block">
+                    <MarketplaceSwitch 
+                      isServerView={isServerView} 
+                      onToggle={setIsServerView} 
+                    />
+                  </div>
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  {isServerView ? 'Showing BTCPay Servers' : 'Showing Shops'}
+                </div>
+              </div>
+              
+              {/* Mobile Switch */}
+              <div className="sm:hidden mt-4">
+                <MarketplaceSwitch 
+                  isServerView={isServerView} 
+                  onToggle={setIsServerView} 
+                />
+              </div>
+            </div>
+
+            <div className="p-6">
+              <MarketplaceTable 
+                data={isServerView ? publicServers : unlinkedShops}
+                type={isServerView ? 'servers' : 'shops'}
+                isLoading={isServerView ? serversLoading : unlinkedShopsLoading}
+              />
             </div>
           </div>
         </div>
@@ -600,7 +670,7 @@ export default function HomePage() {
               <div className="p-6 text-center">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Start Your Shop Journey</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Don't have any shops yet? Add your first shop to start connecting to BTCPay servers and managing subscriptions.
+                  Don&apos;t have any shops yet? Add your first shop to start connecting to BTCPay servers and managing subscriptions.
                 </p>
                 <Link href="/shops/add-shop">
                   <button className="bg-gradient-to-r from-green-600 to-green-700 dark:from-green-500 dark:to-green-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-green-800 dark:hover:from-green-600 dark:hover:to-green-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
