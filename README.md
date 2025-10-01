@@ -25,7 +25,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 18+ 
 - Lightning wallet (NWC compatible)
 - PostgreSQL (or use Docker)
 

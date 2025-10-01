@@ -156,7 +156,8 @@ export async function createShop(data: {
       subscription_status: shop.subscriptionStatus,
       created_at: shop.createdAt,
       is_public: shop.isPublic,
-      server_name: shop.server.name
+      server_linked: shop.serverLinked,
+      server_name: shop.server?.name ?? 'Unlinked'
     };
   } catch (error) {
     console.error('Create shop error:', error);
@@ -231,7 +232,8 @@ export async function getShopsByServer(serverId: number): Promise<ShopWithServer
       subscription_status: shop.subscriptionStatus,
       created_at: shop.createdAt,
       is_public: shop.isPublic,
-      server_name: shop.server.name,
+      server_linked: shop.serverLinked,
+      server_name: shop.server?.name ?? 'Unlinked',
       owner_username: shop.owner.username
     }));
   } catch (error) {
@@ -268,7 +270,8 @@ export async function getShopById(shopId: number, ownerId: number): Promise<Shop
       subscription_status: shop.subscriptionStatus,
       created_at: shop.createdAt,
       is_public: shop.isPublic,
-      server_name: shop.server.name
+      server_linked: shop.serverLinked,
+      server_name: shop.server?.name ?? 'Unlinked'
     };
   } catch (error) {
     console.error('Get shop by ID error:', error);

@@ -11,7 +11,7 @@ interface ServerData {
   description: string | null;
   available_slots: number;
   current_shops: number;
-  owner_username: string | null;
+  owner_username?: string | null;
   lightning_address: string | null;
   created_at: string;
 }
@@ -24,13 +24,13 @@ interface ShopData {
   subscription_status: string;
   created_at: string;
   is_public: boolean;
-  server_linked: boolean;
+  server_linked?: boolean;
   server_name: string | null;
-  owner_username: string | null;
+  owner_username?: string | null;
 }
 
 interface MarketplaceTableProps {
-  data: ServerData[] | ShopData[];
+  data: any[];
   type: 'servers' | 'shops';
   isLoading?: boolean;
 }

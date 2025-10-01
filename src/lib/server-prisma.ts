@@ -12,7 +12,7 @@ export interface ServerWithStats {
   is_owner: number; // Changed to number for frontend compatibility
   current_shops: number;
   available_slots: number;
-  owner_username?: string; // Add owner username
+  owner_username?: string | null; // Fix type to match database
 }
 
 export async function getServersWithStats(userId: number): Promise<ServerWithStats[]> {

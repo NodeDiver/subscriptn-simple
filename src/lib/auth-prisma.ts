@@ -3,7 +3,7 @@ import { prisma } from './prisma';
 
 export interface User {
   id: number;
-  username: string;
+  username: string | null;
 }
 
 export async function getUserById(id: number): Promise<User | null> {
@@ -78,7 +78,7 @@ export async function verifyUser(username: string, password: string): Promise<Us
       where: { username }
     });
 
-    if (!user) {
+    if (!user || !user.passwordHash) {
       return null;
     }
 

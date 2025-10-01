@@ -62,7 +62,7 @@ class NWCEncryptionService {
       const key = this.deriveKey(salt);
 
       // Create cipher
-      const cipher = crypto.createCipherGCM(this.algorithm, key, iv);
+      const cipher = crypto.createCipher(this.algorithm, key);
       cipher.setAAD(Buffer.from('nwc-subscriptn', 'utf8'));
 
       // Encrypt the data
@@ -98,7 +98,7 @@ class NWCEncryptionService {
       const key = this.deriveKey(salt);
 
       // Create decipher
-      const decipher = crypto.createDecipherGCM(this.algorithm, key, iv);
+      const decipher = crypto.createDecipher(this.algorithm, key);
       decipher.setAAD(Buffer.from('nwc-subscriptn', 'utf8'));
       decipher.setAuthTag(authTag);
 
