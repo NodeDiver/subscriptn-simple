@@ -225,6 +225,8 @@ async function main() {
       serverId: createdServers[0].id, // Demo BTCPay Server
       ownerId: createdUsers[1].id, // shopowner
       lightningAddress: 'tienda@lightning.example.com',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -233,6 +235,8 @@ async function main() {
       serverId: createdServers[1].id, // LightningPay Infrastructure
       ownerId: createdUsers[2].id, // alex_martinez
       lightningAddress: 'tech@lightningpay.demo.io',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -241,6 +245,8 @@ async function main() {
       serverId: createdServers[2].id, // BitcoinMarket Solutions
       ownerId: createdUsers[3].id, // sarah_chen
       lightningAddress: 'coffee@bitcoinmarket.demo.com',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -249,6 +255,8 @@ async function main() {
       serverId: createdServers[3].id, // CryptoShop Network
       ownerId: createdUsers[4].id, // mike_roberts
       lightningAddress: 'art@cryptoshop.demo.net',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -257,6 +265,8 @@ async function main() {
       serverId: createdServers[4].id, // DigitalStore Hub
       ownerId: createdUsers[5].id, // lisa_wang
       lightningAddress: 'fashion@digitalstore.demo.com',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -265,6 +275,8 @@ async function main() {
       serverId: createdServers[5].id, // BitcoinStore Mexico
       ownerId: createdUsers[6].id, // carlos_rodriguez
       lightningAddress: 'spices@bitcoinstore.demo.mx',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -273,6 +285,8 @@ async function main() {
       serverId: createdServers[6].id, // LightningCommerce UK
       ownerId: createdUsers[7].id, // emma_thompson
       lightningAddress: 'tea@lightningcommerce.demo.co.uk',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -281,6 +295,8 @@ async function main() {
       serverId: createdServers[7].id, // SatoshiStore Korea
       ownerId: createdUsers[8].id, // david_kim
       lightningAddress: 'beauty@satoshistore.demo.kr',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -289,6 +305,8 @@ async function main() {
       serverId: createdServers[8].id, // BitcoinBoutique Spain
       ownerId: createdUsers[9].id, // maria_gonzalez
       lightningAddress: 'wine@bitcoinboutique.demo.es',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -297,6 +315,8 @@ async function main() {
       serverId: createdServers[1].id, // LightningPay Infrastructure
       ownerId: createdUsers[2].id, // alex_martinez
       lightningAddress: 'books@lightningpay.demo.io',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -305,6 +325,8 @@ async function main() {
       serverId: createdServers[2].id, // BitcoinMarket Solutions
       ownerId: createdUsers[3].id, // sarah_chen
       lightningAddress: 'pizza@bitcoinmarket.demo.com',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -313,6 +335,8 @@ async function main() {
       serverId: createdServers[3].id, // CryptoShop Network
       ownerId: createdUsers[4].id, // mike_roberts
       lightningAddress: 'hardware@cryptoshop.demo.net',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -321,6 +345,8 @@ async function main() {
       serverId: createdServers[4].id, // DigitalStore Hub
       ownerId: createdUsers[5].id, // lisa_wang
       lightningAddress: 'energy@digitalstore.demo.com',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -329,6 +355,8 @@ async function main() {
       serverId: createdServers[5].id, // BitcoinStore Mexico
       ownerId: createdUsers[6].id, // carlos_rodriguez
       lightningAddress: 'tacos@bitcoinstore.demo.mx',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -337,6 +365,8 @@ async function main() {
       serverId: createdServers[6].id, // LightningCommerce UK
       ownerId: createdUsers[7].id, // emma_thompson
       lightningAddress: 'whisky@lightningcommerce.demo.co.uk',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -345,6 +375,8 @@ async function main() {
       serverId: createdServers[7].id, // SatoshiStore Korea
       ownerId: createdUsers[8].id, // david_kim
       lightningAddress: 'samsung@satoshistore.demo.kr',
+      serverLinked: true,
+      subscriptionStatus: 'active',
       isPublic: true
     },
     {
@@ -353,6 +385,89 @@ async function main() {
       serverId: createdServers[8].id, // BitcoinBoutique Spain
       ownerId: createdUsers[9].id, // maria_gonzalez
       lightningAddress: 'flamenco@bitcoinboutique.demo.es',
+      serverLinked: true,
+      subscriptionStatus: 'active',
+      isPublic: true
+    },
+    // Unlinked shops looking for BTCPay Server hosting
+    {
+      name: 'Artisan Coffee Roasters',
+      description: 'Small batch coffee roasters looking to accept Bitcoin payments',
+      serverId: null,
+      ownerId: createdUsers[2].id, // alex_martinez
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Vintage Vinyl Records',
+      description: 'Rare vinyl collection shop seeking Lightning payment infrastructure',
+      serverId: null,
+      ownerId: createdUsers[3].id, // sarah_chen
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Organic Farm Market',
+      description: 'Farm-to-table marketplace wanting to integrate Bitcoin payments',
+      serverId: null,
+      ownerId: createdUsers[4].id, // mike_roberts
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Handmade Jewelry Studio',
+      description: 'Artisan jewelry looking for reliable BTCPay Server provider',
+      serverId: null,
+      ownerId: createdUsers[5].id, // lisa_wang
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Local Bookstore Café',
+      description: 'Independent bookstore wanting to start accepting Lightning payments',
+      serverId: null,
+      ownerId: createdUsers[6].id, // carlos_rodriguez
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Yoga & Wellness Studio',
+      description: 'Wellness center seeking Bitcoin payment infrastructure',
+      serverId: null,
+      ownerId: createdUsers[7].id, // emma_thompson
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Craft Beer Brewery',
+      description: 'Local brewery looking to accept Bitcoin for online orders',
+      serverId: null,
+      ownerId: createdUsers[8].id, // david_kim
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
+      isPublic: true
+    },
+    {
+      name: 'Pet Supplies & Grooming',
+      description: 'Pet store wanting to modernize payment options with Lightning',
+      serverId: null,
+      ownerId: createdUsers[9].id, // maria_gonzalez
+      lightningAddress: null,
+      serverLinked: false,
+      subscriptionStatus: 'pending',
       isPublic: true
     }
   ];
@@ -362,7 +477,7 @@ async function main() {
     const existingShop = await prisma.shop.findFirst({
       where: { 
         name: shopData.name,
-        serverId: shopData.serverId
+        ownerId: shopData.ownerId
       }
     });
 

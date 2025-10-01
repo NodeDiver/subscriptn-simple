@@ -106,7 +106,6 @@ model Shop {
   owner             User      @relation("ShopOwner", fields: [ownerId], references: [id])
   subscriptions     Subscription[]
   
-  @@unique([name, serverId])
   @@map("shops")
 }
 
