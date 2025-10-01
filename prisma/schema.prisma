@@ -94,14 +94,15 @@ model Shop {
   name              String
   description       String?   // Add description field
   lightningAddress  String?   @map("lightning_address")
-  serverId          Int       @map("server_id")
+  serverId          Int?      @map("server_id") // Made optional for unlinked shops
   ownerId           Int       @map("owner_id")
-  subscriptionStatus String   @default("active") @map("subscription_status")
+  subscriptionStatus String   @default("unlinked") @map("subscription_status") // Default to unlinked
   isPublic          Boolean   @default(true) @map("is_public")
+  isLinked          Boolean   @default(false) @map("is_linked") // New field to track link status
   createdAt         DateTime  @default(now()) @map("created_at")
   
   // Relations
-  server            Server    @relation(fields: [serverId], references: [id])
+  server            Server?   @relation(fields: [serverId], references: [id]) // Made optional
   owner             User      @relation("ShopOwner", fields: [ownerId], references: [id])
   subscriptions     Subscription[]
   
