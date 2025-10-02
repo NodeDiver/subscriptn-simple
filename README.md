@@ -116,6 +116,12 @@ This project includes `AGENTS.md` with comprehensive guidelines for AI coding as
 - ✅ API consistency improvements
 
 ### Recent Updates
+- **Marketplace Implementation Complete**: Interactive switch between BTCPay servers and unlinked shops
+- **Database Schema Enhanced**: Added serverLinked field for tracking shop-server connections
+- **New API Endpoints**: /api/shops/unlinked for marketplace functionality
+- **Component Development**: MarketplaceSwitch and MarketplaceTable with themed styling
+- **Data Seeding**: Added 8 unlinked shops for marketplace display
+- **Cleanup**: Removed temporary debugging files and resolved server configuration issues
 - Fixed critical password sanitization vulnerability
 - Removed legacy code duplication
 - Standardized API field naming (snake_case)
