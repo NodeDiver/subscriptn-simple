@@ -81,3 +81,6 @@ Thumbs.db
 
 /src/generated/prisma
 cookies.txt
+
+# SessionEnd chat archives (auto-added)
+previousclaudechat/

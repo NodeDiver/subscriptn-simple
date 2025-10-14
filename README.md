@@ -25,7 +25,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - Lightning wallet (NWC compatible)
 - PostgreSQL (or use Docker)
 
@@ -85,6 +85,22 @@ NODE_ENV=development
 3. Create shop and set up subscriptions
 4. Track payment history and status
 
+## 📚 Documentation
+
+**Complete documentation** is available in the `docs/` folder:
+
+- **[Documentation Index](./docs/README.md)** - Start here
+- **[Product Vision](./docs/02-planning/product-vision.md)** - What we're building and why
+- **[Feature Development Workflow](./docs/workflows/feature-development.md)** - How we build features
+- **[AI Agent Guidelines](./docs/workflows/ai-agent-guidelines.md)** - AI assistant integration
+- **[Architecture Decisions](./docs/02-planning/architecture-decisions/)** - Technical choices and rationale
+
+### Quick Links
+- [Roadmap](./docs/02-planning/roadmap.md)
+- [Feature Registry](./docs/02-planning/feature-registry.md)
+- [Development Log](./docs/04-implementation/dev-journal/development-log.md)
+- [Claude Code Setup](./docs/tools/claude-code/README.md)
+
 ## 🔒 Security
 
 - **Encryption**: AES-256-GCM for NWC secrets
@@ -104,9 +120,12 @@ See [SECURITY.md](SECURITY.md) for detailed information.
 5. Submit a pull request
 
 ### AI Agent Support
-This project includes `AGENTS.md` with comprehensive guidelines for AI coding assistants.
+This project includes comprehensive documentation for AI coding assistants:
+- [AI Agent Guidelines](./docs/workflows/ai-agent-guidelines.md)
+- [Claude Code Setup](./docs/tools/claude-code/README.md)
+- [Feature Development Workflow](./docs/workflows/feature-development.md)
 
-## 📚 Development
+## 🏗️ Development
 
 ### Current Status: Production Ready
 - ✅ Complete NWC payment system
@@ -114,18 +133,16 @@ This project includes `AGENTS.md` with comprehensive guidelines for AI coding as
 - ✅ Unified homepage dashboard
 - ✅ Security fixes and validation
 - ✅ API consistency improvements
+- ✅ Comprehensive documentation framework
 
 ### Recent Updates
-- **Marketplace Implementation Complete**: Interactive switch between BTCPay servers and unlinked shops
-- **Database Schema Enhanced**: Added serverLinked field for tracking shop-server connections
-- **New API Endpoints**: /api/shops/unlinked for marketplace functionality
-- **Component Development**: MarketplaceSwitch and MarketplaceTable with themed styling
-- **Data Seeding**: Added 8 unlinked shops for marketplace display
-- **Cleanup**: Removed temporary debugging files and resolved server configuration issues
-- Fixed critical password sanitization vulnerability
-- Removed legacy code duplication
-- Standardized API field naming (snake_case)
-- Enhanced security and validation
+- **Enhanced Documentation Structure**: BMAD-METHOD inspired organization
+- **Strategic Planning Framework**: Product vision, roadmap, and feature registry
+- **Architecture Decision Records**: Documented technical choices
+- **Development Workflows**: Systematic feature development process
+- **Claude Code Integration**: Complete AI assistant documentation
+
+See [Development Log](./docs/04-implementation/dev-journal/development-log.md) for detailed history.
 
 ## ❓ FAQ
 
@@ -145,7 +162,7 @@ Yes, the core functionality is complete with enterprise-grade security measures.
 
 - **Contact**: nodediver@proton.me
 - **Issues**: [GitHub Issues](https://github.com/NodeDiver/subscriptn-simple/issues)
-- **Documentation**: See individual `.md` files for detailed guides
+- **Documentation**: [Complete docs](./docs/README.md)
 
 ---
 
