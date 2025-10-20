@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import UserDropdown from './UserDropdown';
+import ThemeSwitcher from './ThemeSwitcher';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
@@ -46,7 +47,11 @@ export default function TopBar() {
           </div>
 
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            {/* Theme Switcher */}
+            <ThemeSwitcher />
+
+            {/* User Authentication */}
             {user ? (
               <UserDropdown user={user} />
             ) : (

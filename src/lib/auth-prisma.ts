@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { prisma } from './prisma';
+import { UserRole } from '@prisma/client';
 
 export interface User {
   id: number;
   username: string | null;
+  role: UserRole;
 }
 
 export async function getUserById(id: number): Promise<User | null> {
@@ -12,7 +14,8 @@ export async function getUserById(id: number): Promise<User | null> {
       where: { id },
       select: {
         id: true,
-        username: true
+        username: true,
+        role: true
       }
     });
     return user;
@@ -28,7 +31,8 @@ export async function getUserByUsername(username: string): Promise<User | null> 
       where: { username },
       select: {
         id: true,
-        username: true
+        username: true,
+        role: true
       }
     });
     return user;
@@ -38,13 +42,17 @@ export async function getUserByUsername(username: string): Promise<User | null> 
   }
 }
 
-export async function createUser(username: string, password: string): Promise<User | null> {
+export async function createUser(
+  username: string,
+  password: string,
+  role: UserRole = UserRole.BITCOINER
+): Promise<User | null> {
   try {
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { username }
     });
-    
+
     if (existingUser) {
       return null; // Username already exists
     }
@@ -57,11 +65,13 @@ export async function createUser(username: string, password: string): Promise<Us
     const user = await prisma.user.create({
       data: {
         username,
-        passwordHash
+        passwordHash,
+        role
       },
       select: {
         id: true,
-        username: true
+        username: true,
+        role: true
       }
     });
 
@@ -89,7 +99,8 @@ export async function verifyUser(username: string, password: string): Promise<Us
 
     return {
       id: user.id,
-      username: user.username
+      username: user.username,
+      role: user.role
     };
   } catch (error) {
     console.error('Verify user error:', error);

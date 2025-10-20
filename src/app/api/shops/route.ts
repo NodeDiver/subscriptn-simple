@@ -1,134 +1,255 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserById } from '@/lib/auth-prisma';
-import { getUserShops, createShop, deleteShop } from '@/lib/shop-prisma';
-import { validateApiRequest, shopValidationSchema, sanitizeString } from '@/lib/validation';
-import { shopRateLimiter } from '@/lib/rateLimit';
+import prisma from '@/lib/prisma';
 
+// GET /api/shops - List all public shops (or user's own shops if authenticated)
 export async function GET(request: NextRequest) {
   try {
     const userId = request.cookies.get('user_id')?.value;
-    
-    if (!userId) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    const searchParams = request.nextUrl.searchParams;
+
+    // Filter parameters
+    const search = searchParams.get('search');
+    const hasProvider = searchParams.get('hasProvider'); // 'true' or 'false'
+    const limit = parseInt(searchParams.get('limit') || '50');
+    const offset = parseInt(searchParams.get('offset') || '0');
+
+    // Build where clause
+    const where: any = {};
+
+    // If user is authenticated, show public shops + their own
+    if (userId) {
+      where.OR = [
+        { isPublic: true },
+        { ownerId: parseInt(userId) }
+      ];
+    } else {
+      // Public only for non-authenticated users
+      where.isPublic = true;
     }
 
-    const user = await getUserById(parseInt(userId));
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    // Search by name, description, or address
+    if (search) {
+      where.AND = [
+        ...(where.AND || []),
+        {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { description: { contains: search, mode: 'insensitive' } },
+            { address: { contains: search, mode: 'insensitive' } }
+          ]
+        }
+      ];
     }
 
-    // Get user shops using Prisma
-    const shops = await getUserShops(user.id);
-    return NextResponse.json({ shops });
+    // Filter by connection status
+    if (hasProvider === 'true') {
+      where.connections = {
+        some: {
+          status: 'ACTIVE'
+        }
+      };
+    } else if (hasProvider === 'false') {
+      where.connections = {
+        none: {}
+      };
+    }
+
+    const shops = await prisma.shop.findMany({
+      where,
+      include: {
+        owner: {
+          select: {
+            id: true,
+            username: true,
+            name: true
+          }
+        },
+        connections: {
+          where: { status: 'ACTIVE' },
+          include: {
+            provider: {
+              select: {
+                id: true,
+                name: true,
+                serviceType: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+      skip: offset
+    });
+
+    // Count total for pagination
+    const total = await prisma.shop.count({ where });
+
+    // Transform data for response
+    const transformedShops = shops.map(shop => ({
+      id: shop.id,
+      name: shop.name,
+      description: shop.description,
+      logo_url: shop.logoUrl,
+      address: shop.address,
+      latitude: shop.latitude,
+      longitude: shop.longitude,
+      is_physical_location: shop.isPhysicalLocation,
+      website: shop.website,
+      contact_email: shop.contactEmail,
+      lightning_address: shop.lightningAddress,
+      accepts_bitcoin: shop.acceptsBitcoin,
+      is_public: shop.isPublic,
+      owner: {
+        id: shop.owner.id,
+        username: shop.owner.username,
+        name: shop.owner.name
+      },
+      providers: shop.connections.map(conn => ({
+        id: conn.provider.id,
+        name: conn.provider.name,
+        service_type: conn.provider.serviceType,
+        connection_type: conn.connectionType,
+        status: conn.status
+      })),
+      is_owner: userId ? shop.ownerId === parseInt(userId) : false,
+      created_at: shop.createdAt,
+      updated_at: shop.updatedAt
+    }));
+
+    return NextResponse.json({
+      shops: transformedShops,
+      pagination: {
+        total,
+        limit,
+        offset,
+        hasMore: offset + limit < total
+      }
+    });
   } catch (error) {
-    console.error('Get shops error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error fetching shops:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch shops' },
+      { status: 500 }
+    );
   }
 }
 
+// POST /api/shops - Create a new shop
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting
-    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-    if (!shopRateLimiter.isAllowed(clientIP)) {
+    const userId = request.cookies.get('user_id')?.value;
+
+    if (!userId) {
       return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
+        { error: 'Authentication required' },
+        { status: 401 }
       );
     }
 
-    const userId = request.cookies.get('user_id')?.value;
-    
-    if (!userId) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-    }
+    const body = await request.json();
+    const {
+      name,
+      description,
+      logoUrl,
+      address,
+      latitude,
+      longitude,
+      isPhysicalLocation,
+      website,
+      contactEmail,
+      lightningAddress,
+      acceptsBitcoin,
+      isPublic,
+      providerId // Optional: connect to a provider immediately
+    } = body;
 
-    const user = await getUserById(parseInt(userId));
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
-    // Validate input
-    const validation = await validateApiRequest(request, shopValidationSchema);
-    if (!validation.isValid) {
+    // Validation
+    if (!name) {
       return NextResponse.json(
-        { error: 'Invalid input', details: validation.errors },
+        { error: 'Shop name is required' },
         { status: 400 }
       );
     }
 
-    const { name, server_id, lightning_address, is_public } = validation.data;
-    const sanitizedName = sanitizeString(name as string);
-    const sanitizedLightningAddress = lightning_address ? sanitizeString(lightning_address as string) : null;
-    const serverId = Number(server_id);
-    const isPublic = is_public !== undefined ? Boolean(is_public) : true;
+    // Verify user has SHOP_OWNER role
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(userId) },
+      select: { role: true }
+    });
 
-    try {
-      // Create shop using Prisma
-      const newShop = await createShop({
-        name: sanitizedName,
-        serverId,
-        ownerId: user.id,
-        lightningAddress: sanitizedLightningAddress || undefined,
-        isPublic
-      });
-
-      return NextResponse.json({ shop: newShop }, { status: 201 });
-    } catch (error: any) {
-      // Handle specific error messages from Prisma service
-      if (error.message === 'Server not found') {
-        return NextResponse.json({ error: 'Server not found' }, { status: 404 });
-      } else if (error.message === 'You already own a shop with this name on this server') {
-        return NextResponse.json(
-          { error: 'You already own a shop with this name on this server' },
-          { status: 400 }
-        );
-      } else if (error.message === 'This shop is already owned by another user') {
-        return NextResponse.json(
-          { error: 'This shop is already owned by another user' },
-          { status: 409 }
-        );
-      }
-      throw error;
+    if (!user || user.role !== 'SHOP_OWNER') {
+      return NextResponse.json(
+        { error: 'Only users with SHOP_OWNER role can create shops' },
+        { status: 403 }
+      );
     }
+
+    // Create shop
+    const shop = await prisma.shop.create({
+      data: {
+        name,
+        description,
+        logoUrl,
+        address,
+        latitude: latitude ? parseFloat(latitude) : null,
+        longitude: longitude ? parseFloat(longitude) : null,
+        isPhysicalLocation: isPhysicalLocation || false,
+        website,
+        contactEmail,
+        lightningAddress,
+        acceptsBitcoin: acceptsBitcoin !== undefined ? acceptsBitcoin : true,
+        isPublic: isPublic !== undefined ? isPublic : true,
+        ownerId: parseInt(userId)
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            username: true,
+            name: true
+          }
+        }
+      }
+    });
+
+    // If providerId is provided, create connection
+    if (providerId) {
+      await prisma.connection.create({
+        data: {
+          shopId: shop.id,
+          providerId: parseInt(providerId),
+          connectionType: 'FREE_LISTING', // Default to free listing
+          status: 'PENDING'
+        }
+      });
+    }
+
+    return NextResponse.json({
+      shop: {
+        id: shop.id,
+        name: shop.name,
+        description: shop.description,
+        logo_url: shop.logoUrl,
+        address: shop.address,
+        latitude: shop.latitude,
+        longitude: shop.longitude,
+        is_physical_location: shop.isPhysicalLocation,
+        website: shop.website,
+        contact_email: shop.contactEmail,
+        lightning_address: shop.lightningAddress,
+        accepts_bitcoin: shop.acceptsBitcoin,
+        is_public: shop.isPublic,
+        owner: shop.owner,
+        created_at: shop.createdAt,
+        updated_at: shop.updatedAt
+      }
+    }, { status: 201 });
   } catch (error) {
-    console.error('Create shop error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error creating shop:', error);
+    return NextResponse.json(
+      { error: 'Failed to create shop' },
+      { status: 500 }
+    );
   }
 }
-
-export async function DELETE(request: NextRequest) {
-  try {
-    const userId = request.cookies.get('user_id')?.value;
-    
-    if (!userId) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-    }
-
-    const user = await getUserById(parseInt(userId));
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
-    const { searchParams } = new URL(request.url);
-    const shopId = searchParams.get('id');
-
-    if (!shopId) {
-      return NextResponse.json({ error: 'Shop ID is required' }, { status: 400 });
-    }
-
-    // Delete shop using Prisma
-    const success = await deleteShop(parseInt(shopId), user.id);
-
-    if (!success) {
-      return NextResponse.json({ error: 'Shop not found or not owned by you' }, { status: 404 });
-    }
-
-    return NextResponse.json({ 
-      message: 'Shop removed successfully. All related subscriptions and payments have been cancelled.' 
-    });
-  } catch (error) {
-    console.error('Delete shop error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  }
-} 

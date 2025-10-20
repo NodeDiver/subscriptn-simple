@@ -46,8 +46,8 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('subscriptn-theme');
-                  if (!theme || theme === 'system') {
-                    // Default to system preference
+                  if (!theme) {
+                    // First visit - use system preference
                     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                       document.documentElement.classList.add('dark');
                     } else {

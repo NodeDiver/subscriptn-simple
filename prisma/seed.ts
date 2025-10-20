@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UserRole, ServiceType, ConnectionType, ConnectionStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -6,498 +6,410 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting database seeding...');
 
-  // Create demo users
+  // ============================================
+  // CREATE USERS WITH ROLES
+  // ============================================
+  console.log('👥 Creating users...');
+
   const users = [
+    // Infrastructure Providers
     {
       username: 'btcpayserver',
       password: 'btcpayserver',
       name: 'BTCPay Server Admin',
-      email: 'admin@btcpayserver.demo'
-    },
-    {
-      username: 'shopowner',
-      password: 'shopowner',
-      name: 'Shop Owner',
-      email: 'owner@shop.demo'
+      email: 'admin@btcpayserver.demo',
+      role: UserRole.PROVIDER
     },
     {
       username: 'alex_martinez',
       password: 'password123',
       name: 'Alex Martinez',
-      email: 'alex@lightningpay.io'
+      email: 'alex@lightningpay.io',
+      role: UserRole.PROVIDER
     },
     {
       username: 'sarah_chen',
       password: 'password123',
       name: 'Sarah Chen',
-      email: 'sarah@bitcoinmarket.com'
+      email: 'sarah@bitcoinmarket.com',
+      role: UserRole.PROVIDER
+    },
+    // Shop Owners
+    {
+      username: 'shopowner',
+      password: 'shopowner',
+      name: 'Shop Owner Demo',
+      email: 'owner@shop.demo',
+      role: UserRole.SHOP_OWNER
     },
     {
       username: 'mike_roberts',
       password: 'password123',
       name: 'Mike Roberts',
-      email: 'mike@cryptoshop.net'
+      email: 'mike@cryptoshop.net',
+      role: UserRole.SHOP_OWNER
     },
     {
       username: 'lisa_wang',
       password: 'password123',
       name: 'Lisa Wang',
-      email: 'lisa@digitalstore.com'
+      email: 'lisa@digitalstore.com',
+      role: UserRole.SHOP_OWNER
     },
+    // Bitcoiners (consumers)
     {
       username: 'carlos_rodriguez',
       password: 'password123',
       name: 'Carlos Rodriguez',
-      email: 'carlos@bitcoinstore.mx'
+      email: 'carlos@example.com',
+      role: UserRole.BITCOINER
     },
     {
       username: 'emma_thompson',
       password: 'password123',
       name: 'Emma Thompson',
-      email: 'emma@lightningcommerce.co.uk'
+      email: 'emma@example.com',
+      role: UserRole.BITCOINER
     },
-    {
-      username: 'david_kim',
-      password: 'password123',
-      name: 'David Kim',
-      email: 'david@satoshistore.kr'
-    },
-    {
-      username: 'maria_gonzalez',
-      password: 'password123',
-      name: 'Maria Gonzalez',
-      email: 'maria@bitcoinboutique.es'
-    }
   ];
 
-  console.log('👥 Creating users...');
-  const createdUsers = [];
+  const createdUsers: any[] = [];
   for (const userData of users) {
-    const existingUser = await prisma.user.findUnique({
-      where: { username: userData.username }
+    const hashedPassword = await bcrypt.hash(userData.password, 12);
+    const user = await prisma.user.create({
+      data: {
+        username: userData.username,
+        passwordHash: hashedPassword,
+        name: userData.name,
+        email: userData.email,
+        role: userData.role
+      }
     });
-
-    if (!existingUser) {
-      const hashedPassword = await bcrypt.hash(userData.password, 12);
-      const user = await prisma.user.create({
-        data: {
-          username: userData.username,
-          passwordHash: hashedPassword,
-          name: userData.name,
-          email: userData.email
-        }
-      });
-      createdUsers.push(user);
-      console.log(`✅ Created user: ${userData.username}`);
-    } else {
-      createdUsers.push(existingUser);
-      console.log(`⚠️  User already exists: ${userData.username}`);
-    }
+    createdUsers.push(user);
+    console.log(`✅ Created ${userData.role}: ${userData.username}`);
   }
 
-  // Create BTCPay servers
-  console.log('🖥️  Creating BTCPay servers...');
-  const servers = [
+  // ============================================
+  // CREATE INFRASTRUCTURE PROVIDERS
+  // ============================================
+  console.log('🏗️  Creating infrastructure providers...');
+
+  const providers = [
     {
       name: 'Demo BTCPay Server',
-      hostUrl: 'https://btcpay.example.com',
-      apiKey: 'demo_api_key_123',
-      ownerId: createdUsers[0].id, // btcpayserver user
-      description: 'Servidor demo para testing',
+      description: 'Demo BTCPay Server for testing and development. Professional Bitcoin payment processing infrastructure.',
+      serviceType: ServiceType.PAYMENT_PROCESSOR,
+      website: 'https://btcpay.example.com',
+      contactEmail: 'admin@btcpayserver.demo',
+      lightningAddress: 'demo@btcpay.example.com',
+      pricingTiers: [
+        { name: 'Free', price: 0, features: ['5 shops', 'Basic support', 'Standard uptime'] },
+        { name: 'Pro', price: 10000, features: ['20 shops', 'Priority support', '99.9% uptime'] }
+      ],
+      technicalSpecs: {
+        uptime: '99.5%',
+        apiAvailable: true,
+        maxShops: 20,
+        features: ['Lightning Network', 'On-chain payments', 'Point of Sale']
+      },
       isPublic: true,
+      supportsNwc: true,
       slotsAvailable: 15,
-      lightningAddress: 'demo@btcpay.example.com'
+      ownerId: createdUsers[0].id // btcpayserver
     },
     {
       name: 'LightningPay Infrastructure',
-      hostUrl: 'https://lightningpay.demo.io',
-      apiKey: 'lpi_api_key_456',
-      ownerId: createdUsers[2].id, // alex_martinez
-      description: 'Professional Lightning payment infrastructure with 99.9% uptime guarantee',
+      description: 'Professional Lightning payment infrastructure with 99.9% uptime guarantee. Enterprise-grade solution for high-volume merchants.',
+      serviceType: ServiceType.PAYMENT_PROCESSOR,
+      website: 'https://lightningpay.demo.io',
+      contactEmail: 'alex@lightningpay.io',
+      lightningAddress: 'pay@lightningpay.demo.io',
+      pricingTiers: [
+        { name: 'Starter', price: 5000, features: ['10 shops', 'Email support', '99% uptime'] },
+        { name: 'Business', price: 20000, features: ['50 shops', '24/7 support', '99.9% uptime'] },
+        { name: 'Enterprise', price: 50000, features: ['Unlimited shops', 'Dedicated support', '99.99% uptime'] }
+      ],
+      technicalSpecs: {
+        uptime: '99.9%',
+        apiAvailable: true,
+        maxShops: 100,
+        features: ['Lightning Network', 'Multi-currency', 'Analytics dashboard', 'Webhook support']
+      },
       isPublic: true,
+      supportsNwc: true,
       slotsAvailable: 25,
-      lightningAddress: 'pay@lightningpay.demo.io'
+      ownerId: createdUsers[1].id // alex_martinez
     },
     {
-      name: 'BitcoinMarket Solutions',
-      hostUrl: 'https://bitcoinmarket.demo.com',
-      apiKey: 'bms_api_key_789',
-      ownerId: createdUsers[3].id, // sarah_chen
-      description: 'Enterprise-grade BTCPay server hosting for high-volume merchants',
+      name: 'BLFS Node Provider',
+      description: 'Bitcoin Lightning File Storage provider. Host your files on Lightning Network with instant payments.',
+      serviceType: ServiceType.OTHER,
+      website: 'https://github.com/MegalithicBTC/BLFS',
+      contactEmail: 'sarah@bitcoinmarket.com',
+      lightningAddress: 'blfs@bitcoinmarket.com',
+      pricingTiers: [
+        { name: 'Storage Basic', price: 1000, features: ['10GB storage', 'Standard speed'] },
+        { name: 'Storage Pro', price: 5000, features: ['100GB storage', 'High speed', 'Priority access'] }
+      ],
+      technicalSpecs: {
+        uptime: '99.5%',
+        apiAvailable: true,
+        features: ['File storage', 'Lightning payments', 'IPFS integration']
+      },
       isPublic: true,
-      slotsAvailable: 12,
-      lightningAddress: 'merchant@bitcoinmarket.demo.com'
+      supportsNwc: false,
+      slotsAvailable: 50,
+      ownerId: createdUsers[2].id // sarah_chen
     },
     {
-      name: 'CryptoShop Network',
-      hostUrl: 'https://cryptoshop.demo.net',
-      apiKey: 'csn_api_key_101',
-      ownerId: createdUsers[4].id, // mike_roberts
-      description: 'Reliable Bitcoin payment processing for small to medium businesses',
+      name: 'Lightning Node Hosting Co.',
+      description: 'Managed Lightning node hosting for merchants and enthusiasts. We handle the technical complexity.',
+      serviceType: ServiceType.LIGHTNING_NODE,
+      website: 'https://lnhosting.demo.com',
+      contactEmail: 'sarah@bitcoinmarket.com',
+      lightningAddress: 'node@lnhosting.demo.com',
+      pricingTiers: [
+        { name: 'Hobby Node', price: 15000, features: ['5 channels', 'Basic monitoring'] },
+        { name: 'Merchant Node', price: 30000, features: ['20 channels', 'Advanced monitoring', 'Channel management'] }
+      ],
+      technicalSpecs: {
+        uptime: '99.8%',
+        apiAvailable: true,
+        features: ['LND', 'Channel management', 'Watchtower', 'Auto-pilot']
+      },
       isPublic: true,
-      slotsAvailable: 8,
-      lightningAddress: 'shop@cryptoshop.demo.net'
-    },
-    {
-      name: 'DigitalStore Hub',
-      hostUrl: 'https://digitalstore.demo.com',
-      apiKey: 'dsh_api_key_202',
-      ownerId: createdUsers[5].id, // lisa_wang
-      description: 'Modern Lightning infrastructure with advanced analytics and reporting',
-      isPublic: true,
-      slotsAvailable: 20,
-      lightningAddress: 'hub@digitalstore.demo.com'
-    },
-    {
-      name: 'BitcoinStore Mexico',
-      hostUrl: 'https://bitcoinstore.demo.mx',
-      apiKey: 'bsm_api_key_303',
-      ownerId: createdUsers[6].id, // carlos_rodriguez
-      description: 'Servicios de pagos Lightning para comercios en México y América Latina',
-      isPublic: true,
-      slotsAvailable: 18,
-      lightningAddress: 'mexico@bitcoinstore.demo.mx'
-    },
-    {
-      name: 'LightningCommerce UK',
-      hostUrl: 'https://lightningcommerce.demo.co.uk',
-      apiKey: 'lcu_api_key_404',
-      ownerId: createdUsers[7].id, // emma_thompson
-      description: 'Premium Lightning payment services for UK and European businesses',
-      isPublic: true,
+      supportsNwc: true,
       slotsAvailable: 10,
-      lightningAddress: 'uk@lightningcommerce.demo.co.uk'
+      ownerId: createdUsers[2].id // sarah_chen
     },
     {
-      name: 'SatoshiStore Korea',
-      hostUrl: 'https://satoshistore.demo.kr',
-      apiKey: 'ssk_api_key_505',
-      ownerId: createdUsers[8].id, // david_kim
-      description: 'Korean Bitcoin payment infrastructure with local language support',
+      name: 'Wallet API Services',
+      description: 'RESTful wallet APIs for developers. Integrate Bitcoin payments into your app with our simple API.',
+      serviceType: ServiceType.WALLET_API,
+      website: 'https://walletapi.demo.com',
+      contactEmail: 'alex@lightningpay.io',
+      lightningAddress: 'api@walletapi.demo.com',
+      pricingTiers: [
+        { name: 'Developer', price: 0, features: ['1000 API calls/month', 'Testnet access'] },
+        { name: 'Production', price: 25000, features: ['100k API calls/month', 'Mainnet access', 'Priority support'] }
+      ],
+      technicalSpecs: {
+        uptime: '99.9%',
+        apiAvailable: true,
+        features: ['REST API', 'Websockets', 'Webhooks', 'SDKs for major languages']
+      },
       isPublic: true,
-      slotsAvailable: 14,
-      lightningAddress: 'korea@satoshistore.demo.kr'
-    },
-    {
-      name: 'BitcoinBoutique Spain',
-      hostUrl: 'https://bitcoinboutique.demo.es',
-      apiKey: 'bbs_api_key_606',
-      ownerId: createdUsers[9].id, // maria_gonzalez
-      description: 'Elegant Lightning payment solutions for Spanish and European merchants',
-      isPublic: true,
-      slotsAvailable: 16,
-      lightningAddress: 'spain@bitcoinboutique.demo.es'
+      supportsNwc: true,
+      slotsAvailable: 100,
+      ownerId: createdUsers[1].id // alex_martinez
     }
   ];
 
-  const createdServers = [];
-  for (const serverData of servers) {
-    const existingServer = await prisma.server.findFirst({
-      where: { 
-        OR: [
-          { hostUrl: serverData.hostUrl },
-          { 
-            name: serverData.name,
-            ownerId: serverData.ownerId
-          }
-        ]
-      }
+  const createdProviders: any[] = [];
+  for (const providerData of providers) {
+    const provider = await prisma.infrastructureProvider.create({
+      data: providerData
     });
-
-    if (!existingServer) {
-      const server = await prisma.server.create({
-        data: serverData
-      });
-      createdServers.push(server);
-      console.log(`✅ Created server: ${serverData.name}`);
-    } else {
-      createdServers.push(existingServer);
-      console.log(`⚠️  Server already exists: ${serverData.name}`);
-    }
+    createdProviders.push(provider);
+    console.log(`✅ Created provider: ${providerData.name} (${providerData.serviceType})`);
   }
 
-  // Create shops
+  // ============================================
+  // CREATE SHOPS
+  // ============================================
   console.log('🏪 Creating shops...');
+
   const shops = [
+    // Connected shops
     {
       name: 'Mi Tienda Demo',
-      description: 'Tienda de demostración para pruebas de integración',
-      serverId: createdServers[0].id, // Demo BTCPay Server
-      ownerId: createdUsers[1].id, // shopowner
+      description: 'Demo shop for testing integrations. We sell everything you need for Bitcoin payments.',
+      address: 'Calle Bitcoin 123, Madrid, Spain',
+      latitude: 40.4168,
+      longitude: -3.7038,
+      isPhysicalLocation: true,
+      website: 'https://tienda.demo.com',
+      contactEmail: 'owner@shop.demo',
       lightningAddress: 'tienda@lightning.example.com',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[3].id // shopowner
     },
     {
       name: 'TechGadgets Pro',
-      description: 'Latest tech gadgets and electronics with Lightning payments',
-      serverId: createdServers[1].id, // LightningPay Infrastructure
-      ownerId: createdUsers[2].id, // alex_martinez
-      lightningAddress: 'tech@lightningpay.demo.io',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
+      description: 'Latest tech gadgets and electronics with instant Lightning payments. Worldwide shipping available.',
+      address: '456 Silicon Valley, San Francisco, CA, USA',
+      latitude: 37.7749,
+      longitude: -122.4194,
+      isPhysicalLocation: false,
+      website: 'https://techgadgets.demo.com',
+      contactEmail: 'mike@cryptoshop.net',
+      lightningAddress: 'tech@techgadgets.demo.com',
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[4].id // mike_roberts
     },
     {
       name: 'CryptoCafe',
-      description: 'Coffee shop accepting Bitcoin for premium coffee and pastries',
-      serverId: createdServers[2].id, // BitcoinMarket Solutions
-      ownerId: createdUsers[3].id, // sarah_chen
-      lightningAddress: 'coffee@bitcoinmarket.demo.com',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
+      description: 'Bitcoin-friendly coffee shop. Premium coffee and pastries, pay with Lightning!',
+      address: '789 Blockchain Ave, New York, NY, USA',
+      latitude: 40.7128,
+      longitude: -74.0060,
+      isPhysicalLocation: true,
+      website: 'https://cryptocafe.demo.com',
+      contactEmail: 'contact@cryptocafe.demo.com',
+      lightningAddress: 'coffee@cryptocafe.demo.com',
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[5].id // lisa_wang
     },
     {
       name: 'Digital Art Gallery',
-      description: 'NFT marketplace and digital art gallery with instant Lightning payments',
-      serverId: createdServers[3].id, // CryptoShop Network
-      ownerId: createdUsers[4].id, // mike_roberts
-      lightningAddress: 'art@cryptoshop.demo.net',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
+      description: 'NFT marketplace and digital art gallery. Discover unique digital artwork from artists worldwide.',
+      address: null,
+      latitude: null,
+      longitude: null,
+      isPhysicalLocation: false,
+      website: 'https://digitalart.demo.com',
+      contactEmail: 'mike@cryptoshop.net',
+      lightningAddress: 'art@digitalart.demo.com',
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[4].id // mike_roberts
     },
     {
       name: 'Fashion Forward',
-      description: 'Sustainable fashion store accepting Bitcoin for eco-friendly clothing',
-      serverId: createdServers[4].id, // DigitalStore Hub
-      ownerId: createdUsers[5].id, // lisa_wang
-      lightningAddress: 'fashion@digitalstore.demo.com',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
+      description: 'Sustainable fashion store accepting Bitcoin. Eco-friendly clothing for conscious consumers.',
+      address: '321 Green Street, Portland, OR, USA',
+      latitude: 45.5152,
+      longitude: -122.6784,
+      isPhysicalLocation: true,
+      website: 'https://fashionforward.demo.com',
+      contactEmail: 'lisa@digitalstore.com',
+      lightningAddress: 'fashion@fashionforward.demo.com',
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[5].id // lisa_wang
     },
-    {
-      name: 'Mexican Spices Co.',
-      description: 'Authentic Mexican spices and ingredients delivered worldwide',
-      serverId: createdServers[5].id, // BitcoinStore Mexico
-      ownerId: createdUsers[6].id, // carlos_rodriguez
-      lightningAddress: 'spices@bitcoinstore.demo.mx',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'London Tea House',
-      description: 'Premium British tea blends and accessories with Lightning payments',
-      serverId: createdServers[6].id, // LightningCommerce UK
-      ownerId: createdUsers[7].id, // emma_thompson
-      lightningAddress: 'tea@lightningcommerce.demo.co.uk',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'K-Beauty Store',
-      description: 'Korean beauty products and skincare with instant Bitcoin payments',
-      serverId: createdServers[7].id, // SatoshiStore Korea
-      ownerId: createdUsers[8].id, // david_kim
-      lightningAddress: 'beauty@satoshistore.demo.kr',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Spanish Wine Cellar',
-      description: 'Premium Spanish wines and spirits delivered globally',
-      serverId: createdServers[8].id, // BitcoinBoutique Spain
-      ownerId: createdUsers[9].id, // maria_gonzalez
-      lightningAddress: 'wine@bitcoinboutique.demo.es',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Lightning Books',
-      description: 'Digital books and e-learning courses with instant payments',
-      serverId: createdServers[1].id, // LightningPay Infrastructure
-      ownerId: createdUsers[2].id, // alex_martinez
-      lightningAddress: 'books@lightningpay.demo.io',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Bitcoin Pizza Co.',
-      description: 'Pizza delivery accepting Bitcoin - the original crypto pizza experience',
-      serverId: createdServers[2].id, // BitcoinMarket Solutions
-      ownerId: createdUsers[3].id, // sarah_chen
-      lightningAddress: 'pizza@bitcoinmarket.demo.com',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Crypto Hardware Store',
-      description: 'Hardware wallets, mining equipment, and crypto accessories',
-      serverId: createdServers[3].id, // CryptoShop Network
-      ownerId: createdUsers[4].id, // mike_roberts
-      lightningAddress: 'hardware@cryptoshop.demo.net',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Green Energy Solutions',
-      description: 'Solar panels and renewable energy equipment for crypto miners',
-      serverId: createdServers[4].id, // DigitalStore Hub
-      ownerId: createdUsers[5].id, // lisa_wang
-      lightningAddress: 'energy@digitalstore.demo.com',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Taco Bitcoin',
-      description: 'Authentic Mexican tacos and street food with Lightning payments',
-      serverId: createdServers[5].id, // BitcoinStore Mexico
-      ownerId: createdUsers[6].id, // carlos_rodriguez
-      lightningAddress: 'tacos@bitcoinstore.demo.mx',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Scottish Whisky Exchange',
-      description: 'Premium Scottish whisky collection with global delivery',
-      serverId: createdServers[6].id, // LightningCommerce UK
-      ownerId: createdUsers[7].id, // emma_thompson
-      lightningAddress: 'whisky@lightningcommerce.demo.co.uk',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Samsung Tech Hub',
-      description: 'Official Samsung products and accessories with Bitcoin payments',
-      serverId: createdServers[7].id, // SatoshiStore Korea
-      ownerId: createdUsers[8].id, // david_kim
-      lightningAddress: 'samsung@satoshistore.demo.kr',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    {
-      name: 'Flamenco Dance Academy',
-      description: 'Online flamenco dance lessons and traditional Spanish music',
-      serverId: createdServers[8].id, // BitcoinBoutique Spain
-      ownerId: createdUsers[9].id, // maria_gonzalez
-      lightningAddress: 'flamenco@bitcoinboutique.demo.es',
-      serverLinked: true,
-      subscriptionStatus: 'active',
-      isPublic: true
-    },
-    // Unlinked shops looking for BTCPay Server hosting
+    // Standalone shops (no provider connection yet)
     {
       name: 'Artisan Coffee Roasters',
-      description: 'Small batch coffee roasters looking to accept Bitcoin payments',
-      serverId: null,
-      ownerId: createdUsers[2].id, // alex_martinez
+      description: 'Small batch coffee roasters looking to accept Bitcoin payments. Premium beans from around the world.',
+      address: '555 Bean Lane, Seattle, WA, USA',
+      latitude: 47.6062,
+      longitude: -122.3321,
+      isPhysicalLocation: true,
+      website: 'https://artisancoffee.demo.com',
+      contactEmail: 'owner@shop.demo',
       lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[3].id // shopowner
     },
     {
       name: 'Vintage Vinyl Records',
-      description: 'Rare vinyl collection shop seeking Lightning payment infrastructure',
-      serverId: null,
-      ownerId: createdUsers[3].id, // sarah_chen
+      description: 'Rare vinyl collection shop. Looking for Lightning payment infrastructure to sell globally.',
+      address: '101 Music Row, Nashville, TN, USA',
+      latitude: 36.1627,
+      longitude: -86.7816,
+      isPhysicalLocation: true,
+      website: 'https://vintagevinyl.demo.com',
+      contactEmail: 'mike@cryptoshop.net',
       lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[4].id // mike_roberts
     },
     {
       name: 'Organic Farm Market',
-      description: 'Farm-to-table marketplace wanting to integrate Bitcoin payments',
-      serverId: null,
-      ownerId: createdUsers[4].id, // mike_roberts
+      description: 'Farm-to-table marketplace. Fresh organic produce delivered locally, wanting Bitcoin payments.',
+      address: '789 Farm Road, Austin, TX, USA',
+      latitude: 30.2672,
+      longitude: -97.7431,
+      isPhysicalLocation: true,
+      website: 'https://organicfarm.demo.com',
+      contactEmail: 'lisa@digitalstore.com',
       lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
-    },
-    {
-      name: 'Handmade Jewelry Studio',
-      description: 'Artisan jewelry looking for reliable BTCPay Server provider',
-      serverId: null,
-      ownerId: createdUsers[5].id, // lisa_wang
-      lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
-    },
-    {
-      name: 'Local Bookstore Café',
-      description: 'Independent bookstore wanting to start accepting Lightning payments',
-      serverId: null,
-      ownerId: createdUsers[6].id, // carlos_rodriguez
-      lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
-    },
-    {
-      name: 'Yoga & Wellness Studio',
-      description: 'Wellness center seeking Bitcoin payment infrastructure',
-      serverId: null,
-      ownerId: createdUsers[7].id, // emma_thompson
-      lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
-    },
-    {
-      name: 'Craft Beer Brewery',
-      description: 'Local brewery looking to accept Bitcoin for online orders',
-      serverId: null,
-      ownerId: createdUsers[8].id, // david_kim
-      lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
-    },
-    {
-      name: 'Pet Supplies & Grooming',
-      description: 'Pet store wanting to modernize payment options with Lightning',
-      serverId: null,
-      ownerId: createdUsers[9].id, // maria_gonzalez
-      lightningAddress: null,
-      serverLinked: false,
-      subscriptionStatus: 'pending',
-      isPublic: true
+      acceptsBitcoin: true,
+      isPublic: true,
+      ownerId: createdUsers[5].id // lisa_wang
     }
   ];
 
-  const createdShops = [];
+  const createdShops: any[] = [];
   for (const shopData of shops) {
-    const existingShop = await prisma.shop.findFirst({
-      where: { 
-        name: shopData.name,
-        ownerId: shopData.ownerId
-      }
+    const shop = await prisma.shop.create({
+      data: shopData
     });
-
-    if (!existingShop) {
-      const shop = await prisma.shop.create({
-        data: shopData
-      });
-      createdShops.push(shop);
-      console.log(`✅ Created shop: ${shopData.name}`);
-    } else {
-      createdShops.push(existingShop);
-      console.log(`⚠️  Shop already exists: ${shopData.name}`);
-    }
+    createdShops.push(shop);
+    console.log(`✅ Created shop: ${shopData.name}`);
   }
 
-  console.log('🎉 Database seeding completed!');
+  // ============================================
+  // CREATE CONNECTIONS (Shop-Provider Relationships)
+  // ============================================
+  console.log('🔗 Creating connections...');
+
+  const connections = [
+    {
+      shopId: createdShops[0].id, // Mi Tienda Demo
+      providerId: createdProviders[0].id, // Demo BTCPay Server
+      connectionType: ConnectionType.FREE_LISTING,
+      status: ConnectionStatus.ACTIVE
+    },
+    {
+      shopId: createdShops[1].id, // TechGadgets Pro
+      providerId: createdProviders[1].id, // LightningPay Infrastructure
+      connectionType: ConnectionType.PAID_SUBSCRIPTION,
+      status: ConnectionStatus.ACTIVE,
+      subscriptionAmount: 20000, // 20k sats
+      subscriptionInterval: 'monthly'
+    },
+    {
+      shopId: createdShops[2].id, // CryptoCafe
+      providerId: createdProviders[0].id, // Demo BTCPay Server
+      connectionType: ConnectionType.SELF_REPORTED,
+      status: ConnectionStatus.ACTIVE
+    },
+    {
+      shopId: createdShops[3].id, // Digital Art Gallery
+      providerId: createdProviders[3].id, // Lightning Node Hosting
+      connectionType: ConnectionType.PAID_SUBSCRIPTION,
+      status: ConnectionStatus.ACTIVE,
+      subscriptionAmount: 30000, // 30k sats
+      subscriptionInterval: 'monthly'
+    },
+    {
+      shopId: createdShops[4].id, // Fashion Forward
+      providerId: createdProviders[1].id, // LightningPay Infrastructure
+      connectionType: ConnectionType.FREE_LISTING,
+      status: ConnectionStatus.ACTIVE
+    }
+  ];
+
+  const createdConnections: any[] = [];
+  for (const connectionData of connections) {
+    const connection = await prisma.connection.create({
+      data: connectionData
+    });
+    createdConnections.push(connection);
+    const shop = createdShops.find(s => s.id === connectionData.shopId);
+    const provider = createdProviders.find(p => p.id === connectionData.providerId);
+    console.log(`✅ Connected: ${shop?.name} → ${provider?.name} (${connectionData.connectionType})`);
+  }
+
+  // ============================================
+  // SUMMARY
+  // ============================================
+  console.log('\n🎉 Database seeding completed!');
   console.log(`📊 Summary:`);
   console.log(`   👥 Users: ${createdUsers.length}`);
-  console.log(`   🖥️  Servers: ${createdServers.length}`);
+  console.log(`      - Providers: ${createdUsers.filter(u => u.role === 'PROVIDER').length}`);
+  console.log(`      - Shop Owners: ${createdUsers.filter(u => u.role === 'SHOP_OWNER').length}`);
+  console.log(`      - Bitcoiners: ${createdUsers.filter(u => u.role === 'BITCOINER').length}`);
+  console.log(`   🏗️  Infrastructure Providers: ${createdProviders.length}`);
   console.log(`   🏪 Shops: ${createdShops.length}`);
+  console.log(`   🔗 Connections: ${createdConnections.length}`);
 }
 
 main()

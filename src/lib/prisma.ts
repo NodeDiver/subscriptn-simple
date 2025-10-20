@@ -12,6 +12,9 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
+// Default export for convenience
+export default prisma;
+
 // Database health check
 export async function checkDatabaseHealth(): Promise<boolean> {
   try {
