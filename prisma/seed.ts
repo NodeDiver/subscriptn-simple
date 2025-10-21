@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole, ServiceType, ConnectionType, ConnectionStatus } from '@prisma/client';
+import { PrismaClient, ServiceType, ConnectionType, ConnectionStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ async function main() {
   console.log('🌱 Starting database seeding...');
 
   // ============================================
-  // CREATE USERS WITH ROLES
+  // CREATE USERS (UNIFIED - NO ROLES)
   // ============================================
   console.log('👥 Creating users...');
 
@@ -17,59 +17,51 @@ async function main() {
       username: 'btcpayserver',
       password: 'btcpayserver',
       name: 'BTCPay Server Admin',
-      email: 'admin@btcpayserver.demo',
-      role: UserRole.PROVIDER
+      email: 'admin@btcpayserver.demo'
     },
     {
       username: 'alex_martinez',
       password: 'password123',
       name: 'Alex Martinez',
-      email: 'alex@lightningpay.io',
-      role: UserRole.PROVIDER
+      email: 'alex@lightningpay.io'
     },
     {
       username: 'sarah_chen',
       password: 'password123',
       name: 'Sarah Chen',
-      email: 'sarah@bitcoinmarket.com',
-      role: UserRole.PROVIDER
+      email: 'sarah@bitcoinmarket.com'
     },
     // Shop Owners
     {
       username: 'shopowner',
       password: 'shopowner',
       name: 'Shop Owner Demo',
-      email: 'owner@shop.demo',
-      role: UserRole.SHOP_OWNER
+      email: 'owner@shop.demo'
     },
     {
       username: 'mike_roberts',
       password: 'password123',
       name: 'Mike Roberts',
-      email: 'mike@cryptoshop.net',
-      role: UserRole.SHOP_OWNER
+      email: 'mike@cryptoshop.net'
     },
     {
       username: 'lisa_wang',
       password: 'password123',
       name: 'Lisa Wang',
-      email: 'lisa@digitalstore.com',
-      role: UserRole.SHOP_OWNER
+      email: 'lisa@digitalstore.com'
     },
     // Bitcoiners (consumers)
     {
       username: 'carlos_rodriguez',
       password: 'password123',
       name: 'Carlos Rodriguez',
-      email: 'carlos@example.com',
-      role: UserRole.BITCOINER
+      email: 'carlos@example.com'
     },
     {
       username: 'emma_thompson',
       password: 'password123',
       name: 'Emma Thompson',
-      email: 'emma@example.com',
-      role: UserRole.BITCOINER
+      email: 'emma@example.com'
     },
   ];
 
@@ -81,12 +73,11 @@ async function main() {
         username: userData.username,
         passwordHash: hashedPassword,
         name: userData.name,
-        email: userData.email,
-        role: userData.role
+        email: userData.email
       }
     });
     createdUsers.push(user);
-    console.log(`✅ Created ${userData.role}: ${userData.username}`);
+    console.log(`✅ Created user: ${userData.username}`);
   }
 
   // ============================================

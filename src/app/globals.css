@@ -1,9 +1,19 @@
 @import "tailwindcss";
 
+/* Class-based dark mode configuration for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300;
+    background-color: white;
+    color: rgb(17 24 39);
+    transition: background-color 300ms, color 300ms;
     font-family: var(--font-manrope), system-ui, sans-serif;
+  }
+
+  .dark body {
+    background-color: rgb(17 24 39);
+    color: white;
   }
 }
 
@@ -12,35 +22,63 @@
   bc-connect input,
   bc-connect textarea,
   bc-connect [contenteditable] {
-    @apply text-gray-900 dark:text-white bg-white dark:bg-gray-900;
+    color: rgb(17 24 39);
+    background-color: white;
+  }
+
+  .dark bc-connect input,
+  .dark bc-connect textarea,
+  .dark bc-connect [contenteditable] {
+    color: white;
+    background-color: rgb(17 24 39);
   }
 
   bc-connect input::placeholder,
   bc-connect textarea::placeholder {
-    @apply text-gray-500 dark:text-gray-400;
+    color: rgb(107 114 128);
+  }
+
+  .dark bc-connect input::placeholder,
+  .dark bc-connect textarea::placeholder {
+    color: rgb(156 163 175);
   }
 
   /* Ensure all text within bc-connect is visible */
   bc-connect {
-    @apply text-gray-900 dark:text-white;
+    color: rgb(17 24 39);
+  }
+
+  .dark bc-connect {
+    color: white;
   }
 
   bc-connect * {
-    @apply text-inherit;
+    color: inherit;
   }
 
   /* Specific fix for NWC connection string input */
   bc-connect input[type="text"],
   bc-connect input[type="password"],
   bc-connect input[type="url"] {
-    @apply text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600;
+    color: rgb(17 24 39);
+    background-color: white;
+    border-color: rgb(209 213 219);
+  }
+
+  .dark bc-connect input[type="text"],
+  .dark bc-connect input[type="password"],
+  .dark bc-connect input[type="url"] {
+    color: white;
+    background-color: rgb(17 24 39);
+    border-color: rgb(75 85 99);
   }
 }
 
 @layer utilities {
   /* Dark mode transition for all elements */
   * {
-    @apply transition-colors duration-300;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 300ms;
   }
   
   /* Interactive Button Effects */

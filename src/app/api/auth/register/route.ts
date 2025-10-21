@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createUser } from '@/lib/auth-prisma';
 import { authRateLimiter } from '@/lib/rateLimit';
 import { validateApiRequest, registerValidationSchema, sanitizeString } from '@/lib/validation';
-import { UserRole } from '@prisma/client';
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,19 +23,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { username, password, role } = validation.data;
+    const { username, password } = validation.data;
     const sanitizedUsername = sanitizeString(username as string);
     // Don't sanitize password - it can contain special characters
     const rawPassword = password as string;
 
-    // Validate and set role (default to BITCOINER if not provided)
-    let userRole: UserRole = UserRole.BITCOINER;
-    if (role && Object.values(UserRole).includes(role as UserRole)) {
-      userRole = role as UserRole;
-    }
-
     // Create user using Prisma
-    const user = await createUser(sanitizedUsername, rawPassword, userRole);
+    const user = await createUser(sanitizedUsername, rawPassword);
 
     if (!user) {
       return NextResponse.json(
@@ -50,8 +43,7 @@ export async function POST(request: NextRequest) {
       message: 'User registered successfully',
       user: {
         id: user.id,
-        username: user.username,
-        role: user.role
+        username: user.username
       }
     });
   } catch (error) {

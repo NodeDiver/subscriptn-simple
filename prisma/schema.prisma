@@ -14,13 +14,6 @@ datasource db {
 // USER MODELS
 // ============================================
 
-enum UserRole {
-  PROVIDER      // Infrastructure provider
-  SHOP_OWNER    // Shop owner
-  BITCOINER     // Consumer/spectator
-  ADMIN         // Platform admin
-}
-
 model User {
   id            Int       @id @default(autoincrement())
   username      String?   @unique
@@ -28,7 +21,6 @@ model User {
   passwordHash  String?   @map("password_hash")
   name          String?
   image         String?
-  role          UserRole  @default(BITCOINER)
   createdAt     DateTime  @default(now()) @map("created_at")
 
   // Relations
