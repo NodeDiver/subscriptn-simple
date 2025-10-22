@@ -95,24 +95,24 @@ export default function Settings() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 p-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center">
-              <Link 
+              <Link
                 href="/dashboard"
-                className="text-[#1E3A8A] dark:text-[#3B82F6] hover:text-[#0F766E] dark:hover:text-[#14B8A6] mr-4"
+                className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 mr-4 font-medium transition-colors duration-200"
               >
                 ← Back to Dashboard
               </Link>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
+              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Settings</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600 dark:text-gray-300">Welcome, {user?.username}</span>
+              <span className="text-neutral-600 dark:text-neutral-300">Welcome, {user?.username}</span>
               <button
                 onClick={handleLogout}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200"
               >
                 Logout
               </button>
@@ -120,8 +120,8 @@ export default function Settings() {
           </div>
 
           {/* Settings Navigation */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
-            <div className="border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700 mb-8">
+            <div className="border-b border-neutral-200 dark:border-neutral-700">
               <nav className="flex space-x-8 px-6">
                 {[
                   { id: 'profile', name: 'Profile', icon: UserIcon },
@@ -136,7 +136,7 @@ export default function Settings() {
                     onClick={() => setActiveTab(tab.id)}
                     className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                       activeTab === tab.id
-                        ? 'border-primary-500 text-primary-500'
+                        ? 'border-orange-600 text-orange-600 dark:text-orange-500'
                         : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
                     }`}
                   >
@@ -152,43 +152,43 @@ export default function Settings() {
               {activeTab === 'profile' && (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Profile Information</h3>
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">Profile Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Display Name
                         </label>
                         <input
                           type="text"
                           defaultValue={user?.username || ''}
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Email Address
                         </label>
                         <input
                           type="email"
                           defaultValue="user@example.com"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Lightning Address
                         </label>
                         <input
                           type="text"
                           defaultValue="user@getalby.com"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Timezone
                         </label>
-                        <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent">
+                        <select className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200">
                           <option>UTC</option>
                           <option>America/New_York</option>
                           <option>Europe/London</option>
@@ -200,7 +200,7 @@ export default function Settings() {
                       <button
                         onClick={() => handleSave('profile')}
                         disabled={isLoading}
-                        className="bg-[#2D5A3D] dark:bg-[#10B981] text-white px-4 py-2 rounded-md hover:bg-[#1E3A8A] dark:hover:bg-[#3B82F6] transition-colors disabled:opacity-50"
+                        className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 magnetic-pull"
                       >
                         {isLoading ? 'Saving...' : 'Save Changes'}
                       </button>
@@ -212,33 +212,33 @@ export default function Settings() {
               {activeTab === 'account' && (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Security</h3>
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">Account Security</h3>
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Current Password
                         </label>
                         <input
                           type="password"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           New Password
                         </label>
                         <input
                           type="password"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                           Confirm New Password
                         </label>
                         <input
                           type="password"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#2D5A3D] dark:focus:ring-[#10B981] focus:border-transparent"
+                          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors duration-200"
                         />
                       </div>
                     </div>
@@ -246,15 +246,15 @@ export default function Settings() {
                       <button
                         onClick={() => handleSave('password')}
                         disabled={isLoading}
-                        className="bg-[#2D5A3D] dark:bg-[#10B981] text-white px-4 py-2 rounded-md hover:bg-[#1E3A8A] dark:hover:bg-[#3B82F6] transition-colors disabled:opacity-50"
+                        className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 magnetic-pull"
                       >
                         {isLoading ? 'Updating...' : 'Update Password'}
                       </button>
                     </div>
                   </div>
 
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-4">Account Settings</h4>
+                  <div className="border-t border-neutral-200 dark:border-neutral-700 pt-6">
+                    <h4 className="text-md font-semibold text-neutral-900 dark:text-white mb-4">Account Settings</h4>
                     <div className="space-y-6">
                       <ToggleSwitch
                         checked={true}
@@ -279,19 +279,19 @@ export default function Settings() {
               {activeTab === 'wallet' && (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Bitcoin Wallet</h3>
-                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">Bitcoin Wallet</h3>
+                    <div className="bg-neutral-50 dark:bg-neutral-700 rounded-lg p-6">
                       <div className="flex items-center justify-between mb-6">
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white mb-2">Connect Your Wallet</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                          <h4 className="font-medium text-neutral-900 dark:text-white mb-2">Connect Your Wallet</h4>
+                          <p className="text-sm text-neutral-600 dark:text-neutral-400">
                             Connect your lightning wallet to manage subscriptions and payments
                           </p>
                         </div>
                         <div className="flex justify-center">
                           <Link
                             href="/nwc-management"
-                            className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                            className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl magnetic-pull"
                           >
                             Setup NWC Connection
                           </Link>

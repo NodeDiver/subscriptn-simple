@@ -26,10 +26,10 @@ export default function RegisterPage() {
   // If user is already logged in, show loading while redirecting
   if (user) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Redirecting to dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 dark:border-orange-400 mx-auto"></div>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-400">Redirecting to dashboard...</p>
         </div>
       </div>
     );
@@ -85,18 +85,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 flex items-center justify-center p-6">
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Create Account</h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-3">Create Account</h1>
+          <p className="text-lg text-neutral-600 dark:text-neutral-300">
             Join the Bitcoin marketplace to list services, discover shops, and make connections
           </p>
         </div>
 
         {/* Registration Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-8 border border-neutral-200 dark:border-neutral-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div
@@ -161,7 +161,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed magnetic-pull"
               aria-describedby={loading ? 'loading-message' : undefined}
             >
               {loading ? 'Creating Account...' : 'Create Account'}
@@ -170,9 +170,9 @@ export default function RegisterPage() {
 
           {/* Footer */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
               Already have an account?{' '}
-              <Link href="/login" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+              <Link href="/login" className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 font-semibold">
                 Sign in
               </Link>
             </p>
@@ -181,7 +181,7 @@ export default function RegisterPage() {
 
         {/* Back to Home */}
         <div className="text-center mt-6">
-          <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm">
+          <Link href="/" className="text-neutral-500 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-500 text-sm font-medium transition-colors duration-200">
             ← Back to Home
           </Link>
         </div>

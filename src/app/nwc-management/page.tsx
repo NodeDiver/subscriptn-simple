@@ -29,11 +29,11 @@ export default function NWCManagementPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
               NWC Management
             </h1>
             <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-300">
@@ -73,8 +73,8 @@ export default function NWCManagementPage() {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-6 border border-neutral-200 dark:border-neutral-700">
+                <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-4">
                   Quick Actions
                 </h3>
                 
@@ -87,7 +87,7 @@ export default function NWCManagementPage() {
                         setShowConnectionForm(true);
                       }
                     }}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                    className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-4 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl magnetic-pull"
                   >
                     Setup NWC Connection
                   </button>
@@ -108,18 +108,18 @@ export default function NWCManagementPage() {
                           alert('Failed to process payments');
                         });
                     }}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                    className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-4 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl magnetic-pull"
                   >
                     Process All Payments
                   </button>
                 </div>
 
                 {/* Information Panel */}
-                <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                  <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                <div className="mt-8 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                  <h4 className="text-sm font-medium text-orange-800 dark:text-orange-200 mb-2">
                     How NWC Works
                   </h4>
-                  <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                  <ul className="text-sm text-orange-700 dark:text-orange-300 space-y-1">
                     <li>• Connect your Nostr wallet via NWC</li>
                     <li>• Automatic payments sent to server owners</li>
                     <li>• Payments processed on subscription intervals</li>
@@ -133,7 +133,7 @@ export default function NWCManagementPage() {
           {/* Connection Form Modal */}
           {showConnectionForm && selectedSubscriptionId && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <NWCConnectionForm
                   subscriptionId={selectedSubscriptionId}
                   onSuccess={handleConnectionSuccess}

@@ -73,17 +73,21 @@ NODE_ENV=development
 
 ## 💡 Usage
 
-### For BTCPay Server Providers
-1. Register and add your server details
-2. Set public/private status and available slots
-3. Configure lightning address for payments
-4. Monitor connected shops and payments
+**SubscriptN is a unified platform** - all users have access to all features without role distinctions:
 
-### For Shop Owners
-1. Browse available BTCPay servers
-2. Connect Lightning wallet via NWC
-3. Create shop and set up subscriptions
-4. Track payment history and status
+### Getting Started
+1. **Register**: Create your account with username and password
+2. **Explore**: Browse infrastructure providers and Bitcoin-accepting shops
+3. **List Services**: Add your BTCPay server, Lightning node, or other Bitcoin infrastructure
+4. **Manage Shops**: Create and list your Bitcoin-accepting business
+5. **Connect**: Make connections with optional NWC-powered subscriptions
+6. **Discover**: Use the integrated BTCMap to find Bitcoin businesses worldwide
+
+### Key Capabilities
+- **Infrastructure Providers**: List services, set availability, configure Lightning addresses
+- **Shop Management**: Create shops, connect to infrastructure, manage subscriptions
+- **Discovery**: Interactive map view with BTCMap integration for finding Bitcoin merchants
+- **Payments**: Optional automated Lightning payments via NWC for subscriptions
 
 ## 📚 Documentation
 
@@ -135,12 +139,15 @@ This project includes comprehensive documentation for AI coding assistants:
 - ✅ API consistency improvements
 - ✅ Comprehensive documentation framework
 
-### Recent Updates
-- **Enhanced Documentation Structure**: BMAD-METHOD inspired organization
-- **Strategic Planning Framework**: Product vision, roadmap, and feature registry
-- **Architecture Decision Records**: Documented technical choices
-- **Development Workflows**: Systematic feature development process
-- **Claude Code Integration**: Complete AI assistant documentation
+### Recent Updates (October 2025)
+- **🎨 Platform Unification**: Removed user role distinctions - all users access all features
+- **🎨 Unified Color Scheme**: Transitioned to warm orange/amber branding
+- **🏗️ Database Schema**: Simplified User model by removing role field
+- **🎯 Homepage Redesign**: Unified hero section with feature-focused layout
+- **📝 Registration Flow**: Streamlined signup without role selection
+- **🔧 Auth System**: Updated APIs and authentication to support unified model
+- **📚 Enhanced Documentation**: BMAD-METHOD inspired organization
+- **🤖 Claude Code Integration**: Complete AI assistant documentation
 
 See [Development Log](./docs/04-implementation/dev-journal/development-log.md) for detailed history.
 

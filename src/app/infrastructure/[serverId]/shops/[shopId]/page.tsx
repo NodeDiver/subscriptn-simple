@@ -15,35 +15,35 @@ export default function ShopDashboard({ params }: { params: Promise<{ serverId: 
   }, [params]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center mb-8">
-          <Link 
+          <Link
             href={`/infrastructure/${serverId}`}
-            className="text-blue-600 hover:text-blue-800 mr-4"
+            className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 mr-4 font-medium transition-colors duration-200"
           >
             ← Back to Server
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Shop Dashboard</h1>
+          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Shop Dashboard</h1>
         </div>
 
         {/* Info Box */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Shop Information</h2>
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-6 mb-8 border border-neutral-200 dark:border-neutral-700">
+          <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">Shop Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <div className="text-sm text-gray-600">Shop Name</div>
-              <div className="font-medium">Loading...</div>
+              <div className="text-sm text-neutral-600 dark:text-neutral-400">Shop Name</div>
+              <div className="font-medium text-neutral-900 dark:text-white">Loading...</div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Lightning Address</div>
-              <div className="font-medium">Loading...</div>
+              <div className="text-sm text-neutral-600 dark:text-neutral-400">Lightning Address</div>
+              <div className="font-medium text-neutral-900 dark:text-white">Loading...</div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Subscription Status</div>
+              <div className="text-sm text-neutral-600 dark:text-neutral-400">Subscription Status</div>
               <div className="font-medium">
-                <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">
                   Active
                 </span>
               </div>
@@ -52,30 +52,30 @@ export default function ShopDashboard({ params }: { params: Promise<{ serverId: 
         </div>
 
         {/* Subscription History */}
-        <div className="bg-white rounded-lg shadow-sm mb-8">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Subscription History</h2>
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm mb-8 border border-neutral-200 dark:border-neutral-700">
+          <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
+            <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">Subscription History</h2>
           </div>
           <div className="p-6">
-            <div className="text-center text-gray-500 py-8">
+            <div className="text-center text-neutral-500 dark:text-neutral-400 py-8">
               <p>No payment history available.</p>
             </div>
           </div>
         </div>
 
         {/* Rights Management */}
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">User Rights Management</h2>
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700">
+          <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
+            <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">User Rights Management</h2>
           </div>
           <div className="p-6">
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+              <div className="flex items-center justify-between p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg">
                 <div>
-                  <div className="font-medium">Shop Owner</div>
-                  <div className="text-sm text-gray-600">Full access to shop management</div>
+                  <div className="font-medium text-neutral-900 dark:text-white">Shop Owner</div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-400">Full access to shop management</div>
                 </div>
-                <button className="px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors">
+                <button className="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-xl hover:bg-red-200 dark:hover:bg-red-800 transition-all duration-200 font-semibold">
                   Demote
                 </button>
               </div>

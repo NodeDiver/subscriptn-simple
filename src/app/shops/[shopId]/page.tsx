@@ -109,26 +109,26 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
   }, [params]);
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center">
-              <Link 
+              <Link
                 href="/shops"
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mr-4"
+                className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 mr-4 font-medium transition-colors duration-200"
               >
                 ← Back to My Shops
               </Link>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
                 {shop ? shop.name : 'Shop Details'}
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600 dark:text-gray-300">Welcome, {user?.username}</span>
+              <span className="text-neutral-600 dark:text-neutral-400">Welcome, {user?.username}</span>
               <button
                 onClick={handleLogout}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                className="text-neutral-600 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200"
               >
                 Logout
               </button>
@@ -137,8 +137,8 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
 
           {loading ? (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">Loading shop data...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 dark:border-orange-400 mx-auto"></div>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400">Loading shop data...</p>
             </div>
           ) : error ? (
             <div className="text-center text-red-600 dark:text-red-400 py-8">
@@ -147,23 +147,23 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
           ) : shop ? (
             <>
               {/* Info Box */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Shop Information</h2>
+              <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-6 mb-8 border border-neutral-200 dark:border-neutral-700">
+                <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">Shop Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Shop Name</div>
-                    <div className="font-medium text-gray-900 dark:text-white">{shop.name}</div>
+                    <div className="text-sm text-neutral-600 dark:text-neutral-400">Shop Name</div>
+                    <div className="font-medium text-neutral-900 dark:text-white">{shop.name}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">BTCPay Server</div>
-                    <div className="font-medium text-gray-900 dark:text-white">{shop.server_name}</div>
+                    <div className="text-sm text-neutral-600 dark:text-neutral-400">BTCPay Server</div>
+                    <div className="font-medium text-neutral-900 dark:text-white">{shop.server_name}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Subscription Status</div>
+                    <div className="text-sm text-neutral-600 dark:text-neutral-400">Subscription Status</div>
                     <div className="font-medium">
                       <span className={`px-2 py-1 rounded-full text-sm ${
-                        shop.subscription_status === 'active' 
-                          ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' 
+                        shop.subscription_status === 'active'
+                          ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                           : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
                       }`}>
                         {shop.subscription_status}
@@ -173,39 +173,39 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
                 </div>
                 {shop.lightning_address && (
                   <div className="mt-4">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Lightning Address</div>
-                    <div className="font-medium text-gray-900 dark:text-white">{shop.lightning_address}</div>
+                    <div className="text-sm text-neutral-600 dark:text-neutral-400">Lightning Address</div>
+                    <div className="font-medium text-neutral-900 dark:text-white">{shop.lightning_address}</div>
                   </div>
                 )}
               </div>
 
               {/* Subscription History */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-8 border border-gray-200 dark:border-gray-700">
-                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Subscription History</h2>
+              <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm mb-8 border border-neutral-200 dark:border-neutral-700">
+                <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
+                  <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">Subscription History</h2>
                 </div>
                 <div className="p-6">
                   {subscriptions.length === 0 ? (
-                    <div className="text-center text-gray-600 dark:text-gray-400 py-8">
+                    <div className="text-center text-neutral-600 dark:text-neutral-400 py-8">
                       <p>No subscriptions found for this shop.</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       {subscriptions.map((subscription) => (
-                        <div key={subscription.id} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700">
+                        <div key={subscription.id} className="border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden">
+                          <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-700">
                             <div>
-                              <h3 className="font-medium text-gray-900 dark:text-white">
+                              <h3 className="font-medium text-neutral-900 dark:text-white">
                                 {subscription.amount_sats} sats / {subscription.interval}
                               </h3>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">Created {new Date(subscription.created_at).toLocaleDateString()}</p>
+                              <p className="text-sm text-neutral-600 dark:text-neutral-400">Created {new Date(subscription.created_at).toLocaleDateString()}</p>
                             </div>
                             <div className="flex items-center space-x-4">
                               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                subscription.status === 'active' 
-                                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' 
+                                subscription.status === 'active'
+                                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                                   : subscription.status === 'cancelled'
-                                  ? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                                  ? 'bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200'
                                   : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
                               }`}>
                                 {subscription.status}
@@ -232,20 +232,20 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
               </div>
 
               {/* Actions */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Actions</h2>
+              <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700">
+                <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
+                  <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">Actions</h2>
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
                     {subscriptions.length > 0 && subscriptions.some((sub) => sub.status === 'active') && (
-                      <button className="w-full px-4 py-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md hover:bg-red-200 dark:hover:bg-red-800 transition-colors">
+                      <button className="w-full px-4 py-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-xl hover:bg-red-200 dark:hover:bg-red-800 transition-all duration-200 font-semibold">
                         Cancel Subscription
                       </button>
                     )}
-                    <button 
+                    <button
                       onClick={() => handleRemoveShop(shop.id)}
-                      className="w-full px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-md hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
+                      className="w-full px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-xl hover:bg-red-700 dark:hover:bg-red-600 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
                     >
                       Remove Shop
                     </button>
@@ -254,7 +254,7 @@ export default function ShopView({ params }: { params: Promise<{ shopId: string 
               </div>
             </>
           ) : (
-            <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+            <div className="text-center text-neutral-500 dark:text-neutral-400 py-8">
               <p>Shop not found.</p>
             </div>
           )}

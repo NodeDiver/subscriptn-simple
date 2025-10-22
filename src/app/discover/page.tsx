@@ -120,22 +120,22 @@ export default function DiscoverPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
                 Discover Bitcoin Shops
               </h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-neutral-600 dark:text-neutral-300">
                 Find businesses accepting Bitcoin near you or worldwide
               </p>
             </div>
             <Link
               href="/"
-              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+              className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 font-medium transition-colors duration-200"
             >
               ← Back to Home
             </Link>
@@ -145,7 +145,7 @@ export default function DiscoverPage() {
 
       {/* Search and Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-6 border border-neutral-200 dark:border-neutral-700">
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="mb-4">
             <div className="flex gap-2">
@@ -154,11 +154,11 @@ export default function DiscoverPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search shops by name, city, or description..."
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                className="flex-1 px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700"
               />
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Search
               </button>
@@ -169,13 +169,13 @@ export default function DiscoverPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Source Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Data Source
               </label>
               <select
                 value={source}
                 onChange={(e) => setSource(e.target.value as 'all' | 'local' | 'btcmap')}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700"
               >
                 <option value="all">All Sources</option>
                 <option value="local">Local Database</option>
@@ -185,7 +185,7 @@ export default function DiscoverPage() {
 
             {/* Location Filter */}
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 <input
                   type="checkbox"
                   checked={useLocation}
@@ -195,7 +195,7 @@ export default function DiscoverPage() {
                 Use My Location
               </label>
               {useLocation && (
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   {userLocation ? '✓ Location enabled' : 'Requesting location...'}
                 </p>
               )}
@@ -204,7 +204,7 @@ export default function DiscoverPage() {
             {/* Radius Filter */}
             {useLocation && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                   Radius: {radius} km
                 </label>
                 <input
@@ -220,17 +220,17 @@ export default function DiscoverPage() {
           </div>
 
           {/* Results Summary */}
-          <div className="mt-4 flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-4 flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-400">
             <span>
-              Found <strong className="text-gray-900 dark:text-white">{pagination.total}</strong> shops
+              Found <strong className="text-neutral-900 dark:text-white">{pagination.total}</strong> shops
             </span>
             <span>•</span>
             <span>
-              <strong className="text-blue-600 dark:text-blue-400">{sources.local}</strong> local
+              <strong className="text-orange-600 dark:text-orange-400">{sources.local}</strong> local
             </span>
             <span>•</span>
             <span>
-              <strong className="text-orange-600 dark:text-orange-400">{sources.btcmap}</strong> from BTCMap
+              <strong className="text-amber-600 dark:text-amber-400">{sources.btcmap}</strong> from BTCMap
             </span>
           </div>
         </div>
@@ -239,15 +239,15 @@ export default function DiscoverPage() {
         <div className="mt-6">
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">Loading shops...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-300">Loading shops...</p>
             </div>
           ) : shops.length === 0 ? (
-            <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center py-12 bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700">
+              <svg className="w-16 h-16 text-neutral-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <p className="text-gray-600 dark:text-gray-400">No shops found. Try adjusting your search or filters.</p>
+              <p className="text-neutral-600 dark:text-neutral-400">No shops found. Try adjusting your search or filters.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

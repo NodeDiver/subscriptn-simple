@@ -86,24 +86,24 @@ export default function AddServer() {
   
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 p-6">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="flex items-center mb-8">
-            <Link 
-              href="/infrastructure"
-              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mr-4"
+            <Link
+              href="/dashboard"
+              className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 mr-4 font-medium transition-colors duration-200"
             >
               ← Back to Dashboard
             </Link>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add BTCPay Server</h1>
+            <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Add BTCPay Server</h1>
           </div>
 
         {/* Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm p-6 border border-neutral-200 dark:border-neutral-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Server Name *
               </label>
               <input
@@ -111,8 +111,8 @@ export default function AddServer() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.name ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.name ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 placeholder="My BTCPay Server"
                 required
@@ -123,7 +123,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Description (Optional)
               </label>
               <textarea
@@ -131,8 +131,8 @@ export default function AddServer() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.description ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.description ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 placeholder="Brief description of your BTCPay server..."
               />
@@ -142,7 +142,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label htmlFor="hostUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="hostUrl" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Host URL *
               </label>
               <input
@@ -151,8 +151,8 @@ export default function AddServer() {
                 value={hostUrl}
                 onChange={(e) => setHostUrl(e.target.value)}
                 onBlur={handleHostUrlBlur}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.host_url ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.host_url ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 placeholder="https://your-btcpay-server.com"
                 required
@@ -163,7 +163,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="apiKey" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 API Key *
               </label>
               <input
@@ -171,8 +171,8 @@ export default function AddServer() {
                 id="apiKey"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.api_key ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.api_key ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 placeholder="Your BTCPay Server API key"
                 required
@@ -183,7 +183,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label htmlFor="lightningAddress" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="lightningAddress" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Lightning Address for Payments *
               </label>
               <input
@@ -195,13 +195,13 @@ export default function AddServer() {
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck="false"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.lightning_address ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.lightning_address ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 placeholder="yourlightningaddress@domain.com"
                 required
               />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
                 This is where you'll receive subscription payments from shop owners
               </p>
               {errors.lightning_address && (
@@ -210,7 +210,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label htmlFor="slotsAvailable" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="slotsAvailable" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Available Slots for Shops *
               </label>
               <input
@@ -220,13 +220,13 @@ export default function AddServer() {
                 onChange={(e) => setSlotsAvailable(Number(e.target.value))}
                 min="1"
                 max="1000"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 ${
-                  errors.slots_available ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700 transition-colors duration-200 ${
+                  errors.slots_available ? 'border-red-300 dark:border-red-600' : 'border-neutral-300 dark:border-neutral-600'
                 }`}
                 required
               />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                How many shops can your server handle? This depends on your server's resources. 
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                How many shops can your server handle? This depends on your server's resources.
                 For example, a 4GB RAM, 2-core virtual machine (like m4.luna on LunaNode) can typically handle 20-30 shops comfortably.
               </p>
               {errors.slots_available && (
@@ -235,7 +235,7 @@ export default function AddServer() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 Public Listing *
               </label>
               <div className="flex items-center space-x-4">
@@ -246,9 +246,9 @@ export default function AddServer() {
                     value="true"
                     checked={isPublic === true}
                     onChange={() => setIsPublic(true)}
-                    className="mr-2 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                    className="mr-2 text-orange-600 dark:text-orange-400 focus:ring-orange-500 dark:focus:ring-orange-400"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Yes - List on public directory</span>
+                  <span className="text-sm text-neutral-700 dark:text-neutral-300">Yes - List on public directory</span>
                 </label>
                 <label className="flex items-center">
                   <input
@@ -257,12 +257,12 @@ export default function AddServer() {
                     value="false"
                     checked={isPublic === false}
                     onChange={() => setIsPublic(false)}
-                    className="mr-2 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                    className="mr-2 text-orange-600 dark:text-orange-400 focus:ring-orange-500 dark:focus:ring-orange-400"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">No - Private server only</span>
+                  <span className="text-sm text-neutral-700 dark:text-neutral-300">No - Private server only</span>
                 </label>
               </div>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
                 Public servers will be visible to shop owners looking for BTCPay servers
               </p>
               {errors.is_public && (
@@ -274,13 +274,13 @@ export default function AddServer() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed magnetic-pull"
               >
                 {loading ? 'Adding Server...' : 'Add Server'}
               </button>
               <Link
-                href="/infrastructure"
-                className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 transition-colors text-center"
+                href="/dashboard"
+                className="flex-1 bg-white dark:bg-neutral-900 text-orange-600 dark:text-orange-500 py-3 px-4 rounded-xl font-semibold border-2 border-orange-600 dark:border-orange-500 hover:bg-orange-50 dark:hover:bg-neutral-800 transition-all duration-200 shadow-lg hover:shadow-xl text-center"
               >
                 Cancel
               </Link>

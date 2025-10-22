@@ -60,26 +60,26 @@ export default function InfrastructureSubscriptions() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 p-6">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center">
-              <Link 
+              <Link
                 href="/infrastructure"
-                className="text-blue-600 hover:text-blue-800 mr-4"
+                className="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 mr-4 font-medium transition-colors duration-200"
               >
                 ← Back to Infrastructure
               </Link>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
                 All Subscriptions
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">Welcome, {user?.username}</span>
+              <span className="text-neutral-600 dark:text-neutral-400">Welcome, {user?.username}</span>
               <button
                 onClick={handleLogout}
-                className="text-gray-600 hover:text-gray-800"
+                className="text-neutral-600 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200"
               >
                 Logout
               </button>
@@ -88,69 +88,69 @@ export default function InfrastructureSubscriptions() {
 
           {loading ? (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Loading subscriptions...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 dark:border-orange-400 mx-auto"></div>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400">Loading subscriptions...</p>
             </div>
           ) : error ? (
             <div className="text-center text-red-600 py-8">
               <p>{error}</p>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-sm">
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold">Subscription Overview</h2>
-                <p className="text-gray-600 mt-1">
+            <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700">
+              <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
+                <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">Subscription Overview</h2>
+                <p className="text-neutral-600 dark:text-neutral-400 mt-1">
                   {subscriptions.length} total subscriptions across all servers
                 </p>
               </div>
               <div className="p-6">
                 {subscriptions.length === 0 ? (
-                  <div className="text-center text-gray-500 py-8">
+                  <div className="text-center text-neutral-500 dark:text-neutral-400 py-8">
                     <p>No subscriptions found.</p>
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                    <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
+                      <thead className="bg-neutral-50 dark:bg-neutral-800">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Shop
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Server
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Amount
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Interval
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Status
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                             Created
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
                         {subscriptions.map((subscription) => (
-                          <tr key={subscription.id} className="hover:bg-gray-50">
+                          <tr key={subscription.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors duration-200">
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">
+                              <div className="text-sm font-medium text-neutral-900 dark:text-white">
                                 {subscription.shop_name}
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-neutral-500 dark:text-neutral-400">
                                 {subscription.shop_owner}
                               </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-white">
                               {subscription.server_name}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-white">
                               {subscription.amount_sats} sats
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-white">
                               {subscription.interval}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -158,7 +158,7 @@ export default function InfrastructureSubscriptions() {
                                 {subscription.status}
                               </span>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-white">
                               {new Date(subscription.created_at).toLocaleDateString()}
                             </td>
                           </tr>

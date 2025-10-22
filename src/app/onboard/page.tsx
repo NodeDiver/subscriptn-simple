@@ -23,10 +23,10 @@ export default function OnboardPage() {
   // If user is already logged in, show loading while redirecting
   if (user) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Redirecting to dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 dark:border-orange-400 mx-auto"></div>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-400">Redirecting to dashboard...</p>
         </div>
       </div>
     );
@@ -58,15 +58,15 @@ export default function OnboardPage() {
       title: 'BTCPay Server Administrator',
       description: 'I run a BTCPay Server and want to offer my services to shops through subscriptions to earn revenue.',
       icon: ServerIcon,
-      gradient: 'from-slate-600 to-emerald-500 hover:from-slate-700 hover:to-emerald-600',
-      color: 'emerald'
+      gradient: 'from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700',
+      color: 'orange'
     },
     {
       id: 'shop-owner' as UserType,
       title: 'Shop Owner',
       description: 'I need a solution to start accepting Bitcoin payments and need someone to handle the payment processing.',
       icon: ShoppingBagIcon,
-      gradient: 'from-slate-600 to-orange-500 hover:from-slate-700 hover:to-orange-600',
+      gradient: 'from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700',
       color: 'orange'
     },
     {
@@ -74,19 +74,19 @@ export default function OnboardPage() {
       title: 'I\'m not sure yet',
       description: 'I want to explore the platform and learn more about Bitcoin payment solutions before deciding.',
       icon: QuestionMarkCircleIcon,
-      gradient: 'from-slate-600 to-blue-600 hover:from-slate-700 hover:to-blue-700',
-      color: 'blue'
+      gradient: 'from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700',
+      color: 'orange'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-900 dark:to-gray-800 py-20">
+      <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-6">
             Welcome to{' '}
-            <span className="bg-gradient-to-r from-emerald-600 to-orange-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
               SubscriptN
             </span>
           </h1>
@@ -100,7 +100,7 @@ export default function OnboardPage() {
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
               What describes you best?
             </h2>
             <p className="text-lg text-neutral-600 dark:text-neutral-400">
