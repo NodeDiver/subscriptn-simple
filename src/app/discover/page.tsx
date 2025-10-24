@@ -254,46 +254,46 @@ export default function DiscoverPage() {
               {shops.map((shop) => (
                 <div
                   key={shop.id}
-                  className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow p-6"
+                  className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition-all duration-200 p-6"
                 >
                   {/* Source Badge */}
                   <div className="flex items-center justify-between mb-3">
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       shop.source === 'local'
-                        ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                        : 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
+                        ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
+                        : 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
                     }`}>
                       {shop.source === 'local' ? 'Local' : 'BTCMap'}
                     </span>
                     {shop.distance !== undefined && (
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-neutral-500 dark:text-neutral-400">
                         {shop.distance.toFixed(1)} km away
                       </span>
                     )}
                   </div>
 
                   {/* Shop Name */}
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2">
                     {shop.name}
                   </h3>
 
                   {/* Category */}
                   {shop.category && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 capitalize">
+                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-2 capitalize">
                       {shop.category.replace(/_/g, ' ')}
                     </p>
                   )}
 
                   {/* Description */}
                   {shop.description && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3 line-clamp-2">
                       {shop.description}
                     </p>
                   )}
 
                   {/* Address */}
                   {shop.address && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 flex items-start gap-1">
+                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-3 flex items-start gap-1">
                       <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -310,12 +310,12 @@ export default function DiscoverPage() {
                       </span>
                     )}
                     {shop.accepts_lightning && (
-                      <span className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded">
+                      <span className="text-xs px-2 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded">
                         ⚡ Lightning
                       </span>
                     )}
                     {shop.accepts_onchain && (
-                      <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded">
+                      <span className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 rounded">
                         🔗 On-chain
                       </span>
                     )}
@@ -327,7 +327,7 @@ export default function DiscoverPage() {
                       href={shop.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                      className="inline-flex items-center gap-1 text-sm text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 font-medium transition-colors duration-200"
                     >
                       Visit Website
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -338,15 +338,15 @@ export default function DiscoverPage() {
 
                   {/* Providers (for local shops) */}
                   {shop.source === 'local' && shop.providers && shop.providers.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                    <div className="mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-700">
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
                         Connected Providers:
                       </p>
                       <div className="flex flex-wrap gap-1">
                         {shop.providers.map((provider) => (
                           <span
                             key={provider.id}
-                            className="text-xs px-2 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 rounded"
+                            className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 rounded"
                           >
                             {provider.name}
                           </span>
