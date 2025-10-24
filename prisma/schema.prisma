@@ -79,9 +79,8 @@ model VerificationToken {
 // ============================================
 
 enum ServiceType {
-  PAYMENT_PROCESSOR   // BTCPay, BLFS, etc.
-  LIGHTNING_NODE      // Lightning node hosting
-  WALLET_API          // Wallet services/APIs
+  BTCPAY_SERVER       // BTCPay Server
+  BLFS                // Bitcoin Lightning File System
   OTHER               // Other Bitcoin services
 }
 
