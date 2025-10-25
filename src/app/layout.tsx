@@ -22,8 +22,8 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'SubscriptN - Bitcoin Subscription Management',
-  description: 'Manage Bitcoin subscriptions for BTCPay Server infrastructure and shop owners',
+  title: 'Bitinfrashop - Bitcoin Infrastructure & Shop Marketplace',
+  description: 'Connect Bitcoin infrastructure providers with shops. Discover BTCPay Server, BLFS, and other Bitcoin services.',
   icons: {
     icon: '/screenshots/logo_square.webp',
     shortcut: '/screenshots/logo_square.webp',
@@ -45,7 +45,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('subscriptn-theme');
+                  var theme = localStorage.getItem('bitinfrashop-theme');
                   if (!theme) {
                     // First visit - use system preference
                     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

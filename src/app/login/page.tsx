@@ -103,7 +103,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-3">Welcome Back</h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-300">Sign in to your SubscriptN account</p>
+          <p className="text-lg text-neutral-600 dark:text-neutral-300">Sign in to your Bitinfrashop account</p>
         </div>
 
         {/* Login Form */}

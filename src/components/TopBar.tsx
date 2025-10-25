@@ -28,15 +28,15 @@ export default function TopBar() {
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
                 <Image
                   src="/screenshots/logo_square.webp"
-                  alt="SubscriptN Logo"
+                  alt="Bitinfrashop Logo"
                   width={40}
                   height={40}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-gray-900 dark:text-white">SubscriptN</span>
-                <span className="text-xs text-neutral-500 dark:text-neutral-400 -mt-1">BTCPay & Bitcoin Shops</span>
+                <span className="text-xl font-bold text-gray-900 dark:text-white">Bitinfrashop</span>
+                <span className="text-xs text-neutral-500 dark:text-neutral-400 -mt-1">Bitcoin Infrastructure & Shops</span>
               </div>
             </button>
           </div>

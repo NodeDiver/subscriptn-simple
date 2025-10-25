@@ -20,7 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
 
-    const savedTheme = localStorage.getItem('subscriptn-theme') as ThemeMode | null;
+    const savedTheme = localStorage.getItem('bitinfrashop-theme') as ThemeMode | null;
 
     if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
       // User has a saved preference
@@ -56,7 +56,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     console.log('New classList:', document.documentElement.classList.toString());
 
     // Save to localStorage
-    localStorage.setItem('subscriptn-theme', theme);
+    localStorage.setItem('bitinfrashop-theme', theme);
   }, [theme, mounted]);
 
   const toggleTheme = () => {

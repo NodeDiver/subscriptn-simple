@@ -63,7 +63,7 @@ class NWCEncryptionService {
 
       // Create cipher
       const cipher = crypto.createCipher(this.algorithm, key);
-      cipher.setAAD(Buffer.from('nwc-subscriptn', 'utf8'));
+      cipher.setAAD(Buffer.from('nwc-bitinfrashop', 'utf8'));
 
       // Encrypt the data
       let encrypted = cipher.update(nwcConnectionString, 'utf8', 'hex');
@@ -99,7 +99,7 @@ class NWCEncryptionService {
 
       // Create decipher
       const decipher = crypto.createDecipher(this.algorithm, key);
-      decipher.setAAD(Buffer.from('nwc-subscriptn', 'utf8'));
+      decipher.setAAD(Buffer.from('nwc-bitinfrashop', 'utf8'));
       decipher.setAuthTag(authTag);
 
       // Decrypt the data

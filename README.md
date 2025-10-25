@@ -1,6 +1,6 @@
-# SubscriptN
+# Bitinfrashop
 
-_Bitcoin subscriptions made easy. Lightning fast. ⚡_
+_Bitcoin Infrastructure & Shop Marketplace. Lightning fast. ⚡_
 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -8,7 +8,7 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ## 🎯 Overview
 
-**SubscriptN** is a Bitcoin subscription management platform that enables automated Lightning payments for recurring services. Built with Next.js 15, TypeScript, and PostgreSQL, it connects BTCPay Server providers with shop owners through Lightning network and NWC (Nostr Wallet Connect).
+**Bitinfrashop** is a Bitcoin infrastructure and shop marketplace that connects infrastructure providers (BTCPay Server, BLFS, and more) with Bitcoin-accepting shops. Built with Next.js 15, TypeScript, and PostgreSQL, it enables automated Lightning payments and seamless connections through NWC (Nostr Wallet Connect).
 
 ## ✨ Features
 
@@ -33,8 +33,8 @@ _Bitcoin subscriptions made easy. Lightning fast. ⚡_
 
 ```bash
 # Clone and install
-git clone https://github.com/NodeDiver/subscriptn-simple.git
-cd subscriptn-simple
+git clone https://github.com/NodeDiver/bitinfrashop.git
+cd bitinfrashop
 npm install
 
 # Configure environment

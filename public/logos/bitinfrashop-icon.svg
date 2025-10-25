@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="orangeAmberGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ea580c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer hexagon representing network/infrastructure -->
+  <path d="M 64 8 L 106 32 L 106 80 L 64 104 L 22 80 L 22 32 Z"
+        fill="none"
+        stroke="url(#orangeAmberGradient)"
+        stroke-width="3"
+        stroke-linejoin="round"/>
+
+  <!-- Network nodes at hexagon vertices -->
+  <circle cx="64" cy="8" r="4" fill="url(#orangeAmberGradient)"/>
+  <circle cx="106" cy="32" r="4" fill="url(#orangeAmberGradient)"/>
+  <circle cx="106" cy="80" r="4" fill="url(#orangeAmberGradient)"/>
+  <circle cx="64" cy="104" r="4" fill="url(#orangeAmberGradient)"/>
+  <circle cx="22" cy="80" r="4" fill="url(#orangeAmberGradient)"/>
+  <circle cx="22" cy="32" r="4" fill="url(#orangeAmberGradient)"/>
+
+  <!-- Central Bitcoin B with lightning bolt integrated -->
+  <g transform="translate(64, 56)">
+    <!-- Bitcoin B symbol -->
+    <path d="M -8 -24 L -8 24 M -8 -24 L 4 -24 C 10 -24 14 -20 14 -14 C 14 -10 12 -6 8 -4 C 14 -2 18 2 18 8 C 18 16 12 20 4 20 L -8 20 M -2 -24 L 4 -24 C 8 -24 10 -21 10 -16 C 10 -11 8 -8 4 -8 L -2 -8 M -2 -4 L 6 -4 C 11 -4 14 -1 14 4 C 14 9 11 12 6 12 L -2 12"
+          fill="none"
+          stroke="url(#orangeAmberGradient)"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Lightning bolt through the center -->
+    <path d="M 2 -28 L -6 0 L 2 0 L -4 28 L 8 4 L 0 4 Z"
+          fill="url(#orangeAmberGradient)"
+          opacity="0.9"/>
+  </g>
+
+  <!-- Infrastructure towers/pillars at base -->
+  <rect x="36" y="90" width="8" height="14" fill="url(#orangeAmberGradient)" opacity="0.6"/>
+  <rect x="50" y="85" width="8" height="19" fill="url(#orangeAmberGradient)" opacity="0.7"/>
+  <rect x="70" y="85" width="8" height="19" fill="url(#orangeAmberGradient)" opacity="0.7"/>
+  <rect x="84" y="90" width="8" height="14" fill="url(#orangeAmberGradient)" opacity="0.6"/>
+
+  <!-- Connecting lines for marketplace/network connectivity -->
+  <line x1="64" y1="56" x2="22" y2="32" stroke="url(#orangeAmberGradient)" stroke-width="1.5" opacity="0.3"/>
+  <line x1="64" y1="56" x2="106" y2="32" stroke="url(#orangeAmberGradient)" stroke-width="1.5" opacity="0.3"/>
+  <line x1="64" y1="56" x2="106" y2="80" stroke="url(#orangeAmberGradient)" stroke-width="1.5" opacity="0.3"/>
+  <line x1="64" y1="56" x2="22" y2="80" stroke="url(#orangeAmberGradient)" stroke-width="1.5" opacity="0.3"/>
+</svg>

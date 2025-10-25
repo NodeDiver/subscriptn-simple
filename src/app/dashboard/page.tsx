@@ -187,7 +187,7 @@ export default function Dashboard() {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Dashboard</h1>
-          <p className="text-neutral-600 dark:text-neutral-300 mt-2">Welcome to your SubscriptN dashboard</p>
+          <p className="text-neutral-600 dark:text-neutral-300 mt-2">Welcome to your Bitinfrashop dashboard</p>
         </div>
         
         {/* Enhanced Overview Section */}

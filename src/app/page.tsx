@@ -83,7 +83,7 @@ export default function HomePage() {
             <Link
               href="/register"
               className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-              aria-label="Register for SubscriptN"
+              aria-label="Register for Bitinfrashop"
             >
               Get Started
             </Link>
@@ -339,7 +339,7 @@ export default function HomePage() {
             <Link
               href="/register"
               className="bg-white text-orange-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-orange-50 transition-all duration-200 shadow-lg hover:shadow-xl"
-              aria-label="Register for SubscriptN marketplace"
+              aria-label="Register for Bitinfrashop marketplace"
             >
               Get Started
             </Link>
@@ -363,13 +363,13 @@ export default function HomePage() {
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
                   <Image
                     src="/screenshots/logo_square.webp"
-                    alt="SubscriptN Logo"
+                    alt="Bitinfrashop Logo"
                     width={32}
                     height={32}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-lg font-bold text-neutral-900 dark:text-white">SubscriptN</span>
+                <span className="text-lg font-bold text-neutral-900 dark:text-white">Bitinfrashop</span>
               </div>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 Bitcoin infrastructure and shop marketplace
@@ -403,7 +403,7 @@ export default function HomePage() {
 
           <div className="border-t border-neutral-200 dark:border-neutral-800 pt-8 text-center">
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              © 2025 SubscriptN. Built with ❤️ for the Bitcoin community.
+              © 2025 Bitinfrashop. Built with ❤️ for the Bitcoin community.
             </p>
           </div>
         </div>

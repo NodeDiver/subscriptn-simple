@@ -87,7 +87,7 @@ export default function OnboardPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-6">
             Welcome to{' '}
             <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              SubscriptN
+              Bitinfrashop
             </span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 mb-8 max-w-2xl mx-auto leading-relaxed">

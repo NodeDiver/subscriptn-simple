@@ -61,7 +61,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <div className="w-8 h-8 bg-gradient-to-br from-subscriptn-green-500 via-subscriptn-teal-500 to-subscriptn-blue-500 dark:from-green-500 dark:via-teal-500 dark:to-blue-500 rounded-full flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
+        <div className="w-8 h-8 bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 dark:from-orange-600 dark:via-amber-600 dark:to-orange-700 rounded-full flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
           <span className="text-white text-sm font-medium">
             {user.username.charAt(0).toUpperCase()}
           </span>
@@ -89,14 +89,14 @@ export default function UserDropdown({ user }: UserDropdownProps) {
           {/* User Info Section */}
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-subscriptn-green-500 via-subscriptn-teal-500 to-subscriptn-blue-500 dark:from-green-500 dark:via-teal-500 dark:to-blue-500 rounded-full flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 dark:from-orange-600 dark:via-amber-600 dark:to-orange-700 rounded-full flex items-center justify-center shadow-sm">
                 <span className="text-white text-sm font-medium">
                   {user.username.charAt(0).toUpperCase()}
                 </span>
               </div>
               <div>
                 <div className="text-sm font-semibold text-gray-900 dark:text-white">{user.username}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">SubscriptN User</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Bitinfrashop User</div>
               </div>
             </div>
           </div>

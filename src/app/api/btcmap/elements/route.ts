@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
 
       const response = await fetch(BTCMAP_API_URL, {
         headers: {
-          'User-Agent': 'SubscriptN-Platform/1.0'
+          'User-Agent': 'Bitinfrashop-Platform/1.0'
         }
       });
 
