@@ -25,9 +25,13 @@ export const metadata: Metadata = {
   title: 'Bitinfrashop - Bitcoin Infrastructure & Shop Marketplace',
   description: 'Connect Bitcoin infrastructure providers with shops. Discover BTCPay Server, BLFS, and other Bitcoin services.',
   icons: {
-    icon: '/screenshots/logo_square.webp',
-    shortcut: '/screenshots/logo_square.webp',
-    apple: '/screenshots/logo_square.webp',
+    icon: [
+      { url: '/logos/bitinfrashop-icon.svg', type: 'image/svg+xml' },
+      { url: '/logos/bitinfrashop-icon.svg', sizes: '32x32', type: 'image/svg+xml' },
+      { url: '/logos/bitinfrashop-icon.svg', sizes: '16x16', type: 'image/svg+xml' },
+    ],
+    shortcut: '/logos/bitinfrashop-icon.svg',
+    apple: '/logos/bitinfrashop-icon.svg',
   },
 };
 

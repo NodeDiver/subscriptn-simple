@@ -360,15 +360,13 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
-                  <Image
-                    src="/screenshots/logo_square.webp"
-                    alt="Bitinfrashop Logo"
-                    width={32}
-                    height={32}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <Image
+                  src="/logos/bitinfrashop-icon.svg"
+                  alt="Bitinfrashop Logo"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8"
+                />
                 <span className="text-lg font-bold text-neutral-900 dark:text-white">Bitinfrashop</span>
               </div>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">

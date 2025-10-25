@@ -4,11 +4,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/contexts/ThemeContext';
 import UserDropdown from './UserDropdown';
 import ThemeSwitcher from './ThemeSwitcher';
 
 export default function TopBar() {
   const { user, logout } = useAuth();
+  const { isDark } = useTheme();
   const router = useRouter();
 
   const handleLogoClick = () => {
@@ -21,22 +23,44 @@ export default function TopBar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
-            <button 
+            <button
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200 cursor-pointer"
+              className="hover:opacity-80 transition-opacity duration-200 cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
+              {/* Desktop: Full logo with theme switching */}
+              <div className="hidden md:block">
                 <Image
-                  src="/screenshots/logo_square.webp"
-                  alt="Bitinfrashop Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover"
+                  src={isDark ? "/logos/bitinfrashop-logo-dark.svg" : "/logos/Original-bitinfrashop-logo.svg"}
+                  alt="Bitinfrashop"
+                  width={240}
+                  height={48}
+                  className="h-12 w-auto"
+                  priority
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold text-gray-900 dark:text-white">Bitinfrashop</span>
-                <span className="text-xs text-neutral-500 dark:text-neutral-400 -mt-1">Bitcoin Infrastructure & Shops</span>
+
+              {/* Tablet: Compact logo */}
+              <div className="hidden sm:block md:hidden">
+                <Image
+                  src={isDark ? "/logos/bitinfrashop-logo-dark.svg" : "/logos/Original-bitinfrashop-logo.svg"}
+                  alt="Bitinfrashop"
+                  width={180}
+                  height={36}
+                  className="h-9 w-auto"
+                  priority
+                />
+              </div>
+
+              {/* Mobile: Icon only */}
+              <div className="block sm:hidden">
+                <Image
+                  src="/logos/bitinfrashop-icon.svg"
+                  alt="Bitinfrashop"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10"
+                  priority
+                />
               </div>
             </button>
           </div>
