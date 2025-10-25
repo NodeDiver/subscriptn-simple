@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none">
+  <defs>
+    <!-- Orange to Amber gradient -->
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ea580c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Icon Group (48x48) -->
+  <g id="icon">
+    <!-- Background circle with gradient -->
+    <circle cx="24" cy="24" r="22" fill="url(#logoGradient)" opacity="0.1"/>
+
+    <!-- Infrastructure nodes (buildings/network) - three connected points forming a triangle -->
+    <circle cx="14" cy="30" r="2.5" fill="url(#logoGradient)"/>
+    <circle cx="34" cy="30" r="2.5" fill="url(#logoGradient)"/>
+    <circle cx="24" cy="14" r="2.5" fill="url(#logoGradient)"/>
+
+    <!-- Connecting lines (network/marketplace connections) -->
+    <line x1="14" y1="30" x2="34" y2="30" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+    <line x1="14" y1="30" x2="24" y2="14" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+    <line x1="34" y1="30" x2="24" y2="14" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Central Bitcoin B symbol -->
+    <g transform="translate(24, 24)">
+      <path d="M -4 -8 L -4 8 M -2 -8 L -2 8" stroke="url(#logoGradient)" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M -4 -8 L 2 -8 C 4.5 -8 5.5 -6 5.5 -4.5 C 5.5 -3 4.5 -2 2 -2 L -4 -2 M -4 -2 L 3 -2 C 5.5 -2 6.5 0 6.5 2 C 6.5 4 5.5 6 3 6 L -4 6"
+            stroke="url(#logoGradient)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Lightning bolt accent (top right) -->
+    <path d="M 36 10 L 33 16 L 36 16 L 33 22" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Text (WHITE for dark mode) -->
+  <text x="56" y="32" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="-0.5">
+    Bitinfrashop
+  </text>
+</svg>
