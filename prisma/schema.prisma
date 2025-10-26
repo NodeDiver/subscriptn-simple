@@ -121,11 +121,17 @@ model InfrastructureProvider {
 // SHOP MODELS
 // ============================================
 
+enum ShopType {
+  DIGITAL             // Online/digital shop
+  PHYSICAL            // Physical location
+}
+
 model Shop {
   id                  Int       @id @default(autoincrement())
   name                String
   description         String?   @db.Text
   logoUrl             String?   @map("logo_url")
+  shopType            ShopType  @default(PHYSICAL) @map("shop_type")
 
   // Location (for map view)
   address             String?

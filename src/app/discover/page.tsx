@@ -8,6 +8,7 @@ interface Shop {
   shop_id?: number;
   type: 'shop';
   source: 'local' | 'btcmap';
+  shop_type?: 'DIGITAL' | 'PHYSICAL';
   name: string;
   description?: string;
   logo_url?: string;
@@ -81,6 +82,8 @@ export default function DiscoverPage() {
   const [searchInput, setSearchInput] = useState('');
   const [viewType, setViewType] = useState<'all' | 'shops' | 'infrastructure'>('all');
   const [serviceTypeFilter, setServiceTypeFilter] = useState<string>('all');
+  const [shopTypeFilter, setShopTypeFilter] = useState<string>('all');
+  const [sourceFilter, setSourceFilter] = useState<string>('all');
   const [pagination, setPagination] = useState({
     total: 0,
     limit: 50,
@@ -97,7 +100,7 @@ export default function DiscoverPage() {
   // Fetch results
   useEffect(() => {
     fetchResults();
-  }, [search, viewType, serviceTypeFilter]);
+  }, [search, viewType, serviceTypeFilter, shopTypeFilter, sourceFilter]);
 
   const fetchResults = async () => {
     setLoading(true);
@@ -105,9 +108,22 @@ export default function DiscoverPage() {
       const params = new URLSearchParams();
       if (search) params.append('search', search);
       params.append('type', viewType);
+
+      // Infrastructure filters
       if (serviceTypeFilter !== 'all' && viewType !== 'shops') {
         params.append('serviceType', serviceTypeFilter);
       }
+
+      // Shop filters
+      if (viewType === 'shops' || viewType === 'all') {
+        if (shopTypeFilter !== 'all') {
+          params.append('shopType', shopTypeFilter);
+        }
+        if (sourceFilter !== 'all') {
+          params.append('source', sourceFilter);
+        }
+      }
+
       params.append('limit', '50');
       params.append('offset', '0');
 
@@ -227,8 +243,8 @@ export default function DiscoverPage() {
             </div>
           </form>
 
-          {/* Filters */}
-          {viewType !== 'shops' && (
+          {/* Filters for Infrastructure */}
+          {viewType === 'infrastructure' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
@@ -243,6 +259,40 @@ export default function DiscoverPage() {
                   <option value="BTCPAY_SERVER">BTCPay Server</option>
                   <option value="BLFS">BLFS</option>
                   <option value="OTHER">Other</option>
+                </select>
+              </div>
+            </div>
+          )}
+
+          {/* Filters for Shops */}
+          {viewType === 'shops' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                  Shop Type
+                </label>
+                <select
+                  value={shopTypeFilter}
+                  onChange={(e) => setShopTypeFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700"
+                >
+                  <option value="all">All Types</option>
+                  <option value="DIGITAL">Digital</option>
+                  <option value="PHYSICAL">Real World</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                  Source
+                </label>
+                <select
+                  value={sourceFilter}
+                  onChange={(e) => setSourceFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700"
+                >
+                  <option value="all">All Sources</option>
+                  <option value="local">Local</option>
+                  <option value="btcmap">BTCMap</option>
                 </select>
               </div>
             </div>
@@ -303,15 +353,26 @@ export default function DiscoverPage() {
 function ShopCard({ shop }: { shop: Shop }) {
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition-all duration-200 p-6">
-      {/* Source Badge */}
+      {/* Source and Type Badges */}
       <div className="flex items-center justify-between mb-3">
-        <span className={`text-xs px-2 py-1 rounded-full ${
-          shop.source === 'local'
-            ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
-            : 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
-        }`}>
-          {shop.source === 'local' ? 'This App' : 'BTCMap'}
-        </span>
+        <div className="flex gap-2">
+          <span className={`text-xs px-2 py-1 rounded-full ${
+            shop.source === 'local'
+              ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
+              : 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+          }`}>
+            {shop.source === 'local' ? 'This App' : 'BTCMap'}
+          </span>
+          {shop.shop_type && (
+            <span className={`text-xs px-2 py-1 rounded-full ${
+              shop.shop_type === 'DIGITAL'
+                ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                : 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300'
+            }`}>
+              {shop.shop_type === 'DIGITAL' ? 'Digital' : 'Real World'}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Shop Name */}

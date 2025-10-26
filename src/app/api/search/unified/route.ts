@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type'); // 'all', 'shops', 'infrastructure'
     const serviceType = searchParams.get('serviceType'); // For filtering infrastructure
     const source = searchParams.get('source'); // 'local', 'btcmap', 'all' for shops
+    const shopType = searchParams.get('shopType'); // 'digital', 'physical', 'all' for shops
 
     const results: any[] = [];
 
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
     if (type === 'shops' || type === 'all' || !type) {
       // Fetch local shops
       if (source === 'local' || source === 'all' || !source) {
-        const localShops = await fetchLocalShops(search);
+        const localShops = await fetchLocalShops(search, shopType);
         results.push(...localShops.map(shop => ({
           ...shop,
           type: 'shop',
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
 
       // Fetch BTCMap shops
       if (source === 'btcmap' || source === 'all' || !source) {
-        const btcmapShops = await fetchBTCMapShops(search);
+        const btcmapShops = await fetchBTCMapShops(search, shopType);
         results.push(...btcmapShops.map(shop => ({
           ...shop,
           type: 'shop',
@@ -91,7 +92,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Fetch shops from local database
-async function fetchLocalShops(search: string | null) {
+async function fetchLocalShops(search: string | null, shopType: string | null) {
   const where: any = {
     isPublic: true
   };
@@ -103,6 +104,11 @@ async function fetchLocalShops(search: string | null) {
       { description: { contains: search, mode: 'insensitive' } },
       { address: { contains: search, mode: 'insensitive' } }
     ];
+  }
+
+  // Filter by shop type
+  if (shopType && ['DIGITAL', 'PHYSICAL'].includes(shopType.toUpperCase())) {
+    where.shopType = shopType.toUpperCase();
   }
 
   const shops = await prisma.shop.findMany({
@@ -139,6 +145,7 @@ async function fetchLocalShops(search: string | null) {
     name: shop.name,
     description: shop.description,
     logo_url: shop.logoUrl,
+    shop_type: shop.shopType,
     address: shop.address,
     latitude: shop.latitude,
     longitude: shop.longitude,
@@ -162,7 +169,7 @@ async function fetchLocalShops(search: string | null) {
 }
 
 // Fetch shops from BTCMap API
-async function fetchBTCMapShops(search: string | null) {
+async function fetchBTCMapShops(search: string | null, shopType: string | null) {
   try {
     // Build query parameters for BTCMap proxy
     const params = new URLSearchParams();
@@ -179,11 +186,26 @@ async function fetchBTCMapShops(search: string | null) {
     }
 
     const data = await response.json();
-    return (data.elements || []).map((shop: any) => ({
-      ...shop,
-      id: `btcmap-shop-${shop.id}`,
-      created_at: shop.updated_at || new Date().toISOString()
-    }));
+
+    // Map and infer shop type from coordinates
+    let btcmapShops = (data.elements || []).map((shop: any) => {
+      // Infer shop type: if has coordinates, it's PHYSICAL, otherwise DIGITAL
+      const inferredShopType = (shop.latitude && shop.longitude) ? 'PHYSICAL' : 'DIGITAL';
+
+      return {
+        ...shop,
+        id: `btcmap-shop-${shop.id}`,
+        shop_type: inferredShopType,
+        created_at: shop.updated_at || new Date().toISOString()
+      };
+    });
+
+    // Filter by shop type if specified
+    if (shopType && ['DIGITAL', 'PHYSICAL'].includes(shopType.toUpperCase())) {
+      btcmapShops = btcmapShops.filter((shop: any) => shop.shop_type === shopType.toUpperCase());
+    }
+
+    return btcmapShops;
   } catch (error) {
     console.error('Error fetching BTCMap shops:', error);
     return [];
