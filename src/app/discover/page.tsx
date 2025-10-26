@@ -96,11 +96,38 @@ export default function DiscoverPage() {
     local_shops: 0,
     btcmap_shops: 0
   });
+  const [totalCounts, setTotalCounts] = useState({
+    shops: 0,
+    infrastructure: 0,
+    local_shops: 0,
+    btcmap_shops: 0
+  });
 
-  // Fetch results
+  // Fetch total counts once on mount
+  useEffect(() => {
+    fetchTotalCounts();
+  }, []);
+
+  // Fetch filtered results
   useEffect(() => {
     fetchResults();
   }, [search, viewType, serviceTypeFilter, shopTypeFilter, sourceFilter]);
+
+  const fetchTotalCounts = async () => {
+    try {
+      const params = new URLSearchParams();
+      params.append('type', 'all');
+      params.append('limit', '1');
+
+      const response = await fetch(`/api/search/unified?${params.toString()}`);
+      if (response.ok) {
+        const data: SearchResponse = await response.json();
+        setTotalCounts(data.counts);
+      }
+    } catch (error) {
+      console.error('Error fetching total counts:', error);
+    }
+  };
 
   const fetchResults = async () => {
     setLoading(true);
@@ -195,7 +222,7 @@ export default function DiscoverPage() {
                   : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300'
               }`}
             >
-              All ({counts.shops + counts.infrastructure})
+              All ({totalCounts.shops + totalCounts.infrastructure})
             </button>
             <button
               onClick={() => setViewType('shops')}
@@ -205,7 +232,7 @@ export default function DiscoverPage() {
                   : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300'
               }`}
             >
-              Shops Only ({counts.shops})
+              Shops Only ({totalCounts.shops})
             </button>
             <button
               onClick={() => setViewType('infrastructure')}
@@ -215,7 +242,7 @@ export default function DiscoverPage() {
                   : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300'
               }`}
             >
-              Infrastructure Only ({counts.infrastructure})
+              Infrastructure Only ({totalCounts.infrastructure})
             </button>
           </div>
         </div>
