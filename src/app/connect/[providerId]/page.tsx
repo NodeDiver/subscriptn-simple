@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -26,8 +26,9 @@ interface Shop {
   has_active_connection: boolean;
 }
 
-export default function ConnectProviderPage({ params }: { params: { providerId: string } }) {
+export default function ConnectProviderPage({ params }: { params: Promise<{ providerId: string }> }) {
   const router = useRouter();
+  const { providerId } = use(params);
   const [provider, setProvider] = useState<Provider | null>(null);
   const [shops, setShops] = useState<Shop[]>([]);
   const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
@@ -38,12 +39,12 @@ export default function ConnectProviderPage({ params }: { params: { providerId: 
 
   useEffect(() => {
     fetchProviderAndShops();
-  }, [params.providerId]);
+  }, [providerId]);
 
   const fetchProviderAndShops = async () => {
     try {
       // Fetch provider details
-      const providerResponse = await fetch(`/api/providers/${params.providerId}`);
+      const providerResponse = await fetch(`/api/providers/${providerId}`);
       if (providerResponse.ok) {
         const providerData = await providerResponse.json();
         setProvider(providerData.provider);
@@ -83,7 +84,7 @@ export default function ConnectProviderPage({ params }: { params: { providerId: 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           shopId: selectedShopId,
-          providerId: parseInt(params.providerId),
+          providerId: parseInt(providerId),
           connectionType
         })
       });

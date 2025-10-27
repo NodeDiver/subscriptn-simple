@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     const source = searchParams.get('source'); // 'local', 'btcmap', 'all' for shops
     const shopType = searchParams.get('shopType'); // 'digital', 'physical', 'all' for shops
 
-    const results: any[] = [];
+    let results: any[] = [];
 
     // Fetch shops if requested
     if (type === 'shops' || type === 'all' || !type) {
@@ -50,12 +50,35 @@ export async function GET(request: NextRequest) {
       })));
     }
 
-    // Sort by creation date (newest first) for "all" view
+    // Sort by creation date (newest first)
     results.sort((a: any, b: any) => {
       const dateA = new Date(a.created_at || a.updated_at || 0).getTime();
       const dateB = new Date(b.created_at || b.updated_at || 0).getTime();
       return dateB - dateA; // Newest first
     });
+
+    // For "all" view, interleave shops and infrastructure for better variety
+    if (type === 'all' || !type) {
+      const shops = results.filter((r: any) => r.type === 'shop');
+      const infrastructure = results.filter((r: any) => r.type === 'infrastructure');
+      const interleaved: any[] = [];
+      const maxLength = Math.max(shops.length, infrastructure.length);
+
+      // Interleave with a ratio of 2 shops to 1 infrastructure
+      for (let i = 0; i < maxLength; i++) {
+        if (i * 2 < shops.length) {
+          interleaved.push(shops[i * 2]);
+        }
+        if (i * 2 + 1 < shops.length) {
+          interleaved.push(shops[i * 2 + 1]);
+        }
+        if (i < infrastructure.length) {
+          interleaved.push(infrastructure[i]);
+        }
+      }
+
+      results = interleaved;
+    }
 
     // Count totals by type
     const shopCount = results.filter((r: any) => r.type === 'shop').length;
