@@ -113,6 +113,15 @@ export default function DiscoverPage() {
     fetchResults();
   }, [search, viewType, serviceTypeFilter, shopTypeFilter, sourceFilter]);
 
+  // Auto-search with debounce
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setSearch(searchInput);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchInput]);
+
   const fetchTotalCounts = async () => {
     try {
       const params = new URLSearchParams();
@@ -385,17 +394,13 @@ function ShopCard({ shop }: { shop: Shop }) {
         <div className="flex gap-2">
           <span className={`text-xs px-2 py-1 rounded-full ${
             shop.source === 'local'
-              ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
-              : 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+              ? 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'
+              : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300'
           }`}>
             {shop.source === 'local' ? 'This App' : 'BTCMap'}
           </span>
           {shop.shop_type && (
-            <span className={`text-xs px-2 py-1 rounded-full ${
-              shop.shop_type === 'DIGITAL'
-                ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                : 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300'
-            }`}>
+            <span className="text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300">
               {shop.shop_type === 'DIGITAL' ? 'Digital' : 'Real World'}
             </span>
           )}
@@ -440,7 +445,7 @@ function ShopCard({ shop }: { shop: Shop }) {
           </span>
         )}
         {shop.accepts_lightning && (
-          <span className="text-xs px-2 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded">
+          <span className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 rounded">
             ⚡ Lightning
           </span>
         )}
@@ -476,7 +481,7 @@ function ShopCard({ shop }: { shop: Shop }) {
             {shop.providers.map((provider) => (
               <span
                 key={provider.id}
-                className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 rounded"
+                className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded"
               >
                 {provider.name}
               </span>
@@ -556,7 +561,7 @@ function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) 
           <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">Features:</p>
           <div className="flex flex-wrap gap-1">
             {provider.supports_nwc && (
-              <span className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 rounded">
+              <span className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded">
                 NWC Support
               </span>
             )}
