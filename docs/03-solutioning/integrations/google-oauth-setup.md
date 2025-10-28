@@ -1,13 +1,13 @@
 # Google OAuth Setup Guide
 
-This guide will help you set up Google OAuth authentication for SubscriptN.
+This guide will help you set up Google OAuth authentication for Bitinfrashop.
 
 ## 🔧 Step 1: Google Cloud Console Setup
 
 ### 1.1 Create a Google Cloud Project
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click "Select a project" → "New Project"
-3. Enter project name: `SubscriptN` (or your preferred name)
+3. Enter project name: `Bitinfrashop` (or your preferred name)
 4. Click "Create"
 
 ### 1.2 Enable Google+ API
@@ -21,7 +21,7 @@ This guide will help you set up Google OAuth authentication for SubscriptN.
 3. If prompted, configure the OAuth consent screen:
    - Choose "External" user type
    - Fill in required fields:
-     - App name: `SubscriptN`
+     - App name: `Bitinfrashop`
      - User support email: Your email
      - Developer contact: Your email
    - Add scopes: `email`, `profile`, `openid`
@@ -29,7 +29,7 @@ This guide will help you set up Google OAuth authentication for SubscriptN.
 
 ### 1.4 Configure OAuth Client
 1. Application type: "Web application"
-2. Name: `SubscriptN Web Client`
+2. Name: `Bitinfrashop Web Client`
 3. Authorized redirect URIs:
    - For development: `http://localhost:3000/api/auth/callback/google`
    - For production: `https://yourdomain.com/api/auth/callback/google`

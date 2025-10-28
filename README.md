@@ -61,7 +61,7 @@ open http://localhost:3003
 
 ```env
 # Database
-DATABASE_URL=postgresql://postgres:password@localhost:5433/subscriptn
+DATABASE_URL=postgresql://postgres:password@localhost:5433/bitinfrashop
 
 # Session & Security
 SESSION_SECRET=your-session-secret
@@ -73,7 +73,7 @@ NODE_ENV=development
 
 ## 💡 Usage
 
-**SubscriptN is a unified platform** - all users have access to all features without role distinctions:
+**Bitinfrashop is a unified platform** - all users have access to all features without role distinctions:
 
 ### Getting Started
 1. **Register**: Create your account with username and password
@@ -153,7 +153,7 @@ See [Development Log](./docs/04-implementation/dev-journal/development-log.md) f
 
 ## ❓ FAQ
 
-**What is SubscriptN?**
+**What is Bitinfrashop?**
 A Bitcoin subscription platform connecting BTCPay Server providers with shop owners through Lightning payments.
 
 **Do I need my own BTCPay Server?**
@@ -168,7 +168,7 @@ Yes, the core functionality is complete with enterprise-grade security measures.
 ## 📞 Support
 
 - **Contact**: nodediver@proton.me
-- **Issues**: [GitHub Issues](https://github.com/NodeDiver/subscriptn-simple/issues)
+- **Issues**: [GitHub Issues](https://github.com/NodeDiver/bitinfrashop/issues)
 - **Documentation**: [Complete docs](./docs/README.md)
 
 ---

@@ -2,7 +2,7 @@
 
 ## 🚨 Reporting Security Issues
 
-If you find a security vulnerability in SubscriptN, please report it privately:
+If you find a security vulnerability in Bitinfrashop, please report it privately:
 
 **Email**: [nodediver@proton.me](mailto:nodediver@proton.me)
 
@@ -19,7 +19,7 @@ If you find a security vulnerability in SubscriptN, please report it privately:
 1. **Change default credentials** - Update demo username/password
 2. **Use HTTPS** - Always in production
 3. **Secure environment variables** - Never commit `.env` files
-4. **Database security** - Ensure proper file permissions on `subscriptn.db`
+4. **Database security** - Ensure proper file permissions on `bitinfrashop.db`
 5. **Regular updates** - Keep dependencies updated
 
 ### Environment Variables
@@ -34,7 +34,7 @@ cp env.example .env.local
 - `BTCPAY_API_KEY`: Your BTCPay Server API key
 
 ### Database Security
-- The SQLite database (`subscriptn.db`) contains sensitive user data and is automatically excluded from Git
+- The SQLite database (`bitinfrashop.db`) contains sensitive user data and is automatically excluded from Git
 - Never commit the database file or any `.env` files
 - Use environment variables for all secrets and API keys
 

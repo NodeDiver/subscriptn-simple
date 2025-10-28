@@ -4,7 +4,7 @@ This document describes the Claude Code AI assistant infrastructure for this pro
 
 ## Overview
 
-Claude Code is Anthropic's official CLI for Claude AI integration into development workflows. This project uses Claude Code for:
+Claude Code is Anthropic's official CLI for Claude AI integration into development workflows. The Bitinfrashop project uses Claude Code for:
 - **Code Generation**: Creating new features and components
 - **Code Review**: Analyzing code quality and suggesting improvements
 - **Documentation**: Generating and maintaining project documentation
@@ -175,4 +175,4 @@ For Claude Code issues:
 
 For project-specific questions:
 - Contact: nodediver@proton.me
-- Repository: https://github.com/NodeDiver/subscriptn-simple
+- Repository: https://github.com/NodeDiver/bitinfrashop

@@ -1,6 +1,6 @@
 # TODO - Project Task List v1.0
 
-A human-readable list of tasks and improvements for the SubscriptN - Bitcoin Subscription Management platform.
+A human-readable list of tasks and improvements for the Bitinfrashop - Bitcoin Subscription Management platform.
 
 ## 🎯 Future Enhancements
 

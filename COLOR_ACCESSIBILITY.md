@@ -1,6 +1,6 @@
 # Color Accessibility Documentation
 
-**SubscriptN Marketplace - WCAG Compliance Report**
+**Bitinfrashop Marketplace - WCAG Compliance Report**
 **Last Updated:** October 21, 2025 (Unified Platform Update)
 **Analysis Tool:** MCP Color Servers (accessibility-scanner, color-scheme-generator, mcp-color-server)
 
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-The SubscriptN color palette has been optimized for accessibility with WCAG AAA compliance across all text elements and enhanced support for users with color vision deficiencies. The platform now uses a unified color scheme (orange/amber) for all users, removing previous role-based color distinctions.
+The Bitinfrashop color palette has been optimized for accessibility with WCAG AAA compliance across all text elements and enhanced support for users with color vision deficiencies. The platform now uses a unified color scheme (orange/amber) for all users, removing previous role-based color distinctions.
 
 **Overall Accessibility Score:** 93/100 ✓
 
@@ -140,7 +140,7 @@ The SubscriptN color palette has been optimized for accessibility with WCAG AAA 
 <Link aria-label="Find Bitcoin Infrastructure Providers">
 <Link aria-label="Discover Bitcoin-accepting shops">
 <Link aria-label="Create a Bitcoiner account">
-<Link aria-label="Register for SubscriptN marketplace">
+<Link aria-label="Register for Bitinfrashop marketplace">
 
 // Decorative Icons
 <svg aria-hidden="true">
@@ -291,7 +291,7 @@ module.exports = {
 
 ## Compliance Statement
 
-The SubscriptN marketplace color palette meets or exceeds:
+The Bitinfrashop marketplace color palette meets or exceeds:
 - ✓ WCAG 2.1 Level AA compliance for all text
 - ✓ WCAG 2.1 Level AAA compliance for body text
 - ✓ Section 508 accessibility standards

@@ -1,6 +1,6 @@
-# SubscriptN Documentation
+# Bitinfrashop Documentation
 
-**Complete documentation for the SubscriptN Bitcoin subscription platform**
+**Complete documentation for the Bitinfrashop Bitcoin subscription platform**
 
 ---
 
@@ -249,7 +249,7 @@ Use these templates to create consistent documentation:
 - [SECURITY.md](../SECURITY.md) - Security policy and reporting
 
 ### External Links
-- [GitHub Repository](https://github.com/NodeDiver/subscriptn-simple)
+- [GitHub Repository](https://github.com/NodeDiver/bitinfrashop)
 - [Geyser Hackathon](https://geyser.fund/)
 - [BTCPay Server](https://btcpayserver.org/)
 - [NWC Specification](https://nwc.dev/)
@@ -260,7 +260,7 @@ Use these templates to create consistent documentation:
 
 ### For Documentation Questions
 - Contact: nodediver@proton.me
-- GitHub Issues: [Report documentation issues](https://github.com/NodeDiver/subscriptn-simple/issues)
+- GitHub Issues: [Report documentation issues](https://github.com/NodeDiver/bitinfrashop/issues)
 
 ### For Technical Questions
 See [AI Agent Guidelines](./workflows/ai-agent-guidelines.md) or [Development Log](./04-implementation/dev-journal/development-log.md)

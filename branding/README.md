@@ -1,6 +1,6 @@
-# 🎨 SubscriptN Branding & Design System
+# 🎨 Bitinfrashop Branding & Design System
 
-This folder contains the official branding assets and design system for SubscriptN.
+This folder contains the official branding assets and design system for Bitinfrashop.
 
 ## 📁 Contents
 
@@ -95,4 +95,4 @@ All color combinations meet WCAG AA standards for contrast ratios, ensuring the 
 
 ---
 
-*This design system ensures consistent branding across all SubscriptN interfaces while honoring the Bitcoin ecosystem's visual heritage.* 
+*This design system ensures consistent branding across all Bitinfrashop interfaces while honoring the Bitcoin ecosystem's visual heritage.* 

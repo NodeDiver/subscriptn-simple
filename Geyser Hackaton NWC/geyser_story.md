@@ -1,4 +1,4 @@
-## 🚀 SubscriptN: Bitcoin Subscriptions for BTCPay, Powered by NWC
+## 🚀 Bitinfrashop: Bitcoin Subscriptions for BTCPay, Powered by NWC
 
 **Winner of the NWC Hackathon 2024 (- Tier 1 – New Projects)** 🏆🎉
 
@@ -8,7 +8,7 @@ BTCPay Server admins want to share infrastructure costs. Shop owners want to eas
 
 ### **What's the Solution?**
 
-⚡️ **SubscriptN** automates recurring Bitcoin subscriptions between shop owners and BTCPay Server admins powered by **Nostr Wallet Connect**. Think of it like Patreon or Stripe Subscriptions, but Bitcoin-native and Nostr-native. No fiat. No banks. No middlemen.
+⚡️ **Bitinfrashop** automates recurring Bitcoin subscriptions between shop owners and BTCPay Server admins powered by **Nostr Wallet Connect**. Think of it like Patreon or Stripe Subscriptions, but Bitcoin-native and Nostr-native. No fiat. No banks. No middlemen.
 
 Admins track which shops are paying. Shops pay via NWC with a click. If they don't? They lose admin rights automatically via the BTCPay Greenfield API. Simple.
 
@@ -55,7 +55,7 @@ Admins track which shops are paying. Shops pay via NWC with a click. If they don
 
 🏆 **Hackathon Winner** → 🚀 **Active Development**
 
-We're actively improving SubscriptN based on real-world testing and feedback. The core Lightning payment functionality is working smoothly, and we're continuously enhancing the user experience and technical foundation.
+We're actively improving Bitinfrashop based on real-world testing and feedback. The core Lightning payment functionality is working smoothly, and we're continuously enhancing the user experience and technical foundation.
 
 ### **Why It's Fun**
 
@@ -86,8 +86,8 @@ Because building solid tools for BTCPay + Lightning + NWC is good for everyone.
 
 **And honestly? Because we're actively building this transparently, step-by-step, not just dreaming about it.**
 
-**Repo:**  
-[https://github.com/NodeDiver/subscriptn-simple](https://github.com/NodeDiver/subscriptn-simple)
+**Repo:**
+[https://github.com/NodeDiver/bitinfrashop](https://github.com/NodeDiver/bitinfrashop)
 
-⚡️ If you want shops owners and infrastructure admins to live in harmony through Bitcoin subscriptions, SubscriptN is for you.  
+⚡️ If you want shops owners and infrastructure admins to live in harmony through Bitcoin subscriptions, Bitinfrashop is for you.  
 **Built with love, Lightning, and a lot of good vibes.** ⚡️ 

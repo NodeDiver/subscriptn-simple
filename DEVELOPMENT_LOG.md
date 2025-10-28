@@ -1,4 +1,4 @@
-# SubscriptN Development Log
+# Bitinfrashop Development Log
 
 ## Current Status: Production Ready ✅
 
@@ -110,8 +110,8 @@
 ### Quick Start
 ```bash
 # Clone and setup
-git clone https://github.com/NodeDiver/subscriptn-simple.git
-cd subscriptn-simple
+git clone https://github.com/NodeDiver/bitinfrashop.git
+cd bitinfrashop
 npm install
 
 # Configure environment
@@ -127,7 +127,7 @@ docker-compose up -d
 
 ### Environment Variables
 ```env
-DATABASE_URL=postgresql://postgres:password@localhost:5433/subscriptn
+DATABASE_URL=postgresql://postgres:password@localhost:5433/bitinfrashop
 SESSION_SECRET=your-session-secret
 NWC_ENCRYPTION_KEY=your-32-char-hex-key
 ```
@@ -191,10 +191,10 @@ NWC_ENCRYPTION_KEY=your-32-char-hex-key
 ## 📞 Support & Contact
 
 - **Developer**: nodediver@proton.me
-- **Repository**: [GitHub](https://github.com/NodeDiver/subscriptn-simple)
-- **Issues**: [GitHub Issues](https://github.com/NodeDiver/subscriptn-simple/issues)
+- **Repository**: [GitHub](https://github.com/NodeDiver/bitinfrashop)
+- **Issues**: [GitHub Issues](https://github.com/NodeDiver/bitinfrashop/issues)
 - **Documentation**: See individual `.md` files for detailed guides
 
 ---
 
-**SubscriptN**: Making Bitcoin subscriptions accessible to everyone. ⚡
+**Bitinfrashop**: Making Bitcoin subscriptions accessible to everyone. ⚡

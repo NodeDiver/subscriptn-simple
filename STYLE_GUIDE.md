@@ -1,4 +1,4 @@
-# SubscriptN Style Guide v0.2.0
+# Bitinfrashop Style Guide v0.2.0
 
 **Last Updated**: October 21, 2025
 **Design System**: Unified Orange/Amber Branding

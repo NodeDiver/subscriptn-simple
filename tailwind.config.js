@@ -83,7 +83,7 @@ module.exports = {
           900: '#111827', // Darkest background
         },
         // Legacy support (will be removed gradually)
-        'subscriptn': {
+        'bitinfrashop': {
           'green': {
             500: '#2D5A3D',
             600: '#16a34a',

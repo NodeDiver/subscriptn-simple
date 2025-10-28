@@ -1,4 +1,4 @@
-# SubscriptN Product Vision
+# Bitinfrashop Product Vision
 
 **Last Updated**: 2025-10-13
 **Status**: Living Document

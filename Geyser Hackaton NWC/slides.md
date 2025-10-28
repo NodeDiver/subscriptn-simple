@@ -1,4 +1,4 @@
-# Geyser Hackathon NWC – Slides Presentation (2025-07-09)
+# Geyser Hackathon NWC – Slides Presentation (2024-07-09)
 
 ---
 
@@ -21,7 +21,7 @@
 - Subscription management is manual and tedious: admins must contact each shop owner monthly to request Lightning payments for server hosting.
 - This process is inefficient and feels outdated—like being a fee collector from the Middle Ages!
 
-### 🚀 Solution: SubscriptN
+### 🚀 Solution: Bitinfrashop
 - **Automate subscription payments** using Nostr Wallet Connect (NWC).
 - Seamless subscription status management:
   - Restrict admin rights for unpaid shop owners, but allow view-only access.
@@ -53,7 +53,7 @@
 📚 **Main Objective:** Learning & Development
 
 - This is my first hackathon and public presentation experience!
-- SubscriptN started as a personal learning journey and practical tool for my own needs.
+- Bitinfrashop started as a personal learning journey and practical tool for my own needs.
 - Core functionality is nearly complete; a few more days are needed for full automation.
 - Collaboration planned with ONG Bitcoin Chile for real-world feedback and broader impact.
 - Security is a top priority: cautious, responsible growth before wider adoption.
@@ -65,7 +65,7 @@
 
 🙏 Thank you for your time and attention!
 
-- 🔗 [GitHub Repository](https://github.com/NodeDiver/subscriptn-simple)
+- 🔗 [GitHub Repository](https://github.com/NodeDiver/bitinfrashop)
 - 📩 Email: nodii@protonmail.com
 - 🌐 Nostr: npub1kqp22llek97fvjk6u4zranwv99j75469t4g9cm5r6h0zrfswejjssnpvad
 - 💬 Feedback and suggestions warmly welcomed!

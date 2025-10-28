@@ -45,7 +45,7 @@ next-env.d.ts
 *.sqlite
 *.sqlite3
 *.db-journal
-subscriptn.db
+bitinfrashop.db
 
 # Test scripts with hardcoded secrets
 add-server.js

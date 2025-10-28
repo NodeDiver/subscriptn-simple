@@ -1,4 +1,4 @@
-# Getting Started with SubscriptN Documentation
+# Getting Started with Bitinfrashop Documentation
 
 **Welcome to the enhanced documentation framework!**
 
@@ -270,7 +270,7 @@ Cross-reference related documents. Create a web of knowledge, not silos.
 
 ### Questions about Documentation
 - Contact: nodediver@proton.me
-- Issue: [Report on GitHub](https://github.com/NodeDiver/subscriptn-simple/issues)
+- Issue: [Report on GitHub](https://github.com/NodeDiver/bitinfrashop/issues)
 
 ### Questions about BMAD-METHOD
 - This framework is inspired by BMAD-METHOD™ principles

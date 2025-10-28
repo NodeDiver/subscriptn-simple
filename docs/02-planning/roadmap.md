@@ -1,8 +1,8 @@
-# 🗺️ SubscriptN Development Roadmap
+# 🗺️ Bitinfrashop Development Roadmap
 
 ## 📋 Project Overview
 
-**SubscriptN** is a Bitcoin subscription management application that enables BTCPay Server providers to manage shop subscriptions through Lightning payments and Nostr Wallet Connect (NWC). The project won the **NWC Hackathon 2024 (Tier 1 – New Projects)** 🏆.
+**Bitinfrashop** is a Bitcoin subscription management application that enables BTCPay Server providers to manage shop subscriptions through Lightning payments and Nostr Wallet Connect (NWC). The project won the **NWC Hackathon 2024 (Tier 1 – New Projects)** 🏆.
 
 ## 🎯 Current Status
 

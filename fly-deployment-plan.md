@@ -8,7 +8,7 @@ Given this information, let me create a comprehensive deployment plan:
 
 ## 📋 Overview
 
-Deploy SubscriptN (Next.js + PostgreSQL) to Fly.io using their containerized infrastructure. This plan covers both the application and database setup.
+Deploy Bitinfrashop (Next.js + PostgreSQL) to Fly.io using their containerized infrastructure. This plan covers both the application and database setup.
 
 ---
 
@@ -41,7 +41,7 @@ Deploy SubscriptN (Next.js + PostgreSQL) to Fly.io using their containerized inf
 7. Generous bandwidth - 100GB free outbound data transfer
 8. Developer-friendly - Excellent CLI and documentation
 
-✅ **Good fit for SubscriptN because:**
+✅ **Good fit for Bitinfrashop because:**
 - Bitcoin subscription platform = low traffic initially
 - Lightning payments are event-driven (not constant load)
 - Small database (~10-50MB initially)
@@ -72,7 +72,7 @@ cd /home/motoko/dev/subscriptn-simple
 ```bash
 # Create a new Postgres cluster
 fly postgres create \
-  --name subscriptn-db \
+  --name bitinfrashop-db \
   --region sjc \
   --initial-cluster-size 1 \
   --vm-size shared-cpu-1x \
@@ -100,7 +100,7 @@ fly launch --no-deploy
 ```
 
 **During launch wizard:**
-- App name: `subscriptn-app` (or your choice)
+- App name: `bitinfrashop-app` (or your choice)
 - Region: Same as database (sjc)
 - Would you like to set up a Postgresql database? **NO** (we already created one)
 - Would you like to set up an Upstash Redis database? **NO**
@@ -114,7 +114,7 @@ This creates `fly.toml` configuration file.
 
 ```bash
 # Attach the database to your app
-fly postgres attach subscriptn-db --app subscriptn-app
+fly postgres attach bitinfrashop-db --app bitinfrashop-app
 
 # This automatically sets DATABASE_URL secret
 ```
@@ -134,10 +134,10 @@ fly secrets set \
   SESSION_SECRET="$(openssl rand -hex 32)" \
   NWC_ENCRYPTION_KEY="$(openssl rand -hex 16)" \
   NODE_ENV="production" \
-  --app subscriptn-app
+  --app bitinfrashop-app
 
 # Verify secrets are set
-fly secrets list --app subscriptn-app
+fly secrets list --app bitinfrashop-app
 ```
 
 **Required environment variables:**
@@ -153,7 +153,7 @@ fly secrets list --app subscriptn-app
 Create or update `fly.toml` in your project root:
 
 ```toml
-app = "subscriptn-app"
+app = "bitinfrashop-app"
 primary_region = "sjc"
 
 [build]
@@ -209,13 +209,13 @@ export default nextConfig;
 
 ```bash
 # Deploy the application
-fly deploy --app subscriptn-app
+fly deploy --app bitinfrashop-app
 
 # Monitor deployment logs
-fly logs --app subscriptn-app
+fly logs --app bitinfrashop-app
 
 # Check status
-fly status --app subscriptn-app
+fly status --app bitinfrashop-app
 ```
 
 **Deployment process:**
@@ -231,16 +231,16 @@ fly status --app subscriptn-app
 
 ```bash
 # Open app in browser
-fly open --app subscriptn-app
+fly open --app bitinfrashop-app
 
 # Check app info
-fly info --app subscriptn-app
+fly info --app bitinfrashop-app
 
 # View current machines
-fly machine list --app subscriptn-app
+fly machine list --app bitinfrashop-app
 
 # Check database status
-fly postgres db list --app subscriptn-db
+fly postgres db list --app bitinfrashop-db
 ```
 
 ---
@@ -251,14 +251,14 @@ fly postgres db list --app subscriptn-db
 
 ```bash
 # Connect to PostgreSQL
-fly postgres connect --app subscriptn-db
+fly postgres connect --app bitinfrashop-db
 
 # Run SQL commands
 \dt  # List tables
 \q   # Quit
 
 # Run database migrations manually if needed
-fly ssh console --app subscriptn-app
+fly ssh console --app bitinfrashop-app
 npx prisma migrate deploy
 exit
 ```
@@ -267,13 +267,13 @@ exit
 
 ```bash
 # Real-time logs
-fly logs --app subscriptn-app
+fly logs --app bitinfrashop-app
 
 # Check metrics
-fly dashboard --app subscriptn-app
+fly dashboard --app bitinfrashop-app
 
 # SSH into container
-fly ssh console --app subscriptn-app
+fly ssh console --app bitinfrashop-app
 ```
 
 ### Database Backups
@@ -282,10 +282,10 @@ fly ssh console --app subscriptn-app
 # Fly automatically backs up PostgreSQL databases
 
 # List backups
-fly postgres backup list --app subscriptn-db
+fly postgres backup list --app bitinfrashop-db
 
 # Restore from backup (if needed)
-fly postgres backup restore <backup-id> --app subscriptn-db
+fly postgres backup restore <backup-id> --app bitinfrashop-db
 ```
 
 ---
@@ -322,7 +322,7 @@ fly postgres backup restore <backup-id> --app subscriptn-db
 ### App won't start
 
 ```bash
-fly logs --app subscriptn-app
+fly logs --app bitinfrashop-app
 ```
 
 **Check for:**
@@ -334,10 +334,10 @@ fly logs --app subscriptn-app
 
 ```bash
 # Verify attachment
-fly postgres db list --app subscriptn-db
+fly postgres db list --app bitinfrashop-db
 
 # Check DATABASE_URL is set
-fly secrets list --app subscriptn-app
+fly secrets list --app bitinfrashop-app
 ```
 
 ### Build failures
@@ -357,24 +357,24 @@ docker build -t test .
 
 1. **Increase VM size:**
    ```bash
-   fly scale vm shared-cpu-2x --memory 512 --app subscriptn-app
+   fly scale vm shared-cpu-2x --memory 512 --app bitinfrashop-app
    ```
 
 2. **Add more instances:**
    ```bash
-   fly scale count 2 --app subscriptn-app
+   fly scale count 2 --app bitinfrashop-app
    ```
 
 3. **Upgrade database:**
    ```bash
-   fly volumes extend <volume-id> --size 10 --app subscriptn-db
+   fly volumes extend <volume-id> --size 10 --app bitinfrashop-db
    ```
 
 ---
 
 ## 🎯 Why This Plan Works
 
-✅ **For SubscriptN specifically:**
+✅ **For Bitinfrashop specifically:**
 - Low initial traffic expected
 - Bitcoin/Lightning payments are sporadic events
 - Small database size (user accounts, shops, servers)
@@ -398,7 +398,7 @@ docker build -t test .
 
 ## 📝 Summary
 
-This plan deploys SubscriptN to Fly.io with:
+This plan deploys Bitinfrashop to Fly.io with:
 - **App:** Next.js on shared-cpu-1x VM (256MB)
 - **Database:** PostgreSQL on shared-cpu-1x VM (3GB storage)
 - **Cost:** ~$5-7/month for low traffic
