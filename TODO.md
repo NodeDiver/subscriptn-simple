@@ -59,6 +59,39 @@ A human-readable list of tasks and improvements for the Bitinfrashop - Bitcoin S
   - Store contact preferences in user profiles
   - Enable messaging between shop owners and server providers
 
+## ✅ Recently Completed - Version 0.3.0 (October 2025)
+
+### Marketplace Transformation & BTCMap Integration
+- **✅ BTCMap Integration**: Real-time discovery of Bitcoin-accepting shops worldwide
+  - Interactive map view with location-based search
+  - Real-time data from BTCMap API
+  - Global visibility for Bitcoin merchants
+  - Shop type filtering (Online Store vs Physical Shop)
+- **✅ Enhanced Marketplace Features**: Advanced discovery and browsing
+  - Category-based filtering for infrastructure providers and shops
+  - Search functionality across all listings
+  - Improved card layouts with aligned sticky footers
+  - Better visual hierarchy and information display
+  - Accurate counter displays for marketplace totals
+- **✅ Connection System**: Shop-provider matching
+  - Notification system for shops seeking infrastructure providers
+  - Connection workflow between shops and Lightning providers
+  - Enhanced communication and request/acceptance flow
+  - Improved discovery page with marketplace focus
+- **✅ UX Improvements**: Polish and refinement
+  - Shop type labels (Online Store/Physical Shop) for clarity
+  - Consistent card patterns across all marketplace views
+  - Improved mobile responsiveness
+  - Better navigation and user flows
+- **✅ Technical Improvements**: Code quality and performance
+  - Database query optimizations for marketplace data
+  - Component architecture refinements
+  - Better state management for map interactions
+  - Performance improvements for large data sets
+  - Cleaner separation of concerns
+
+---
+
 ## ✅ Recently Completed - Version 0.2.0 (October 2025)
 
 ### Platform Unification
@@ -169,4 +202,4 @@ A human-readable list of tasks and improvements for the Bitinfrashop - Bitcoin S
 - **Component reusability**: Extract common patterns into shared components
 - **Git workflow**: Feature branches, conventional commits, thorough PR reviews
 
-**Current Status (October 2025)**: Platform successfully unified - all users now access all features without role distinctions. Version 0.2.0 complete with warm orange/amber branding throughout. Ready for continued feature development and polish.
+**Current Status (October 2025)**: Platform successfully transformed into full Bitcoin marketplace with BTCMap integration for global discovery. Version 0.3.0 complete with marketplace features, connection system, and enhanced UX. Ready for continued feature development and community growth.

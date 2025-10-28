@@ -14,6 +14,8 @@ _Bitcoin Infrastructure & Shop Marketplace. Lightning fast. ⚡_
 
 - **🏠 Unified Dashboard**: Complete infrastructure and shops management
 - **⚡ Lightning Payments**: NWC integration for secure Bitcoin payments
+- **🗺️ BTCMap Integration**: Real-time discovery of Bitcoin-accepting shops worldwide with interactive map
+- **🏪 Marketplace**: Browse infrastructure providers and shops with filtering, search, and categories
 - **🖥️ BTCPay Marketplace**: Browse and connect to public servers
 - **🛍️ Shop Management**: Create shops with automated subscriptions
 - **🔐 Secure Wallets**: Encrypted NWC connection strings
@@ -140,8 +142,15 @@ This project includes comprehensive documentation for AI coding assistants:
 - ✅ Comprehensive documentation framework
 
 ### Recent Updates (October 2025)
+- **🏪 Marketplace Transformation**: Evolved from subscription tool to full Bitcoin marketplace
+- **🗺️ BTCMap Integration**: Real-time discovery with interactive map showing Bitcoin merchants worldwide
+- **🔍 Enhanced Discovery**: Filtering, search, and categories for infrastructure providers and shops
+- **🔗 Connection System**: Shops can find and connect with Lightning infrastructure providers
+- **📱 Improved UX**: Shop type labels (Online Store/Physical Shop), aligned card layouts, sticky footer patterns
+- **🔢 Counter Fixes**: Accurate marketplace totals display
+- **🔔 Notification System**: Shops can seek and connect with infrastructure providers
 - **🎨 Platform Unification**: Removed user role distinctions - all users access all features
-- **🎨 Unified Color Scheme**: Transitioned to warm orange/amber branding
+- **🎨 Unified Color Scheme**: Transitioned to warm orange/amber branding reflecting Bitcoin's energy
 - **🏗️ Database Schema**: Simplified User model by removing role field
 - **🎯 Homepage Redesign**: Unified hero section with feature-focused layout
 - **📝 Registration Flow**: Streamlined signup without role selection
@@ -154,13 +163,16 @@ See [Development Log](./docs/04-implementation/dev-journal/development-log.md) f
 ## ❓ FAQ
 
 **What is Bitinfrashop?**
-A Bitcoin subscription platform connecting BTCPay Server providers with shop owners through Lightning payments.
+A Bitcoin marketplace connecting infrastructure providers with Bitcoin-accepting shops worldwide, featuring automated Lightning payments, BTCMap integration for global discovery, and seamless NWC-powered connections.
 
 **Do I need my own BTCPay Server?**
-No, you can browse and connect to public servers listed on the platform.
+No, you can browse and connect to public servers listed on the platform marketplace.
 
 **What wallets are supported?**
 NWC (Nostr Wallet Connect) compatible wallets like Alby, Zeus, Mutiny, and Coinos.
+
+**How does BTCMap integration work?**
+The discover page features an interactive map showing Bitcoin-accepting businesses globally from BTCMap, with filtering and search capabilities.
 
 **Is this production-ready?**
 Yes, the core functionality is complete with enterprise-grade security measures.

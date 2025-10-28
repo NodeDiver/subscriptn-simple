@@ -1,6 +1,6 @@
 # Bitinfrashop Documentation
 
-**Complete documentation for the Bitinfrashop Bitcoin subscription platform**
+**Complete documentation for the Bitinfrashop Bitcoin marketplace connecting infrastructure providers with shops worldwide**
 
 ---
 

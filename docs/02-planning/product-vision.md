@@ -1,6 +1,6 @@
 # Bitinfrashop Product Vision
 
-**Last Updated**: 2025-10-13
+**Last Updated**: 2025-10-28
 **Status**: Living Document
 **Review Cadence**: Quarterly
 
@@ -8,25 +8,28 @@
 
 ## Mission Statement
 
-**To make Bitcoin subscription management accessible, secure, and effortless for small BTCPay Server providers and shop owners through Lightning Network automation.**
+**To create a thriving Bitcoin marketplace that connects infrastructure providers with Bitcoin-accepting shops worldwide, making Lightning payments, global discovery, and seamless connections accessible to everyone.**
 
 ---
 
 ## Problem We're Solving
 
 ### The Market Gap
-Bitcoin payments are peer-to-peer, fast, and global. But recurring subscriptions on Bitcoin/Lightning are still:
-- **Complex** to set up and manage
-- **Fragmented** across different platforms
-- **Inaccessible** to small businesses without technical expertise
-- **Disconnected** from existing BTCPay Server infrastructure
+Bitcoin commerce is growing, but finding and connecting with the right infrastructure and shops is still:
+- **Fragmented** - Providers and shops exist in silos without easy discovery
+- **Local-only** - Limited global visibility for Bitcoin-accepting businesses
+- **Manual** - Connection processes require manual coordination and setup
+- **Complex** - Setting up Lightning payments and subscriptions requires technical expertise
+- **Disconnected** - No unified marketplace to browse and discover Bitcoin services
 
 ### Our Solution
-A **unified platform** that bridges BTCPay Server providers with shop owners, enabling:
-- One-click subscription setup
-- Automated Lightning payments via NWC (Nostr Wallet Connect)
-- Marketplace for discovering providers
-- Enterprise-grade security for everyone
+A **unified Bitcoin marketplace** that connects the ecosystem, featuring:
+- **Global Discovery**: BTCMap integration showing Bitcoin merchants worldwide
+- **Marketplace Platform**: Browse infrastructure providers and shops with advanced filtering
+- **Seamless Connections**: Easy shop-provider matching with notification system
+- **Automated Payments**: Lightning subscriptions via NWC (Nostr Wallet Connect)
+- **Interactive Tools**: Map views, search, and category-based discovery
+- **Enterprise Security**: Professional-grade security accessible to everyone
 
 ---
 
@@ -128,16 +131,18 @@ A **unified platform** that bridges BTCPay Server providers with shop owners, en
 ## Product Positioning
 
 ### What We Are
-- **Subscription Management Platform** for Bitcoin/Lightning
-- **Marketplace** connecting providers and shops
-- **Integration Layer** between BTCPay Server and NWC wallets
-- **Community Platform** for the Bitcoin subscription economy
+- **Bitcoin Marketplace** connecting infrastructure providers with shops globally
+- **Discovery Platform** featuring BTCMap integration and interactive map views
+- **Connection Hub** enabling seamless shop-provider matching and notifications
+- **Subscription Management** with automated Lightning payments via NWC
+- **Community Platform** for the Bitcoin commerce ecosystem
 
 ### What We're NOT
 - **Not** a full BTCPay Server replacement (we integrate with it)
 - **Not** a payment processor (we use Lightning Network directly)
-- **Not** a merchant directory (we focus on subscriptions)
+- **Not** just a merchant directory (we enable connections and subscriptions)
 - **Not** a custodial wallet service (NWC is non-custodial)
+- **Not** a replacement for BTCMap (we integrate and enhance it with marketplace features)
 
 ---
 
@@ -148,14 +153,17 @@ None currently offering this exact solution.
 
 ### Adjacent Solutions
 - **BTCPay Server**: Infrastructure, but no subscription marketplace
+- **BTCMap**: Global merchant directory, but no provider connections or payments
 - **OpenNode/Strike**: Payment processors, but not subscription-focused
 - **Traditional SaaS**: Subscriptions, but not Bitcoin/Lightning native
 
 ### Our Differentiators
-1. **Marketplace Model**: Connect providers with shops
-2. **NWC Integration**: Seamless wallet connection
-3. **Small Business Focus**: Built for individuals, not enterprises
-4. **Open Source**: Community-driven development
+1. **Unified Marketplace**: Connect providers with shops in one platform
+2. **Global Discovery**: BTCMap integration + marketplace features
+3. **Connection System**: Seamless shop-provider matching and notifications
+4. **NWC Integration**: Automated Lightning subscriptions
+5. **Small Business Focus**: Built for individuals, not enterprises
+6. **Open Source**: Community-driven development
 
 ---
 

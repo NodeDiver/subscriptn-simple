@@ -2,13 +2,46 @@
 
 ## Current Status: Production Ready ✅
 
-**Last Updated**: 2025-10-21
-**Version**: 0.2.0
-**Status**: Platform unified - all users access all features without role distinctions
+**Last Updated**: 2025-10-28
+**Version**: 0.3.0
+**Status**: Full Bitcoin marketplace with BTCMap integration
 
 ---
 
 ## 🎯 Recent Sessions
+
+### 2025-10-28: Marketplace Transformation & BTCMap Integration
+
+**Major Platform Evolution**:
+- ✅ **BTCMap Integration**: Real-time discovery of Bitcoin-accepting shops worldwide
+- ✅ **Interactive Map View**: Location-based search and discovery with map interface
+- ✅ **Marketplace Features**: Browse providers and shops with filtering, search, and categories
+- ✅ **Enhanced Discovery Page**: Unified marketplace experience with improved navigation
+
+**UX Enhancements**:
+- ✅ **Shop Type Labels**: Clear distinction between Online Store and Physical Shop
+- ✅ **Aligned Card Layouts**: Consistent sticky footer patterns across all cards
+- ✅ **Counter Fixes**: Accurate marketplace totals display
+- ✅ **Improved Filtering**: Category-based filtering for better discovery
+
+**Connection System**:
+- ✅ **Shop-Provider Matching**: Notification system for shops seeking infrastructure
+- ✅ **Connection Workflow**: Seamless connections between shops and Lightning providers
+- ✅ **Enhanced Communication**: Better connection request and acceptance flow
+
+**Technical Improvements**:
+- ✅ **Database Optimizations**: Improved query performance for marketplace data
+- ✅ **Component Architecture**: Better separation of concerns and reusability
+- ✅ **State Management**: Enhanced state handling for map interactions
+- ✅ **Performance**: Optimized rendering for large data sets
+
+**Impact**:
+- Transformed from subscription management tool to full Bitcoin marketplace
+- Global reach with BTCMap integration
+- Enhanced discovery capabilities for users
+- Better connection system between shops and providers
+
+---
 
 ### 2025-10-21: Platform Unification & Unified Branding
 

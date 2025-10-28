@@ -34,23 +34,31 @@ cp env.example .env.local
 - `BTCPAY_API_KEY`: Your BTCPay Server API key
 
 ### Database Security
-- The SQLite database (`bitinfrashop.db`) contains sensitive user data and is automatically excluded from Git
-- Never commit the database file or any `.env` files
+- PostgreSQL database contains sensitive user data
+- Use secure connection strings with proper authentication
+- Never commit database credentials or any `.env` files
 - Use environment variables for all secrets and API keys
+- Implement proper backup and recovery procedures
 
-### Development Security
-- Demo credentials are hardcoded for development only
-- In production, implement proper user registration and password hashing
-- Use HTTPS in production environments
-- Implement proper session management and CSRF protection
+### Production Security
+- ✅ **Password Hashing**: Implemented with bcrypt
+- ✅ **Session Management**: Secure session-based authentication
+- ✅ **Input Validation**: Comprehensive sanitization and validation
+- ✅ **Rate Limiting**: API endpoint protection
+- ✅ **Encryption**: AES-256-GCM for NWC secrets
+- ✅ **HTTPS**: Required for production deployments
 
-### Basic Security Checklist
-- [ ] Changed default demo credentials
+### Production Security Checklist
 - [ ] Using HTTPS in production
 - [ ] Environment variables properly configured
-- [ ] Database file has secure permissions
+- [ ] PostgreSQL database with secure credentials
+- [ ] Database backups configured
+- [ ] NWC encryption key properly set (32-char hex)
+- [ ] Session secret configured
 - [ ] Dependencies are up to date
+- [ ] Rate limiting enabled
+- [ ] Regular security audits scheduled
 
 ---
 
-**Note**: This is a beginner project. For production use, consider implementing proper user registration, password hashing, and additional security measures. 
+**Note**: Bitinfrashop is production-ready with enterprise-grade security measures including password hashing, input validation, rate limiting, and encryption. For questions or security concerns, contact nodediver@proton.me. 
