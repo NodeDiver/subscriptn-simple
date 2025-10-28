@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { logger } from '@/lib/logger';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -35,25 +36,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Apply theme changes
   useEffect(() => {
-    console.log('Theme effect running:', { theme, mounted });
-
     if (!mounted) {
-      console.log('Not mounted yet, skipping theme application');
       return;
     }
 
-    console.log('Applying theme:', theme);
-    console.log('Current classList:', document.documentElement.classList.toString());
+    logger.debug('Applying theme', { theme });
 
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
-      console.log('Added dark class');
     } else {
       document.documentElement.classList.remove('dark');
-      console.log('Removed dark class');
     }
-
-    console.log('New classList:', document.documentElement.classList.toString());
 
     // Save to localStorage
     localStorage.setItem('bitinfrashop-theme', theme);
@@ -62,7 +55,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => {
     setThemeState(prev => {
       const newTheme = prev === 'light' ? 'dark' : 'light';
-      console.log('Toggling theme from', prev, 'to', newTheme);
+      logger.debug('Theme toggled', { from: prev, to: newTheme });
       return newTheme;
     });
   };

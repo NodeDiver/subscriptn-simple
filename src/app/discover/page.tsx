@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import Link from 'next/link';
+import { PAGINATION, DEBOUNCE_DELAYS, SHOP_TYPE_LABELS, SHOP_TYPES } from '@/lib/constants';
+import { logger } from '@/lib/logger';
 
 interface Shop {
   id: string;
@@ -30,6 +32,20 @@ interface Shop {
   created_at?: string;
 }
 
+interface PricingTier {
+  name?: string;
+  price?: number;
+  features?: string[];
+  [key: string]: unknown;
+}
+
+interface TechnicalSpecs {
+  capacity?: number;
+  uptime?: string;
+  features?: string[];
+  [key: string]: unknown;
+}
+
 interface InfrastructureProvider {
   id: string;
   provider_id: number;
@@ -42,8 +58,8 @@ interface InfrastructureProvider {
   website?: string;
   contact_email?: string;
   lightning_address?: string;
-  pricing_tiers?: any;
-  technical_specs?: any;
+  pricing_tiers?: PricingTier | PricingTier[] | null;
+  technical_specs?: TechnicalSpecs | null;
   supports_nwc?: boolean;
   total_slots?: number | null;
   connected_shops: number;
@@ -86,7 +102,7 @@ export default function DiscoverPage() {
   const [sourceFilter, setSourceFilter] = useState<string>('all');
   const [pagination, setPagination] = useState({
     total: 0,
-    limit: 50,
+    limit: PAGINATION.DEFAULT_LIMIT,
     offset: 0,
     hasMore: false
   });
@@ -117,16 +133,17 @@ export default function DiscoverPage() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setSearch(searchInput);
-    }, 300);
+    }, DEBOUNCE_DELAYS.SEARCH);
 
     return () => clearTimeout(timeoutId);
   }, [searchInput]);
 
-  const fetchTotalCounts = async () => {
+  const fetchTotalCounts = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       params.append('type', 'all');
-      params.append('limit', '1');
+      params.append('limit', '10000'); // Very high limit to get all results for accurate counts
+      params.append('countOnly', 'true'); // Signal we want accurate total counts
 
       const response = await fetch(`/api/search/unified?${params.toString()}`);
       if (response.ok) {
@@ -134,11 +151,11 @@ export default function DiscoverPage() {
         setTotalCounts(data.counts);
       }
     } catch (error) {
-      console.error('Error fetching total counts:', error);
+      logger.error('Error fetching total counts', error);
     }
-  };
+  }, []);
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -160,8 +177,8 @@ export default function DiscoverPage() {
         }
       }
 
-      params.append('limit', '50');
-      params.append('offset', '0');
+      params.append('limit', String(PAGINATION.DEFAULT_LIMIT));
+      params.append('offset', String(PAGINATION.DEFAULT_OFFSET));
 
       const response = await fetch(`/api/search/unified?${params.toString()}`);
       if (response.ok) {
@@ -171,18 +188,18 @@ export default function DiscoverPage() {
         setCounts(data.counts);
       }
     } catch (error) {
-      console.error('Error fetching results:', error);
+      logger.error('Error fetching results', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, viewType, serviceTypeFilter, shopTypeFilter, sourceFilter]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     setSearch(searchInput);
-  };
+  }, [searchInput]);
 
-  const getServiceTypeName = (type: string) => {
+  const getServiceTypeName = useCallback((type: string) => {
     switch (type) {
       case 'BTCPAY_SERVER':
         return 'BTCPay Server';
@@ -193,7 +210,7 @@ export default function DiscoverPage() {
       default:
         return type;
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
@@ -313,8 +330,8 @@ export default function DiscoverPage() {
                   className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-neutral-900 dark:text-white bg-white dark:bg-neutral-700"
                 >
                   <option value="all">All Types</option>
-                  <option value="DIGITAL">Digital</option>
-                  <option value="PHYSICAL">Real World</option>
+                  <option value="DIGITAL">{SHOP_TYPE_LABELS[SHOP_TYPES.DIGITAL]}</option>
+                  <option value="PHYSICAL">{SHOP_TYPE_LABELS[SHOP_TYPES.PHYSICAL]}</option>
                 </select>
               </div>
               <div>
@@ -369,7 +386,7 @@ export default function DiscoverPage() {
               <p className="text-neutral-600 dark:text-neutral-400">No results found. Try adjusting your search or filters.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {results.map((result) => (
                 result.type === 'shop' ? (
                   <ShopCard key={result.id} shop={result} />
@@ -385,10 +402,10 @@ export default function DiscoverPage() {
   );
 }
 
-// Shop Card Component
-function ShopCard({ shop }: { shop: Shop }) {
+// Shop Card Component - Memoized to prevent unnecessary re-renders
+const ShopCard = memo(function ShopCard({ shop }: { shop: Shop }) {
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition-all duration-200 p-6">
+    <div className="flex flex-col h-full bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition-all duration-200 p-6">
       {/* Source and Type Badges */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex gap-2">
@@ -401,7 +418,7 @@ function ShopCard({ shop }: { shop: Shop }) {
           </span>
           {shop.shop_type && (
             <span className="text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300">
-              {shop.shop_type === 'DIGITAL' ? 'Digital' : 'Real World'}
+              {SHOP_TYPE_LABELS[shop.shop_type]}
             </span>
           )}
         </div>
@@ -456,45 +473,61 @@ function ShopCard({ shop }: { shop: Shop }) {
         )}
       </div>
 
-      {/* Website Link */}
-      {shop.website && (
-        <a
-          href={shop.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 font-medium transition-colors duration-200"
-        >
-          Visit Website
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
-      )}
+      {/* Actions Footer - Always pushed to bottom */}
+      <div className="mt-auto pt-4 border-t border-neutral-200 dark:border-neutral-700 flex flex-col gap-3">
+        {/* Website Link */}
+        {shop.website && (
+          <a
+            href={shop.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 font-medium transition-colors duration-200"
+          >
+            Visit Website
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        )}
 
-      {/* Providers (for local shops) */}
-      {shop.source === 'local' && shop.providers && shop.providers.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-700">
-          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-            Connected Providers:
-          </p>
-          <div className="flex flex-wrap gap-1">
-            {shop.providers.map((provider) => (
-              <span
-                key={provider.id}
-                className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded"
-              >
-                {provider.name}
-              </span>
-            ))}
+        {/* Needs Infrastructure Button (for local shops without connections) */}
+        {shop.source === 'local' && (!shop.providers || shop.providers.length === 0) && (
+          <Link
+            href="/discover?type=infrastructure"
+            className="inline-flex items-center gap-2 text-sm px-3 py-2 bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg font-medium transition-colors duration-200"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Needs Bitcoin Setup
+          </Link>
+        )}
+
+        {/* Connected Providers (for local shops) */}
+        {shop.source === 'local' && shop.providers && shop.providers.length > 0 && (
+          <div>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">
+              Connected Providers:
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {shop.providers.map((provider) => (
+                <span
+                  key={provider.id}
+                  className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded"
+                >
+                  {provider.name}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
-}
+});
 
-// Infrastructure Provider Card Component
-function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) {
+// Infrastructure Provider Card Component - Memoized to prevent unnecessary re-renders
+const InfrastructureCard = memo(function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) {
   const getServiceTypeName = (type: string) => {
     switch (type) {
       case 'BTCPAY_SERVER': return 'BTCPay Server';
@@ -523,7 +556,7 @@ function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) 
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-amber-200 dark:border-amber-700/50 hover:shadow-lg transition-all duration-200 p-6">
+    <div className="flex flex-col h-full bg-white dark:bg-neutral-800 rounded-2xl border border-amber-200 dark:border-amber-700/50 hover:shadow-lg transition-all duration-200 p-6">
       {/* Service Type Badge */}
       <div className="flex items-center justify-between mb-3">
         <span className="text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300">
@@ -574,8 +607,8 @@ function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) 
         {provider.connected_shops} shop{provider.connected_shops !== 1 ? 's' : ''} connected
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-2">
+      {/* Actions Footer */}
+      <div className="mt-auto pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
         <Link
           href={`/connect/${provider.provider_id}`}
           className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl text-center"
@@ -603,4 +636,4 @@ function InfrastructureCard({ provider }: { provider: InfrastructureProvider }) 
       </div>
     </div>
   );
-}
+});

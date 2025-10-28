@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { logger } from './logger';
 
 /**
  * NWC Connection String Encryption Service
@@ -61,8 +62,8 @@ class NWCEncryptionService {
       // Derive encryption key
       const key = this.deriveKey(salt);
 
-      // Create cipher
-      const cipher = crypto.createCipher(this.algorithm, key);
+      // Create cipher with explicit IV
+      const cipher = crypto.createCipheriv(this.algorithm, key, iv);
       cipher.setAAD(Buffer.from('nwc-bitinfrashop', 'utf8'));
 
       // Encrypt the data
@@ -79,7 +80,10 @@ class NWCEncryptionService {
         salt: salt.toString('hex')
       };
     } catch (error) {
-      console.error('NWC encryption error:', error);
+      logger.error('NWC encryption failed', error, {
+        operation: 'encrypt',
+        algorithm: this.algorithm,
+      });
       throw new Error('Failed to encrypt NWC connection string');
     }
   }
@@ -97,8 +101,8 @@ class NWCEncryptionService {
       // Derive the same encryption key
       const key = this.deriveKey(salt);
 
-      // Create decipher
-      const decipher = crypto.createDecipher(this.algorithm, key);
+      // Create decipher with explicit IV
+      const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
       decipher.setAAD(Buffer.from('nwc-bitinfrashop', 'utf8'));
       decipher.setAuthTag(authTag);
 
@@ -113,7 +117,10 @@ class NWCEncryptionService {
 
       return decrypted;
     } catch (error) {
-      console.error('NWC decryption error:', error);
+      logger.error('NWC decryption failed', error, {
+        operation: 'decrypt',
+        algorithm: this.algorithm,
+      });
       throw new Error('Failed to decrypt NWC connection string');
     }
   }

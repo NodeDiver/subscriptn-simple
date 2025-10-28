@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '@/lib/auth-prisma';
+import { logger } from '@/lib/logger';
 
 interface AuthContextType {
   user: User | null;
@@ -20,30 +21,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      console.log('Checking authentication...');
+      logger.debug('Checking authentication');
       const response = await fetch('/api/auth/me');
-      console.log('Auth check response status:', response.status);
-      
+
       if (response.ok) {
         const data = await response.json();
-        console.log('Auth check response data:', data);
         setUser(data.user);
+        logger.debug('Authentication verified', { userId: data.user?.id });
       } else {
-        console.log('Auth check failed, setting user to null');
+        logger.debug('Authentication check failed', { status: response.status });
         setUser(null);
       }
     } catch (error) {
-      console.error('Auth check error:', error);
+      logger.error('Authentication check failed', error);
       setUser(null);
     } finally {
       setLoading(false);
-      console.log('Auth check completed, loading set to false');
     }
   };
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      console.log('Attempting login for:', username);
+      logger.debug('Login attempt', { username }); // OK to log username, NOT password
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -52,18 +51,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ username, password }),
       });
 
-      console.log('Login response status:', response.status);
       const data = await response.json();
-      console.log('Login response data:', data);
 
       if (response.ok) {
         setUser(data.user);
-        console.log('User set in context:', data.user);
+        logger.info('Login successful', { userId: data.user?.id });
         return true;
       }
+
+      logger.debug('Login failed', { status: response.status });
       return false;
     } catch (error) {
-      console.error('Login error:', error);
+      logger.error('Login request failed', error);
       return false;
     }
   };
@@ -72,8 +71,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       setUser(null);
+      logger.info('Logout successful');
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout request failed', error);
+      // Still set user to null even if API call fails
+      setUser(null);
     }
   };
 

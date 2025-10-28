@@ -114,6 +114,11 @@ model InfrastructureProvider {
   owner             User        @relation("ProviderOwner", fields: [ownerId], references: [id])
   connections       Connection[]
 
+  // Performance indexes for search and filtering
+  @@index([name, isPublic])
+  @@index([serviceType, isPublic])
+  @@index([ownerId])
+  @@index([createdAt])
   @@map("infrastructure_providers")
 }
 
@@ -157,6 +162,12 @@ model Shop {
   owner               User        @relation("ShopOwner", fields: [ownerId], references: [id])
   connections         Connection[]
 
+  // Performance indexes for search and filtering
+  @@index([name, isPublic])
+  @@index([address])
+  @@index([shopType, isPublic])
+  @@index([ownerId])
+  @@index([createdAt])
   @@map("shops")
 }
 
@@ -197,6 +208,11 @@ model Connection {
   provider            InfrastructureProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   payments            PaymentHistory[]
 
+  // Performance indexes for filtering and queries
+  @@index([status])
+  @@index([shopId, status])
+  @@index([providerId, status])
+  @@index([connectionType])
   @@unique([shopId, providerId])
   @@map("connections")
 }
@@ -219,5 +235,9 @@ model PaymentHistory {
   // Relations
   connection      Connection  @relation(fields: [connectionId], references: [id], onDelete: Cascade)
 
+  // Performance indexes for queries and reporting
+  @@index([connectionId, paymentDate])
+  @@index([status])
+  @@index([paymentDate])
   @@map("payment_history")
 }

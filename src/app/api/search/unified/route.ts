@@ -1,5 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { logger } from '@/lib/logger';
+import { Prisma } from '@prisma/client';
+import { PAGINATION, HTTP_STATUS, ERROR_MESSAGES } from '@/lib/constants';
+import { parseIntSafe } from '@/lib/utils';
+
+// Type definitions for search results
+interface ProviderConnection {
+  id: number;
+  name: string;
+  service_type: string;
+  connection_type?: string;
+  status?: string;
+}
+
+interface ShopResult {
+  id: string;
+  shop_id?: number;
+  type: 'shop';
+  source: 'local' | 'btcmap';
+  name: string;
+  description?: string | null;
+  logo_url?: string | null;
+  shop_type?: 'DIGITAL' | 'PHYSICAL';
+  address?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  website?: string | null;
+  contact_email?: string | null;
+  category?: string;
+  providers?: ProviderConnection[];
+  created_at?: string | Date;
+  updated_at?: string | Date;
+}
+
+interface InfrastructureResult {
+  id: string;
+  provider_id: number;
+  type: 'infrastructure';
+  source: 'local';
+  name: string;
+  description?: string | null;
+  logo_url?: string | null;
+  service_type: string;
+  website?: string | null;
+  contact_email?: string | null;
+  connected_shops: number;
+  available_slots?: number | null;
+  created_at: string | Date;
+  updated_at: string | Date;
+}
+
+type SearchResult = ShopResult | InfrastructureResult;
+
+interface SearchWhere {
+  isPublic?: boolean;
+  shopType?: string;
+  serviceType?: string;
+  OR?: Array<{
+    name?: { contains: string; mode: Prisma.QueryMode };
+    description?: { contains: string; mode: Prisma.QueryMode };
+    address?: { contains: string; mode: Prisma.QueryMode };
+  }>;
+}
 
 // Unified search for both shops and infrastructure providers
 export async function GET(request: NextRequest) {
@@ -8,50 +71,61 @@ export async function GET(request: NextRequest) {
 
     // Common search parameters
     const search = searchParams.get('search');
-    const limit = parseInt(searchParams.get('limit') || '50');
-    const offset = parseInt(searchParams.get('offset') || '0');
+    const countOnly = searchParams.get('countOnly') === 'true'; // For getting accurate total counts
+    const limit = parseIntSafe(
+      searchParams.get('limit'),
+      PAGINATION.DEFAULT_LIMIT,
+      { min: 1, max: countOnly ? 10000 : PAGINATION.MAX_LIMIT } // Allow higher limit for counting
+    );
+    const offset = parseIntSafe(
+      searchParams.get('offset'),
+      PAGINATION.DEFAULT_OFFSET,
+      { min: 0 }
+    );
     const type = searchParams.get('type'); // 'all', 'shops', 'infrastructure'
     const serviceType = searchParams.get('serviceType'); // For filtering infrastructure
     const source = searchParams.get('source'); // 'local', 'btcmap', 'all' for shops
     const shopType = searchParams.get('shopType'); // 'digital', 'physical', 'all' for shops
 
-    let results: any[] = [];
+    logger.apiRequest('GET', '/api/search/unified', { search, type, limit, offset, countOnly });
+
+    let results: SearchResult[] = [];
 
     // Fetch shops if requested
     if (type === 'shops' || type === 'all' || !type) {
       // Fetch local shops
       if (source === 'local' || source === 'all' || !source) {
-        const localShops = await fetchLocalShops(search, shopType);
+        const localShops = await fetchLocalShops(search, shopType, limit);
         results.push(...localShops.map(shop => ({
           ...shop,
-          type: 'shop',
-          source: 'local'
+          type: 'shop' as const,
+          source: 'local' as const
         })));
       }
 
       // Fetch BTCMap shops
       if (source === 'btcmap' || source === 'all' || !source) {
-        const btcmapShops = await fetchBTCMapShops(search, shopType);
+        const btcmapShops = await fetchBTCMapShops(search, shopType, limit);
         results.push(...btcmapShops.map(shop => ({
           ...shop,
-          type: 'shop',
-          source: 'btcmap'
+          type: 'shop' as const,
+          source: 'btcmap' as const
         })));
       }
     }
 
     // Fetch infrastructure providers if requested
     if (type === 'infrastructure' || type === 'all' || !type) {
-      const providers = await fetchInfrastructureProviders(search, serviceType);
+      const providers = await fetchInfrastructureProviders(search, serviceType, limit);
       results.push(...providers.map(provider => ({
         ...provider,
-        type: 'infrastructure',
-        source: 'local'
+        type: 'infrastructure' as const,
+        source: 'local' as const
       })));
     }
 
     // Sort by creation date (newest first)
-    results.sort((a: any, b: any) => {
+    results.sort((a: SearchResult, b: SearchResult) => {
       const dateA = new Date(a.created_at || a.updated_at || 0).getTime();
       const dateB = new Date(b.created_at || b.updated_at || 0).getTime();
       return dateB - dateA; // Newest first
@@ -59,9 +133,9 @@ export async function GET(request: NextRequest) {
 
     // For "all" view, interleave shops and infrastructure for better variety
     if (type === 'all' || !type) {
-      const shops = results.filter((r: any) => r.type === 'shop');
-      const infrastructure = results.filter((r: any) => r.type === 'infrastructure');
-      const interleaved: any[] = [];
+      const shops = results.filter((r: SearchResult) => r.type === 'shop');
+      const infrastructure = results.filter((r: SearchResult) => r.type === 'infrastructure');
+      const interleaved: SearchResult[] = [];
       const maxLength = Math.max(shops.length, infrastructure.length);
 
       // Interleave with a ratio of 2 shops to 1 infrastructure
@@ -81,10 +155,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Count totals by type
-    const shopCount = results.filter((r: any) => r.type === 'shop').length;
-    const infrastructureCount = results.filter((r: any) => r.type === 'infrastructure').length;
-    const localShopCount = results.filter((r: any) => r.type === 'shop' && r.source === 'local').length;
-    const btcmapShopCount = results.filter((r: any) => r.type === 'shop' && r.source === 'btcmap').length;
+    const shopCount = results.filter((r: SearchResult) => r.type === 'shop').length;
+    const infrastructureCount = results.filter((r: SearchResult) => r.type === 'infrastructure').length;
+    const localShopCount = results.filter((r: SearchResult) => r.type === 'shop' && r.source === 'local').length;
+    const btcmapShopCount = results.filter((r: SearchResult) => r.type === 'shop' && r.source === 'btcmap').length;
 
     // Apply pagination
     const total = results.length;
@@ -106,26 +180,33 @@ export async function GET(request: NextRequest) {
       }
     });
   } catch (error) {
-    console.error('Error in unified search:', error);
+    logger.error('Unified search failed', error, {
+      endpoint: '/api/search/unified'
+    });
     return NextResponse.json(
-      { error: 'Failed to perform unified search' },
-      { status: 500 }
+      {
+        error: ERROR_MESSAGES.INTERNAL_ERROR,
+        ...(process.env.NODE_ENV === 'development' && {
+          details: error instanceof Error ? error.message : 'Unknown error'
+        })
+      },
+      { status: HTTP_STATUS.INTERNAL_ERROR }
     );
   }
 }
 
 // Fetch shops from local database
-async function fetchLocalShops(search: string | null, shopType: string | null) {
-  const where: any = {
+async function fetchLocalShops(search: string | null, shopType: string | null, limit: number = PAGINATION.DEFAULT_LIMIT) {
+  const where: SearchWhere = {
     isPublic: true
   };
 
   // Apply search filter
   if (search) {
     where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { description: { contains: search, mode: 'insensitive' } },
-      { address: { contains: search, mode: 'insensitive' } }
+      { name: { contains: search, mode: 'insensitive' as Prisma.QueryMode } },
+      { description: { contains: search, mode: 'insensitive' as Prisma.QueryMode } },
+      { address: { contains: search, mode: 'insensitive' as Prisma.QueryMode } }
     ];
   }
 
@@ -158,7 +239,7 @@ async function fetchLocalShops(search: string | null, shopType: string | null) {
       }
     },
     orderBy: { createdAt: 'desc' },
-    take: 500 // Fetch more for combined results
+    take: limit // Apply proper limit from parameter
   });
 
   // Transform to unified format
@@ -192,26 +273,37 @@ async function fetchLocalShops(search: string | null, shopType: string | null) {
 }
 
 // Fetch shops from BTCMap API
-async function fetchBTCMapShops(search: string | null, shopType: string | null) {
+async function fetchBTCMapShops(search: string | null, shopType: string | null, limit: number = PAGINATION.DEFAULT_LIMIT) {
   try {
     // Build query parameters for BTCMap proxy
     const params = new URLSearchParams();
     if (search) params.append('search', search);
-    params.append('limit', '500');
+    params.append('limit', limit.toString());
 
     // Call our BTCMap proxy endpoint
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const response = await fetch(`${baseUrl}/api/btcmap/elements?${params.toString()}`);
 
     if (!response.ok) {
-      console.error('BTCMap proxy error:', response.status);
+      logger.warn('BTCMap proxy request failed', { status: response.status });
       return [];
     }
 
     const data = await response.json();
 
+    interface BTCMapElement {
+      id: string | number;
+      name?: string;
+      description?: string;
+      latitude?: number;
+      longitude?: number;
+      website?: string;
+      updated_at?: string;
+      [key: string]: unknown;
+    }
+
     // Map and infer shop type from coordinates
-    let btcmapShops = (data.elements || []).map((shop: any) => {
+    let btcmapShops = (data.elements || []).map((shop: BTCMapElement) => {
       // Infer shop type: if has coordinates, it's PHYSICAL, otherwise DIGITAL
       const inferredShopType = (shop.latitude && shop.longitude) ? 'PHYSICAL' : 'DIGITAL';
 
@@ -223,29 +315,33 @@ async function fetchBTCMapShops(search: string | null, shopType: string | null) 
       };
     });
 
+    interface BTCMapShopWithType extends BTCMapElement {
+      shop_type: string;
+    }
+
     // Filter by shop type if specified
     if (shopType && ['DIGITAL', 'PHYSICAL'].includes(shopType.toUpperCase())) {
-      btcmapShops = btcmapShops.filter((shop: any) => shop.shop_type === shopType.toUpperCase());
+      btcmapShops = btcmapShops.filter((shop: BTCMapShopWithType) => shop.shop_type === shopType.toUpperCase());
     }
 
     return btcmapShops;
   } catch (error) {
-    console.error('Error fetching BTCMap shops:', error);
+    logger.error('Failed to fetch BTCMap shops', error, { search, shopType, limit });
     return [];
   }
 }
 
 // Fetch infrastructure providers from local database
-async function fetchInfrastructureProviders(search: string | null, serviceType: string | null) {
-  const where: any = {
+async function fetchInfrastructureProviders(search: string | null, serviceType: string | null, limit: number = PAGINATION.DEFAULT_LIMIT) {
+  const where: SearchWhere = {
     isPublic: true
   };
 
   // Apply search filter
   if (search) {
     where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { description: { contains: search, mode: 'insensitive' } }
+      { name: { contains: search, mode: 'insensitive' as Prisma.QueryMode } },
+      { description: { contains: search, mode: 'insensitive' as Prisma.QueryMode } }
     ];
   }
 
@@ -273,7 +369,7 @@ async function fetchInfrastructureProviders(search: string | null, serviceType: 
       }
     },
     orderBy: { createdAt: 'desc' },
-    take: 500 // Fetch more for combined results
+    take: limit // Apply proper limit from parameter
   });
 
   // Transform to unified format with available spots calculation
